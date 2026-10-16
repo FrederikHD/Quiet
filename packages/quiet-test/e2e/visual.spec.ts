@@ -1,0 +1,19 @@
+// Screenshots of every example, light and dark. Update the baselines with `npm run test:visual:update`
+// after a deliberate visual change, and review the new images in the diff.
+import { components, slugOf } from './catalog';
+import { expect, test } from './fixtures';
+
+for (const theme of ['light', 'dark'] as const) {
+  for (const folder of components) {
+    test(`${folder} examples, ${theme}`, async ({ page }) => {
+      await page.addInitScript((t) => localStorage.setItem('quiet-explorer-theme', t), theme);
+      await page.goto(`/components/${slugOf(folder)}/examples`);
+      await page.evaluate(() => document.fonts.ready);
+      const examples = page.getByTestId('example');
+      await expect(examples.first()).toBeVisible();
+      for (let i = 0; i < (await examples.count()); i++) {
+        await expect(examples.nth(i)).toHaveScreenshot(`${slugOf(folder)}-${i + 1}-${theme}.png`);
+      }
+    });
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "types": ["vite/client", "node"],
+    "paths": {
+      "quiet": ["../quiet/src/index.ts"],
+      "@quiet/*": ["../quiet/*"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.vue", "plugins/**/*.ts", "vite.config.ts"]
+}

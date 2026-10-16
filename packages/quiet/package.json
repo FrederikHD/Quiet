@@ -4,7 +4,8 @@
   "description": "Quiet design system \u2014 Vue 3 components, tokens and styles for commerce storefronts and back offices.",
   "type": "module",
   "sideEffects": [
-    "**/*.css"
+    "*.css",
+    "./src/index.ts"
   ],
   "main": "./dist/quiet.js",
   "module": "./dist/quiet.js",
