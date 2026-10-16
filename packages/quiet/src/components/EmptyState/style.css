@@ -1,0 +1,8 @@
+/* ---------- EmptyState ---------- */
+.q-empty { display: grid; justify-items: center; gap: var(--space-3); padding: var(--space-16) var(--space-4); text-align: center; font-family: var(--font-sans); color: var(--ink); }
+.q-empty--small { padding: var(--space-8) var(--space-4); }
+.q-empty__icon { display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 50%; background: var(--surface-sunken); color: var(--ink-muted); }
+.q-empty__title { margin: var(--space-1) 0 0; font-size: 17px; line-height: 24px; font-weight: 600; }
+.q-empty__text { max-width: 44ch; font-size: var(--control-text-md); line-height: 22px; color: var(--ink-muted); }
+.q-empty__text p { margin: 0; }
+.q-empty__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-2); margin-top: var(--space-2); }

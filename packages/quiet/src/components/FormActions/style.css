@@ -1,0 +1,24 @@
+/* Actions */
+.q-factions { container-type: inline-size; min-width: 0; }
+.q-factions__row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
+.q-factions__row--end { justify-content: flex-end; }
+.q-factions__row--start { justify-content: flex-start; }
+.q-factions__row--between { justify-content: space-between; }
+.q-factions--sticky {
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  margin: 0 calc(var(--space-4) * -1);
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+}
+@container (max-width: 479px) {
+  .q-factions__row,
+  .q-factions__row > div { display: flex; flex-direction: column-reverse; align-items: stretch; gap: var(--space-2); }
+  .q-factions__row .q-btn { width: 100%; }
+  /* A sticky bar stays one row high on phones: its buttons share the width, primary on the right. */
+  .q-factions--sticky .q-factions__row,
+  .q-factions--sticky .q-factions__row > div { flex-direction: row; flex-wrap: nowrap; flex: 1 1 auto; min-width: 0; }
+  .q-factions--sticky .q-factions__row .q-btn { flex: 1 1 0; width: auto; min-width: 0; }
+}

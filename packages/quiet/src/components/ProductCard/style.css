@@ -1,0 +1,28 @@
+/* ---------- ProductCard ---------- */
+/* The image is the card: on surface-sunken at radius-md, 4:5 (or 1:1). No border. Name in body, price below. */
+.q-pcard { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; gap: var(--space-3); min-width: 0; font-family: var(--font-sans); color: var(--ink); }
+.q-pcard__media { grid-row: 1; grid-column: 1; }
+.q-pcard__body { grid-row: 2; }
+.q-pcard__media { position: relative; overflow: hidden; aspect-ratio: 4 / 5; border-radius: var(--radius-md); background: var(--surface-sunken); }
+.q-pcard--square .q-pcard__media { aspect-ratio: 1 / 1; }
+.q-pcard__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity 200ms ease; }
+.q-pcard__img--hover { opacity: 0; }
+@media (hover: hover) { .q-pcard:hover .q-pcard__img--hover { opacity: 1; } }
+.q-pcard__placeholder { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--ink-muted); }
+.q-pcard__badges { position: absolute; top: var(--space-2); left: var(--space-2); z-index: 1; display: flex; flex-wrap: wrap; gap: var(--space-1); max-width: calc(100% - 2 * var(--space-2)); }
+.q-pcard__badges .q-badge--neutral { background: var(--surface-raised); }
+.q-pcard__quick { grid-row: 1; grid-column: 1; align-self: end; justify-self: end; margin: var(--space-2); z-index: 1; border-radius: var(--radius-full); }
+.q-pcard__body { display: flex; flex-direction: column; gap: var(--space-1); min-width: 0; }
+.q-pcard__vendor { font-size: 12px; line-height: 16px; color: var(--ink-muted); }
+.q-pcard__name { margin: 0; font-size: 15px; line-height: 22px; font-weight: 400; overflow-wrap: anywhere; }
+.q-pcard__link { color: inherit; text-decoration: none; }
+/* One link covers the whole card. */
+.q-pcard__link::after { content: ""; position: absolute; inset: 0; z-index: 0; border-radius: var(--radius-md); }
+@media (hover: hover) { .q-pcard:hover .q-pcard__link { text-decoration: underline; text-underline-offset: 3px; } }
+.q-pcard__link:focus-visible { outline: none; }
+.q-pcard__link:focus-visible::after { outline: 2px solid var(--brand); outline-offset: 4px; }
+.q-pcard.is-soldout .q-pcard__img { opacity: .6; }
+.q-pcard__swatches { position: relative; display: flex; align-items: center; gap: 6px; margin-top: 2px; }
+.q-pcard__dot { width: 12px; height: 12px; border-radius: var(--radius-full); background: var(--q-swatch); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 20%, transparent); forced-color-adjust: none; }
+.q-pcard__more { font-size: 12px; line-height: 16px; color: var(--ink-muted); }
+@media (forced-colors: active) { .q-pcard__link:focus-visible::after { outline-color: Highlight; } }

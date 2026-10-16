@@ -1,0 +1,19 @@
+/* ---------- Badge ---------- */
+/* Status pill: label type, tint background, strong text of the same hue. Always a word, never colour alone. */
+.q-badge {
+  display: inline-flex; align-items: center; gap: var(--space-1);
+  max-width: 100%; box-sizing: border-box;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-full);
+  font-family: var(--font-sans); font-size: 13px; line-height: 16px; font-weight: 500;
+  white-space: nowrap; vertical-align: middle;
+}
+.q-badge__label { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.q-badge > .q-lead { margin-left: -2px; }
+.q-badge--neutral { background: var(--surface-sunken); color: var(--ink-muted); }
+.q-badge--success { background: var(--success-tint); color: var(--success); }
+.q-badge--warning { background: var(--warning-tint); color: var(--warning); }
+.q-badge--info { background: var(--info-tint); color: var(--info); }
+.q-badge--danger { background: var(--danger-tint); color: var(--danger); }
+.q-badge--sale { background: var(--sale); color: var(--on-solid); }
+@media (forced-colors: active) { .q-badge { border: 1px solid CanvasText; } }

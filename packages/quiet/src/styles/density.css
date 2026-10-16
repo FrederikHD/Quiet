@@ -1,0 +1,34 @@
+/* Quiet — density. Components size themselves from these variables, never from control-* directly.
+   Set data-density on <html> or any container; the nearest one wins.
+   comfortable is the default (storefront, back-office forms); compact is for data-heavy back-office screens. */
+
+:root,
+[data-density="comfortable"] {
+  --ctl-h: var(--control-md);
+  --ctl-pad: var(--control-pad-md);
+  --ctl-text: var(--control-text-md);
+  --ctl-icon: var(--icon-md);
+  --ctl-gap: var(--space-2);
+  --row-h: var(--row-comfortable);
+  --cell-pad-x: var(--space-4);
+  --cell-pad-y: var(--space-3);
+  --cell-text: var(--control-text-md);
+  --field-gap: var(--space-4);
+  --panel-pad: var(--space-6);
+  --stack-gap: var(--space-4);
+}
+
+[data-density="compact"] {
+  --ctl-h: var(--control-sm);
+  --ctl-pad: var(--control-pad-sm);
+  --ctl-text: var(--control-text-sm);
+  --ctl-icon: var(--icon-sm);
+  --ctl-gap: var(--space-1);
+  --row-h: var(--row-dense);
+  --cell-pad-x: var(--space-3);
+  --cell-pad-y: var(--space-2);
+  --cell-text: var(--control-text-sm);
+  --field-gap: var(--space-3);
+  --panel-pad: var(--space-4);
+  --stack-gap: var(--space-2);
+}

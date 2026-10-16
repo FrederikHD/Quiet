@@ -1,0 +1,38 @@
+/* ---------- OrderSummary ----------
+   A panel on surface-sunken. Lines: 56px image (4:5) with the quantity on its corner, name and variant, price.
+   Totals in an inline DescriptionList; the total in price size. Folded (phones): one full-width button. */
+.q-summary { min-width: 0; font-family: var(--font-sans); color: var(--ink); }
+.q-summary__title { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-3); margin: 0 0 var(--space-4); font-size: 17px; line-height: 24px; font-weight: 600; }
+.q-summary__count { font-size: var(--control-text-sm); font-weight: 400; color: var(--ink-muted); }
+.q-summary__body { display: grid; gap: var(--space-4); min-width: 0; }
+.q-summary__lines { display: grid; gap: var(--space-3); margin: 0; padding: 0; list-style: none; }
+.q-summary__line { display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; align-items: center; gap: var(--space-3); }
+.q-summary__media { position: relative; display: flex; align-items: center; justify-content: center; width: 56px; aspect-ratio: 4 / 5; border-radius: var(--radius-sm); background: var(--surface-sunken); box-shadow: inset 0 0 0 1px var(--line); color: var(--ink-muted); }
+.q-summary__media img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
+.q-summary__qty {
+  position: absolute; top: -6px; right: -6px; min-width: 20px; height: 20px; padding: 0 6px; box-sizing: border-box; border-radius: var(--radius-full);
+  background: var(--ink-muted); color: var(--surface-raised); font-size: 11px; line-height: 20px; font-weight: 600; text-align: center; font-variant-numeric: tabular-nums;
+}
+.q-summary__info { display: flex; flex-direction: column; min-width: 0; }
+.q-summary__name { font-size: var(--control-text-md); line-height: 22px; font-weight: 500; color: var(--ink); overflow-wrap: anywhere; }
+a.q-summary__name { display: inline-block; align-self: flex-start; min-height: 24px; padding-block: 1px; box-sizing: border-box; text-decoration: none; border-radius: 2px; }
+a.q-summary__name:hover { text-decoration: underline; }
+a.q-summary__name:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.q-summary__variant { font-size: var(--control-text-sm); line-height: 18px; color: var(--ink-muted); }
+.q-summary__price { align-items: flex-end; text-align: right; }
+.q-summary__price .q-price__row { justify-content: flex-end; flex-direction: column; align-items: flex-end; gap: 0; }
+.q-summary__extra { padding-top: var(--space-4); border-top: 1px solid var(--line); }
+.q-summary__totals { padding-top: var(--space-4); border-top: 1px solid var(--line); }
+.q-summary__term { display: inline-flex; flex-wrap: wrap; align-items: baseline; column-gap: var(--space-2); }
+.q-summary__detail { font-size: var(--control-text-sm); color: var(--ink-muted); }
+.q-summary__pending { font-size: var(--control-text-sm); color: var(--ink-muted); }
+.q-summary__minus { color: var(--success); }
+.q-summary__total { font-size: 20px; line-height: 28px; font-weight: 600; }
+.q-summary__note { margin: calc(var(--space-2) * -1) 0 0; font-size: var(--control-text-sm); line-height: 18px; color: var(--ink-muted); text-align: right; }
+/* Folded: a Disclosure in brand, the total beside it in ink */
+.q-summary__disc .q-disc__btn { min-height: var(--control-lg); color: var(--brand); font-weight: 500; }
+.q-summary__disc .q-disc__chev { order: -1; margin-left: calc(var(--space-1) * -1); color: var(--brand); }
+.q-summary__disc .q-disc__title { flex: 0 1 auto; }
+.q-summary__disc .q-disc__meta { margin-left: auto; max-width: none; color: var(--ink); font-size: 17px; line-height: 24px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.q-summary__toggletext { display: inline-flex; align-items: center; gap: var(--space-2); }
+.q-summary__disc .q-disc__panel { padding: var(--space-2) 0 var(--space-4); }

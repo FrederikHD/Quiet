@@ -1,0 +1,17 @@
+/* Base */
+body { margin: 0; font-family: var(--font-sans); background: var(--surface); color: var(--ink); }
+/* Native parts (scrollbars, autofill, date pickers, the caret) follow the theme */
+:root, [data-theme="light"] { color-scheme: light; }
+[data-theme="dark"] { color-scheme: dark; }
+
+/* Utility */
+.q-visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0; border: 0;
+  overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Sticky bars set these (see useStickyPad), so a focused field never ends up under them. */
+html { scroll-padding-top: var(--q-sticky-top, 0px); scroll-padding-bottom: var(--q-sticky-bottom, 0px); }

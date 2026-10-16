@@ -1,0 +1,106 @@
+/* ---------- Combobox ---------- */
+/* Closed: the Select box. Single — one button fills it. Multiple — chips wrap inside and the box grows. */
+.q-combo { cursor: pointer; }
+.q-combo__trigger {
+  flex: 1 1 auto;
+  align-self: stretch;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: inherit;
+}
+.q-combo__value { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.q-combo__value--placeholder { color: var(--ink-muted); }
+.q-combo.q-input--disabled .q-combo__trigger { cursor: not-allowed; color: var(--ink-muted); }
+/* Read-only Select and Combobox: like a read-only Input — the value in ink on a sunken box, no chevron */
+.q-select.q-input--readonly, .q-select.q-input--readonly .q-select__field, .q-combo.q-input--readonly .q-combo__trigger { cursor: default; color: var(--ink); }
+.q-input--readonly > .q-select__chevron { display: none; }
+.q-select.q-input--readonly { --q-select-pad-r: var(--ctl-pad); }
+.q-combo__clear { margin-right: calc(var(--ctl-gap) * -1 + 2px); }
+
+.q-combo--multi { height: auto; min-height: var(--ctl-h); flex-wrap: wrap; row-gap: var(--space-1); padding-top: 3px; padding-bottom: 3px; }
+.q-combo--multi.q-input--slim { min-height: var(--control-slim); padding-top: 2px; padding-bottom: 2px; }
+.q-combo--multi.q-input--slim .q-combo__trigger { min-height: calc(var(--control-slim) - 6px); }
+.q-combo--multi.q-input--slim .q-tag--field { height: calc(var(--control-slim) - 6px); }
+.q-combo--multi.q-input--large { min-height: var(--control-lg); padding-top: 5px; padding-bottom: 5px; }
+.q-combo--multi.q-input--large .q-combo__trigger { min-height: calc(var(--control-lg) - 12px); }
+.q-combo--multi.q-input--large .q-tag--field { height: calc(var(--control-lg) - 14px); }
+@media (max-width: 639px) {
+  /* slim is desktop-only, as on Input and Button */
+  .q-combo--multi.q-input--slim { min-height: var(--ctl-h); padding-top: 3px; padding-bottom: 3px; }
+  .q-combo--multi.q-input--slim .q-combo__trigger { min-height: calc(var(--ctl-h) - 8px); }
+  .q-combo--multi.q-input--slim .q-tag--field { height: calc(var(--ctl-h) - 10px); }
+}
+.q-combo--multi .q-combo__trigger { flex: 1 1 48px; min-height: calc(var(--ctl-h) - 8px); }
+.q-combo--has-chips { padding-left: 4px; }
+.q-combo--multi .q-select__chevron { align-self: center; }
+/* Chosen options are Tags (variant field) — see Tag below. */
+
+/* Panel */
+.q-combo__panel { display: flex; flex-direction: column; min-height: 0; max-height: min(440px, var(--q-pop-max, calc(100vh - 16px))); }
+.q-dialog .q-combo__panel { flex: 1 1 auto; max-height: none; }
+.q-combo__search { padding: var(--space-2); border-bottom: 1px solid var(--line); }
+.q-combo__list { flex: 1 1 auto; min-height: 0; margin: 0; padding: var(--space-1); list-style: none; overflow-y: auto; overscroll-behavior: contain; }
+.q-combo__list.is-loading { opacity: .6; }
+.q-combo__option {
+  display: flex; align-items: center; gap: var(--space-3);
+  min-height: var(--ctl-h);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
+  color: var(--ink);
+  cursor: pointer;
+}
+.q-combo__option.is-active { background: var(--surface-sunken); }
+.q-combo__option.is-disabled { color: var(--ink-muted); cursor: not-allowed; }
+.q-combo__text { display: flex; flex-direction: column; flex: 1 1 auto; min-width: 0; }
+.q-combo__label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: var(--ctl-text); line-height: 20px; }
+.q-combo__desc { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: var(--control-text-sm); line-height: 18px; color: var(--ink-muted); }
+.q-combo__meta { flex: none; font-size: var(--ctl-text); line-height: 20px; font-weight: 500; color: var(--ink); font-variant-numeric: tabular-nums; text-align: right; }
+.q-combo__option.is-disabled .q-combo__meta { color: var(--ink-muted); }
+.q-combo__media { flex: none; display: inline-flex; width: 32px; height: 32px; border-radius: var(--radius-sm); overflow: hidden; background: var(--surface-sunken); }
+.q-combo__media > img { width: 100%; height: 100%; object-fit: cover; }
+.q-combo__tick { flex: none; display: inline-flex; width: var(--icon-sm); height: var(--icon-sm); color: var(--brand); }
+.q-combo__tick > .q-icon { width: 100% !important; height: 100% !important; }
+.q-combo__check {
+  flex: none; display: inline-flex; align-items: center; justify-content: center;
+  width: 18px; height: 18px; box-sizing: border-box;
+  border: 1px solid var(--line-strong); border-radius: var(--radius-sm);
+  background: var(--surface-raised); color: var(--on-solid);
+}
+.q-combo__option.is-selected .q-combo__check { background: var(--brand); border-color: var(--brand); }
+.q-combo__check > .q-icon { width: 14px !important; height: 14px !important; stroke-width: 2.5; }
+[data-density="compact"] .q-combo__check { width: 16px; height: 16px; }
+[data-density="compact"] .q-combo__check > .q-icon { width: 12px !important; height: 12px !important; }
+.q-combo__option.is-disabled .q-combo__check { background: var(--surface-sunken); border-color: var(--line); }
+.q-combo__empty { padding: var(--space-4) var(--space-3); color: var(--ink-muted); font-size: var(--control-text-sm); }
+.q-combo__footer {
+  display: flex; align-items: center; gap: var(--space-2);
+  min-height: 36px; padding: var(--space-1) var(--space-3);
+  border-top: 1px solid var(--line);
+  color: var(--ink-muted); font-size: var(--control-text-sm); line-height: 18px;
+}
+.q-combo__status { flex: 1 1 auto; min-width: 0; }
+.q-combo__footer.is-error { color: var(--danger); }
+.q-combo__spinner {
+  flex: none; width: 14px; height: 14px; box-sizing: border-box;
+  border: 2px solid currentColor; border-right-color: transparent; border-radius: var(--radius-full);
+  animation: q-spin 700ms linear infinite;
+}
+
+/* In the phone dialog: roomier search and taller rows */
+.q-dialog .q-combo__search { padding: var(--space-3) var(--space-4); }
+.q-dialog .q-combo__option { min-height: 48px; }
+.q-dialog .q-combo__footer { padding-bottom: max(var(--space-2), env(safe-area-inset-bottom)); }
+
+@media (forced-colors: active) {
+  .q-combo__option.is-active { outline: 2px solid Highlight; outline-offset: -2px; }
+  .q-combo__option.is-selected .q-combo__check { forced-color-adjust: none; background: Highlight; border-color: Highlight; color: HighlightText; }
+  .q-tag--field { border: 1px solid CanvasText; }
+}
+@media (prefers-reduced-motion: reduce) { .q-combo__spinner { animation-duration: 2s; } }

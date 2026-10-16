@@ -1,0 +1,148 @@
+/* Button
+   Order matters: variant -> hover -> pressed -> selected -> menu open -> disabled -> loading. */
+.q-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-height: var(--ctl-h);
+  min-width: var(--ctl-h);
+  max-width: 100%;
+  padding: 0 var(--ctl-pad);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-size: var(--ctl-text);
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
+}
+.q-btn__content { display: inline-flex; align-items: center; gap: var(--ctl-gap); min-width: 0; max-width: 100%; }
+/* The label keeps room for accents and descenders (Ä, g, y): its overflow is clipped for the ellipsis. */
+.q-btn__label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; line-height: 1.35; }
+.q-btn__icon { display: inline-flex; width: var(--ctl-icon); height: var(--ctl-icon); flex: none; }
+.q-btn__icon > svg { width: 100%; height: 100%; }
+.q-btn:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+
+/* Variants */
+.q-btn--primary { background: var(--brand); border-color: var(--brand); color: var(--on-solid); }
+.q-btn--secondary { background: var(--surface-raised); border-color: var(--line-strong); color: var(--ink); }
+.q-btn--ghost { background: transparent; color: var(--ink); }
+.q-btn--danger { background: var(--danger); border-color: var(--danger); color: var(--on-solid); }
+.q-btn--danger-outline { background: var(--surface-raised); border-color: var(--danger); color: var(--danger); }
+
+/* Hover — only where a pointer can hover, so a tapped button doesn't stay highlighted */
+@media (hover: hover) {
+  .q-btn--primary:hover { background: var(--brand-hover); border-color: var(--brand-hover); }
+  .q-btn--secondary:hover,
+  .q-btn--ghost:hover { background: var(--surface-sunken); }
+  .q-btn--danger:hover { background: var(--danger-hover); border-color: var(--danger-hover); }
+  .q-btn--danger-outline:hover { background: var(--danger-tint); }
+}
+
+/* Pressed (pointer down) */
+.q-btn--primary:active { background: var(--brand-active); border-color: var(--brand-active); }
+.q-btn--secondary:active,
+.q-btn--ghost:active { background: var(--line); }
+.q-btn--danger:active { background: var(--danger-active); border-color: var(--danger-active); }
+.q-btn--danger-outline:active { background: var(--danger-tint); border-color: var(--danger-hover); color: var(--danger-hover); }
+
+/* Selected — a toggle that is on (aria-pressed="true"). Secondary and ghost only. */
+.q-btn--secondary[aria-pressed="true"],
+.q-btn--ghost[aria-pressed="true"] { background: var(--brand-tint); border-color: var(--brand); color: var(--brand); }
+.q-btn--ghost[aria-pressed="true"] { border-color: transparent; }
+@media (hover: hover) {
+  .q-btn--secondary[aria-pressed="true"]:hover,
+  .q-btn--ghost[aria-pressed="true"]:hover { background: var(--brand-tint-hover); color: var(--brand-hover); }
+}
+
+/* Menu open (aria-expanded="true") — stays in its hover look while the menu is open */
+.q-btn--primary[aria-expanded="true"] { background: var(--brand-hover); border-color: var(--brand-hover); }
+.q-btn--secondary[aria-expanded="true"],
+.q-btn--ghost[aria-expanded="true"] { background: var(--surface-sunken); }
+.q-btn--secondary[aria-expanded="true"] { border-color: var(--ink); }
+
+/* Sizes */
+.q-btn--slim {
+  min-height: var(--control-slim);
+  min-width: var(--control-slim);
+  padding: 0 var(--control-pad-slim);
+  font-size: var(--control-text-sm);
+}
+.q-btn--slim .q-btn__icon { width: var(--icon-sm); height: var(--icon-sm); }
+.q-btn--slim .q-btn__content { gap: var(--space-1); }
+.q-btn--large {
+  min-height: var(--control-lg);
+  min-width: var(--control-lg);
+  padding: 0 var(--control-pad-lg);
+  font-size: var(--control-text-lg);
+  font-weight: 600;
+}
+.q-btn--large .q-btn__icon { width: var(--icon-md); height: var(--icon-md); }
+.q-btn--large .q-btn__content { gap: var(--space-2); }
+
+.q-btn--icon { padding: 0; width: var(--ctl-h); }
+.q-btn--icon.q-btn--slim { width: var(--control-slim); }
+.q-btn--icon.q-btn--large { width: var(--control-lg); }
+.q-btn--full { display: flex; width: 100%; padding-top: var(--space-2); padding-bottom: var(--space-2); }
+.q-btn--full .q-btn__label { white-space: normal; overflow: visible; text-align: center; line-height: 1.25; overflow-wrap: anywhere; }
+
+/* Slim is desktop-only: below 640px it takes the density size again */
+@media (max-width: 639px) {
+  .q-btn--slim { min-height: var(--ctl-h); min-width: var(--ctl-h); padding: 0 var(--ctl-pad); font-size: var(--ctl-text); }
+  .q-btn--slim .q-btn__icon { width: var(--ctl-icon); height: var(--ctl-icon); }
+  .q-btn--icon.q-btn--slim { width: var(--ctl-h); padding: 0; }
+}
+
+/* Disabled */
+.q-btn:disabled,
+.q-btn[aria-disabled="true"] {
+  background: var(--surface-sunken);
+  border-color: var(--line);
+  color: var(--ink-muted);
+  cursor: not-allowed;
+}
+.q-btn--ghost:disabled,
+.q-btn--ghost[aria-disabled="true"] { background: transparent; border-color: transparent; }
+
+/* Loading — keeps the variant's look, hides the label, shows a spinner */
+.q-btn--loading,
+.q-btn--loading:disabled { cursor: progress; }
+.q-btn--loading.q-btn--primary { background: var(--brand); border-color: var(--brand); color: var(--on-solid); }
+.q-btn--loading.q-btn--danger { background: var(--danger); border-color: var(--danger); color: var(--on-solid); }
+.q-btn--loading.q-btn--secondary { background: var(--surface-raised); border-color: var(--line-strong); color: var(--ink); }
+.q-btn--loading.q-btn--danger-outline { background: var(--surface-raised); border-color: var(--danger); color: var(--danger); }
+.q-btn--loading.q-btn--ghost { background: transparent; color: var(--ink); }
+.q-btn--loading .q-btn__content { opacity: 0; }
+.q-btn__spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--ctl-icon);
+  height: var(--ctl-icon);
+  margin: calc(var(--ctl-icon) / -2) 0 0 calc(var(--ctl-icon) / -2);
+  box-sizing: border-box;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: var(--radius-full);
+  animation: q-spin 700ms linear infinite;
+}
+.q-btn--slim .q-btn__spinner { width: var(--icon-sm); height: var(--icon-sm); margin: calc(var(--icon-sm) / -2) 0 0 calc(var(--icon-sm) / -2); }
+@keyframes q-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .q-btn__spinner { animation-duration: 2s; } .q-btn { transition: none; } }
+
+/* Forced colours (Windows high contrast): backgrounds are stripped, so states must show through borders and system colours */
+@media (forced-colors: active) {
+  .q-btn { border-color: ButtonText; }
+  .q-btn:focus-visible { outline-color: Highlight; }
+  .q-btn[aria-pressed="true"] { forced-color-adjust: none; background: Highlight; border-color: Highlight; color: HighlightText; }
+  .q-btn[aria-expanded="true"] { border-width: 2px; }
+  .q-btn:disabled,
+  .q-btn[aria-disabled="true"] { border-color: GrayText; color: GrayText; }
+  .q-btn__spinner { border-color: ButtonText; border-right-color: transparent; }
+}

@@ -1,0 +1,29 @@
+{
+  "name": "quiet-monorepo",
+  "private": true,
+  "description": "Quiet — a calm, neutral-first design system for commerce, in Vue.",
+  "type": "module",
+  "workspaces": [
+    "packages/quiet",
+    "packages/quiet-explorer",
+    "packages/quiet-test"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w quiet-explorer",
+    "build": "npm run build -w quiet && npm run build -w quiet-explorer",
+    "tokens": "npm run tokens -w quiet",
+    "typecheck": "npm run typecheck -w quiet && npm run typecheck -w quiet-explorer",
+    "test": "npm run test -w quiet-test",
+    "test:unit": "npm run test:unit -w quiet-test",
+    "test:e2e": "npm run test:e2e -w quiet-test",
+    "test:visual": "npm run test:visual -w quiet-test",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "prettier": "^3.9.10"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

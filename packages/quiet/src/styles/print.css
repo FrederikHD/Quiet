@@ -1,0 +1,19 @@
+/* ---------- Print ----------
+   A printed page is the content only: no navigation, toasts or controls that do nothing on paper,
+   cards kept whole across pages. Colours are always the light theme's (see tokens.css). */
+@media print {
+
+  body { background: #fff; }
+  .q-shell { display: block; }
+  .q-shell__side, .q-shell__topbar, .q-shell__skip, .q-toaster, .q-dialog,
+  .q-page__actions, .q-page__back, .q-factions, .q-table__toolbar, .q-table__bulk, .q-table__mobilebar, .q-table__footer,
+  .q-table__actions, .q-table__select, .q-field__help, .q-tabs__bar, .q-menu__more { display: none !important; }
+  .q-tabs__panel[hidden] { display: block !important; }
+  .q-page__inner { padding: 0; max-width: none; }
+  .q-card, .q-table__frame, .q-dl__item, .q-table__row { break-inside: avoid; }
+  .q-table__scroll { overflow: visible !important; max-height: none !important; }
+  a { color: inherit; }
+}
+
+/* Print: searching, filtering and acting on a page mean nothing on paper. */
+@media print { .q-search, .q-fchips, .q-rsum__action, .q-range__track, .q-notice__dismiss { display: none !important; } }

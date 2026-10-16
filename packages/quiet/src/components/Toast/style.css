@@ -1,0 +1,33 @@
+/* ---------- Toast ---------- */
+/* Top centre, above everything: under the phone's top bar (AppShell sets --q-sticky-top) and clear of the notch.
+   The newest toast sits nearest the edge, errors first. Inverted (ink on surface) so it reads on any page. */
+.q-toaster {
+  position: fixed; left: 50%; top: calc(var(--q-sticky-top, var(--space-4)) + env(safe-area-inset-top, 0px)); z-index: 1200;
+  transform: translateX(-50%); width: min(480px, calc(100vw - 2 * var(--space-4))); pointer-events: none;
+  display: flex; flex-direction: column-reverse; gap: var(--space-2);
+}
+.q-toaster__stack { display: flex; flex-direction: column-reverse; gap: var(--space-2); }
+.q-toaster__stack:empty { display: none; }
+.q-toast {
+  display: flex; align-items: center; gap: var(--space-2); pointer-events: auto;
+  min-height: 48px; box-sizing: border-box; padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4);
+  background: var(--ink); color: var(--surface); border-radius: var(--radius-md);
+  box-shadow: 0 4px 16px color-mix(in srgb, #000 18%, transparent);
+  font-family: var(--font-sans); font-size: var(--control-text-md); line-height: 20px;
+  animation: q-drop 160ms ease-out;
+}
+@keyframes q-drop { from { opacity: 0; transform: translateY(-8px); } }
+.q-toast > .q-icon { flex: none; }
+.q-toast--error > .q-lead { color: var(--danger-tint); }
+.q-toast--success > .q-lead { color: var(--success-tint); }
+.q-toast__msg { flex: 1 1 auto; min-width: 0; overflow-wrap: anywhere; }
+.q-toast__action, .q-toast__close {
+  flex: none; display: inline-flex; align-items: center; justify-content: center; min-height: 32px; margin: 0; border: 0; border-radius: var(--radius-sm);
+  background: transparent; color: inherit; font: inherit; font-weight: 600; cursor: pointer;
+}
+.q-toast__action { padding: 0 var(--space-2); text-decoration: underline; text-underline-offset: 3px; }
+.q-toast__close { width: 32px; padding: 0; opacity: .8; }
+@media (hover: hover) { .q-toast__action:hover, .q-toast__close:hover { background: color-mix(in srgb, var(--surface) 14%, transparent); opacity: 1; } }
+.q-toast__action:focus-visible, .q-toast__close:focus-visible { outline: 2px solid var(--surface); outline-offset: 1px; }
+@media (prefers-reduced-motion: reduce) { .q-toast { animation: none; } }
+@media (forced-colors: active) { .q-toast { border: 1px solid CanvasText; } }

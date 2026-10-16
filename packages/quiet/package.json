@@ -1,0 +1,42 @@
+{
+  "name": "quiet",
+  "version": "0.1.0",
+  "description": "Quiet design system — Vue 3 components, tokens and styles for commerce storefronts and back offices.",
+  "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "main": "./dist/quiet.js",
+  "module": "./dist/quiet.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/quiet.js"
+    },
+    "./style.css": "./dist/quiet.css",
+    "./tokens.json": "./src/tokens/tokens.json",
+    "./tokens.css": "./src/styles/tokens.css"
+  },
+  "files": [
+    "dist",
+    "src/tokens/tokens.json",
+    "src/styles/tokens.css"
+  ],
+  "scripts": {
+    "tokens": "node scripts/build-tokens.mjs",
+    "build": "npm run tokens && vite build && vue-tsc -p tsconfig.build.json",
+    "typecheck": "vue-tsc -p tsconfig.json --noEmit"
+  },
+  "peerDependencies": {
+    "vue": "^3.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "@vitejs/plugin-vue": "^6.0.10",
+    "typescript": "~5.9.3",
+    "vite": "^8.3.4",
+    "vue": "^3.5.44",
+    "vue-tsc": "^3.3.13"
+  }
+}

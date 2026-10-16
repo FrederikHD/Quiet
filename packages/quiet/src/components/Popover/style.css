@@ -1,0 +1,35 @@
+/* Popover — floats above the page; borders, not shadows, so it uses line-strong to stand apart */
+.q-popover {
+  position: fixed;
+  z-index: 1000;
+  box-sizing: border-box;
+  width: max-content;
+  max-width: min(320px, calc(100vw - 16px));
+  max-height: calc(100vh - 16px);
+  overflow: auto;
+  padding: var(--space-4);
+  background: var(--surface-raised);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--control-text-md);
+  line-height: 22px;
+}
+.q-popover:focus { outline: none; }
+.q-popover:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.q-popover--tip {
+  max-width: min(280px, calc(100vw - 16px));
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--control-text-sm);
+  line-height: 18px;
+}
+.q-popover > :first-child { margin-top: 0; }
+.q-popover > :last-child { margin-bottom: 0; }
+
+@media (forced-colors: active) {
+  .q-popover { border-color: CanvasText; }
+}
+
+/* Popover variants used by Combobox */
+.q-popover--flush { padding: 0; }

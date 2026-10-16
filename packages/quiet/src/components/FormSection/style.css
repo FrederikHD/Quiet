@@ -1,0 +1,10 @@
+/* Section */
+.q-fsection { container-type: inline-size; min-width: 0; }
+.q-fsection__inner { display: grid; gap: var(--space-4); }
+.q-fsection__head { display: grid; gap: var(--space-1); }
+.q-fsection__title { margin: 0; font-size: 17px; line-height: 24px; font-weight: 600; color: var(--ink); }
+.q-fsection__desc { margin: 0; font-size: var(--control-text-sm); line-height: 18px; color: var(--ink-muted); }
+.q-fsection__body { display: flex; flex-direction: column; gap: var(--field-gap); min-width: 0; }
+@container (min-width: 760px) {
+  .q-fsection--aside > .q-fsection__inner { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: var(--space-8); align-items: start; }
+}

@@ -1,0 +1,23 @@
+/* ---------- DescriptionList ---------- */
+/* columns: term beside value from 480px of width (stacked below); inline: term left, value right (totals); stacked: term above value. */
+.q-dl { container-type: inline-size; display: grid; gap: var(--space-3); margin: 0; font-family: var(--font-sans); font-size: var(--control-text-md); line-height: 22px; color: var(--ink); }
+.q-dl__item { display: grid; gap: 2px; min-width: 0; }
+.q-dl__term { color: var(--ink-muted); font-size: var(--control-text-sm); line-height: 18px; }
+.q-dl__desc { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+.q-dl__desc.is-numeric { font-variant-numeric: tabular-nums; }
+.q-dl__empty { color: var(--ink-muted); }
+.q-dl--inline { gap: var(--space-2); }
+.q-dl--inline .q-dl__item { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-4); }
+.q-dl--inline .q-dl__term { font-size: inherit; line-height: inherit; }
+.q-dl--inline .q-dl__desc { text-align: right; }
+.q-dl--inline .q-dl__item--emphasis { padding-top: var(--space-2); border-top: 1px solid var(--line); font-weight: 600; }
+.q-dl--inline .q-dl__item--emphasis .q-dl__term { color: var(--ink); }
+.q-dl--dividers { gap: 0; }
+.q-dl--dividers .q-dl__item { padding: var(--space-3) 0; border-top: 1px solid var(--line); }
+.q-dl--dividers .q-dl__item:first-child { border-top: 0; padding-top: 0; }
+.q-dl--dividers .q-dl__item:last-child { padding-bottom: 0; }
+.q-dl__item--emphasis .q-dl__desc { font-weight: 600; }
+@container (min-width: 480px) {
+  .q-dl--columns .q-dl__item { grid-template-columns: var(--q-dl-term, 12rem) minmax(0, 1fr); gap: var(--space-4); align-items: baseline; }
+  .q-dl--columns .q-dl__term { font-size: inherit; line-height: inherit; }
+}

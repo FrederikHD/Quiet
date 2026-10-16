@@ -1,0 +1,142 @@
+/* Quiet — generated from tokens.json by scripts/build-tokens.mjs. Do not edit. */
+:root, [data-theme="light"] {
+  --surface: #fafaf8; /* Page background in both the storefront and the back office. The default ground for everything. */
+  --surface-raised: #ffffff; /* Cards, tables, popovers, inputs, product cards — anything sitting on top of surface. Separate it with a line border, not a shadow. */
+  --surface-sunken: #f2f2ee; /* Table header rows, filter bars, product-image placeholders, disabled and read-only fields, hover fill of secondary and ghost buttons. A step darker than surface in light, a step lighter in dark. ink and ink-muted both read on it in both themes. */
+  --overlay: rgba(28, 31, 30, 0.48); /* Scrim behind dialogs, drawers and the mobile cart sheet. Darker in the dark theme so the panel still stands apart. */
+  --line: #e4e4df; /* 1px hairlines: card borders, dividers, table row rules. Decorative only — not for control borders. */
+  --line-strong: #7f8481; /* Borders of inputs, selects, checkboxes and quantity steppers at rest (3.8:1 on surface-raised, 3.4:1 on surface-sunken, 3.2:1 on brand-tint); disabled text. */
+  --ink: #1c1f1e; /* Primary text, prices and icons on surface or surface-raised (16:1). */
+  --ink-muted: #5e6461; /* Secondary text, captions, SKUs, timestamps, struck-through original prices, placeholder and helper text (5.9:1). */
+  --on-solid: #ffffff; /* Text and icons on solid fills: brand, brand-hover, brand-active, danger, danger-hover, danger-active, sale. White in light; near-black in dark, where those fills are light. 4.5:1 or more on every fill in both themes. */
+  --brand: #2f5d50; /* The one accent: primary buttons (Add to cart, Checkout, Save), links, focus rings, selected states. White text on it passes 7.5:1. At most one brand button per view. */
+  --brand-hover: #244a3f; /* Hover and pressed fill of brand buttons. on-solid on it 9.9:1. */
+  --brand-active: #1c3b32; /* Pressed fill of brand buttons (while the pointer is down). on-solid on it 12.2:1. */
+  --brand-tint: #e6efeb; /* Quiet emphasis: selected table rows, active nav item, applied filter chips. Text on it is ink or brand (6.4:1). */
+  --brand-tint-hover: #d5e4dd; /* Hover on selected (toggled-on) buttons and selected chips. brand text on it 5.7:1. */
+  --success: #1e6b3a; /* Text and icon of positive states: Paid, Fulfilled, Delivered, In stock. Always on success-tint, always with a label — it sits close to brand in hue. */
+  --success-tint: #e5f3e9; /* Background of success badges and banners (success text on it 5.7:1). */
+  --warning: #8a5300; /* Text and icon of states needing attention: Pending, Unfulfilled, Low stock, Partially refunded. */
+  --warning-tint: #fbf0dc; /* Background of warning badges and banners (warning text on it 5.6:1). */
+  --info: #2b5a8c; /* Text and icon of in-progress or neutral-system states: Processing, Shipped, In transit, Pre-order. */
+  --info-tint: #e6eef7; /* Background of info badges and banners (info text on it 6.1:1). */
+  --danger: #b3382c; /* Errors, destructive actions and failed states: Payment failed, Cancelled, Out of stock. Never decoration. White text on it passes 5.6:1. */
+  --danger-hover: #962d23; /* Hover and pressed fill of danger buttons. on-solid on it 7.8:1. */
+  --danger-active: #7c251d; /* Pressed fill of danger buttons. on-solid on it 9.8:1. */
+  --danger-tint: #f9e7e5; /* Background of danger badges, inline field errors and error banners (danger text on it 5.0:1). */
+  --sale: #b42318; /* Storefront only: reduced prices and the Sale / −20% badge (6.6:1 on white; white on it 6.6:1). Never for errors, never in the back office. */
+  --rating: #a86a14; /* Filled review stars and rating icons (3:1+ as an icon). Not for text — print the rating number in ink. */
+}
+[data-theme="dark"] {
+  --surface: #151716;
+  --surface-raised: #1d201e;
+  --surface-sunken: #272b29;
+  --overlay: rgba(0, 0, 0, 0.6);
+  --line: #2f3331;
+  --line-strong: #7a807c;
+  --ink: #ecede9;
+  --ink-muted: #a4aaa6;
+  --on-solid: #0e1714;
+  --brand: #7cb8a3;
+  --brand-hover: #95c8b6;
+  --brand-active: #aed6c8;
+  --brand-tint: #1c352d;
+  --brand-tint-hover: #234238;
+  --success: #7cc995;
+  --success-tint: #16301f;
+  --warning: #e3b25e;
+  --warning-tint: #352812;
+  --info: #8db6e6;
+  --info-tint: #192a3d;
+  --danger: #f08e82;
+  --danger-hover: #f4a69c;
+  --danger-active: #f7bdb5;
+  --danger-tint: #3a1d1a;
+  --sale: #ff8e7e;
+  --rating: #e0a83c;
+}
+:root {
+  --space-1: 4px; /* Icon-to-label gaps, badge padding, tight inline spacing. */
+  --space-2: 8px; /* Gaps inside controls; between label and input; table cell vertical padding. */
+  --space-3: 12px; /* Table cell horizontal padding; gaps in back-office toolbars and filter bars. */
+  --space-4: 16px; /* Card padding, gaps between form fields, product-grid gap on mobile, mobile page gutter. */
+  --space-6: 24px; /* Back-office panel padding; product-grid gap on desktop. */
+  --space-8: 32px; /* Between sections in the back office; desktop page gutter. */
+  --space-16: 64px; /* Between storefront sections (hero, collections, featured products). */
+  --radius-sm: 4px; /* Checkboxes, tags, table thumbnails. */
+  --radius-md: 8px; /* Buttons, inputs, menus, product images. */
+  --radius-lg: 16px; /* Cards, dialogs, cart drawer, sheets. */
+  --radius-full: 9999px; /* Status badges, filter chips, cart-count bubble, color swatches. */
+  --control-slim: 28px; /* Slim control height: actions inside table cells, filter bars, beside headings, dense side panels. Back office, desktop only — grows to the density size below 640px. Pairs with control-pad-slim, control-text-sm, icon-sm. */
+  --control-sm: 32px; /* Compact control height: back-office toolbars, table actions, inline selects. Pairs with control-pad-sm, control-text-sm, icon-sm. */
+  --control-md: 40px; /* Comfortable control height: forms in both surfaces, storefront filters. Pairs with control-pad-md, control-text-md, icon-md. */
+  --control-lg: 48px; /* Storefront primary actions (Add to cart, Checkout) and every mobile touch target, in any density. Pairs with control-pad-lg, control-text-lg, icon-md. */
+  --control-pad-slim: 8px; /* Horizontal padding of slim buttons. */
+  --control-pad-sm: 12px; /* Horizontal padding of compact buttons, inputs and selects. */
+  --control-pad-md: 16px; /* Horizontal padding of comfortable buttons, inputs and selects. */
+  --control-pad-lg: 24px; /* Horizontal padding of large storefront buttons. */
+  --control-text-sm: 13px; /* Text inside compact controls, weight 500 for buttons, 400 for input values. */
+  --control-text-md: 15px; /* Text inside comfortable controls (matches body). */
+  --control-text-lg: 16px; /* Text inside large storefront buttons, weight 600. 16px also stops iOS zooming into inputs. */
+  --icon-sm: 16px; /* Icons in compact controls, table cells and badges. */
+  --icon-md: 20px; /* Default icon size: comfortable and large controls, navigation. */
+  --icon-lg: 24px; /* Storefront header icons (cart, account, search) and empty states. */
+  --row-dense: 40px; /* Compact table row height (orders, products, customers). */
+  --row-comfortable: 56px; /* Comfortable table row height, and any row carrying a product thumbnail in either density. */
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --text-hero: 600 48px/52px var(--font-sans);
+  --text-display: 600 32px/40px var(--font-sans);
+  --text-title: 600 22px/28px var(--font-sans);
+  --text-heading: 600 17px/24px var(--font-sans);
+  --text-body: 400 15px/22px var(--font-sans);
+  --text-small: 400 13px/18px var(--font-sans);
+  --text-label: 500 13px/16px var(--font-sans);
+  --text-caption: 400 12px/16px var(--font-sans);
+  --text-price-lg: 600 28px/32px var(--font-sans);
+  --text-price: 600 17px/24px var(--font-sans);
+  --text-table-text: 400 13px/20px var(--font-sans);
+  --text-metric: 600 28px/32px var(--font-sans);
+}
+.q-text-hero { font-family: var(--font-sans); font-size: 48px; line-height: 52px; font-weight: 600; }
+.q-text-display { font-family: var(--font-sans); font-size: 32px; line-height: 40px; font-weight: 600; }
+.q-text-title { font-family: var(--font-sans); font-size: 22px; line-height: 28px; font-weight: 600; }
+.q-text-heading { font-family: var(--font-sans); font-size: 17px; line-height: 24px; font-weight: 600; }
+.q-text-body { font-family: var(--font-sans); font-size: 15px; line-height: 22px; font-weight: 400; }
+.q-text-small { font-family: var(--font-sans); font-size: 13px; line-height: 18px; font-weight: 400; }
+.q-text-label { font-family: var(--font-sans); font-size: 13px; line-height: 16px; font-weight: 500; }
+.q-text-caption { font-family: var(--font-sans); font-size: 12px; line-height: 16px; font-weight: 400; }
+.q-text-price-lg { font-family: var(--font-sans); font-size: 28px; line-height: 32px; font-weight: 600; }
+.q-text-price { font-family: var(--font-sans); font-size: 17px; line-height: 24px; font-weight: 600; }
+.q-text-table-text { font-family: var(--font-sans); font-size: 13px; line-height: 20px; font-weight: 400; }
+.q-text-metric { font-family: var(--font-sans); font-size: 28px; line-height: 32px; font-weight: 600; }
+@media print {
+  :root, [data-theme] {
+    --surface: #fafaf8 !important;
+    --surface-raised: #ffffff !important;
+    --surface-sunken: #f2f2ee !important;
+    --overlay: rgba(28, 31, 30, 0.48) !important;
+    --line: #e4e4df !important;
+    --line-strong: #7f8481 !important;
+    --ink: #1c1f1e !important;
+    --ink-muted: #5e6461 !important;
+    --on-solid: #ffffff !important;
+    --brand: #2f5d50 !important;
+    --brand-hover: #244a3f !important;
+    --brand-active: #1c3b32 !important;
+    --brand-tint: #e6efeb !important;
+    --brand-tint-hover: #d5e4dd !important;
+    --success: #1e6b3a !important;
+    --success-tint: #e5f3e9 !important;
+    --warning: #8a5300 !important;
+    --warning-tint: #fbf0dc !important;
+    --info: #2b5a8c !important;
+    --info-tint: #e6eef7 !important;
+    --danger: #b3382c !important;
+    --danger-hover: #962d23 !important;
+    --danger-active: #7c251d !important;
+    --danger-tint: #f9e7e5 !important;
+    --sale: #b42318 !important;
+    --rating: #a86a14 !important;
+    color-scheme: light;
+  }
+}

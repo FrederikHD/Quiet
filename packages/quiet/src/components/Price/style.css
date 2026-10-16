@@ -1,0 +1,15 @@
+/* ---------- Price ----------
+   `price` 17/24 by default, `price-lg` 28/32 on the product page, body 15 in cards. On sale: the new price in `sale`,
+   the original after it in `small` `ink-muted`, struck through. Prices are never `brand`. */
+.q-price { display: inline-flex; flex-direction: column; gap: 2px; min-width: 0; font-family: var(--font-sans); color: var(--ink); font-variant-numeric: tabular-nums; }
+.q-price__row { display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 2px var(--space-2); }
+.q-price__now { font-size: 17px; line-height: 24px; font-weight: 600; white-space: nowrap; }
+.q-price--large .q-price__now { font-size: 28px; line-height: 32px; }
+.q-price--small .q-price__now { font-size: 15px; line-height: 22px; }
+.q-price.is-sale .q-price__now { color: var(--sale); }
+.q-price__from { font-size: 13px; line-height: 18px; color: var(--ink-muted); }
+.q-price__was { font-size: 13px; line-height: 18px; color: var(--ink-muted); white-space: nowrap; text-decoration-thickness: 1px; }
+.q-price--large .q-price__was { font-size: 15px; line-height: 22px; }
+.q-price__saving { align-self: center; }
+.q-price__unit, .q-price__note { font-size: 13px; line-height: 18px; color: var(--ink-muted); font-variant-numeric: normal; }
+.q-price__note a { color: inherit; text-underline-offset: 2px; }

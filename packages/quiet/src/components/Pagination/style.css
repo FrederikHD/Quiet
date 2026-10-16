@@ -1,0 +1,46 @@
+/* ---------- Pagination ---------- */
+/* One line at every width: it measures itself (container) and drops the extras as space runs out —
+   the "Rows per page" and "Page" words first, then first/last, and numbered pages fall back to "4 / 25". */
+.q-pager { container-type: inline-size; width: 100%; min-width: 0; font-family: var(--font-sans); font-size: var(--control-text-sm); line-height: 18px; color: var(--ink-muted); }
+.q-pager__row { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: var(--space-2) var(--space-4); min-width: 0; }
+.q-pager__row--start { justify-content: flex-start; }
+.q-pager__row--center { justify-content: center; }
+.q-pager__row--between { justify-content: space-between; }
+.q-pager__info { display: flex; align-items: center; gap: var(--space-4); min-width: 0; }
+.q-pager__size, .q-pager__jump { display: inline-flex; align-items: center; gap: var(--space-2); white-space: nowrap; }
+.q-pager__size .q-select { width: 96px; }
+.q-pager__range { font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; }
+.q-pager__controls { display: flex; align-items: center; gap: var(--space-1); flex: none; }
+.q-pager__pages { display: inline-flex; align-items: center; gap: var(--space-1); }
+.q-pager__page { font-variant-numeric: tabular-nums; }
+.q-pager__page.q-btn { padding: 0 var(--space-2); }
+.q-pager__page.is-current { background: var(--brand-tint); color: var(--brand); font-weight: 600; cursor: default; }
+.q-pager__gap { display: inline-flex; justify-content: center; min-width: 20px; color: var(--ink-muted); }
+.q-pager__compact { display: inline-flex; align-items: center; padding: 0 var(--space-2); color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.q-pager__compact--fallback { display: none; }
+.q-pager__jump-input.q-input { width: 4.5em; padding: 0 var(--space-2); }
+.q-pager.is-disabled .q-pager__range, .q-pager.is-disabled .q-pager__compact { color: var(--ink-muted); }
+@media (forced-colors: active) { .q-pager__page.is-current { border-color: Highlight; } }
+@container (max-width: 559px) {
+  .q-pager--pages .q-pager__pages { display: none; }
+  .q-pager--pages .q-pager__compact--fallback { display: inline-flex; }
+}
+@container (max-width: 459px) {
+  .q-pager__row { flex-wrap: nowrap; column-gap: var(--space-2); }
+  .q-pager__info { flex: 0 1 auto; gap: var(--space-2); }
+  .q-pager__range { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+  .q-pager__compact { padding: 0 var(--space-1); }
+  /* a narrower rows-per-page select: tighter padding, still room for "100" */
+  .q-pager__size .q-select { width: 72px; padding: 0 var(--space-2); --q-select-pad-l: var(--space-2); --q-select-pad-r: calc(var(--space-2) + var(--ctl-icon) + var(--space-1)); }
+  .q-pager__size-label, .q-pager__jump-label { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+}
+@container (max-width: 399px) {
+  .q-pager__first, .q-pager__last { display: none; }
+  /* With a jump field the page is already shown; the range would only be cut off */
+  .q-pager--jump .q-pager__range { display: none; }
+}
+@container (max-width: 279px) {
+  /* The smallest phones: the range matters more than choosing the page size */
+  .q-pager__size { display: none; }
+  .q-pager--pages .q-pager__range { display: none; }
+}

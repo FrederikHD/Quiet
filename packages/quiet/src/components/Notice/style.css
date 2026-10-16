@@ -1,0 +1,18 @@
+/* ---------- Notice ----------
+   A tint box: info-tint / success-tint / warning-tint / danger-tint, the icon in the tone's strong colour,
+   the title in label weight, text and links in ink. radius-md, panel padding. */
+.q-notice { display: flex; align-items: flex-start; gap: var(--space-3); min-width: 0; padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); font-family: var(--font-sans); font-size: var(--control-text-sm); line-height: 20px; color: var(--ink); }
+.q-notice--info { background: var(--info-tint); --q-tone: var(--info); }
+.q-notice--success { background: var(--success-tint); --q-tone: var(--success); }
+.q-notice--warning { background: var(--warning-tint); --q-tone: var(--warning); }
+.q-notice--danger { background: var(--danger-tint); --q-tone: var(--danger); }
+.q-notice__icon { display: inline-flex; flex: none; height: 20px; align-items: center; color: var(--q-tone); }
+.q-notice__icon .q-icon { width: var(--icon-md) !important; height: var(--icon-md) !important; }
+.q-notice__body { display: grid; gap: var(--space-1); flex: 1 1 auto; min-width: 0; overflow-wrap: anywhere; }
+.q-notice__title { margin: 0; font-weight: 600; }
+.q-notice__text p { margin: 0; }
+.q-notice__text a, .q-notice__title a { color: inherit; text-underline-offset: 2px; }
+.q-notice__text a:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: 2px; }
+.q-notice__actions { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-2); }
+.q-notice__dismiss { flex: none; margin: -4px -8px -4px 0; }
+@media (forced-colors: active) { .q-notice { border: 1px solid CanvasText; } }

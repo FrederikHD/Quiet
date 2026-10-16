@@ -1,0 +1,202 @@
+/* ---------- Checkbox and Radio ----------
+   Native inputs with appearance:none, so label clicks, Space, arrow keys, form posts and validation stay native.
+   A row is one line of label text (--q-choice-lh) padded up to the control height, so a list of options keeps the
+   rhythm of the form and the first option lines up with a label beside the group. */
+.q-choice {
+  --q-box: 18px;
+  --q-choice-lh: 24px;
+  --q-choice-pad: calc((var(--ctl-h) - var(--q-choice-lh)) / 2);
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  box-sizing: border-box;
+  min-width: 0;
+  min-height: var(--ctl-h);
+  padding: var(--q-choice-pad) 0;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--ctl-text);
+  line-height: var(--q-choice-lh);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+[data-density="compact"] .q-choice, .q-choice[data-density="compact"] { --q-box: 16px; --q-choice-lh: 20px; gap: var(--space-2); }
+.q-choice__control { position: relative; display: inline-flex; align-items: center; justify-content: center; flex: none; height: var(--q-choice-lh); }
+.q-choice__input {
+  appearance: none; -webkit-appearance: none;
+  display: block;
+  box-sizing: border-box;
+  width: var(--q-box); height: var(--q-box);
+  margin: 0;
+  background: var(--surface-raised);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  cursor: inherit;
+  transition: background-color 120ms ease, border-color 120ms ease, box-shadow 120ms ease;
+}
+.q-choice--radio .q-choice__input { border-radius: var(--radius-full); }
+.q-choice__mark {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--on-solid);
+  pointer-events: none;
+}
+.q-choice__mark .q-icon { display: none; width: calc(var(--q-box) - 4px) !important; height: calc(var(--q-box) - 4px) !important; stroke-width: 2.5; }
+.q-choice__input:checked:not([type="checkbox"]:indeterminate) + .q-choice__mark .q-choice__tick,
+.q-choice__input[type="checkbox"]:indeterminate + .q-choice__mark .q-choice__dash { display: block; }
+
+/* On */
+.q-choice__input:checked,
+.q-choice__input[type="checkbox"]:indeterminate { background: var(--brand); border-color: var(--brand); }
+.q-choice--radio .q-choice__input:checked { box-shadow: inset 0 0 0 calc(var(--q-box) * 0.22) var(--surface-raised); }
+
+/* Hover: the whole row is the target */
+@media (hover: hover) {
+  .q-choice:not(.is-disabled):hover .q-choice__input:not(:checked):not([type="checkbox"]:indeterminate) { border-color: var(--ink-muted); }
+  .q-choice:not(.is-disabled):hover .q-choice__input:checked,
+  .q-choice:not(.is-disabled):hover .q-choice__input[type="checkbox"]:indeterminate { background: var(--brand-hover); border-color: var(--brand-hover); }
+}
+.q-choice__input:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+
+/* Error: the box border turns danger until it's ticked; the message under the group says why */
+.q-choice.is-invalid:not(.q-choice--card) .q-choice__input:not(:checked):not([type="checkbox"]:indeterminate) { border-color: var(--danger); box-shadow: inset 0 0 0 1px var(--danger); }
+.q-choice.is-invalid .q-choice__input:focus-visible { outline-color: var(--danger); }
+
+/* Disabled */
+.q-choice.is-disabled { cursor: not-allowed; color: var(--ink-muted); }
+.q-choice.is-disabled .q-choice__input { background: var(--surface-sunken); border-color: var(--line); }
+.q-choice.is-disabled .q-choice__input:checked,
+.q-choice.is-disabled .q-choice__input[type="checkbox"]:indeterminate { background: var(--line-strong); border-color: var(--line-strong); }
+.q-choice--radio.is-disabled .q-choice__input:checked { box-shadow: inset 0 0 0 calc(var(--q-box) * 0.22) var(--surface-sunken); }
+
+/* Text */
+.q-choice__text { display: flex; flex-direction: column; flex: 1 1 auto; min-width: 0; overflow-wrap: break-word; }
+.q-choice__label { color: inherit; }
+.q-choice__desc { font-size: var(--control-text-sm); line-height: 18px; color: var(--ink-muted); }
+.q-choice__meta { flex: none; margin-left: auto; padding-left: var(--space-2); color: var(--ink); font-weight: 500; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.q-choice.is-disabled .q-choice__meta { color: var(--ink-muted); }
+.q-choice--label-hidden { display: inline-flex; gap: 0; vertical-align: middle; }
+/* The box alone is small: widen the hit area to 24px+ without moving it */
+.q-choice--label-hidden::after { content: ""; position: absolute; inset: calc((var(--q-choice-lh) - 24px) / 2) -4px; }
+/* …while the box itself stays on top, so it is still the element under the pointer */
+.q-choice--label-hidden .q-choice__input { position: relative; z-index: 1; }
+.q-choice--label-hidden .q-choice__mark { z-index: 2; }
+
+/* Card: a bordered tile — shipping and payment methods, plans. The chosen card takes the brand border and tint. */
+.q-choice--card {
+  --q-choice-pad: var(--space-3);
+  min-height: 0;
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface-raised);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  transition: border-color 120ms ease, background-color 120ms ease, box-shadow 120ms ease;
+}
+@media (hover: hover) { .q-choice--card:not(.is-disabled):hover { border-color: var(--ink-muted); } }
+.q-choice--card:has(.q-choice__input:checked) { border-color: var(--brand); box-shadow: inset 0 0 0 1px var(--brand); background: var(--brand-tint); }
+.q-choice--radio.q-choice--card .q-choice__input:checked { box-shadow: inset 0 0 0 calc(var(--q-box) * 0.22) var(--brand-tint); }
+.q-choice--card:has(.q-choice__input:focus-visible) { outline: 2px solid var(--brand); outline-offset: 2px; }
+.q-choice--card .q-choice__input:focus-visible { outline: none; }
+.q-choice--card.is-invalid:not(:has(.q-choice__input:checked)) { border-color: var(--danger); }
+.q-choice--card.is-invalid:has(.q-choice__input:focus-visible) { outline-color: var(--danger); }
+.q-choice--card.is-disabled { background: var(--surface-sunken); border-color: var(--line); }
+/* Browsers without :has() keep the ring on the box itself */
+@supports not selector(:has(*)) { .q-choice--card .q-choice__input:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; } }
+
+/* Group layouts */
+.q-choicegroup__options { display: flex; flex-direction: column; min-width: 0; }
+.q-choicegroup__options--inline { flex-flow: row wrap; column-gap: var(--space-6); }
+/* Cards: one per row by default (shipping, payment); columns={n} puts n per row while each stays at least 180px wide */
+.q-choicegroup__options--cards {
+  --q-cols: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(max(min(180px, 100%), calc((100% - (var(--q-cols) - 1) * var(--space-2)) / var(--q-cols))), 1fr));
+  gap: var(--space-2);
+}
+/* List labels sit closer to their options: the rows already carry their own padding */
+.q-choicegroup--list > .q-field__layout,
+.q-choicegroup--inline > .q-field__layout { row-gap: 0; }
+/* The first line of a card's text sits at its top padding + border + half a line */
+.q-choicegroup { --q-choice-first: var(--ctl-h); }
+.q-choicegroup--cards { --q-choice-first: calc(2 * (var(--space-3) + 1px) + 24px); }
+[data-density="compact"] .q-choicegroup--cards, .q-choicegroup--cards[data-density="compact"] { --q-choice-first: calc(2 * (var(--space-3) + 1px) + 20px); }
+/* Label beside: centred on the first option, not on the 16px group-label line other groups use */
+@container (min-width: 400px) {
+  .q-choicegroup.q-field--side > .q-field__layout > .q-field__labelcol { min-height: var(--q-choice-first); }
+}
+@container (min-width: 520px) {
+  .q-choicegroup.q-field--auto > .q-field__layout > .q-field__labelcol { min-height: var(--q-choice-first); }
+}
+
+@media (forced-colors: active) {
+  /* System colours can't show a filled box: hand the drawing back to the browser */
+  .q-choice__input { appearance: auto; -webkit-appearance: auto; box-shadow: none !important; }
+  .q-choice__mark { display: none; }
+  .q-choice--card { border-color: CanvasText; }
+  .q-choice--card:has(.q-choice__input:checked) { border: 2px solid Highlight; }
+}
+@media (prefers-reduced-motion: reduce) { .q-choice__input, .q-choice--card { transition: none; } }
+
+/* ---------- Swatches and size buttons (RadioGroup layouts) ---------- */
+.q-choicegroup__chosen { margin-left: var(--space-2); color: var(--ink-muted); font-weight: 400; }
+.q-choicegroup__options--swatches, .q-choicegroup__options--buttons { display: flex; flex-flow: row wrap; }
+/* The dots' tap areas touch; the row is pulled out so the first dot lines up with the label. */
+.q-choicegroup__options--swatches { --q-tile-hit: var(--ctl-h); gap: 0; margin: -4px calc((var(--q-tile-hit) - 28px) / -2); }
+.q-choicegroup__options--buttons { gap: var(--space-2); }
+.q-tile { position: relative; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; -webkit-tap-highlight-color: transparent; font-family: var(--font-sans); }
+/* The radio is still there for the keyboard, forms and screen readers; the face beside it is what shows. */
+.q-tile__input { position: absolute; top: 50%; left: 50%; width: 1px; height: 1px; margin: 0; opacity: 0; pointer-events: none; outline: none; }
+.q-tile__face { box-sizing: border-box; }
+
+/* Colour dot: 28px, in a 40px tap area (48px on phones); chosen = a brand ring with a gap. */
+.q-tile--swatch { width: var(--q-tile-hit, var(--ctl-h)); height: var(--q-tile-hit, var(--ctl-h)); }
+.q-tile--swatch .q-tile__face {
+  position: relative; width: 28px; height: 28px; border-radius: var(--radius-full);
+  background: var(--q-swatch) center / cover no-repeat;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 20%, transparent);
+  forced-color-adjust: none;
+}
+@media (hover: hover) { .q-tile--swatch:not(.is-disabled):hover .q-tile__face { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 20%, transparent), 0 0 0 2px var(--q-tile-gap, var(--surface)), 0 0 0 3px var(--ink-muted); } }
+.q-tile--swatch .q-tile__input:checked + .q-tile__face { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 20%, transparent), 0 0 0 2px var(--q-tile-gap, var(--surface)), 0 0 0 4px var(--brand); }
+.q-tile--swatch .q-tile__input:focus-visible + .q-tile__face { outline: 2px solid var(--brand); outline-offset: 6px; }
+.q-tile--swatch.is-soldout .q-tile__face::after {
+  content: ""; position: absolute; left: 50%; top: -3px; bottom: -3px; width: 2px; margin-left: -1px; border-radius: 1px;
+  background: var(--ink); box-shadow: 0 0 0 1px var(--q-tile-gap, var(--surface)); transform: rotate(45deg);
+}
+.q-tile--swatch.is-soldout .q-tile__face { opacity: .55; }
+.q-tile--swatch.is-soldout .q-tile__input:checked + .q-tile__face { opacity: 1; }
+
+/* Size tile: a box with the size in it; chosen = brand border and brand-tint, like a chosen card. */
+.q-tile--button .q-tile__face {
+  display: inline-flex; align-items: center; justify-content: center; min-width: var(--ctl-h); height: var(--ctl-h); padding: 0 var(--space-3);
+  border: 1px solid var(--line-strong); border-radius: var(--radius-md); background: var(--surface-raised);
+  color: var(--ink); font-size: var(--ctl-text); line-height: 1.35; font-weight: 500; white-space: nowrap; font-variant-numeric: tabular-nums;
+  transition: border-color 120ms ease, background-color 120ms ease;
+}
+@media (hover: hover) { .q-tile--button:not(.is-disabled):hover .q-tile__face { border-color: var(--ink-muted); } }
+.q-tile--button .q-tile__input:checked + .q-tile__face { border-color: var(--brand); box-shadow: inset 0 0 0 1px var(--brand); background-color: var(--brand-tint); }
+.q-tile--button .q-tile__input:focus-visible + .q-tile__face { outline: 2px solid var(--brand); outline-offset: 2px; }
+.q-tile--button.is-soldout .q-tile__face {
+  color: var(--ink-muted);
+  background-image: linear-gradient(to top right, transparent calc(50% - 0.5px), var(--line-strong) calc(50% - 0.5px), var(--line-strong) calc(50% + 0.5px), transparent calc(50% + 0.5px));
+}
+.q-tile.is-invalid .q-tile__input:not(:checked) + .q-tile__face { border-color: var(--danger); }
+.q-tile--swatch.is-invalid .q-tile__input:not(:checked) + .q-tile__face { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 20%, transparent), 0 0 0 2px var(--q-tile-gap, var(--surface)), 0 0 0 3px var(--danger); }
+.q-tile.is-invalid .q-tile__input:focus-visible + .q-tile__face { outline-color: var(--danger); }
+.q-tile.is-disabled { cursor: not-allowed; }
+.q-tile--button.is-disabled .q-tile__face { background-color: var(--surface-sunken); border-color: var(--line); color: var(--ink-muted); }
+.q-tile--swatch.is-disabled .q-tile__face { opacity: .35; }
+@media (max-width: 639px) {
+  .q-choicegroup__options--swatches { --q-tile-hit: var(--control-lg); }
+  .q-tile--button .q-tile__face { min-width: var(--control-lg); height: var(--control-lg); font-size: var(--control-text-lg); }
+}
+@media (forced-colors: active) {
+  .q-tile--button .q-tile__input:checked + .q-tile__face { border: 2px solid Highlight; }
+  .q-tile--swatch .q-tile__input:checked + .q-tile__face { outline: 2px solid Highlight; outline-offset: 2px; }
+  .q-tile--button.is-soldout .q-tile__face { background-image: none; text-decoration: line-through; }
+}
+
+/* ---------- Radio card media (payment icons) ---------- */
+.q-choice__media { display: inline-flex; align-items: center; justify-content: center; flex: none; min-width: 32px; height: 24px; margin-right: calc(var(--space-1) * -1); color: var(--ink); }
+.q-choice__media .q-icon { width: var(--icon-md) !important; height: var(--icon-md) !important; }

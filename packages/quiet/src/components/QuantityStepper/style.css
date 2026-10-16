@@ -1,0 +1,17 @@
+/* ---------- QuantityStepper ---------- */
+.q-stepper { display: inline-flex; width: auto; max-width: 100%; align-self: flex-start; vertical-align: middle; padding: 0; gap: 0; cursor: default; }
+.q-stepper__btn {
+  display: inline-flex; align-items: center; justify-content: center; flex: none; align-self: stretch;
+  width: calc(var(--ctl-h) - 2px); margin: 0; padding: 0; border: 0; background: transparent; color: var(--ink); cursor: pointer; border-radius: calc(var(--radius-md) - 1px);
+  -webkit-tap-highlight-color: transparent;
+}
+.q-stepper__btn .q-icon { width: var(--ctl-icon) !important; height: var(--ctl-icon) !important; }
+@media (hover: hover) { .q-stepper__btn:not(:disabled):hover { background: var(--surface-sunken); } }
+.q-stepper__btn:disabled { color: var(--line-strong); cursor: not-allowed; }
+.q-stepper__field.q-input__field { flex: none; width: 4ch; min-width: 0; padding: 0 2px; text-align: center; font-variant-numeric: tabular-nums; cursor: text; }
+.q-stepper.q-input--large .q-stepper__btn { width: calc(var(--control-lg) - 2px); }
+@media (max-width: 639px) {
+  .q-stepper { height: var(--control-lg); }
+  .q-stepper__btn { width: calc(var(--control-lg) - 2px); }
+}
+@media (forced-colors: active) { .q-stepper__btn:disabled { color: GrayText; } }
