@@ -1,15 +1,16 @@
-export * from './components/Icon';
-export * from './components/Button';
-export * from './components/Input';
-export * from './components/Select';
-export * from './components/Popover';
-export * from './components/Dialog';
-export * from './components/Field';
-export * from './components/FieldGroup';
-export * from './components/Checkbox';
-export * from './components/Radio';
-export * from './components/CheckboxGroup';
-export * from './components/RadioGroup';
-export * from './components/Form';
-export * from './components/FormSection';
-export * from './components/FormActions';
+// Quiet — Vue 3 components for commerce storefronts and back offices.
+//
+//   import { createApp } from 'vue';
+//   import { Quiet } from 'quiet';
+//   import 'quiet/style.css';
+//   createApp(App).use(Quiet, { locale: 'de-DE' }).mount('#app');
+//
+// Or import components one by one: import { QButton, QField, QInput } from 'quiet';
+
+import './styles/index.css';
+
+export { configure, useConfig, money, fmt, currencySymbol, type ConfigureOptions, type QuietConfig } from './config';
+export { useStickyPad } from './composables/useStickyPad';
+export { Quiet, type QuietPluginOptions } from './plugin';
+
+export * from './components';

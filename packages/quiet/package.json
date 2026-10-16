@@ -1,7 +1,7 @@
 {
   "name": "quiet",
   "version": "0.1.0",
-  "description": "Quiet design system — Vue 3 components, tokens and styles for commerce storefronts and back offices.",
+  "description": "Quiet design system \u2014 Vue 3 components, tokens and styles for commerce storefronts and back offices.",
   "type": "module",
   "sideEffects": [
     "**/*.css"
@@ -16,12 +16,16 @@
     },
     "./style.css": "./dist/quiet.css",
     "./tokens.json": "./src/tokens/tokens.json",
-    "./tokens.css": "./src/styles/tokens.css"
+    "./tokens.css": "./src/styles/tokens.css",
+    "./global": {
+      "types": "./src/global-components.d.ts"
+    }
   },
   "files": [
     "dist",
     "src/tokens/tokens.json",
-    "src/styles/tokens.css"
+    "src/styles/tokens.css",
+    "src/global-components.d.ts"
   ],
   "scripts": {
     "tokens": "node scripts/build-tokens.mjs",
