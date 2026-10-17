@@ -11,9 +11,9 @@ test.describe('Button playground', () => {
     const button = preview.getByRole('button', { name: 'Place order' });
     await expect(button).toBeVisible();
 
-    await controls.getByLabel('disabled', { exact: true }).check();
+    await controls.getByRole('checkbox', { name: /^disabled/ }).check();
     await expect(button).toBeDisabled();
-    await controls.getByLabel('disabled', { exact: true }).uncheck();
+    await controls.getByRole('checkbox', { name: /^disabled/ }).uncheck();
     await expect(button).toBeEnabled();
 
     await controls.getByLabel('variant', { exact: true }).selectOption('danger');

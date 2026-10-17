@@ -5,9 +5,10 @@ import { computed } from 'vue';
 
 const props = defineProps<{ source: string }>();
 const md = new MarkdownIt({ html: false, linkify: true, typographer: false });
-// Code blocks scroll sideways, so keyboard users need to be able to focus them.
+// Code blocks and wide tables scroll sideways, so keyboard users need to be able to focus them.
 const fence = md.renderer.rules.fence!;
 md.renderer.rules.fence = (...args) => fence(...args).replace('<pre>', '<pre tabindex="0">');
+md.renderer.rules.table_open = () => '<table tabindex="0">\n';
 const html = computed(() => md.render(props.source));
 </script>
 

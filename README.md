@@ -31,7 +31,7 @@ Edit a component in `packages/quiet/src/components/<Name>/` and the explorer upd
 | `npm run tokens` | Regenerates `tokens.css` from `tokens.json`. |
 | `npm run test:unit` | Component and library tests in jsdom (fast; run them while you work). |
 | `npm run test:e2e` | Builds the explorer and runs every Playwright spec against it. |
-| `npm run test:visual` | Screenshot comparison of every example, light and dark. `npm run test:visual:update -w quiet-test` accepts the new look. |
+| `npm run test:visual` | Screenshot comparison of every example, light and dark, against the baselines in `packages/quiet-test/e2e/__screenshots__/<platform>/`. After a deliberate change, `npm run test:visual:update -w quiet-test` accepts the new look; review the changed images in the diff. |
 | `npm test` | Unit, then end-to-end tests. |
 
 Playwright needs a Chromium: run `npx playwright install chromium` once, or point `PW_CHROMIUM_PATH` at one you have.
@@ -77,5 +77,6 @@ props, slots instead of render props, and class names shared with the original d
 
 ## Deploying the explorer
 
-`.github/workflows/pages.yml` builds the explorer and publishes it to GitHub Pages on every push to `main`.
+`.github/workflows/pages.yml` builds the explorer and publishes it to GitHub Pages on every push to `main` and to the
+working branch listed in that file, or by hand from the Actions tab.
 In the repository settings, Pages → Source must be "GitHub Actions".

@@ -36,7 +36,7 @@ test.describe('phone navigation', () => {
 
   test('the menu opens a drawer, moves focus into it and closes after navigating', async ({ page }) => {
     await page.goto('/components/button');
-    const menu = page.getByRole('button', { name: 'Menu' });
+    const menu = page.getByRole('button', { name: 'Menu', exact: true });
     await menu.click();
     await expect(menu).toHaveAttribute('aria-expanded', 'true');
     await expect(page.getByRole('link', { name: 'Brand book' })).toBeFocused();
@@ -47,7 +47,7 @@ test.describe('phone navigation', () => {
 
   test('Escape closes the drawer and returns focus to the menu button', async ({ page }) => {
     await page.goto('/');
-    const menu = page.getByRole('button', { name: 'Menu' });
+    const menu = page.getByRole('button', { name: 'Menu', exact: true });
     await menu.click();
     await page.keyboard.press('Escape');
     await expect(menu).toHaveAttribute('aria-expanded', 'false');

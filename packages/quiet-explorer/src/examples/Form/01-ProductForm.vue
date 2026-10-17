@@ -71,7 +71,7 @@ const belowCost = computed(() => !errors.value.price && values.price && values.c
               label="Price"
               required
               :error="errors.price"
-              :warning="belowCost ? `This is below the cost of €${values.cost} — you lose money on every sale.` : null"
+              :warning="belowCost ? `This is below the cost of ${values.cost} € — you lose money on every sale.` : null"
             >
               <QInput v-model="values.price" suffix="€" numeric align="end" inputmode="decimal" />
             </QField>

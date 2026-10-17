@@ -5,7 +5,7 @@ code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospac
 :not(pre) > code { padding: 1px 4px; border-radius: var(--radius-sm); background: var(--surface-sunken); color: var(--ink); overflow-wrap: anywhere; }
 
 .ex-muted { margin: 0; color: var(--ink-muted); font: var(--text-small); }
-.ex-stack { display: grid; gap: var(--space-6); min-width: 0; }
+.ex-stack { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-6); min-width: 0; }
 .ex-steps { margin: 0; padding-left: var(--space-6); display: grid; gap: var(--space-2); }
 .ex-settings { display: grid; gap: var(--space-2); }
 .ex-required { color: var(--danger); font: var(--text-caption); }
@@ -15,14 +15,14 @@ code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospac
 .ex-h3 { margin: var(--space-4) 0 var(--space-2); font: var(--text-label); color: var(--ink-muted); }
 
 /* Guidelines (Markdown) */
-.ex-prose { max-width: 72ch; color: var(--ink); }
+.ex-prose { max-width: 72ch; min-width: 0; color: var(--ink); overflow-wrap: break-word; }
 .ex-prose h2 { margin: var(--space-8) 0 var(--space-3); font: var(--text-title); }
 .ex-prose h3 { margin: var(--space-6) 0 var(--space-2); font: var(--text-heading); }
 .ex-prose p, .ex-prose ul, .ex-prose ol { margin: 0 0 var(--space-3); }
 .ex-prose li { margin: var(--space-1) 0; }
 .ex-prose li > ul { margin: var(--space-1) 0 0; }
 .ex-prose a { color: var(--brand); }
-.ex-prose table { width: 100%; margin: var(--space-3) 0 var(--space-4); border-collapse: collapse; font: var(--text-small); }
+.ex-prose table { display: block; max-width: 100%; overflow-x: auto; width: 100%; margin: var(--space-3) 0 var(--space-4); border-collapse: collapse; font: var(--text-small); }
 .ex-prose th, .ex-prose td { padding: var(--space-2) var(--space-3); border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
 .ex-prose th { background: var(--surface-sunken); font: var(--text-label); color: var(--ink-muted); }
 .ex-prose pre { margin: 0 0 var(--space-4); padding: var(--space-4); overflow: auto; border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--surface-raised); line-height: 20px; }
@@ -32,7 +32,7 @@ code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospac
 .ex-code { position: relative; min-width: 0; }
 .ex-code pre { margin: 0; padding: var(--space-4) var(--space-12, 48px) var(--space-4) var(--space-4); overflow: auto; border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--surface-raised); line-height: 20px; white-space: pre; }
 .ex-code__copy { position: absolute; top: var(--space-2); right: var(--space-2); }
-.ex-code pre:focus-visible, .ex-prose pre:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.ex-code pre:focus-visible, .ex-prose pre:focus-visible, .ex-prose table:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
 
 /* Examples */
 .ex-example__stage { display: flex; flex-direction: column; gap: var(--space-4); min-width: 0; }

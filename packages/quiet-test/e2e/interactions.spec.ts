@@ -53,17 +53,17 @@ test('Tabs: arrow keys move the selection', async ({ page }) => {
 
 test('Combobox: typing filters, arrow keys and Enter pick', async ({ page }) => {
   await page.goto('/components/combobox/examples');
-  const trigger = page.locator('button', { hasText: 'Choose a rate' });
+  const trigger = page.locator('.q-field', { hasText: 'Tax rate' }).locator('button').first();
   await trigger.click();
-  const search = page.getByRole('combobox');
+  const search = page.getByRole('combobox', { name: 'Tax rate' });
   await expect(search).toBeFocused();
   const listbox = page.getByRole('listbox');
-  await search.fill('aus');
+  await search.fill('austria, red');
   await expect(listbox.getByRole('option')).toHaveCount(1);
   await page.keyboard.press('ArrowDown');
   await page.keyboard.press('Enter');
   await expect(listbox).toBeHidden();
-  await expect(trigger).toContainText('Austria');
+  await expect(trigger).toContainText('Austria, reduced');
   await expect(trigger).toBeFocused();
 });
 

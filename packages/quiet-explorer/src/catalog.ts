@@ -35,6 +35,14 @@ export interface Entry {
   examples: Example[];
 }
 
+// "CheckoutAndFolded" → "Checkout and folded"; acronyms ("RTL") keep their capitals.
+const sentenceCase = (name: string) =>
+  name
+    .replace(/([a-z])([A-Z])/g, '$1 $2')
+    .split(' ')
+    .map((w, i) => (i > 0 && /^[A-Z][a-z]+$/.test(w) ? w.toLowerCase() : w))
+    .join(' ');
+
 const slugOf = (folder: string) => folder.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 
 function splitReadme(md: string) {
@@ -58,7 +66,7 @@ function examplesFor(folder: string): Example[] {
     .sort()
     .map((p) => ({
       // 01-Variants.vue → "Variants"
-      title: p.split('/').pop()!.replace(/\.vue$/, '').replace(/^\d+-/, '').replace(/([a-z])([A-Z])/g, '$1 $2'),
+      title: sentenceCase(p.split('/').pop()!.replace(/\.vue$/, '').replace(/^\d+-/, '')),
       component: exampleModules[p],
       source: exampleSources[p],
     }));
