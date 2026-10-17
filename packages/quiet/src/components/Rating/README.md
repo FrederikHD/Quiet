@@ -29,4 +29,4 @@ Read as one phrase — "Rated 4,3 out of 5, 31 reviews"; the stars themselves ar
 
 ## What you provide
 
-The average (`value`) and `count`; `href` when it should lead to the reviews.
+The average (`value`) and `count`; `href` (or `@click`) when it should lead to the reviews.

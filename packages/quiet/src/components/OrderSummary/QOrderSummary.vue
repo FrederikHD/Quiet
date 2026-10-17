@@ -9,23 +9,31 @@ import QOrderSummaryBody from './QOrderSummaryBody.vue';
 import type { OrderSummaryItem, OrderSummaryRow, OrderSummaryStrings } from './types';
 
 export interface OrderSummaryProps {
+  /** The lines: { name, variant, quantity, price, compareAt, image, href }. Falsy entries are skipped. */
   items: (OrderSummaryItem | null | false)[];
   /** Rows between Subtotal and Total: discount, shipping, … */
   totals?: (OrderSummaryRow | null | false)[];
   /** Defaults to the sum of the items' prices. */
   subtotal?: number;
+  /** What's paid, as a number. */
   total: number;
   /** "Including 13,51 € VAT (19 %)" under the total. */
   taxNote?: string;
+  /** ISO code; default from configure({ currency }). */
   currency?: string;
   /** Fold into a "Show order summary · total" button: always (true), never (false, default), or below `collapseBelow` px of viewport ('auto'). */
   collapsible?: boolean | 'auto';
+  /** collapsible="auto": the viewport width (px) below which it folds. Default 900. */
   collapseBelow?: number;
+  /** Folded: open at first when v-model:open isn't bound. */
+  defaultOpen?: boolean;
   /** Default "Order summary"; null for no heading of its own (inside a Card that has one). */
   title?: string | null;
+  /** The title's heading level (folded: the toggle's). Default 2. */
   headingLevel?: 2 | 3 | 4 | 5 | 6;
   /** 'always' puts the quantity on every image; by default only from 2 up. */
   showQuantity?: 'auto' | 'always';
+  /** Translations; or once for the shop with configure() under strings.orderSummary. */
   strings?: OrderSummaryStrings;
 }
 
@@ -36,14 +44,22 @@ const props = withDefaults(defineProps<OrderSummaryProps>(), {
   currency: undefined,
   collapsible: false,
   collapseBelow: 900,
+  defaultOpen: false,
   title: undefined,
   headingLevel: 2,
   showQuantity: 'auto',
   strings: undefined,
 });
 /** Folded: open or not. */
-const open = defineModel<boolean>('open', { default: false });
-defineSlots<{ /** Goes between the lines and the totals — a DiscountCode. */ default?(): unknown }>();
+const open = defineModel<boolean>('open');
+// A boolean model reads false when unbound.
+if (props.defaultOpen && !open.value) open.value = true;
+defineSlots<{
+  /** Goes between the lines and the totals — a DiscountCode. */
+  default?(): unknown;
+  /** Your own note under the total, in place of the taxNote prop (e.g. with a link). */
+  'tax-note'?(): unknown;
+}>();
 
 const slots = useSlots();
 const strings = useStrings<Required<OrderSummaryStrings>>(
@@ -74,11 +90,11 @@ const bodyProps = computed(() => ({
   rows: rows.value,
   subtotal: subtotal.value,
   total: props.total,
-  taxNote: props.taxNote,
   currency: props.currency,
   showQuantity: props.showQuantity,
   strings: strings.value,
   hasExtra: !!slots.default,
+  hasNote: !!props.taxNote || !!slots['tax-note'],
 }));
 </script>
 
@@ -92,7 +108,10 @@ const bodyProps = computed(() => ({
       <template #title>
         <span class="q-summary__toggletext"><QLead icon="bag" /><span>{{ open ? strings.hide : strings.show }}</span></span>
       </template>
-      <QOrderSummaryBody v-bind="bodyProps"><slot /></QOrderSummaryBody>
+      <QOrderSummaryBody v-bind="bodyProps">
+        <slot />
+        <template #tax-note><slot name="tax-note">{{ taxNote }}</slot></template>
+      </QOrderSummaryBody>
     </QDisclosure>
   </section>
   <component
@@ -104,6 +123,9 @@ const bodyProps = computed(() => ({
     <component :is="`h${headingLevel}`" v-if="title !== null" :id="`${id}-title`" class="q-summary__title">
       {{ title ?? strings.title }}<span class="q-summary__count">{{ strings.items(count) }}</span>
     </component>
-    <QOrderSummaryBody v-bind="bodyProps"><slot /></QOrderSummaryBody>
+    <QOrderSummaryBody v-bind="bodyProps">
+      <slot />
+      <template #tax-note><slot name="tax-note">{{ taxNote }}</slot></template>
+    </QOrderSummaryBody>
   </component>
 </template>

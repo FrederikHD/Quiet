@@ -17,7 +17,7 @@ Moves through a long list a page at a time. It usually sits in a Table's `footer
 | `showFirstLast` | Adds « and » buttons for the first and last page. Useful with long lists. |
 | `jumpToPage` | Shows the page number as a small field — "Page [6] of 25". Enter or leaving the field goes there. Numbers out of range snap to the first or last page, and an empty field restores the current page. |
 | `showRange` | `false` hides "1–50 of 1,240". The storefront usually hides it. |
-| `page-size-options` + `v-model:page-size` | Rows-per-page select, e.g. `[25, 50, 100]`. |
+| `page-size-options` + `v-model:page-size` | Rows-per-page select, e.g. `[25, 50, 100]`. `show-page-size="false"` hides it again. |
 | `align` | `end` (default), `start`, `center` (storefront), or `between` (range on the left, controls on the right). |
 | `size` | `slim` (default; back office), `default`, `large` (storefront). The same sizes as Button. |
 | `disabled` | Disables every control while a page loads, and sets `aria-busy`. |
@@ -46,5 +46,5 @@ Back-office lists are searched and filtered far more than browsed page by page. 
 ## What you provide
 
 - **Required:** `v-model:page` (1-based), `page-size`, `total` (or `has-next`).
-- **Optional:** `variant`, `siblings`, `show-first-last`, `jump-to-page`, `show-range`, `page-size-options` with `v-model:page-size`, `align`, `size`, `disabled`, `href-for`, `class`.
+- **Optional:** `variant`, `siblings`, `show-first-last`, `jump-to-page`, `show-range`, `page-size-options` with `v-model:page-size`, `show-page-size`, `align`, `size`, `disabled`, `href-for`, `class`.
 - **`strings`** to translate: "Zeilen pro Seite", "1–50 von 1.240", "Vorherige Seite", "Nächste Seite", "Erste Seite", "Letzte Seite", "Seite 6", "Seite 6 von 25", "von 25". You can also set these once for the whole shop with `configure`. Numbers follow the configured locale ("1.240" with `de-DE`).

@@ -29,6 +29,7 @@ export interface PriceProps {
   taxNote?: boolean | string;
   /** ISO code; default from configure({ currency }) (EUR). */
   currency?: string;
+  /** Translations; or once for the shop with configure() under strings.price. */
   strings?: PriceStrings;
 }
 
@@ -66,10 +67,10 @@ const pct = computed(() => (sale.value ? Math.round((1 - props.amount / props.co
     <span class="q-price__row">
       <span v-if="from" class="q-price__from">{{ strings.from }}</span>
       <span class="q-price__now">
-        <span v-if="sale" class="q-visually-hidden">{{ strings.salePrice }} </span>{{ money(amount, currency) }}
+        <span v-if="sale" class="q-visually-hidden">{{ `${strings.salePrice} ` }}</span>{{ money(amount, currency) }}
       </span>
       <s v-if="sale" class="q-price__was">
-        <span class="q-visually-hidden">{{ strings.originalPrice }} </span>{{ money(compareAt!, currency) }}
+        <span class="q-visually-hidden">{{ `${strings.originalPrice} ` }}</span>{{ money(compareAt!, currency) }}
       </s>
       <QBadge v-if="sale && showSaving" tone="sale" class="q-price__saving">
         <span aria-hidden="true">{{ strings.saving(pct) }}</span><span class="q-visually-hidden">{{ strings.savingLabel(pct) }}</span>

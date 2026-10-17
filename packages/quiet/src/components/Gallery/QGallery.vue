@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { useStrings } from '../../config';
 import QButton from '../Button/QButton.vue';
 import QDialog from '../Dialog/QDialog.vue';
@@ -7,8 +7,11 @@ import QIcon from '../Icon/QIcon.vue';
 
 export interface GalleryImage {
   src: string;
+  /** What the image shows ("Linen shirt, back"); names the enlarge button and the larger view. */
   alt: string;
+  /** A smaller file for the thumbnail. Default: src. */
   thumb?: string;
+  /** A larger file for the enlarged view. Default: src. */
   zoom?: string;
 }
 export interface GalleryStrings {
@@ -22,17 +25,30 @@ export interface GalleryStrings {
   showing?: (i: number, n: number) => string;
 }
 export interface GalleryProps {
+  /** The product's images, main image first. */
   images: GalleryImage[];
   /** Names the carousel: "Linen shirt images". */
   label?: string;
+  /** portrait (4:5, default) or square; match the ProductCards. */
   aspect?: 'portrait' | 'square';
+  /** The row of thumbnails under the stage (with two or more images). Default true. */
   thumbnails?: boolean;
+  /** The image shown first when v-model:index isn't bound (0-based). */
+  defaultIndex?: number;
+  /** Translations; or once for the shop with configure() under strings.gallery. */
   strings?: GalleryStrings;
 }
 
-const props = withDefaults(defineProps<GalleryProps>(), { label: undefined, aspect: 'portrait', thumbnails: true, strings: undefined });
+const props = withDefaults(defineProps<GalleryProps>(), {
+  label: undefined,
+  aspect: 'portrait',
+  thumbnails: true,
+  defaultIndex: undefined,
+  strings: undefined,
+});
 /** The image shown (0-based). */
-const index = defineModel<number>('index', { default: 0 });
+const index = defineModel<number>('index');
+if (index.value === undefined && props.defaultIndex) index.value = props.defaultIndex;
 
 const strings = useStrings<Required<GalleryStrings>>(
   'gallery',
@@ -50,7 +66,7 @@ const strings = useStrings<Required<GalleryStrings>>(
 );
 const images = computed(() => props.images.filter(Boolean));
 const n = computed(() => images.value.length);
-const at = computed(() => Math.min(index.value, Math.max(0, n.value - 1)));
+const at = computed(() => Math.max(0, Math.min(index.value ?? 0, n.value - 1)));
 const zoom = ref(false);
 const live = ref('');
 const track = ref<HTMLElement | null>(null);
@@ -82,6 +98,10 @@ watch(
     if (track.value) track.value.scrollLeft = 0;
   },
 );
+// Start on the chosen image.
+onMounted(() => {
+  if (track.value && at.value) track.value.scrollLeft = at.value * track.value.clientWidth;
+});
 // Keep the current thumbnail in view.
 watch(at, (i) => {
   const row = thumbs.value;
@@ -167,7 +187,7 @@ const current = computed(() => images.value[at.value]);
       </button>
     </div>
     <QDialog v-model:open="zoom" :title="current.alt || label || strings.label" size="lg" mobile="full" flush class="q-gallery__dialog">
-      <div class="q-gallery__big" tabindex="0" :aria-label="strings.slide(at + 1, n)" @keydown="onKeyDown">
+      <div class="q-gallery__big" role="group" tabindex="0" :aria-label="strings.slide(at + 1, n)" @keydown="onKeyDown">
         <img :src="current.zoom ?? current.src" :alt="current.alt" />
         <div v-if="n > 1" class="q-gallery__bignav">
           <QButton icon-start="chevron-left" :aria-label="strings.previous" :disabled="at === 0" @click="go(at - 1, true)" />

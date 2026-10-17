@@ -13,11 +13,11 @@ const props = defineProps<{
   rows: OrderSummaryRow[];
   subtotal: number;
   total: number;
-  taxNote?: string;
   currency?: string;
   showQuantity: 'auto' | 'always';
   strings: Required<OrderSummaryStrings>;
   hasExtra: boolean;
+  hasNote: boolean;
 }>();
 
 const amountText = (r: OrderSummaryRow) =>
@@ -64,6 +64,6 @@ const dlItems = computed<DescriptionListItem[]>(() => [
       </template>
       <template #description-total><span class="q-summary__total">{{ money(total, currency) }}</span></template>
     </QDescriptionList>
-    <p v-if="taxNote" class="q-summary__note">{{ taxNote }}</p>
+    <p v-if="hasNote" class="q-summary__note"><slot name="tax-note" /></p>
   </div>
 </template>

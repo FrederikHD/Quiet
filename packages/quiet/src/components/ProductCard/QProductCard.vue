@@ -9,15 +9,21 @@ import QPrice from '../Price/QPrice.vue';
 import QRating from '../Rating/QRating.vue';
 
 export interface ProductCardProps {
+  /** The product name; the card's heading and its one link. */
   name: string;
+  /** The product page. The name links there and the whole card is clickable. */
   href?: string;
+  /** The product image. Leave alt empty when it only shows the product named below; a placeholder shows without one. */
   image?: { src: string; alt?: string };
   /** Shown on hover (pointer devices): the back, or the product worn. */
   hoverImage?: { src: string };
+  /** The price, as a number (formatted by Price). */
   price?: number;
+  /** The original price; above price it shows as a sale. */
   compareAt?: number;
   /** "from" before the price, when variants differ. */
   priceFrom?: boolean;
+  /** ISO code; default from configure({ currency }). */
   currency?: string;
   /** Stars and count under the price; hidden while count is 0. */
   rating?: { value: number; count: number } | null;
@@ -27,6 +33,7 @@ export interface ProductCardProps {
   swatches?: { label: string; color: string }[];
   /** Default 5; the rest show as "+2". */
   maxSwatches?: number;
+  /** Brand or maker, above the name. */
   vendor?: string;
   /** Dims the image and hides quick add. */
   soldOut?: boolean;
@@ -36,6 +43,7 @@ export interface ProductCardProps {
   aspect?: 'portrait' | 'square';
   /** The name's heading level. Default 3. */
   headingLevel?: 2 | 3 | 4 | 5 | 6;
+  /** Translations; or once for the shop with configure() under strings.productCard. */
   strings?: { quickAdd?: (name: string) => string; colours?: (n: number) => string; more?: (n: number) => string };
 }
 
@@ -58,6 +66,7 @@ const props = withDefaults(defineProps<ProductCardProps>(), {
 const emit = defineEmits<{
   /** The product link was clicked (for client-side routing). */
   navigate: [event: MouseEvent];
+  /** The quick add (+) button was pressed. */
   'quick-add': [];
 }>();
 
@@ -75,8 +84,8 @@ const badges = computed(() => (props.badges ?? []).filter((b): b is { label: str
 </script>
 
 <template>
-  <!-- The image is the card: no border. One link (the name) covers the whole card, so a card is one Tab stop. -->
   <article :class="['q-pcard', aspect === 'square' && 'q-pcard--square', soldOut && 'is-soldout']" :aria-labelledby="nameId">
+    <!-- The image is the card: no border. One link (the name) covers the whole card, so a card is one Tab stop. -->
     <div class="q-pcard__media">
       <img v-if="image?.src" class="q-pcard__img" :src="image.src" :alt="image.alt ?? ''" loading="lazy" decoding="async" />
       <span v-else class="q-pcard__placeholder" aria-hidden="true"><QIcon name="image" /></span>

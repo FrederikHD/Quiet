@@ -29,4 +29,4 @@ Button (arrows), Dialog (large view), Icon.
 
 ## What you provide
 
-`images`: `{ src, alt, thumb?, zoom? }`. Optional: `label` (names the carousel, e.g. the product), `aspect`, `:thumbnails="false"`, `v-model:index`, `strings` (shop-wide under `strings.gallery`).
+`images`: `{ src, alt, thumb?, zoom? }`. Optional: `label` (names the carousel, e.g. the product), `aspect`, `:thumbnails="false"`, `v-model:index` (or `default-index`), `strings` (shop-wide under `strings.gallery`).

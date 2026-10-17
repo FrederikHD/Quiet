@@ -23,7 +23,8 @@ What's being bought and what it costs. Beside the checkout form, on the order co
 - **Totals:** Subtotal (summed from the lines unless you pass `subtotal`), your rows, then **Total** in price size. A negative amount is a discount (`−8,30 €` in `success`); `0` reads "Free"; no amount shows your `note` ("Chosen in the next step").
 - `:title="null"` drops its own heading — for inside a Card that already has one (the back office's order page).
 - The default slot sits between the lines and the totals — that's where DiscountCode goes.
-- **Folding:** `collapsible="auto"` folds it under 900px of viewport into one row — "Show order summary ⌄ · 84,60 €" — a disclosure button (`aria-expanded`), so the form comes first on a phone but the total is always in view. `true` always folds, `false` (default) never.
+- **Folding:** `collapsible="auto"` folds it under 900px of viewport into one row — "Show order summary ⌄ · 84,60 €" — a disclosure button (`aria-expanded`), so the form comes first on a phone but the total is always in view. `true` always folds, `false` (default) never. Bind `v-model:open` to control it, or pass `default-open`.
+- `tax-note` ("Including 16,96 € VAT (19 %)") sits under the total; the `#tax-note` slot takes your own text with a link.
 - Screen readers hear each line's quantity ("Quantity 2"); the picture is decorative unless you give it `alt`.
 
 ## Layout

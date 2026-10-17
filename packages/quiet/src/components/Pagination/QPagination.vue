@@ -27,10 +27,9 @@ export interface PaginationStrings {
   of?: (pages: number) => string;
 }
 export interface PaginationProps {
-  /** Rows per page. */
-  pageSize?: number;
   /** Total rows. Leave out for cursor-based APIs and pass hasNext instead (always the simple variant then). */
   total?: number;
+  /** Without a total (cursor-based APIs): whether there is a next page. Overrides the one worked out from total. */
   hasNext?: boolean;
   /** simple (default): range + previous/next. pages: 1 … 4 5 6 … 25. compact: 6 / 25. pages and compact need total. */
   variant?: 'simple' | 'pages' | 'compact';
@@ -44,6 +43,9 @@ export interface PaginationProps {
   showRange?: boolean;
   /** e.g. [25, 50, 100]: shows a rows-per-page select (v-model:page-size). */
   pageSizeOptions?: number[];
+  /** Show the rows-per-page select. Default true when pageSizeOptions are set. */
+  showPageSize?: boolean;
+  /** Where the controls sit; between puts the range on the left and the buttons on the right. */
   align?: 'end' | 'start' | 'center' | 'between';
   /** Button size: slim (default), default, large (storefront). */
   size?: 'slim' | 'default' | 'large';
@@ -51,16 +53,17 @@ export interface PaginationProps {
   disabled?: boolean;
   /** Render the controls as links (pages that load from the server). Clicks still emit update:page; prevent them for client-side routing. */
   hrefFor?: (page: number) => string;
+  /** Translations; or once for the shop with configure(). */
   strings?: PaginationStrings;
 }
 
 const props = withDefaults(defineProps<PaginationProps>(), {
-  pageSize: 50,
   total: undefined,
   hasNext: undefined,
   variant: 'simple',
   siblings: 1,
   showRange: true,
+  showPageSize: true,
   pageSizeOptions: undefined,
   align: 'end',
   size: 'slim',
@@ -69,8 +72,8 @@ const props = withDefaults(defineProps<PaginationProps>(), {
 });
 /** 1-based page. */
 const page = defineModel<number>('page', { default: 1 });
-/** Rows per page, when pageSizeOptions are shown. */
-const pageSizeModel = defineModel<number>('pageSize');
+/** Rows per page (default 50); v-model:page-size with pageSizeOptions. */
+const pageSizeModel = defineModel<number>('pageSize', { default: 50 });
 
 provideNoField();
 const strings = useStrings<Required<PaginationStrings>>(
@@ -93,7 +96,7 @@ const strings = useStrings<Required<PaginationStrings>>(
   () => props.strings,
 );
 
-const size = computed(() => pageSizeModel.value ?? props.pageSize);
+const size = computed(() => pageSizeModel.value || 50);
 const pages = computed(() => (props.total != null ? Math.max(1, Math.ceil(props.total / size.value)) : null));
 const current = computed(() => Math.max(1, Math.min(page.value || 1, pages.value ?? Infinity)));
 const from = computed(() => (props.total === 0 ? 0 : (current.value - 1) * size.value + 1));
@@ -165,7 +168,7 @@ function commitJump() {
 const jumpId = useQuietId('q-pager-jump-');
 const sizeId = useQuietId('q-pager-size-');
 const showJump = computed(() => props.jumpToPage && pages.value != null);
-const showSize = computed(() => !!props.pageSizeOptions?.length);
+const showSize = computed(() => props.showPageSize && !!props.pageSizeOptions?.length);
 const href = (p: number, enabled = true) => (props.hrefFor && enabled && !props.disabled ? props.hrefFor(p) : undefined);
 </script>
 

@@ -2,6 +2,7 @@
 import { computed } from 'vue';
 
 export interface DescriptionListItem {
+  /** The label: "SKU", "Subtotal". Use the `term-<key>` slot for rich content. */
   term: string;
   /** Empty shows "—". Use the `description-<key>` slot for rich content. */
   description?: string | number | null;
@@ -9,9 +10,11 @@ export interface DescriptionListItem {
   numeric?: boolean;
   /** The summing item (total): a rule above, semibold. */
   emphasis?: boolean;
+  /** Stable key, also the slot suffix (#description-<key>). Default: the item's index. */
   key?: string;
 }
 export interface DescriptionListProps {
+  /** The pairs: { term, description, numeric, emphasis, key }. Falsy entries are skipped, so an item can be added conditionally. */
   items: (DescriptionListItem | null | false)[];
   /** columns (default): term beside value from 480px; inline: value right-aligned on the same line (totals); stacked: term above value. */
   layout?: 'columns' | 'inline' | 'stacked';

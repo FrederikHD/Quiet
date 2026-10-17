@@ -16,16 +16,23 @@ export interface TableProps<R> {
   caption: string;
   /** Hide the caption visually when a heading above says the same. */
   captionHidden?: boolean;
+  /** The columns: { key, header, format, numeric, sortable, … }. Falsy entries are skipped, so a column can be added conditionally. Rich cells and headers use the #cell-<key> and #header-<key> slots. */
   columns: (TableColumn<R> | null | false)[];
+  /** The rows on this page (up to 100; page through the rest with a Pagination in the footer). */
   rows: R[];
   /** Key per row: a field name (default "id") or a function. */
   rowKey?: string | ((row: R) => RowKey);
   /** Names the row in its checkbox ("Select order #10421"). Default: the primary column's text. */
   rowLabel?: (row: R) => string;
+  /** The initial sort when v-model:sort isn't bound. */
+  defaultSort?: TableSort | null;
   /** The rows arrive sorted (server data): the table only shows the sort state. */
   manualSort?: boolean;
   /** Adds a checkbox column, select all and the bulk bar. */
   selectable?: boolean;
+  /** The initially selected row keys when v-model:selected isn't bound. */
+  defaultSelected?: RowKey[];
+  /** Rows it returns false for can't be selected; their checkbox is disabled. */
   isRowSelectable?: (row: R) => boolean;
   /** All rows matching the current query (across pages). With v-model:all-matching it enables "Select all 1,240". */
   totalCount?: number;
@@ -35,6 +42,7 @@ export interface TableProps<R> {
   onRowClick?: (row: R, event: MouseEvent) => void;
   /** Dims the rows and sets aria-busy; with no rows it shows skeleton rows. */
   loading?: boolean;
+  /** How many skeleton rows to show while loading with no rows yet. */
   skeletonRows?: number;
   /** Under 640px (the table's own width): scroll (default) sideways with the first column pinned, or cards. */
   mobile?: 'scroll' | 'cards';
@@ -42,13 +50,17 @@ export interface TableProps<R> {
   pinFirst?: boolean;
   /** Scrolls the body inside this height; the header stays. */
   maxHeight?: number | string;
+  /** Row height: comfortable (56px) or compact (40px). Default: the nearest data-density. */
   density?: 'comfortable' | 'compact';
+  /** Translations; or once for the shop with configure(). */
   strings?: TableStrings;
 }
 
 const props = withDefaults(defineProps<TableProps<Row>>(), {
   rowKey: 'id',
   rowLabel: undefined,
+  defaultSort: undefined,
+  defaultSelected: undefined,
   isRowSelectable: undefined,
   totalCount: undefined,
   rowHref: undefined,
@@ -61,14 +73,16 @@ const props = withDefaults(defineProps<TableProps<Row>>(), {
   strings: undefined,
 });
 /** The sort shown (and applied, unless manualSort). */
-const sort = defineModel<TableSort | null>('sort', { default: null });
+const sortModel = defineModel<TableSort | null>('sort');
 /** Selected row keys. */
-const selected = defineModel<RowKey[]>('selected', { default: () => [] });
+const selectedModel = defineModel<RowKey[]>('selected');
 /** "Select all 1,240": every row matching the query is selected, not just this page. */
 const allMatching = defineModel<boolean>('allMatching', { default: false });
 
 defineSlots<
   {
+    /** A rich caption; the caption prop still names the table. */
+    caption?(): unknown;
     /** Search and filters above the table (slim controls). */
     toolbar?(): unknown;
     /** Below the table, usually a Pagination. */
@@ -87,6 +101,12 @@ defineSlots<
     [K in `header-${string}`]?: () => unknown;
   }
 >();
+
+// Uncontrolled: start from defaultSort / defaultSelected.
+if (sortModel.value === undefined && props.defaultSort) sortModel.value = { ...props.defaultSort };
+if (selectedModel.value === undefined && props.defaultSelected) selectedModel.value = [...props.defaultSelected];
+const sort = computed({ get: () => sortModel.value ?? null, set: (v) => (sortModel.value = v) });
+const selected = computed({ get: () => selectedModel.value ?? [], set: (v) => (selectedModel.value = v) });
 
 provideNoField();
 const slots = useSlots();
@@ -208,7 +228,7 @@ function onRowAreaClick(e: MouseEvent) {
   if (String(window.getSelection?.() ?? '').length) return; // selecting text, not opening the row
   const link = (e.currentTarget as Element).querySelector('.q-table__link');
   link?.dispatchEvent(
-    new MouseEvent('click', { bubbles: true, cancelable: true, view: window, ctrlKey: e.ctrlKey, metaKey: e.metaKey, shiftKey: e.shiftKey, altKey: e.altKey }),
+    new MouseEvent('click', { bubbles: true, cancelable: true, view: e.view, ctrlKey: e.ctrlKey, metaKey: e.metaKey, shiftKey: e.shiftKey, altKey: e.altKey }),
   );
 }
 
@@ -287,7 +307,7 @@ const maxHeightCss = computed(() => (props.maxHeight == null ? undefined : typeo
       >
         <!-- A real <table>, with explicit roles so it stays a table to screen readers when phones show cards. -->
         <table class="q-table__table" role="table" :aria-busy="loading ? 'true' : undefined" :aria-labelledby="captionId">
-          <caption :id="captionId" :class="['q-table__caption', captionHidden && 'q-visually-hidden']">{{ caption }}</caption>
+          <caption :id="captionId" :class="['q-table__caption', captionHidden && 'q-visually-hidden']"><slot name="caption">{{ caption }}</slot></caption>
           <thead role="rowgroup" class="q-table__head">
             <tr role="row">
               <th v-if="selectable" role="columnheader" scope="col" :class="['q-table__select', pin && 'is-pinned']">

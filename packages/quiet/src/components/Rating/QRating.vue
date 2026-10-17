@@ -7,17 +7,24 @@ import { ratingDefaults, type RatingStrings } from './stars';
 export interface RatingProps {
   /** 0–5, fractions show as part-filled stars. */
   value: number;
+  /** Number of reviews, shown as "(128)". Leave out to show only the stars and the value. */
   count?: number;
   /** Makes it a link (to the reviews). */
   href?: string;
+  /** Makes it a link too (href "#" unless given), e.g. to open the reviews tab: @click. */
+  onClick?: (event: MouseEvent) => void;
+  /** Show the number ("4.6") after the stars. Default true. */
   showValue?: boolean;
+  /** small in product cards and review lists, large on the product page. */
   size?: 'small' | 'default' | 'large';
+  /** Translations; or once for the shop with configure() under strings.rating. */
   strings?: RatingStrings;
 }
 
 const props = withDefaults(defineProps<RatingProps>(), {
   count: undefined,
   href: undefined,
+  onClick: undefined,
   showValue: true,
   size: 'default',
   strings: undefined,
@@ -27,13 +34,15 @@ const strings = useStrings<Required<RatingStrings>>('rating', ratingDefaults(), 
 // Read as one phrase: "Rated 4.6 out of 5, 128 reviews".
 const shown = computed(() => oneDecimal(props.value || 0));
 const none = computed(() => !props.value && !props.count);
+const isLink = computed(() => props.href != null || !!props.onClick);
 </script>
 
 <template>
   <component
-    :is="href != null ? 'a' : 'span'"
-    :href="href"
-    :class="['q-rating', size === 'small' && 'q-rating--small', size === 'large' && 'q-rating--large', href != null && 'q-rating--link']"
+    :is="isLink ? 'a' : 'span'"
+    :href="isLink ? (href ?? '#') : undefined"
+    :class="['q-rating', size === 'small' && 'q-rating--small', size === 'large' && 'q-rating--large', isLink && 'q-rating--link']"
+    @click="onClick?.($event)"
   >
     <QStars :value="value || 0" />
     <span v-if="none" class="q-rating__none">{{ strings.none }}</span>

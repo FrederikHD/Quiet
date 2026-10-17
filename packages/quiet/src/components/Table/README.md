@@ -31,8 +31,8 @@ Back-office lists: orders, products, customers, refunds. It's a real `<table>` a
 | Field | What it does |
 | --- | --- |
 | `key` | Field name in the row, and the sort key. |
-| `header` | Header text. |
-| `cell(row)` | What to show; default `row[key]`. Return a Badge for statuses. |
+| `header` | Header text (rich headers: the `#header-<key>` slot). |
+| `format(row)` | Plain text for the cell; default `row[key]`. For rich cells (a Badge for statuses) use the `#cell-<key>` slot. |
 | `numeric` | Right-aligned, tabular figures; sorts high to low first. |
 | `align` | `start` / `end` / `center`. |
 | `sortable`, `sortValue(row)`, `sortFirst` | Make it sortable; the value to sort by; the first direction. |
@@ -72,7 +72,7 @@ The `#row-actions="{ row }"` slot holds slim ghost icon Buttons for the last col
 ## Loading and empty
 
 - `loading` dims the rows and sets `aria-busy`. With no rows yet, it shows 5 skeleton rows (`skeletonRows`).
-- `empty` is what shows when there are no rows. Say why and what to do: "No orders match — try another search or clear the filter."
+- The `#empty` slot is what shows when there are no rows. Say why and what to do: "No orders match — try another search or clear the filter."
 
 ## Phones
 
@@ -91,4 +91,4 @@ Show up to 100 rows at a time and page through the rest with Pagination. At that
 ## What you provide
 
 - **Required:** `caption` ("Orders"; `captionHidden` when a heading above already says it), `columns`, `rows`.
-- **Optional:** `row-key`, `row-label`, `v-model:sort` / `manual-sort`, `selectable` / `v-model:selected` / the `#bulk-actions` slot / `total-count` / `v-model:all-matching` / `is-row-selectable`, `row-href` / `@row-click`, the `#row-actions` slot, `loading`, the `#empty`, `#toolbar` and `#footer` slots, rich cells in `#cell-<key>` slots, `mobile`, `pin-first`, `max-height` (the header stays while the body scrolls), `density`, `strings` (translations; or once for the shop with `configure`).
+- **Optional:** `row-key`, `row-label`, `v-model:sort` / `default-sort` / `manual-sort`, `selectable` / `v-model:selected` / `default-selected` / the `#bulk-actions` slot / `total-count` / `v-model:all-matching` / `is-row-selectable`, `row-href` / `@row-click`, the `#row-actions` slot, `loading`, the `#empty`, `#toolbar` and `#footer` slots, rich cells in `#cell-<key>` slots, `mobile`, `pin-first`, `max-height` (the header stays while the body scrolls), `density`, `strings` (translations; or once for the shop with `configure`).

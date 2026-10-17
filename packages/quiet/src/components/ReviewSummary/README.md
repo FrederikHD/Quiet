@@ -12,12 +12,12 @@ The head of a product's reviews: the average large, the stars, the count, and on
 
 - Average in 40px semibold, stars `rating`, "31 reviews" in `ink-muted`.
 - Bars: level, a `rating` bar scaled to the most common level, the count. They're decorative to screen readers; each row is read as "20 reviews — 5 stars".
-- With `filterable` each row is a toggle button (emitting `filter` with the level, or null) — "Show only 5-star reviews (20)", pressed while active (`brand-tint`); press again to show all. Levels with no reviews are disabled.
+- With `filterable` each row is a toggle button (emitting `filter` with the level, or null) — named by its content, "5 stars, 20 reviews", so the name starts with the visible level and count; pressed while active (`brand-tint`); press again to show all. Levels with no reviews are disabled.
 - `action` sits under the bars — usually "Write a review".
 
 ## Keyboard and screen readers
 
-The average is read as "4,3 out of 5". With `filterable`, each bar is a toggle button ("Show only 5-star reviews (20)", pressed while active); levels without reviews are disabled.
+The average is read as "4,3 out of 5". With `filterable`, each bar is a toggle button ("5 stars, 20 reviews", pressed while active; no aria-label, so the visible text is part of the name); levels without reviews are disabled.
 
 ## Built from
 
