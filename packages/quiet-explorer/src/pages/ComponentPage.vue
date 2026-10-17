@@ -125,7 +125,10 @@ const usage = computed(
       </div>
 
       <div v-else class="ex-stack">
-        <ExampleView v-for="ex in entry.examples" :key="ex.title" :example="ex" />
+        <nav v-if="entry.examples.length > 2" class="ex-toc" aria-label="Examples on this page">
+          <RouterLink v-for="ex in entry.examples" :key="ex.id" :to="{ hash: `#${ex.id}` }" class="ex-toc__link">{{ ex.title }}</RouterLink>
+        </nav>
+        <ExampleView v-for="ex in entry.examples" :key="ex.id" :example="ex" />
         <p v-if="!entry.examples.length" class="ex-muted">No examples yet.</p>
       </div>
     </QTabs>

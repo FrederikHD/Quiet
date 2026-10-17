@@ -16,6 +16,10 @@ const exampleSources = import.meta.glob<string>('./examples/*/*.vue', { query: '
 
 export interface Example {
   title: string;
+  /** One sentence under the title, from a leading <!-- … --> comment in the example file. */
+  description?: string;
+  /** Anchor on the Examples tab: "button-variants". */
+  id: string;
   component: Component;
   source: string;
 }
@@ -64,12 +68,19 @@ function examplesFor(folder: string): Example[] {
   return Object.keys(exampleModules)
     .filter((p) => p.startsWith(`./examples/${folder}/`))
     .sort()
-    .map((p) => ({
+    .map((p) => {
       // 01-Variants.vue → "Variants"
-      title: sentenceCase(p.split('/').pop()!.replace(/\.vue$/, '').replace(/^\d+-/, '')),
-      component: exampleModules[p],
-      source: exampleSources[p],
-    }));
+      const name = p.split('/').pop()!.replace(/\.vue$/, '').replace(/^\d+-/, '');
+      const lead = exampleSources[p].match(/^<!--\s*([\s\S]*?)\s*-->\s*/);
+      return {
+        title: sentenceCase(name),
+        description: lead?.[1].replace(/\s+/g, ' '),
+        id: `${slugOf(folder)}-${slugOf(name)}`,
+        component: exampleModules[p],
+        // The shown source starts at the code: the description is already above it.
+        source: lead ? exampleSources[p].slice(lead[0].length) : exampleSources[p],
+      };
+    });
 }
 
 export const entries: Entry[] = [];

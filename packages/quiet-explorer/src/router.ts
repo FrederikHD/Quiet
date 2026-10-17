@@ -16,7 +16,8 @@ export const router = createRouter({
     },
     { path: '/:rest(.*)*', name: 'not-found', component: () => import('./pages/NotFoundPage.vue'), meta: { title: 'Not found' } },
   ],
-  scrollBehavior: (_to, _from, saved) => saved ?? { top: 0 },
+  // Example links (#button-sizes) scroll to the card, clear of the sticky phone header.
+  scrollBehavior: (to, _from, saved) => saved ?? (to.hash ? { el: to.hash, top: 72, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' } : { top: 0 }),
 });
 
 router.afterEach((to) => {

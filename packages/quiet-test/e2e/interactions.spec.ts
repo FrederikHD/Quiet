@@ -100,3 +100,25 @@ test('Theme and density switch the whole explorer', async ({ page }) => {
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
 });
+
+test('a segmented Tabs inside a line Tabs keeps its own look (no underline)', async ({ page }) => {
+  // The playground's Props/Code/Events switch is segmented and sits inside the page's line tabs.
+  await page.goto('/components/button/playground');
+  const active = page.getByRole('tab', { name: 'Props' });
+  await expect(active).toHaveAttribute('aria-selected', 'true');
+  const underline = await active.evaluate((el) => getComputedStyle(el, '::before').content);
+  expect(underline).toBe('none');
+});
+
+test('the examples index links to each example', async ({ page }) => {
+  await page.goto('/components/button/examples');
+  const index = page.getByRole('navigation', { name: 'Examples on this page' });
+  const links = index.getByRole('link');
+  const count = await links.count();
+  expect(count).toBe(await page.getByTestId('example').count());
+  const last = links.last();
+  const hash = (await last.getAttribute('href'))!.split('#')[1];
+  await last.click();
+  await expect(page).toHaveURL(new RegExp(`#${hash}$`));
+  await expect(page.locator(`#${hash}`)).toBeInViewport();
+});

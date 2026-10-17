@@ -9,7 +9,7 @@ const showSource = ref(false);
 </script>
 
 <template>
-  <QCard :title="example.title" :heading-level="2" class="ex-example" data-testid="example">
+  <QCard :id="example.id" :title="example.title" :description="example.description" :heading-level="2" class="ex-example" data-testid="example">
     <template #actions>
       <QButton size="slim" variant="ghost" icon-start="eye" :pressed="showSource" @click="showSource = !showSource">Source</QButton>
     </template>
