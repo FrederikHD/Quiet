@@ -77,6 +77,6 @@ props, slots instead of render props, and class names shared with the original d
 
 ## Deploying the explorer
 
-`.github/workflows/pages.yml` builds the explorer and publishes it to GitHub Pages on every push to `main` and to the
-working branch listed in that file, or by hand from the Actions tab.
+`.github/workflows/pages.yml` builds the explorer and publishes it to GitHub Pages on every push to `main` and
+`develop`, or by hand from the Actions tab.
 In the repository settings, Pages → Source must be "GitHub Actions".

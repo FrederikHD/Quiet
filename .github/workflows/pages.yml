@@ -4,7 +4,7 @@ name: Explorer on GitHub Pages
 
 on:
   push:
-    branches: [main, claude/quiet-design-system-access-yoz9ny]
+    branches: [main, develop]
   workflow_dispatch:
 
 permissions:
