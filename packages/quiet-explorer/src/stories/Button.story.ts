@@ -6,5 +6,4 @@ export default defineStory({
   name: 'QButton',
   props: { variant: 'primary', size: 'default' },
   slots: { default: 'Save changes' },
-  hide: ['href', 'type'],
 });

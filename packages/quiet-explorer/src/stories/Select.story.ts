@@ -7,5 +7,4 @@ export default defineStory({
   props: { placeholder: 'Choose a country', options: ['Germany', 'Austria', 'Switzerland', 'Netherlands'] },
   model: { value: '' },
   field: { label: 'Country' },
-  hide: ['id', 'name'],
 });

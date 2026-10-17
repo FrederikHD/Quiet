@@ -16,8 +16,6 @@ export default defineStory({
     swatches: [{ label: 'Navy', color: swatchOf('Navy') }, { label: 'Sand', color: swatchOf('Sand') }],
     quickAdd: true,
   },
-  // image holds a long data: URI: kept, but not as an editable JSON blob.
-  hide: ['image', 'hoverImage', 'headingLevel'],
   // A card fills its grid column; give it one.
   wrap: (target) => h('div', { style: 'width: 240px' }, [target()]),
 });

@@ -12,5 +12,4 @@ export default defineStory({
       { label: 'Customers', icon: 'user', href: '#customers' },
     ],
   },
-  hide: ['sections'],
 });

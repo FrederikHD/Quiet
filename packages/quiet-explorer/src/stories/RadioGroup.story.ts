@@ -13,6 +13,5 @@ export default defineStory({
       h(QRadio, { value: 'exp', label: 'Express', description: 'Next working day', meta: '9,90 €' }),
     ],
   },
-  hide: ['defaultValue', 'id', 'name'],
   layout: 'block',
 });

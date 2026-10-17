@@ -7,5 +7,4 @@ export default defineStory({
   props: { placeholder: 'e.g. Linen shirt', size: 'default', clearable: true },
   model: { value: 'Linen shirt' },
   field: { label: 'Product name', hint: 'The Field gives it a label, hint and messages.' },
-  hide: ['id', 'type'],
 });

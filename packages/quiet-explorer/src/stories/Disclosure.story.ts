@@ -7,6 +7,5 @@ export default defineStory({
   props: { title: 'Material and care', meta: 'Linen' },
   model: { prop: 'open', value: true },
   slots: { default: '100% linen from the Rhön. Machine washable at 30 °C, hang to dry.' },
-  hide: ['defaultOpen'],
   layout: 'block',
 });

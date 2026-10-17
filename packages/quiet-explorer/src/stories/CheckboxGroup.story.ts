@@ -8,6 +8,5 @@ export default defineStory({
   props: { label: 'Notify the customer by', layout: 'list', hint: 'Only for this order.' },
   model: { value: ['email'] },
   slots: { default: () => [h(QCheckbox, { value: 'email', label: 'Email', description: 'Order confirmation and shipping updates' }), h(QCheckbox, { value: 'sms', label: 'Text message' })] },
-  hide: ['defaultValue', 'id', 'name'],
   layout: 'block',
 });

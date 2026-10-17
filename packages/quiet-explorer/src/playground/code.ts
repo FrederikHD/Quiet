@@ -13,7 +13,8 @@ function literal(v: unknown): string {
 
 function attr(name: string, value: unknown): string | null {
   const k = kebab(name);
-  if (value === undefined || value === null || value === false) return null;
+  if (value === undefined || value === false) return null;
+  if (value === null) return `:${k}="null"`;
   if (value === true) return k;
   if (typeof value === 'string') return `${k}="${value.replace(/"/g, '&quot;')}"`;
   if (typeof value === 'function') return `:${k}="${name}"`;
@@ -29,7 +30,7 @@ export function templateFor(story: Story, props: Record<string, unknown>, defaul
     const a = attr(k, v);
     if (a) attrs.push(a);
   }
-  const named = Object.entries(slotText).filter(([n]) => n !== 'default');
+  const named = Object.entries(slotText).filter(([n, t]) => n !== 'default' && t);
   const inner = [
     ...(slotText.default ? [slotText.default] : []),
     ...named.map(([n, t]) => `<template #${n}>${t}</template>`),

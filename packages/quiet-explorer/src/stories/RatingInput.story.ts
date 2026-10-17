@@ -6,5 +6,4 @@ export default defineStory({
   name: 'QRatingInput',
   props: { label: 'Your rating', required: true },
   model: { value: 4 },
-  hide: ['id', 'name', 'defaultValue'],
 });

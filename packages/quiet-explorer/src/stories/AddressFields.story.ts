@@ -6,6 +6,5 @@ export default defineStory({
   name: 'QAddressFields',
   props: { idPrefix: 'pg', kind: 'shipping' },
   model: { value: { country: 'DE' } },
-  hide: ['countries', 'errors'],
   layout: 'block',
 });

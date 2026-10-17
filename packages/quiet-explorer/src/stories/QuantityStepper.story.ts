@@ -7,5 +7,4 @@ export default defineStory({
   props: { min: 1, max: 10 },
   model: { value: 2 },
   field: { label: 'Quantity' },
-  hide: ['id'],
 });

@@ -16,6 +16,5 @@ export default defineStory({
   },
   model: { value: 'open' },
   slots: { default: 'One shared panel: the list of orders for the chosen view.' },
-  hide: ['defaultValue'],
   layout: 'block',
 });

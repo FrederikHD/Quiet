@@ -12,9 +12,19 @@ export interface PropMeta {
   required: boolean;
   default?: string;
   description: string;
-  /** For playground controls: the literal values of a union, or a basic kind. */
-  control: { kind: 'boolean' } | { kind: 'string' } | { kind: 'number' } | { kind: 'enum'; values: string[] } | { kind: 'other' };
+  /** How the playground edits it. Every prop gets one; only functions and DOM elements are left to code. */
+  control: PropControl;
 }
+export type PropControl =
+  | { kind: 'boolean' }
+  | { kind: 'string' }
+  | { kind: 'number' }
+  /** A union of literals; `values` are their JSON texts ('"md"', '2', 'true', 'null'). */
+  | { kind: 'enum'; values: string[] }
+  /** Objects, arrays and records, edited as JSON. */
+  | { kind: 'json' }
+  /** Functions and elements: they can only be passed from code. */
+  | { kind: 'code'; reason: string };
 export interface ComponentDoc {
   name: string;
   folder: string;
@@ -28,18 +38,26 @@ export interface ComponentDoc {
 const VIRTUAL = 'virtual:quiet-meta';
 const RESOLVED = '\0' + VIRTUAL;
 
-function control(schema: PropertyMetaSchema, type: string): PropMeta['control'] {
-  const parts =
-    typeof schema === 'object' && schema.kind === 'enum'
-      ? (schema.schema ?? []).map((s) => (typeof s === 'string' ? s : s.type)).filter((s) => s !== 'undefined')
-      : [typeof schema === 'string' ? schema : type];
-  if (parts.length && parts.every((p) => p === 'boolean' || p === 'true' || p === 'false')) return { kind: 'boolean' };
-  if (parts.length && parts.every((p) => /^".*"$/.test(p))) return { kind: 'enum', values: parts.map((p) => JSON.parse(p)) };
-  if (parts.length && parts.every((p) => /^-?\d+$/.test(p))) return { kind: 'enum', values: parts };
-  if (parts.length === 1 && parts[0] === 'string') return { kind: 'string' };
-  if (parts.length === 1 && parts[0] === 'number') return { kind: 'number' };
-  if (parts.includes('string') && parts.every((p) => p === 'string' || p === 'null')) return { kind: 'string' };
-  return { kind: 'other' };
+function control(schema: PropertyMetaSchema, type: string): PropControl {
+  // vue-component-meta marks function types (even behind an alias such as ComboboxSearch) as kind "event".
+  const text = (sc: PropertyMetaSchema) => (typeof sc === 'string' ? sc : sc.kind === 'event' ? '(…) => unknown' : sc.type);
+  const parts = (typeof schema === 'object' && schema.kind === 'enum' ? (schema.schema ?? []).map(text) : [text(schema) || type])
+    .flatMap((p) => (p === 'boolean' ? ['true', 'false'] : [p.trim()]))
+    .filter((p) => p !== 'undefined');
+  const literal = (p: string) => /^".*"$/.test(p) || /^-?\d+(\.\d+)?$/.test(p) || p === 'true' || p === 'false' || p === 'null';
+  const isFunction = (p: string) => /=>/.test(p) && !/^[{[]/.test(p);
+  const values = parts.filter((p) => p !== 'null');
+
+  if (parts.length && parts.every((p) => p === 'true' || p === 'false')) return { kind: 'boolean' };
+  if (parts.length && parts.every(literal)) return { kind: 'enum', values: parts };
+  // A function or element alternative is for code; the playground edits the plain part ("id" | (row) => key).
+  const plain = values.filter((p) => !isFunction(p) && !/HTMLElement|Element\b/.test(p));
+  if (plain.length && plain.every((p) => p === 'string' || p === 'number' || literal(p))) {
+    return plain.includes('string') ? { kind: 'string' } : { kind: 'number' };
+  }
+  if (!plain.length && values.some(isFunction)) return { kind: 'code', reason: 'a function' };
+  if (!plain.length) return { kind: 'code', reason: 'an element' };
+  return { kind: 'json' };
 }
 
 /** The public components: what each folder's index.ts exports as `default as Q…`. */

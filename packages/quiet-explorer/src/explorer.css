@@ -60,6 +60,9 @@ code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospac
 .ex-preview__stage.is-block { display: grid; justify-content: stretch; align-items: start; }
 .ex-preview__stage > .q-field { max-width: 420px; }
 .ex-controls { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr)); gap: var(--space-4) var(--space-6); align-items: start; }
+.ex-json__fold summary { cursor: pointer; padding: var(--space-2) 0; color: var(--ink); font: var(--text-small); }
+.ex-json__fold summary:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: var(--radius-sm); }
+.ex-controls__rest { grid-column: 1 / -1; }
 .ex-json .q-textarea__field { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; line-height: 18px; }
 .ex-log { margin: 0; padding-left: var(--space-6); display: grid; gap: var(--space-1); }
 

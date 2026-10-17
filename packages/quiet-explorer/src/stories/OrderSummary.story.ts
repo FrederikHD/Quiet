@@ -17,8 +17,6 @@ export default defineStory({
     collapsible: false,
   },
   model: { prop: 'open', value: false },
-  // items hold a long data: URI image: kept, but not as an editable JSON blob.
-  hide: ['items'],
   wrap: (target) => h('div', { style: 'max-width: 420px' }, [target()]),
   layout: 'block',
 });

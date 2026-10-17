@@ -17,5 +17,4 @@ export default defineStory({
   },
   model: { value: null },
   field: { label: 'Tax rate' },
-  hide: ['id', 'name', 'search'],
 });

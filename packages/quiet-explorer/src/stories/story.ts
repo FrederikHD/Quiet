@@ -15,7 +15,7 @@ export interface Story {
   model?: { prop?: string; value: unknown };
   /** Slot content: text (editable in the playground) or a render function. */
   slots?: Record<string, string | (() => VNodeChild)>;
-  /** Props that get no control (the playground manages them, or they make no sense to toggle). */
+  /** Props the playground sets itself and must not be changed (AppShell's contained). Listed, not hidden silently. */
   hide?: string[];
   /** Put the component in a Field with this label (for bare controls such as Input). */
   field?: { label: string; hint?: string };

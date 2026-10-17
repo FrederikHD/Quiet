@@ -22,6 +22,5 @@ export default defineStory({
     ],
   },
   model: { prop: 'selected', value: [] },
-  hide: ['totalCount'],
   layout: 'block',
 });
