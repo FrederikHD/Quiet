@@ -41,6 +41,7 @@ const place = ref<{ top: number; left: number; side: 'top' | 'bottom'; density?:
 const announce = ref(false);
 let placed = false;
 let focused = false;
+let started = false;
 
 function close(returnFocus = false) {
   emit('close', returnFocus);
@@ -128,6 +129,7 @@ function onKeyDown(e: KeyboardEvent) {
 let ro: ResizeObserver | null = null;
 let tipTimer = 0;
 function start() {
+  started = true;
   pushLayer(props.id);
   window.addEventListener('scroll', schedule, true);
   window.addEventListener('resize', schedule);
@@ -146,6 +148,8 @@ function start() {
   }
 }
 function stop() {
+  if (!started) return;
+  started = false;
   cancelAnimationFrame(raf);
   clearTimeout(tipTimer);
   window.removeEventListener('scroll', schedule, true);
@@ -159,9 +163,9 @@ function stop() {
 
 watch(
   () => props.open,
-  async (open, was) => {
+  async (open) => {
     if (!open) {
-      if (was) stop();
+      stop();
       placed = false;
       focused = false;
       place.value = null;
@@ -169,14 +173,14 @@ watch(
       return;
     }
     await nextTick();
+    // Closed again before it was placed: nothing to set up.
+    if (!props.open || started) return;
     reposition();
     start();
   },
   { immediate: true },
 );
-onBeforeUnmount(() => {
-  if (props.open) stop();
-});
+onBeforeUnmount(stop);
 
 // Dialog and menu kinds: move focus in once the panel is placed and visible (hidden elements can't take focus).
 watch(place, async (p) => {

@@ -50,4 +50,4 @@ The panel never gets taller than the screen minus 32px; the header and footer st
 
 ## What you provide
 
-`v-model:open`, `title`, and the content. Optional `description`, the `#footer` slot (Buttons; a form's submit button can sit here with `form="<form id>"`), `size`, `mobile`, `placement`, `role`, `dismissible`, `close-text`, `close-label` (translate: "Schließen", or once for the shop with `configure({ strings: { dialog: { close: 'Schließen' } } })`), `initial-focus`, `flush`.
+`v-model:open`, `title` (or the `#title` slot), and the content. Optional `description` (or `#description`), the `#footer` slot (Buttons; a form's submit button can sit here with `form="<form id>"`), `size`, `mobile`, `placement`, `role`, `dismissible`, `close-text`, `close-label` (translate: "Schließen", or once for the shop with `configure({ strings: { dialog: { close: 'Schließen' } } })`), `initial-focus`, `flush`.

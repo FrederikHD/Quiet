@@ -1,4 +1,32 @@
 import { computed, reactive, type ComputedRef } from 'vue';
+import type {
+  AddressStrings,
+  BreadcrumbsProps,
+  ComboboxStrings,
+  DiscountCodeStrings,
+  FileUploadStrings,
+  FilterChipsStrings,
+  FormStrings,
+  GalleryStrings,
+  MetricProps,
+  NoticeStrings,
+  OrderSummaryStrings,
+  PaginationStrings,
+  PriceRangeStrings,
+  PriceStrings,
+  ProductCardProps,
+  QuantityStepperProps,
+  RatingStrings,
+  ReviewSummaryProps,
+  SearchBoxStrings,
+  ShellStrings,
+  StepsProps,
+  TableStrings,
+  TabsProps,
+  TagStrings,
+  TextareaStrings,
+  ToasterStrings,
+} from './components';
 
 /**
  * Shop-wide settings: the locale for numbers and money, the currency, and translations of every built-in phrase.
@@ -13,13 +41,47 @@ export interface QuietConfig {
 
 const config = reactive<QuietConfig>({ locale: 'en', currency: 'EUR', strings: {} });
 
+/** Translations of the built-in phrases, by namespace. Each namespace is merged into what is there. */
+export interface QuietStrings {
+  form?: FormStrings;
+  combobox?: ComboboxStrings;
+  table?: TableStrings;
+  pagination?: PaginationStrings;
+  input?: { clear?: string };
+  dialog?: { close?: string };
+  shell?: ShellStrings;
+  textarea?: TextareaStrings;
+  toast?: ToasterStrings;
+  upload?: FileUploadStrings;
+  tabs?: TabsProps['strings'];
+  price?: PriceStrings;
+  stepper?: QuantityStepperProps['strings'];
+  productCard?: ProductCardProps['strings'];
+  gallery?: GalleryStrings;
+  breadcrumbs?: BreadcrumbsProps['strings'];
+  choice?: { soldOut?: string };
+  steps?: StepsProps['strings'];
+  orderSummary?: OrderSummaryStrings;
+  address?: AddressStrings;
+  discount?: DiscountCodeStrings;
+  search?: SearchBoxStrings;
+  priceRange?: PriceRangeStrings;
+  filterChips?: FilterChipsStrings;
+  rating?: RatingStrings;
+  reviewSummary?: ReviewSummaryProps['strings'];
+  tag?: TagStrings;
+  notice?: NoticeStrings;
+  metric?: MetricProps['strings'];
+  [namespace: string]: object | undefined;
+}
+
 export interface ConfigureOptions {
   /** BCP 47 locale for numbers and money: "de-DE" formats 1240 as "1.240". */
   locale?: string;
   /** ISO currency code for Price and money() (default EUR). */
   currency?: string;
   /** Translations per namespace: { form: {...}, table: {...}, pagination: {...} }. Merged into what is there. */
-  strings?: Record<string, Record<string, unknown> | undefined>;
+  strings?: QuietStrings;
 }
 
 export function configure(options: ConfigureOptions = {}): Readonly<QuietConfig> {

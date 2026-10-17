@@ -6,12 +6,19 @@ import { useStrings } from '../../config';
 import QToastItem from './QToastItem.vue';
 import { toastState } from './store';
 
+export interface ToasterStrings {
+  /** The × on each toast. Default "Dismiss". */
+  dismiss?: string;
+  /** Names the toast region for screen readers. Default "Notifications". */
+  region?: string;
+}
 export interface ToasterProps {
-  strings?: { dismiss?: string; region?: string };
+  /** Translations: { dismiss: 'Dismiss', region: 'Notifications' }; or once for the shop with configure({ strings: { toast } }). */
+  strings?: ToasterStrings;
 }
 const props = withDefaults(defineProps<ToasterProps>(), { strings: undefined });
 
-const strings = useStrings('toast', { dismiss: 'Dismiss', region: 'Notifications' }, () => props.strings);
+const strings = useStrings<Required<ToasterStrings>>('toast', { dismiss: 'Dismiss', region: 'Notifications' }, () => props.strings);
 const polite = computed(() => toastState.list.filter((t) => t.tone !== 'error'));
 const urgent = computed(() => toastState.list.filter((t) => t.tone === 'error'));
 </script>

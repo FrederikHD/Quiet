@@ -22,7 +22,7 @@ A Badge states a status and can't be acted on (Paid, Out of stock). A Tag is som
 
 ## Keyboard and screen readers
 
-Removable pills are buttons named "Remove <text>" (or `removeLabel`: "Remove filter: Navy"). After a removal, move focus somewhere sensible — FilterChips and DiscountCode do this for you.
+Removable pills are buttons named "Remove <text>" (or `removeLabel`: "Remove filter: Navy"). The whole pill is the button, so its name always holds what it shows: a `detail` is added to the end ("Remove discount LINEN10 −10 %"), and a `removeLabel` should contain the tag's text — people using voice control say what they see. After a removal, move focus somewhere sensible — FilterChips and DiscountCode do this for you.
 
 ## Built from
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, watch, watchEffect } from 'vue';
+import { onMounted, onUpdated, ref, watch, watchEffect } from 'vue';
 import { useQuietId } from '../../composables/useQuietId';
 import QPopoverPanel from '../../internal/QPopoverPanel.vue';
 import { warnOnce } from '../../utils/dom';
@@ -24,7 +24,7 @@ export interface PopoverProps {
   initialFocus?: HTMLElement | null;
   /** No padding inside the panel (lists that reach the edges). */
   flush?: boolean;
-  /** Class for the floating panel. */
+  /** Class for the floating panel (a `class` or `style` set on the Popover goes there too). */
   panelClass?: unknown;
 }
 
@@ -55,9 +55,13 @@ const trigger = ref<HTMLElement | null>(null);
 if (import.meta.env.DEV && !props.label) warnOnce('popover-label', 'Popover: pass a label — it names the panel for screen readers.');
 if (props.defaultOpen && !open.value) open.value = true;
 
-onMounted(() => {
-  trigger.value = (wrap.value?.firstElementChild as HTMLElement | null) ?? null;
-});
+// The trigger is the slot's first element; follow it if the slot swaps it for another.
+const findTrigger = () => {
+  const el = (wrap.value?.firstElementChild as HTMLElement | null) ?? null;
+  if (el !== trigger.value) trigger.value = el;
+};
+onMounted(findTrigger);
+onUpdated(findTrigger);
 // The trigger tells assistive tech what it opens, and whether it is open.
 watchEffect(() => {
   const t = trigger.value;
@@ -91,7 +95,6 @@ watch(open, (now, was) => {
   }, 0);
 });
 
-const anchorEl = computed(() => trigger.value);
 defineExpose({
   show: () => (open.value = true),
   hide: () => (open.value = false),
@@ -108,14 +111,15 @@ defineExpose({
     :open="open"
     :kind="kind"
     :label="label"
-    :anchor="anchorEl"
+    :anchor="trigger"
     :trigger="trigger"
     :placement="placement"
     :align="align"
     :width="width"
     :flush="flush"
     :initial-focus="initialFocus"
-    :panel-class="panelClass"
+    :panel-class="[panelClass, $attrs.class]"
+    :panel-style="$attrs.style"
     @close="onClose"
   >
     <slot name="content">{{ content }}</slot>

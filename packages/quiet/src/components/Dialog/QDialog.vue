@@ -20,9 +20,9 @@ import {
 import QButton from '../Button/QButton.vue';
 
 export interface DialogProps {
-  /** Names the dialog: a short phrase saying what it is for — "Delete product?", "Edit shipping address". Required. */
+  /** Names the dialog: a short phrase saying what it is for — "Delete product?", "Edit shipping address". Required (or use the `title` slot for rich content). */
   title: string;
-  /** One or two sentences under the title, read out with it. */
+  /** One or two sentences under the title, read out with it (or use the `description` slot). */
   description?: string;
   /** sm 400px (confirmations), md 560px (default: short forms, pickers), lg 760px (longer forms, tables). */
   size?: 'sm' | 'md' | 'lg';
@@ -42,6 +42,7 @@ export interface DialogProps {
   initialFocus?: HTMLElement | null;
   /** Body without padding, for content that scrolls on its own (a list). */
   flush?: boolean;
+  /** Density inside the dialog. Default: the density around the element that opened it. */
   density?: 'comfortable' | 'compact';
 }
 
@@ -68,11 +69,16 @@ const emit = defineEmits<{
 defineSlots<{
   /** The content. */
   default?(): unknown;
+  /** A rich title, in place of the title prop. */
+  title?(): unknown;
+  /** A rich description, in place of the description prop. */
+  description?(): unknown;
   /** Buttons at the bottom, primary last. Stacked full width on phones. */
   footer?(): unknown;
 }>();
 
 const slots = useSlots();
+const hasDesc = () => !!props.description || !!slots.description;
 const strings = useStrings('dialog', { close: 'Close' });
 const baseId = useQuietId('q-dialog-');
 const titleId = `${baseId}-title`;
@@ -158,9 +164,11 @@ watch(
       deactivate();
       return;
     }
-    if (import.meta.env.DEV && !props.title) warnOnce('dialog-title', 'Dialog: pass a title — it names the dialog for screen readers.');
+    if (import.meta.env.DEV && !props.title && !slots.title) warnOnce('dialog-title', 'Dialog: pass a title — it names the dialog for screen readers.');
     place = rememberPlace(returnTarget());
     inheritedDensity.value = place?.el.closest('[data-density]')?.getAttribute('data-density') ?? undefined;
+    await nextTick();
+    // Once more when it opens on mount: a template ref to a control inside, passed as initial-focus, arrives a tick later.
     await nextTick();
     if (open.value) activate();
   },
@@ -195,16 +203,16 @@ defineExpose({ panel, close });
         :role="role"
         aria-modal="true"
         :aria-labelledby="titleId"
-        :aria-describedby="description ? descId : undefined"
+        :aria-describedby="hasDesc() ? descId : undefined"
         tabindex="-1"
         :class="['q-dialog__panel', `q-dialog__panel--${size}`]"
       >
         <div class="q-dialog__header">
-          <h2 :id="titleId" class="q-dialog__title">{{ title }}</h2>
+          <h2 :id="titleId" class="q-dialog__title"><slot name="title">{{ title }}</slot></h2>
           <QButton v-if="closeText" variant="ghost" @click="close">{{ closeText }}</QButton>
           <QButton v-else-if="dismissible" variant="ghost" icon-start="x" :aria-label="closeLabel || strings.close" @click="close" />
         </div>
-        <p v-if="description" :id="descId" class="q-dialog__desc">{{ description }}</p>
+        <p v-if="hasDesc()" :id="descId" class="q-dialog__desc"><slot name="description">{{ description }}</slot></p>
         <div :class="['q-dialog__body', flush && 'q-dialog__body--flush']"><slot /></div>
         <div v-if="slots.footer" class="q-dialog__footer"><slot name="footer" /></div>
       </div>
