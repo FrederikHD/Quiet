@@ -16,6 +16,6 @@ async function copy() {
 <template>
   <div class="ex-code">
     <QButton class="ex-code__copy" size="slim" variant="ghost" icon-start="copy" aria-label="Copy code" @click="copy" />
-    <pre><code :data-lang="lang">{{ code }}</code></pre>
+    <pre tabindex="0"><code :data-lang="lang">{{ code }}</code></pre>
   </div>
 </template>

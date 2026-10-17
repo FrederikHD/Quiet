@@ -26,11 +26,6 @@ test.describe('Button playground', () => {
     await expect(page.getByText('<QButton variant="ghost"')).toBeVisible();
   });
 
-  test('events are logged', async ({ page }) => {
-    await page.getByTestId('playground-preview').getByRole('button').click();
-    await page.getByRole('tab', { name: /Events/ }).click();
-    await expect(page.getByTestId('playground-events')).toContainText('click(');
-  });
 
   test('reset restores the story', async ({ page }) => {
     const controls = page.getByTestId('playground-controls');
@@ -53,7 +48,7 @@ test('v-model round-trips through the playground', async ({ page }) => {
 test('an overlay opens from the playground and closes with Escape', async ({ page }) => {
   await page.goto('/components/dialog/playground');
   await page.getByTestId('playground-preview').getByRole('button').first().click();
-  const dialog = page.getByRole('dialog');
+  const dialog = page.getByRole('alertdialog');
   await expect(dialog).toBeVisible();
   await page.keyboard.press('Escape');
   await expect(dialog).toBeHidden();

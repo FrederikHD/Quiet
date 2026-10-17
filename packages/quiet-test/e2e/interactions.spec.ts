@@ -51,21 +51,20 @@ test('Tabs: arrow keys move the selection', async ({ page }) => {
   await expect(tabs.nth(1)).toHaveAttribute('aria-selected', 'true');
 });
 
-test('Combobox: typing filters, Enter picks', async ({ page }) => {
+test('Combobox: typing filters, arrow keys and Enter pick', async ({ page }) => {
   await page.goto('/components/combobox/examples');
-  const example = page.getByTestId('example').first();
-  await example.getByRole('combobox').first().click();
-  const search = page.getByRole('combobox').and(page.locator(':focus'));
+  const trigger = page.locator('button', { hasText: 'Choose a rate' });
+  await trigger.click();
+  const search = page.getByRole('combobox');
+  await expect(search).toBeFocused();
   const listbox = page.getByRole('listbox');
-  await expect(listbox).toBeVisible();
-  const before = await listbox.getByRole('option').count();
-  await search.pressSequentially('a', { delay: 30 });
-  await expect.poll(() => listbox.getByRole('option').count()).toBeLessThanOrEqual(before);
-  const first = (await listbox.getByRole('option').first().textContent())!.trim();
+  await search.fill('aus');
+  await expect(listbox.getByRole('option')).toHaveCount(1);
   await page.keyboard.press('ArrowDown');
   await page.keyboard.press('Enter');
   await expect(listbox).toBeHidden();
-  await expect(example.getByRole('combobox').first()).toContainText(first.split('\n')[0].trim().slice(0, 4));
+  await expect(trigger).toContainText('Austria');
+  await expect(trigger).toBeFocused();
 });
 
 test('Table: a sortable header sorts the rows', async ({ page }) => {
@@ -79,10 +78,10 @@ test('Table: a sortable header sorts the rows', async ({ page }) => {
 
 test('Toast: a confirmation appears and can be dismissed', async ({ page }) => {
   await page.goto('/components/toast/examples');
-  await page.getByTestId('example').first().getByRole('button').first().click();
+  await page.getByRole('button', { name: 'Save product' }).click();
   const toast = page.locator('.q-toast').first();
   await expect(toast).toBeVisible();
-  await toast.getByRole('button', { name: /dismiss|close/i }).click();
+  await toast.getByRole('button', { name: 'Dismiss' }).click();
   await expect(toast).toBeHidden();
 });
 

@@ -8,27 +8,30 @@ class ResizeObserverStub {
 }
 globalThis.ResizeObserver ??= ResizeObserverStub as unknown as typeof ResizeObserver;
 
-window.matchMedia ??= ((query: string) => ({
-  matches: false,
-  media: query,
-  onchange: null,
-  addEventListener() {},
-  removeEventListener() {},
-  addListener() {},
-  removeListener() {},
-  dispatchEvent: () => false,
-})) as unknown as typeof window.matchMedia;
+// Specs that run in Node (// @vitest-environment node) have no DOM to patch.
+if (typeof window !== 'undefined') {
+  window.matchMedia ??= ((query: string) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addEventListener() {},
+    removeEventListener() {},
+    addListener() {},
+    removeListener() {},
+    dispatchEvent: () => false,
+  })) as unknown as typeof window.matchMedia;
 
-Element.prototype.scrollIntoView ??= function () {};
-window.scrollTo ??= (() => {}) as typeof window.scrollTo;
-HTMLElement.prototype.scrollTo ??= function () {};
+  Element.prototype.scrollIntoView ??= function () {};
+  window.scrollTo ??= (() => {}) as typeof window.scrollTo;
+  HTMLElement.prototype.scrollTo ??= function () {};
 
-// jsdom has no layout: report every element as rendered, so "visible focusables" are found.
-Element.prototype.getClientRects = function () {
-  return [{ width: 1, height: 1, top: 0, left: 0, right: 1, bottom: 1 }] as unknown as DOMRectList;
-};
+  // jsdom has no layout: report every element as rendered, so "visible focusables" are found.
+  Element.prototype.getClientRects = function () {
+    return [{ width: 1, height: 1, top: 0, left: 0, right: 1, bottom: 1 }] as unknown as DOMRectList;
+  };
 
-afterEach(() => {
-  document.body.innerHTML = '';
-  document.body.removeAttribute('style');
-});
+  afterEach(() => {
+    document.body.innerHTML = '';
+    document.body.removeAttribute('style');
+  });
+}

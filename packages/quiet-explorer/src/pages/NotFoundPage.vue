@@ -5,7 +5,7 @@ import { QButton, QEmptyState, QPage } from 'quiet';
 <template>
   <QPage title="Not found">
     <QEmptyState title="There's no page here" icon="search" :heading-level="2">
-      <p>The link may be old. Pick a component on the left, or start from the brand book.</p>
+      <p>The link may be old. Pick a component from the navigation, or start from the brand book.</p>
       <template #actions><QButton href="/">Brand book</QButton></template>
     </QEmptyState>
   </QPage>

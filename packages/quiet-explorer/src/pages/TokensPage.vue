@@ -19,7 +19,8 @@ const fontStack = (family: string) => (tokens.type.families as Record<string, st
 
 <template>
   <QPage title="Tokens" subtitle="Generated into tokens.css as CSS custom properties: var(--brand), var(--space-4), var(--text-body) …">
-    <QCard title="Colour" :heading-level="2" flush>
+    <section class="ex-section" aria-labelledby="tokens-colour">
+      <h2 id="tokens-colour" class="ex-h2">Colour</h2>
       <QTable
         caption="Colour tokens"
         caption-hidden
@@ -39,7 +40,7 @@ const fontStack = (family: string) => (tokens.type.families as Record<string, st
           </span>
         </template>
       </QTable>
-    </QCard>
+    </section>
 
     <QCard title="Type" :heading-level="2">
       <p class="ex-muted">Font: <code>{{ fontStack('sans') }}</code>. Use the shorthand <code>font: var(--text-body)</code> or the class <code>.q-text-body</code>.</p>

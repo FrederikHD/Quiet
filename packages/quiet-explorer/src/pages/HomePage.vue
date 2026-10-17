@@ -16,7 +16,7 @@ import MarkdownView from './MarkdownView.vue';
         </li>
         <li>Load Inter from Google Fonts, set <code>data-theme</code> and <code>data-density</code> on <code>&lt;html&gt;</code>.</li>
       </ol>
-      <p class="ex-muted">{{ groups.reduce((n, g) => n + g.entries.length, 0) }} components in {{ groups.length }} groups. Pick one on the left.</p>
+      <p class="ex-muted">{{ groups.reduce((n, g) => n + g.entries.length, 0) }} components in {{ groups.length }} groups. Pick one from the navigation.</p>
     </QCard>
     <MarkdownView :source="brandBook" />
   </QPage>

@@ -40,8 +40,16 @@ const slugOf = (folder: string) => folder.replace(/([a-z])([A-Z])/g, '$1-$2').to
 function splitReadme(md: string) {
   const body = md.replace(/^# .*\n+/, '');
   const end = body.search(/\n\s*\n/);
-  const summary = (end === -1 ? body : body.slice(0, end)).trim().replace(/`([^`]+)`/g, '$1');
-  return { summary, rest: end === -1 ? '' : body.slice(end).trim() };
+  const first = (end === -1 ? body : body.slice(0, end)).trim();
+  const rest = end === -1 ? '' : body.slice(end).trim();
+  const plain = (s: string) => s.replace(/`([^`]+)`/g, '$1');
+  // A paragraph ending in ":" introduces the list after it: the subtitle takes the sentences before that
+  // lead-in, and the lead-in stays with its list.
+  if (first.endsWith(':')) {
+    const cut = first.search(/[.!?]\s+[^.!?]*:$/);
+    if (cut !== -1) return { summary: plain(first.slice(0, cut + 1)), rest: `${first.slice(cut + 1).trim()}\n\n${rest}` };
+  }
+  return { summary: plain(first), rest };
 }
 
 function examplesFor(folder: string): Example[] {

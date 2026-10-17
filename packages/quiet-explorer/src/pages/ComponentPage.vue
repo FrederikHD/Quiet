@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { QBadge, QCard, QPage, QTable, QTabs, type TabItem } from 'quiet';
+import { QBadge, QPage, QTable, QTabs, type TabItem } from 'quiet';
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { entries } from '../catalog';
@@ -51,75 +51,77 @@ const usage = computed(
       <PlaygroundView v-else-if="current === 'playground' && entry.story" :entry="entry" />
 
       <div v-else-if="current === 'api'" class="ex-stack" data-testid="api">
-        <QCard v-for="api in entry.apis" :key="api.name" :title="api.name" :description="api.file" :heading-level="2" flush>
-          <div class="ex-api">
-            <QTable
-              :caption="`${api.name} props`"
-              :columns="[
-                { key: 'name', header: 'Prop' },
-                { key: 'type', header: 'Type', wrap: true },
-                { key: 'default', header: 'Default' },
-                { key: 'description', header: 'Description', wrap: true },
-              ]"
-              :rows="api.props"
-              row-key="name"
-              mobile="cards"
-              density="compact"
-            >
-              <template #cell-name="{ row }"><code>{{ row.name }}</code><span v-if="row.required" class="ex-required"> required</span></template>
-              <template #cell-type="{ row }"><code class="ex-type">{{ row.type }}</code></template>
-              <template #cell-default="{ row }"><code v-if="row.default">{{ row.default }}</code></template>
-              <template #empty>No props.</template>
-            </QTable>
-            <QTable
-              v-if="api.events.length"
-              :caption="`${api.name} events`"
-              :columns="[
-                { key: 'name', header: 'Event' },
-                { key: 'type', header: 'Payload', wrap: true },
-                { key: 'description', header: 'Description', wrap: true },
-              ]"
-              :rows="api.events"
-              row-key="name"
-              mobile="cards"
-              density="compact"
-            >
-              <template #cell-name="{ row }"><code>@{{ row.name }}</code></template>
-              <template #cell-type="{ row }"><code class="ex-type">{{ row.type }}</code></template>
-            </QTable>
-            <QTable
-              v-if="api.slots.length"
-              :caption="`${api.name} slots`"
-              :columns="[
-                { key: 'name', header: 'Slot' },
-                { key: 'type', header: 'Slot props', wrap: true },
-                { key: 'description', header: 'Description', wrap: true },
-              ]"
-              :rows="api.slots"
-              row-key="name"
-              mobile="cards"
-              density="compact"
-            >
-              <template #cell-name="{ row }"><code>#{{ row.name }}</code></template>
-              <template #cell-type="{ row }"><code class="ex-type">{{ row.type === '{}' ? '' : row.type }}</code></template>
-            </QTable>
-            <QTable
-              v-if="api.exposed.length"
-              :caption="`${api.name} ref (exposed)`"
-              :columns="[
-                { key: 'name', header: 'Name' },
-                { key: 'type', header: 'Type', wrap: true },
-              ]"
-              :rows="api.exposed"
-              row-key="name"
-              mobile="cards"
-              density="compact"
-            >
-              <template #cell-name="{ row }"><code>{{ row.name }}</code></template>
-              <template #cell-type="{ row }"><code class="ex-type">{{ row.type }}</code></template>
-            </QTable>
-          </div>
-        </QCard>
+        <section v-for="api in entry.apis" :key="api.name" class="ex-api" :aria-labelledby="`api-${api.name}`">
+          <header>
+            <h2 :id="`api-${api.name}`" class="ex-h2">{{ api.name }}</h2>
+            <p class="ex-muted">{{ api.file }}</p>
+          </header>
+          <QTable
+            :caption="`${api.name} props`"
+            :columns="[
+              { key: 'name', header: 'Prop' },
+              { key: 'type', header: 'Type', wrap: true },
+              { key: 'default', header: 'Default' },
+              { key: 'description', header: 'Description', wrap: true },
+            ]"
+            :rows="api.props"
+            row-key="name"
+            mobile="cards"
+            density="compact"
+          >
+            <template #cell-name="{ row }"><code>{{ row.name }}</code><span v-if="row.required" class="ex-required"> required</span></template>
+            <template #cell-type="{ row }"><code class="ex-type">{{ row.type }}</code></template>
+            <template #cell-default="{ row }"><code v-if="row.default">{{ row.default }}</code></template>
+            <template #empty>No props.</template>
+          </QTable>
+          <QTable
+            v-if="api.events.length"
+            :caption="`${api.name} events`"
+            :columns="[
+              { key: 'name', header: 'Event' },
+              { key: 'type', header: 'Payload', wrap: true },
+              { key: 'description', header: 'Description', wrap: true },
+            ]"
+            :rows="api.events"
+            row-key="name"
+            mobile="cards"
+            density="compact"
+          >
+            <template #cell-name="{ row }"><code>@{{ row.name }}</code></template>
+            <template #cell-type="{ row }"><code class="ex-type">{{ row.type }}</code></template>
+          </QTable>
+          <QTable
+            v-if="api.slots.length"
+            :caption="`${api.name} slots`"
+            :columns="[
+              { key: 'name', header: 'Slot' },
+              { key: 'type', header: 'Slot props', wrap: true },
+              { key: 'description', header: 'Description', wrap: true },
+            ]"
+            :rows="api.slots"
+            row-key="name"
+            mobile="cards"
+            density="compact"
+          >
+            <template #cell-name="{ row }"><code>#{{ row.name }}</code></template>
+            <template #cell-type="{ row }"><code class="ex-type">{{ row.type === '{}' ? '' : row.type }}</code></template>
+          </QTable>
+          <QTable
+            v-if="api.exposed.length"
+            :caption="`${api.name} ref (exposed)`"
+            :columns="[
+              { key: 'name', header: 'Name' },
+              { key: 'type', header: 'Type', wrap: true },
+            ]"
+            :rows="api.exposed"
+            row-key="name"
+            mobile="cards"
+            density="compact"
+          >
+            <template #cell-name="{ row }"><code>{{ row.name }}</code></template>
+            <template #cell-type="{ row }"><code class="ex-type">{{ row.type }}</code></template>
+          </QTable>
+        </section>
       </div>
 
       <div v-else class="ex-stack">
