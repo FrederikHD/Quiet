@@ -35,6 +35,7 @@ const model = defineModel<string[]>();
 defineSlots<{
   /** Checkboxes, each with a `value` and a `label`. */
   default(): unknown;
+  /** Rich hint content instead of `hint`. */
   hint?(): unknown;
 }>();
 

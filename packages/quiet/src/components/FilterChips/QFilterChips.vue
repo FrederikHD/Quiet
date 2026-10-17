@@ -9,21 +9,35 @@ export interface FilterChip {
   /** A colour dot before the label. */
   swatch?: string;
 }
+export interface FilterChipsStrings {
+  /** Names the chip list. Default "Active filters". */
+  label?: string;
+  /** Names a chip's button. Default "Remove filter: <label>". */
+  remove?: (label: string) => string;
+  clear?: string;
+}
 export interface FilterChipsProps {
+  /** The filters in use; null and false are skipped, so you can write `inStock && { … }`. */
   items: (FilterChip | null | false)[];
   /** Shows "Clear all" from two chips up (emits `clear`). */
   clearable?: boolean;
   /** Where focus goes when the last chip is removed (default: the chip list itself). */
   emptyFocus?: HTMLElement | null;
-  strings?: { label?: string; remove?: (label: string) => string; clear?: string };
+  /** Overrides the texts, e.g. for another language. */
+  strings?: FilterChipsStrings;
 }
 
 const props = withDefaults(defineProps<FilterChipsProps>(), { clearable: true, emptyFocus: undefined, strings: undefined });
-const emit = defineEmits<{ remove: [key: string]; clear: [] }>();
+const emit = defineEmits<{
+  /** A chip was pressed: drop that filter. */
+  remove: [key: string];
+  /** Clear all was pressed. */
+  clear: [];
+}>();
 
-const strings = useStrings(
+const strings = useStrings<Required<FilterChipsStrings>>(
   'filterChips',
-  { label: 'Active filters', remove: (l: string) => `Remove filter: ${l}`, clear: 'Clear all' },
+  { label: 'Active filters', remove: (l) => `Remove filter: ${l}`, clear: 'Clear all' },
   () => props.strings,
 );
 const root = ref<HTMLElement | null>(null);

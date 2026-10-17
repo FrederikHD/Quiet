@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { useStrings } from '../../config';
+import { useFormReset } from '../../composables/useFormReset';
 import { useQuietId } from '../../composables/useQuietId';
 import QFieldMarker from '../../internal/QFieldMarker.vue';
 import QFieldMessage from '../../internal/QFieldMessage.vue';
@@ -9,15 +10,23 @@ import { useFieldSetup, type FormStrings, type Markers } from '../Field/context'
 import { STAR_PATH, ratingDefaults, type RatingStrings } from '../Rating/stars';
 
 export interface RatingInputProps {
+  /** The question. Default "Your rating". */
   label?: string;
   required?: boolean;
+  /** Error message; also marks the stars invalid. */
   error?: string | null;
+  /** Visible guidance under the stars. */
   hint?: string;
   /** Goes on the chosen star's radio (or the first), so the Form's error summary can jump to it. */
   id?: string;
+  /** Name for form posts; generated when missing. */
   name?: string;
   disabled?: boolean;
+  /** Overrides the Form's markers for this one field. */
   markers?: Markers;
+  /** Starting value when you don't use v-model; a form reset goes back to it. */
+  defaultValue?: number;
+  /** Overrides the texts, e.g. for another language. */
   strings?: RatingStrings & FormStrings;
 }
 
@@ -28,23 +37,31 @@ const props = withDefaults(defineProps<RatingInputProps>(), {
   id: undefined,
   name: undefined,
   markers: undefined,
+  defaultValue: undefined,
   strings: undefined,
 });
 /** 1–5, or 0 for none yet. */
-const model = defineModel<number>({ default: 0 });
+const model = defineModel<number>();
+if (model.value === undefined && props.defaultValue !== undefined) model.value = props.defaultValue;
 
 // Five stars to pick from — a radio group, so ← → and screen readers work as with any radios.
 const strings = useStrings<Required<RatingStrings>>('rating', ratingDefaults(), () => props.strings);
 const { markers, strings: fstrings, status, summaryShown } = useFieldSetup(props);
 const gid = useQuietId('q-rinput-');
 const hover = ref(0);
-const shown = computed(() => hover.value || model.value);
+const root = ref<HTMLElement | null>(null);
+// A form reset puts the stars back to defaultValue.
+useFormReset(root, () => {
+  model.value = props.defaultValue ?? 0;
+});
+const shown = computed(() => hover.value || model.value || 0);
 const describedBy = computed(() => joinIds(status.value[0] && `${gid}-msg`, props.hint && `${gid}-hint`));
 const inputId = (n: number) => (n === (model.value || 1) && props.id ? props.id : `${gid}-${n}`);
 </script>
 
 <template>
   <div
+    ref="root"
     class="q-field q-rinput q-field--top"
     role="radiogroup"
     :aria-labelledby="`${gid}-label`"

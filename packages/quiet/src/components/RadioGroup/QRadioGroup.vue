@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, useAttrs } from 'vue';
 import { useFormReset } from '../../composables/useFormReset';
 import { RADIO_GROUP_KEY } from '../../internal/choice';
 import QChoiceGroupFrame from '../../internal/QChoiceGroupFrame.vue';
 import { useChoiceGroup, type ChoiceGroupProps } from '../../internal/useChoiceGroup';
+import { warnOnce } from '../../utils/dom';
 
 export interface RadioGroupProps extends ChoiceGroupProps {
   /** Starting value when you don't use v-model. */
@@ -35,8 +36,12 @@ const model = defineModel<string | null>();
 defineSlots<{
   /** Radios, each with a `value` and a `label`. */
   default(): unknown;
+  /** Rich hint content instead of `hint`. */
   hint?(): unknown;
 }>();
+
+if (import.meta.env.DEV && props.label == null && !props.ariaLabel && !useAttrs()['aria-labelledby'])
+  warnOnce('radiogroup-label', 'RadioGroup: pass a label — it is the question the radios answer.');
 
 if (model.value === undefined && props.defaultValue !== undefined) model.value = props.defaultValue;
 

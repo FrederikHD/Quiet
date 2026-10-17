@@ -19,6 +19,10 @@ import { QButton, QFormActions } from 'quiet';
       <p class="pv-title">Under 480px — stacked, primary on top</p>
       <QFormActions><QButton size="large">Back to cart</QButton><QButton variant="primary" size="large">Continue to payment</QButton></QFormActions>
     </div>
+    <div class="narrow">
+      <p class="pv-title">sticky, under 480px — stays one row</p>
+      <QFormActions sticky><QButton>Cancel</QButton><QButton variant="primary">Save</QButton></QFormActions>
+    </div>
   </div>
 </template>
 

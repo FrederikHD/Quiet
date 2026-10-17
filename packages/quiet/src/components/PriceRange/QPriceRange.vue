@@ -6,15 +6,31 @@ import QField from '../Field/QField.vue';
 import QFieldGroup from '../FieldGroup/QFieldGroup.vue';
 import QInput from '../Input/QInput.vue';
 
-export interface PriceRangeProps {
-  min: number;
-  max: number;
-  step?: number;
+export interface PriceRangeStrings {
   label?: string;
+  from?: string;
+  to?: string;
+  /** Names the lower handle. */
+  minimum?: string;
+  /** Names the upper handle. */
+  maximum?: string;
+}
+export interface PriceRangeProps {
+  /** The cheapest price in the list: the left end of the track. */
+  min: number;
+  /** The dearest price in the list: the right end of the track. */
+  max: number;
+  /** Handles and typed prices snap to it. Default 1. */
+  step?: number;
+  /** The group's label. Default "Price". */
+  label?: string;
+  /** Keeps the label for screen readers only — when a filter heading already says "Price". */
   labelHidden?: boolean;
+  /** ISO code for the symbol in the fields and the handles' spoken value; defaults to the configured currency. */
   currency?: string;
   disabled?: boolean;
-  strings?: { label?: string; from?: string; to?: string; minimum?: string; maximum?: string };
+  /** Overrides the texts, e.g. for another language. */
+  strings?: PriceRangeStrings;
 }
 
 const props = withDefaults(defineProps<PriceRangeProps>(), { step: 1, label: undefined, currency: undefined, strings: undefined });
@@ -22,7 +38,7 @@ const props = withDefaults(defineProps<PriceRangeProps>(), { step: 1, label: und
 const model = defineModel<[number, number]>({ required: true });
 const emit = defineEmits<{ /** A handle was let go, or a field left — apply the filter here. */ commit: [value: [number, number]] }>();
 
-const strings = useStrings(
+const strings = useStrings<Required<PriceRangeStrings>>(
   'priceRange',
   { label: 'Price', from: 'From', to: 'To', minimum: 'Minimum price', maximum: 'Maximum price' },
   () => props.strings,

@@ -27,4 +27,4 @@ The Field layout (label, marker, message) around native radios.
 
 ## What you provide
 
-`v-model`, `required` and the error when nothing is chosen.
+`v-model` (or `defaultValue`; a form reset goes back to it), `required` and the error when nothing is chosen.

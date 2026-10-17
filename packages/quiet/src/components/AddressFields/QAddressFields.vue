@@ -26,11 +26,15 @@ export interface AddressFieldsProps {
   section?: string;
   /** Which optional parts show: { company: 'hidden', phone: 'required' }. */
   fields?: AddressFieldOptions;
+  /** The countries you deliver to. Default: the 13 countries in addressCountries. */
   countries?: { value: string; label: string }[];
+  /** Shown in the country select while none is chosen: "Choose a country". */
   countryPlaceholder?: string;
-  /** Default "Only used if the courier needs to reach you"; null for none. */
+  /** Hint under the phone field. Default "Only used if the courier needs to reach you"; null for none. */
   phoneHint?: string | null;
+  /** Disables every part. */
   disabled?: boolean;
+  /** Overrides the labels and messages, e.g. for another language. */
   strings?: AddressStrings;
 }
 
@@ -47,7 +51,7 @@ const props = withDefaults(defineProps<AddressFieldsProps>(), {
 });
 /** The address. Updated as a whole, with the key that changed in `change`. */
 const model = defineModel<Address>({ default: () => ({}) });
-const emit = defineEmits<{ change: [next: Address, key: AddressFieldKey] }>();
+const emit = defineEmits<{ /** After every edit: the whole new address and the key that changed. */ change: [next: Address, key: AddressFieldKey] }>();
 
 const strings = useStrings<Required<AddressStrings>>('address', ADDRESS_STRINGS, () => props.strings);
 const country = computed(() => model.value.country ?? '');

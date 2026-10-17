@@ -8,8 +8,11 @@ import { joinIds, warnOnce } from '../../utils/dom';
 export interface RadioProps {
   /** The group's value when this radio is chosen. */
   value: string;
+  /** The option's name (or the `label` slot). */
   label?: string;
+  /** One line under the label in ink-muted: delivery time, conditions (or the `description` slot). */
   description?: string;
+  /** At the end of the row: a price, a count (or the `meta` slot). */
   meta?: string;
   /** swatches layout: the dot's colour (any CSS colour). */
   swatch?: string;
@@ -17,9 +20,12 @@ export interface RadioProps {
   image?: string;
   /** swatches / buttons layouts: crossed out but still choosable, read as "XL, sold out". */
   soldOut?: boolean;
+  /** Marks this option invalid; the RadioGroup's error does this for every option. */
   invalid?: boolean;
+  /** A bordered tile instead of a row; follows the group's cards layout by default. */
   card?: boolean;
   disabled?: boolean;
+  /** Goes on the native input. */
   id?: string;
 }
 
@@ -35,8 +41,11 @@ const props = withDefaults(defineProps<RadioProps>(), {
   id: undefined,
 });
 defineSlots<{
+  /** Rich label content instead of `label`. */
   label?(): unknown;
+  /** Rich description content instead of `description`. */
   description?(): unknown;
+  /** Rich meta content instead of `meta`. */
   meta?(): unknown;
   /** cards layout: a small picture before the text — a payment method's icon or logo (decorative). */
   media?(): unknown;
@@ -67,6 +76,7 @@ const inputAttrs = computed<Record<string, unknown>>(() => {
     'aria-describedby': joinIds(rest['aria-describedby'] as string | undefined, g?.describedBy),
     onChange: (e: Event) => {
       if ((e.target as HTMLInputElement).checked) g?.select(props.value);
+      (rest.onChange as ((e: Event) => void) | undefined)?.(e);
     },
   };
 });

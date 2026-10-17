@@ -29,9 +29,12 @@ export interface DiscountCodeProps {
   applied?: AppliedCode[];
   /** Start as a quiet "Add a discount code" button. */
   collapsible?: boolean;
+  /** The field's label. Default "Discount code". */
   label?: string;
+  /** Goes on the code field. */
   id?: string;
   disabled?: boolean;
+  /** Overrides the texts, e.g. for another language. */
   strings?: DiscountCodeStrings;
 }
 
@@ -113,6 +116,11 @@ async function remove(a: AppliedCode) {
   await nextTick();
   input.value?.focus();
 }
+// The whole tag is the button, so its name holds all of its visible text (WCAG 2.5.3): "Remove discount LINEN10 −10 %".
+// The space after the code keeps "LINEN10 −10 %" apart in the tag's text too.
+function removeLabel(a: AppliedCode) {
+  return a.label ? `${strings.value.remove(a.code)} ${a.label}` : strings.value.remove(a.code);
+}
 async function reveal() {
   open.value = true;
   await nextTick();
@@ -151,8 +159,8 @@ function onInput(v: string | number | null | undefined) {
     </QButton>
     <ul v-if="applied.length" class="q-discount__tags">
       <li v-for="a in applied" :key="a.code">
-        <QTag icon="tag" :detail="a.label" removable :remove-label="strings.remove(a.code)" :disabled="disabled" class="q-discount__tag" @remove="remove(a)">
-          {{ a.code }}
+        <QTag icon="tag" :detail="a.label" removable :remove-label="removeLabel(a)" :disabled="disabled" class="q-discount__tag" @remove="remove(a)">
+          {{ a.label ? `${a.code} ` : a.code }}
         </QTag>
       </li>
     </ul>

@@ -43,11 +43,17 @@ export interface FileUploadProps {
   acceptLabel?: string;
   /** Bytes. */
   maxSize?: number;
+  /** Most files in the list; the choose button is disabled once it's full. */
   maxFiles?: number;
+  /** Also follows the surrounding Field's disabled. */
   disabled?: boolean;
+  /** Also follows the surrounding Field's error. */
   invalid?: boolean;
+  /** Name of the native file input, for form posts. */
   name?: string;
+  /** Goes on the choose button; defaults to the Field's id, so its label names the button. */
   id?: string;
+  /** Overrides the texts, e.g. for another language. */
   strings?: FileUploadStrings;
 }
 
@@ -91,7 +97,7 @@ const images = computed(() => props.variant === 'images');
 const multiple = computed(() => props.multiple ?? images.value);
 const accept = computed(() => props.accept ?? (images.value ? 'image/jpeg,image/png,image/webp,image/gif' : undefined));
 const isDisabled = computed(() => props.disabled || !!field?.value.disabled);
-const isInvalid = computed(() => props.invalid || !!field?.value.invalid);
+const isInvalid = computed(() => props.invalid || String(attrs['aria-invalid']) === 'true' || !!field?.value.invalid);
 const controlId = computed(() => props.id ?? field?.value.id);
 const over = ref(false);
 const rejects = ref<string[]>([]);
@@ -101,7 +107,6 @@ const root = ref<HTMLElement | null>(null);
 const msgId = useQuietId('q-upload-msg-');
 const textId = useQuietId('q-upload-text-');
 let seq = 0;
-
 
 // Object URLs made here are released when their item goes away.
 const made = new Map<string, string>();

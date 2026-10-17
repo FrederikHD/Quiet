@@ -10,7 +10,10 @@ export interface FormActionsProps {
 }
 
 const props = withDefaults(defineProps<FormActionsProps>(), { align: 'end' });
-defineSlots<{ default(): unknown }>();
+defineSlots<{
+  /** The buttons, primary last. With align="between", wrap the right-hand ones in a <div>. */
+  default(): unknown;
+}>();
 
 const root = ref<HTMLElement | null>(null);
 useStickyPad(root, 'bottom', () => props.sticky);
