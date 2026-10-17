@@ -21,7 +21,7 @@ const PREFIX = { error: 'errorPrefix', warning: 'warningPrefix', success: 'succe
     <div v-if="status" :id="id" :class="['q-field__msg', `q-field__msg--${status}`]">
       <span class="q-lead" aria-hidden="true"><QIcon :name="ICONS[status]" size="sm" /></span>
       <span>
-        <span v-if="strings[PREFIX[status]]" class="q-visually-hidden">{{ strings[PREFIX[status]] }} </span>
+        <span v-if="strings[PREFIX[status]]" class="q-visually-hidden">{{ `${strings[PREFIX[status]]} ` }}</span>
         <slot>{{ message }}</slot>
       </span>
     </div>

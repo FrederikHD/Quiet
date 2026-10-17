@@ -5,7 +5,7 @@ import { useQuietId } from '../../composables/useQuietId';
 import QLead from '../../internal/QLead.vue';
 import { joinIds } from '../../utils/dom';
 import QButton from '../Button/QButton.vue';
-import { useFieldControl } from '../Field/context';
+import { useControlId, useFieldControl } from '../Field/context';
 import QIcon from '../Icon/QIcon.vue';
 import { fileMatches as matches, formatSize } from './files';
 
@@ -98,7 +98,7 @@ const multiple = computed(() => props.multiple ?? images.value);
 const accept = computed(() => props.accept ?? (images.value ? 'image/jpeg,image/png,image/webp,image/gif' : undefined));
 const isDisabled = computed(() => props.disabled || !!field?.value.disabled);
 const isInvalid = computed(() => props.invalid || String(attrs['aria-invalid']) === 'true' || !!field?.value.invalid);
-const controlId = computed(() => props.id ?? field?.value.id);
+const controlId = useControlId(field, () => props.id);
 const over = ref(false);
 const rejects = ref<string[]>([]);
 const input = ref<HTMLInputElement | null>(null);

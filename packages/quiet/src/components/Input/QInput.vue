@@ -2,7 +2,7 @@
 import { computed, ref, useAttrs, useSlots } from 'vue';
 import { useStrings } from '../../config';
 import { joinIds, warnOnce } from '../../utils/dom';
-import { useFieldControl } from '../Field/context';
+import { useControlId, useFieldControl } from '../Field/context';
 
 export interface InputProps {
   /** default follows the nearest data-density (40px comfortable, 32px compact). slim is a fixed 28px for filter bars and table cells (back office, desktop). large is a fixed 48px for storefront search, newsletter and checkout fields. */
@@ -22,9 +22,12 @@ export interface InputProps {
   /** Accessible name of the clear button. Default "Clear" — translate it ("Leeren"). */
   clearLabel?: string;
   disabled?: boolean;
+  /** Shown and copyable, never editable: order numbers, generated SKUs, API keys. */
   readonly?: boolean;
   required?: boolean;
+  /** Inside a Field the Field's id wins; outside, pair it with your own <label for>. */
   id?: string;
+  /** Native input type. Prefer "text" with inputmode="decimal" or "numeric" over "number". */
   type?: string;
 }
 
@@ -62,7 +65,7 @@ const field = useFieldControl();
 const strings = useStrings('input', { clear: 'Clear' });
 const input = ref<HTMLInputElement | null>(null);
 
-const controlId = computed(() => props.id ?? field?.value.id);
+const controlId = useControlId(field, () => props.id);
 const isDisabled = computed(() => props.disabled || !!field?.value.disabled);
 const isReadonly = computed(() => props.readonly || !!field?.value.readOnly);
 const isInvalid = computed(

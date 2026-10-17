@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { computed, ref, useAttrs, useSlots } from 'vue';
+import { computed, nextTick, ref, useAttrs, useSlots } from 'vue';
 import { useCheckGroup } from '../../internal/choice';
 import QChoiceRow from '../../internal/QChoiceRow.vue';
 import QChoiceTile from '../../internal/QChoiceTile.vue';
 import { joinIds, warnOnce } from '../../utils/dom';
+import { useControlId, useFieldControl } from '../Field/context';
 
 export interface CheckboxProps {
   /** The option's name. Clicking it toggles the box. (Or the `label` slot.) */
@@ -24,10 +25,12 @@ export interface CheckboxProps {
   labelHidden?: boolean;
   /** Shows a dash: some, not all, of the items below are ticked ("Select all"). */
   indeterminate?: boolean;
+  /** Red border until it's ticked. Inside a CheckboxGroup the group's error sets it. */
   invalid?: boolean;
   /** Bordered tile. Inside a CheckboxGroup with layout="cards" this is set for you. */
   card?: boolean;
   disabled?: boolean;
+  /** Posted with the form; inside a CheckboxGroup the group's name is used. */
   name?: string;
   id?: string;
 }
@@ -47,19 +50,29 @@ const props = withDefaults(defineProps<CheckboxProps>(), {
 });
 /** Ticked or not (on its own; inside a CheckboxGroup the group holds the value). */
 const checked = defineModel<boolean>({ default: false });
-defineSlots<{ label?(): unknown; description?(): unknown; meta?(): unknown }>();
+defineSlots<{
+  /** Rich label content instead of `label`. */
+  label?(): unknown;
+  /** Rich description instead of `description`. */
+  description?(): unknown;
+  /** Rich meta instead of `meta`. */
+  meta?(): unknown;
+}>();
 
 const attrs = useAttrs();
 const slots = useSlots();
 const group = useCheckGroup();
+// A lone checkbox wrapped in a Field gets the Field's wiring, like any control (a group's own options don't).
+const field = group ? null : useFieldControl();
 const input = ref<HTMLInputElement | null>(null);
+const ownId = useControlId(field, () => props.id);
 
 if (import.meta.env.DEV && props.label == null && !slots.label && !attrs['aria-label']) {
   warnOnce('check-label', 'Checkbox: pass a label (use labelHidden to hide it visually, e.g. in table rows).');
 }
 
-const isDisabled = computed(() => props.disabled || !!group?.value.disabled);
-const isInvalid = computed(() => props.invalid || !!group?.value.invalid);
+const isDisabled = computed(() => props.disabled || !!group?.value.disabled || !!field?.value.disabled);
+const isInvalid = computed(() => props.invalid || !!group?.value.invalid || !!field?.value.invalid);
 const managed = computed(() => Array.isArray(group?.value.value));
 const isChecked = computed(() =>
   managed.value ? (group!.value.value as string[]).includes(props.value ?? '') : checked.value,
@@ -69,6 +82,12 @@ function onChange(e: Event) {
   const on = (e.target as HTMLInputElement).checked;
   if (managed.value) group!.value.toggle(props.value ?? '', on);
   checked.value = on;
+  // Clicking clears the native indeterminate state, and the owner may keep the old value: show what the props say.
+  nextTick(() => {
+    if (!input.value) return;
+    input.value.checked = isChecked.value;
+    input.value.indeterminate = !!props.indeterminate;
+  });
 }
 
 const inputAttrs = computed<Record<string, unknown>>(() => {
@@ -78,15 +97,15 @@ const inputAttrs = computed<Record<string, unknown>>(() => {
     ...rest,
     type: 'checkbox',
     class: g?.tile ? 'q-tile__input' : 'q-choice__input',
-    id: props.id ?? (g?.firstId && g.firstValue === props.value ? g.firstId : undefined),
+    id: ownId.value ?? (g?.firstId && g.firstValue === props.value ? g.firstId : undefined),
     name: props.name ?? g?.name,
     value: props.value,
     checked: isChecked.value,
     indeterminate: props.indeterminate,
     disabled: isDisabled.value,
     'aria-invalid': isInvalid.value ? 'true' : undefined,
-    'aria-required': rest['aria-required'] ?? (g?.requiredSingle ? 'true' : undefined),
-    'aria-describedby': joinIds(rest['aria-describedby'] as string | undefined, g?.describedBy),
+    'aria-required': rest['aria-required'] ?? (g?.requiredSingle || field?.value.required ? 'true' : undefined),
+    'aria-describedby': joinIds(rest['aria-describedby'] as string | undefined, g?.describedBy, field?.value.describedBy),
     onChange,
   };
 });

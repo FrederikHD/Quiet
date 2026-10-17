@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, useAttrs, watch } from 'vue';
 import { fmt, useStrings } from '../../config';
+import { useFormReset } from '../../composables/useFormReset';
 import { useQuietId } from '../../composables/useQuietId';
 import { joinIds, warnOnce } from '../../utils/dom';
-import { useFieldControl } from '../Field/context';
+import { useControlId, useFieldControl } from '../Field/context';
 
 export interface TextareaStrings {
   count?: (n: number, max: number) => string;
@@ -14,17 +15,22 @@ export interface TextareaProps {
   rows?: number;
   /** Grow with the text from rows up to maxRows, then scroll. */
   autoGrow?: boolean;
+  /** With autoGrow: the most lines it grows to before it scrolls. Default: no limit. */
   maxRows?: number;
-  /** With a counter: "114 / 500", then "8 characters left" near the limit. */
+  /** A hard limit on the length, with a counter: "114 / 500", then "8 characters left" near the limit. */
   maxlength?: number;
-  /** Default true when maxlength is set. */
+  /** Shows the counter while maxlength is set. Default true. */
   showCount?: boolean;
+  /** large: 24px lines and 16px text, for storefront forms. */
   size?: 'default' | 'large';
+  /** Error border and aria-invalid; the message comes from Field. */
   invalid?: boolean;
   disabled?: boolean;
   readonly?: boolean;
   required?: boolean;
+  /** Inside a Field the Field's id wins. */
   id?: string;
+  /** The counter's words: count(n, max) "114 / 500" and left(n) "8 characters left". */
   strings?: TextareaStrings;
 }
 
@@ -54,10 +60,12 @@ const strings = useStrings<Required<TextareaStrings>>(
 const el = ref<HTMLTextAreaElement | null>(null);
 const counterId = useQuietId('q-textarea-count-');
 
-const controlId = computed(() => props.id ?? field?.value.id);
+const controlId = useControlId(field, () => props.id);
 const isDisabled = computed(() => props.disabled || !!field?.value.disabled);
 const isReadonly = computed(() => props.readonly || !!field?.value.readOnly);
-const isInvalid = computed(() => props.invalid || !!field?.value.invalid || attrs['aria-invalid'] === 'true');
+const isInvalid = computed(
+  () => props.invalid || !!field?.value.invalid || attrs['aria-invalid'] === true || attrs['aria-invalid'] === 'true',
+);
 const length = computed(() => String(model.value ?? '').length);
 const hasCount = computed(() => props.maxlength != null && props.showCount);
 const left = computed(() => (props.maxlength != null ? props.maxlength - length.value : 0));
@@ -80,6 +88,10 @@ function grow() {
   t.style.height = `${Math.max(props.rows * line + pad, Math.min(t.scrollHeight, maxH))}px`;
 }
 watch(model, () => nextTick(grow));
+// A form reset empties the native textarea (its default is its text content, which Vue never sets); follow it.
+useFormReset(el, () => {
+  if (el.value && el.value.value !== String(model.value ?? '')) model.value = el.value.value;
+});
 let ro: ResizeObserver | null = null;
 const onFonts = () => grow();
 onMounted(() => {

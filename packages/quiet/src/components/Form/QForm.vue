@@ -45,7 +45,10 @@ const emit = defineEmits<{
   /** The form was submitted. Call event.preventDefault() unless you want a native post. */
   submit: [event: SubmitEvent];
 }>();
-defineSlots<{ default(): unknown }>();
+defineSlots<{
+  /** The form's sections, fields and actions. */
+  default(): unknown;
+}>();
 
 const config = useConfig();
 const strings = computed(() => ({ ...FORM_DEFAULT_STRINGS, ...(config.strings.form as FormStrings), ...props.strings }));
@@ -67,12 +70,16 @@ const submits = ref(0);
 
 // Focus the summary after a submit, or when errors first appear (e.g. from the server) — never while someone is
 // correcting them, and not just because the app rebuilt the list.
-watch([submits, () => !!list.value], async ([, hasErrors]) => {
-  if (!hasErrors || !props.focusErrorSummary) return;
-  await nextTick();
-  summary.value?.focus({ preventScroll: true });
-  summary.value?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-});
+watch(
+  [submits, () => !!list.value],
+  async ([, hasErrors]) => {
+    if (!hasErrors || !props.focusErrorSummary) return;
+    await nextTick();
+    summary.value?.focus({ preventScroll: true });
+    summary.value?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  },
+  { immediate: true },
+);
 
 function onSubmit(e: SubmitEvent) {
   submits.value++;

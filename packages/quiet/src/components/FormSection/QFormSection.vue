@@ -5,6 +5,7 @@ import { useQuietId } from '../../composables/useQuietId';
 export interface FormSectionProps {
   /** Section heading: "Pricing", "Shipping address". */
   title?: string;
+  /** One or two lines under the heading, in ink-muted: what the section is for, where it shows up. */
   description?: string;
   /** stack (default): heading above the fields. aside: heading in a left column beside the fields once the section is 760px wide — settings pages. */
   layout?: 'stack' | 'aside';
@@ -13,7 +14,14 @@ export interface FormSectionProps {
 }
 
 withDefaults(defineProps<FormSectionProps>(), { title: undefined, description: undefined, layout: 'stack', headingLevel: 2 });
-defineSlots<{ default(): unknown; title?(): unknown; description?(): unknown }>();
+defineSlots<{
+  /** The section's fields. */
+  default(): unknown;
+  /** Rich heading content instead of `title`. */
+  title?(): unknown;
+  /** Rich description instead of `description`. */
+  description?(): unknown;
+}>();
 
 const slots = useSlots();
 const id = useQuietId('q-fsection-');

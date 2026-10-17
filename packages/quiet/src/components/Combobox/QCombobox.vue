@@ -6,7 +6,7 @@ import { useQuietId } from '../../composables/useQuietId';
 import QPopoverPanel from '../../internal/QPopoverPanel.vue';
 import { joinIds, warnOnce } from '../../utils/dom';
 import QDialog from '../Dialog/QDialog.vue';
-import { provideNoField, useFieldControl } from '../Field/context';
+import { provideNoField, useControlId, useFieldControl } from '../Field/context';
 import QIcon from '../Icon/QIcon.vue';
 import type { IconName } from '../Icon/icons';
 import QTag from '../Tag/QTag.vue';
@@ -28,13 +28,18 @@ export interface ComboboxProps {
   maxChips?: number;
   /** Shows a × to clear the choice (single). */
   clearable?: boolean;
+  /** Shown in the closed box while nothing is chosen ("Choose a product"). */
   placeholder?: string;
+  /** Placeholder of the search field in the open panel. Default "Search". */
   searchPlaceholder?: string;
+  /** Same sizes as Input and Select: default follows data-density (40/32px), slim 28px, large 48px. */
   size?: 'slim' | 'default' | 'large';
+  /** Error border and aria-invalid; the message comes from Field. */
   invalid?: boolean;
   disabled?: boolean;
   /** Shown like a read-only Input (ink on a sunken box, no chevron); can't be opened. */
   readonly?: boolean;
+  /** Read out on the search field (aria-required). */
   required?: boolean;
   /** An icon before the value. */
   prefixIcon?: IconName;
@@ -42,7 +47,9 @@ export interface ComboboxProps {
   name?: string;
   /** Where the list opens. auto (default): a dropdown under the field; on screens under 640px a Dialog. always: a Dialog everywhere. never: always a dropdown. */
   dialog?: 'auto' | 'always' | 'never';
+  /** Id of the trigger button. Inside a Field the Field's id wins. */
   id?: string;
+  /** Translations of the built-in words: status line, Clear, Done, "Remove …", "+N more". */
   strings?: ComboboxStrings;
 }
 
@@ -89,7 +96,8 @@ const strings = useStrings<Required<ComboboxStrings>>(
 );
 
 const baseId = useQuietId('q-combo-');
-const triggerId = computed(() => props.id ?? field?.value.id ?? `${baseId}-trigger`);
+const ownId = useControlId(field, () => props.id);
+const triggerId = computed(() => ownId.value ?? `${baseId}-trigger`);
 const listId = `${baseId}-list`;
 const valueId = `${baseId}-value`;
 const statusId = `${baseId}-status`;
@@ -97,8 +105,12 @@ const panelId = `${baseId}-panel`;
 
 const isReadonly = computed(() => (props.readonly || !!field?.value.readOnly) && !props.disabled);
 const isDisabled = computed(() => props.disabled || !!field?.value.disabled || isReadonly.value);
-const isInvalid = computed(() => props.invalid || !!field?.value.invalid || attrs['aria-invalid'] === 'true');
-const isRequired = computed(() => props.required || !!field?.value.required);
+const isInvalid = computed(
+  () => props.invalid || !!field?.value.invalid || attrs['aria-invalid'] === true || attrs['aria-invalid'] === 'true',
+);
+const isRequired = computed(
+  () => props.required || !!field?.value.required || attrs['aria-required'] === true || attrs['aria-required'] === 'true',
+);
 
 if (import.meta.env.DEV && !props.id && !field && !attrs['aria-label'] && !attrs['aria-labelledby']) {
   warnOnce('combo-label', 'Combobox: give it a label — wrap it in Field, or pass aria-label.');
@@ -282,7 +294,7 @@ const srValue = computed(() =>
 );
 
 const triggerAttrs = computed<Record<string, unknown>>(() => {
-  const { class: _c, style: _s, ...rest } = attrs;
+  const { class: _c, style: _s, 'aria-required': _r, ...rest } = attrs;
   const labelled = rest['aria-label'] || rest['aria-labelledby'];
   return {
     ...rest,
@@ -292,7 +304,8 @@ const triggerAttrs = computed<Record<string, unknown>>(() => {
     'aria-describedby': joinIds(rest['aria-describedby'] as string | undefined, field?.value.describedBy, rest['aria-label'] ? valueId : null),
     'aria-invalid': isInvalid.value ? 'true' : undefined,
     'aria-expanded': String(open.value),
-    'aria-controls': open.value ? panelId : undefined,
+    // The dropdown panel; on phones the list opens in a modal Dialog instead, which takes focus itself.
+    'aria-controls': open.value && !inDialog.value ? panelId : undefined,
     'aria-haspopup': 'dialog',
   };
 });

@@ -6,7 +6,7 @@
 //
 // Controls read FIELD_CONTROL_KEY through useFieldControl(); a component that renders controls of its own
 // (Combobox's search field, Pagination's page-size select) calls provideNoField() so they don't pick up its Field.
-import { computed, inject, provide, type ComputedRef, type InjectionKey } from 'vue';
+import { computed, inject, onBeforeUnmount, provide, watch, type ComputedRef, type InjectionKey } from 'vue';
 import { useConfig } from '../../config';
 
 export type LabelPlacement = 'auto' | 'top' | 'side';
@@ -59,12 +59,29 @@ export interface FieldControlContext {
   disabled: boolean;
   readOnly: boolean;
   invalid: boolean;
+  /** A control with an id of its own hands it to the Field, so the label and messages point at it. */
+  claimId(id: string | undefined): void;
 }
 export const FIELD_CONTROL_KEY: InjectionKey<ComputedRef<FieldControlContext> | null> = Symbol('quiet-field-control');
 
 /** The surrounding Field's wiring for a control, or null outside a Field. */
 export function useFieldControl(): ComputedRef<FieldControlContext> | null {
   return inject(FIELD_CONTROL_KEY, null);
+}
+
+/**
+ * The id a control renders. Inside a Field it is always the Field's: the Field's own `id`, else the control's
+ * (handed over here), else a generated one. Outside a Field it is the control's own `id`.
+ */
+export function useControlId(
+  field: ComputedRef<FieldControlContext> | null,
+  own: () => string | undefined,
+): ComputedRef<string | undefined> {
+  if (field) {
+    watch(own, (id) => field.value.claimId(id), { immediate: true });
+    onBeforeUnmount(() => field.value.claimId(undefined));
+  }
+  return computed(() => (field ? field.value.id : own()));
 }
 
 /** Stops controls rendered inside this component from picking up the surrounding Field. */
@@ -74,6 +91,7 @@ export function provideNoField(): void {
 }
 
 export interface FieldCommonProps {
+  /** The question the field asks: "Product title", "Email". Always give one (or use the `label` slot). */
   label?: string;
   /** Opens from a help icon after the label, as a Popover tip. One or two sentences. (Or the `help` slot.) */
   help?: string;
@@ -85,12 +103,15 @@ export interface FieldCommonProps {
   warning?: string | null;
   /** Confirms a check passed: "Discount code applied". */
   success?: string | null;
+  /** Marks the field required: an asterisk (or no "(optional)") and aria-required on the control. */
   required?: boolean;
   /** Overrides the Form's placement for this one field or group. */
   labelPlacement?: LabelPlacement;
   /** Width of a label beside the control, any CSS length. Default 200px. */
   labelWidth?: string;
+  /** Overrides the Form's markers: required = asterisk on required fields, optional = "(optional)" on optional ones, none. */
   markers?: Markers;
+  /** Translations for the built-in words; overrides the Form's. */
   strings?: FormStrings;
 }
 

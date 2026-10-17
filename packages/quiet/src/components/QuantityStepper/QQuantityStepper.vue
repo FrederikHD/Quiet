@@ -3,7 +3,7 @@ import { computed, ref, useAttrs } from 'vue';
 import { useStrings } from '../../config';
 import { useFormReset } from '../../composables/useFormReset';
 import { joinIds, warnOnce } from '../../utils/dom';
-import { useFieldControl } from '../Field/context';
+import { useControlId, useFieldControl } from '../Field/context';
 import QIcon from '../Icon/QIcon.vue';
 
 export interface QuantityStepperProps {
@@ -11,13 +11,17 @@ export interface QuantityStepperProps {
   min?: number;
   /** Default 99. */
   max?: number;
+  /** Values snap to min + n × step. Default 1. */
   step?: number;
   /** large: 48px, for the product page. Phones are always 48px. */
   size?: 'default' | 'large';
+  /** Error border and aria-invalid; the message comes from Field. */
   invalid?: boolean;
   disabled?: boolean;
   readonly?: boolean;
+  /** Inside a Field the Field's id wins. */
   id?: string;
+  /** Names of the − and + buttons. Defaults "Decrease quantity", "Increase quantity". */
   strings?: { decrease?: string; increase?: string };
 }
 
@@ -49,10 +53,12 @@ useFormReset(root, () => {
   draft.value = null;
 });
 
-const controlId = computed(() => props.id ?? field?.value.id);
+const controlId = useControlId(field, () => props.id);
 const isDisabled = computed(() => props.disabled || !!field?.value.disabled);
 const isReadonly = computed(() => props.readonly || !!field?.value.readOnly);
-const isInvalid = computed(() => props.invalid || !!field?.value.invalid || attrs['aria-invalid'] === 'true');
+const isInvalid = computed(
+  () => props.invalid || !!field?.value.invalid || attrs['aria-invalid'] === true || attrs['aria-invalid'] === 'true',
+);
 const canDown = computed(() => !isDisabled.value && !isReadonly.value && value.value > props.min);
 const canUp = computed(() => !isDisabled.value && !isReadonly.value && value.value < props.max);
 

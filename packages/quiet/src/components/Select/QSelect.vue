@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { computed, ref, useAttrs, useSlots } from 'vue';
+import { computed, nextTick, onUpdated, ref, useAttrs, useSlots, watch } from 'vue';
 import { useFormReset } from '../../composables/useFormReset';
 import { joinIds, warnOnce } from '../../utils/dom';
-import { useFieldControl } from '../Field/context';
+import { useControlId, useFieldControl } from '../Field/context';
 import QIcon from '../Icon/QIcon.vue';
 import type { IconName } from '../Icon/icons';
 
@@ -27,8 +27,11 @@ export interface SelectProps {
   /** Shown like a read-only Input and kept in form posts; can't be changed (or focused — a native select has no read-only mode). */
   readonly?: boolean;
   disabled?: boolean;
+  /** Required: the placeholder can't be picked again once something is chosen. Sets aria-required. */
   required?: boolean;
+  /** Inside a Field the Field's id wins. */
   id?: string;
+  /** Posted with the form (also while read-only, through a hidden input). */
   name?: string;
 }
 
@@ -55,13 +58,26 @@ const slots = useSlots();
 const field = useFieldControl();
 const select = ref<HTMLSelectElement | null>(null);
 
-// The value the select starts with, so a form reset can bring the placeholder styling back.
-const initial = model.value ?? (props.placeholder != null ? '' : undefined);
+// The DOM follows the value. With no value and no placeholder the select shows its first option, like a native one.
+function sync() {
+  const el = select.value;
+  const v = model.value ?? (props.placeholder != null ? '' : null);
+  if (el && v != null && el.value !== v) el.value = v;
+}
+watch([model, select], sync, { flush: 'post' });
+onUpdated(sync); // options rendered later (or changed) still show the value
+function onChange(e: Event) {
+  model.value = (e.target as HTMLSelectElement).value;
+}
+
+// The value the select starts with, so a form reset can bring it (and the placeholder styling) back.
+const initial = model.value ?? (props.placeholder != null ? '' : null);
 useFormReset(select, () => {
-  model.value = initial ?? null;
+  model.value = initial;
+  nextTick(sync);
 });
 
-const controlId = computed(() => props.id ?? field?.value.id);
+const controlId = useControlId(field, () => props.id);
 // A native select has no read-only state: shown like a read-only Input, it can't be changed, and a hidden input
 // carries its value in form posts (a disabled select would drop it).
 const isReadonly = computed(() => (props.readonly || !!field?.value.readOnly) && !props.disabled);
@@ -76,13 +92,6 @@ const hasPrefix = computed(() => !!props.prefixIcon || !!slots.prefix);
 if (import.meta.env.DEV && !controlId.value && !attrs['aria-label'] && !attrs['aria-labelledby']) {
   warnOnce('select-label', 'Select: give it a visible label — wrap it in Field, or pass id, aria-label or aria-labelledby.');
 }
-
-const current = computed({
-  get: () => model.value ?? '',
-  set: (v: string) => {
-    model.value = v;
-  },
-});
 
 const selectAttrs = computed<Record<string, unknown>>(() => {
   const { class: _c, style: _s, ...rest } = attrs;
@@ -132,7 +141,7 @@ defineExpose({ select, focus: () => select.value?.focus() });
     <span v-if="hasPrefix" class="q-input__affix q-input__affix--start q-select__prefix" aria-hidden="true">
       <slot name="prefix"><QIcon v-if="prefixIcon" :name="prefixIcon" /></slot>
     </span>
-    <select ref="select" v-bind="selectAttrs" v-model="current" class="q-select__field">
+    <select ref="select" v-bind="selectAttrs" class="q-select__field" @change="onChange">
       <!-- Required: the placeholder can't be picked again once something is chosen. Optional: it stays as the "none" choice. -->
       <option v-if="placeholder != null" value="" :disabled="isRequired" :hidden="isRequired">{{ placeholder }}</option>
       <template v-if="options">

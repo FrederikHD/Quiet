@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { computed, provide, ref, useSlots } from 'vue';
+import { computed, nextTick, provide, ref, useSlots, watch } from 'vue';
 import { useQuietId } from '../../composables/useQuietId';
 import { useResizeObserver } from '../../composables/useResizeObserver';
 import QFieldHelp from '../../internal/QFieldHelp.vue';
 import QFieldMarker from '../../internal/QFieldMarker.vue';
 import QFieldMessage from '../../internal/QFieldMessage.vue';
-import { flattenNodes, joinIds } from '../../utils/dom';
+import { flattenNodes, joinIds, textOf } from '../../utils/dom';
 import { GROUP_KEY, useFieldSetup, type FieldCommonProps, type GroupContext } from '../Field/context';
 
 export interface FieldGroupProps extends FieldCommonProps {
@@ -41,6 +41,11 @@ const props = withDefaults(defineProps<FieldGroupProps>(), {
 defineSlots<{
   /** Fields shown side by side. Their labels always sit above them. */
   default(): unknown;
+  /** Rich group label instead of `label`. */
+  label?(): unknown;
+  /** Rich help content instead of `help`. */
+  help?(): unknown;
+  /** Rich hint content instead of `hint`. */
   hint?(): unknown;
 }>();
 
@@ -52,7 +57,7 @@ const labelId = computed(() => `${groupId.value}-label`);
 const hintId = computed(() => `${groupId.value}-hint`);
 const msgId = computed(() => `${groupId.value}-msg`);
 const hasHint = computed(() => !!props.hint || !!slots.hint);
-const labelled = computed(() => props.label != null);
+const labelled = computed(() => props.label != null || !!slots.label);
 
 const ctx = computed<GroupContext>(() => ({
   describedBy: joinIds(status.value[0] && msgId.value, hasHint.value && hintId.value),
@@ -103,8 +108,26 @@ function check() {
   const minFrac = Math.min(...fr) / fr.reduce((a, b) => a + b, 0);
   const floorSum = floors.value.reduce((a, b) => a + b, 0);
   stacked.value = fr.length > 1 && (props.connected ? avail < floorSum + 8 * fr.length : avail * minFrac < (props.stack === 'late' ? 88 : 100));
+  if (!hasSubgrid()) levelLabels(row);
 }
 useResizeObserver(controls, check);
+watch(() => [props.columns, props.connected, props.stack], () => nextTick(check), { deep: true });
+
+const hasSubgrid = () => typeof CSS !== 'undefined' && !!CSS.supports?.('grid-template-rows', 'subgrid');
+// Browsers without subgrid: give every label in the row the height of the tallest, so the controls stay level.
+function levelLabels(row: Element) {
+  const cols = Array.from(row.querySelectorAll<HTMLElement>(':scope > .q-field > .q-field__layout > .q-field__labelcol'));
+  for (const c of cols) {
+    c.style.minHeight = '';
+    c.style.alignItems = '';
+  }
+  if (stacked.value) return;
+  const max = Math.max(0, ...cols.map((c) => c.getBoundingClientRect().height));
+  for (const c of cols) {
+    c.style.minHeight = `${max}px`;
+    c.style.alignItems = 'flex-end';
+  }
+}
 
 // The grid's columns, from `columns` or one equal column per field.
 function template(): string {
@@ -136,9 +159,16 @@ function template(): string {
     <div class="q-field__layout">
       <div :class="['q-field__labelcol', labelHidden && 'q-visually-hidden']">
         <span v-if="labelled" :id="labelId" class="q-field__label">
-          {{ label }}<QFieldMarker :markers="markers" :required="required" :strings="fstrings" />
+          <slot name="label">{{ label }}</slot><QFieldMarker :markers="markers" :required="required" :strings="fstrings" />
         </span>
-        <QFieldHelp v-if="labelled && help" :help="help" :label="label" :prefix="fstrings.help" />
+        <QFieldHelp
+          v-if="labelled && (help || slots.help)"
+          :help="help"
+          :label="label ?? textOf(slots.label?.())"
+          :prefix="fstrings.help"
+        >
+          <slot v-if="slots.help" name="help" />
+        </QFieldHelp>
       </div>
       <div class="q-field__controlcol">
         <div ref="controls" class="q-fgroup__controls">
