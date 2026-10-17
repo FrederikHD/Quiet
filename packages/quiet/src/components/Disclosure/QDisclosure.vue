@@ -4,6 +4,7 @@ import { useQuietId } from '../../composables/useQuietId';
 import QIcon from '../Icon/QIcon.vue';
 
 export interface DisclosureProps {
+  /** The heading's text (or the `title` slot): "Colour", "Delivery and returns". */
   title?: string;
   /** Beside the title in ink-muted: what's chosen ("Navy, Sand") or a count, so a closed group still says what it holds. */
   meta?: string;
@@ -20,7 +21,14 @@ export interface DisclosureProps {
 const props = withDefaults(defineProps<DisclosureProps>(), { title: undefined, meta: undefined, headingLevel: 3, divider: true });
 /** Open or not; v-model:open to control it. */
 const open = defineModel<boolean>('open', { default: false });
-defineSlots<{ default?(): unknown; title?(): unknown; meta?(): unknown }>();
+defineSlots<{
+  /** What opens and closes. */
+  default?(): unknown;
+  /** The heading's content, when it needs more than text. */
+  title?(): unknown;
+  /** Beside the title, when it needs more than text. */
+  meta?(): unknown;
+}>();
 
 const slots = useSlots();
 const id = useQuietId('q-disc-');

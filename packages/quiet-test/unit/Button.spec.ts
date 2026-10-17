@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { QButton } from 'quiet';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 describe('QButton', () => {
   it('renders a secondary button of type="button" by default', () => {
@@ -61,5 +61,46 @@ describe('QButton', () => {
     const w = mount(QButton, { attrs: { onClick: () => clicked++ }, slots: { default: 'Go' } });
     await w.get('button').trigger('click');
     expect(clicked).toBe(1);
+  });
+});
+
+describe('QButton states', () => {
+  it('sets aria-expanded for a menu trigger, and false when closed', () => {
+    const open = mount(QButton, { props: { expanded: true }, slots: { default: 'Bulk actions' } });
+    expect(open.get('button').attributes('aria-expanded')).toBe('true');
+    const closed = mount(QButton, { props: { expanded: false }, slots: { default: 'Bulk actions' } });
+    expect(closed.get('button').attributes('aria-expanded')).toBe('false');
+    const plain = mount(QButton, { slots: { default: 'Save' } });
+    expect(plain.get('button').attributes('aria-expanded')).toBeUndefined();
+  });
+
+  it('honours type and slim size, and puts icons in aria-hidden slots', () => {
+    const w = mount(QButton, { props: { type: 'submit', size: 'slim', iconStart: 'plus', iconEnd: 'arrow-right' }, slots: { default: 'Add' } });
+    const b = w.get('button');
+    expect(b.attributes('type')).toBe('submit');
+    expect(b.classes()).toContain('q-btn--slim');
+    expect(b.classes()).not.toContain('q-btn--icon');
+    const icons = w.findAll('.q-btn__icon');
+    expect(icons).toHaveLength(2);
+    icons.forEach((i) => expect(i.attributes('aria-hidden')).toBe('true'));
+  });
+
+  it('accepts icon slots', () => {
+    const w = mount(QButton, { slots: { 'icon-start': '<svg class="mine" />', default: 'Go' } });
+    expect(w.find('.q-btn__icon .mine').exists()).toBe(true);
+  });
+
+  it('does not disable an enabled link', () => {
+    const w = mount(QButton, { props: { href: '/x' }, slots: { default: 'Go' } });
+    const a = w.get('a');
+    expect(a.attributes('disabled')).toBeUndefined();
+    expect(a.attributes('aria-disabled')).toBeUndefined();
+    expect(a.attributes('type')).toBeUndefined();
+  });
+
+  it('warns when an icon-only button has no name', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    mount(QButton, { props: { iconStart: 'x', variant: 'ghost', size: 'slim' } });
+    expect(warn.mock.calls.some((c) => String(c[0]).includes('aria-label'))).toBe(true);
   });
 });

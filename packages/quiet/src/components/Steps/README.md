@@ -15,7 +15,7 @@ Shows where someone is in a short flow that has to be done in order — checkout
 
 ## Behaviour
 
-- **Done** steps show a check on `brand-tint` and are links back (with `href`, or buttons emitting `select`); screen readers hear "Address (completed)".
+- **Done** steps show a check on `brand-tint` and are links back (with `href`, or buttons emitting `select` when you listen to it; with neither they stay plain text); screen readers hear "Address (completed)".
 - The **current** step is filled `brand`, its label semibold, `aria-current="step"`.
 - **Later** steps are plain text in `ink-muted` — people can't skip ahead, so they aren't links.
 - A thin line joins the steps; it turns `brand` behind finished ones.

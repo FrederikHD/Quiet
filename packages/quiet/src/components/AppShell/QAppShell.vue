@@ -8,8 +8,13 @@ import QDialog from '../Dialog/QDialog.vue';
 import QToaster from '../Toast/QToaster.vue';
 
 export interface ShellStrings {
+  /** Name of the top bar's menu button. Default "Menu"; also the drawer's title when there is no brand. */
   menu?: string;
+  /** The skip link. Default "Skip to content". */
   skip?: string;
+  /** Name of the Nav landmark (Nav reads it from the same `shell` namespace). Default "Main". */
+  nav?: string;
+  /** Name of the drawer's close button. Default "Close menu". */
   closeMenu?: string;
 }
 export interface AppShellProps {
@@ -19,7 +24,9 @@ export interface AppShellProps {
   mainId?: string;
   /** AppShell renders a Toaster; false leaves it out. */
   toaster?: boolean;
+  /** Phrases for the built-in Toaster: the dismiss button and the region's name. */
   toastStrings?: { dismiss?: string; region?: string };
+  /** Built-in phrases (menu button, skip link, close button). */
   strings?: ShellStrings;
 }
 
@@ -35,6 +42,7 @@ defineSlots<{
   default?(): unknown;
   /** A Nav. Shown in the left column from 1024px, in a drawer below. */
   nav?(): unknown;
+  /** The shop name, when it needs more than plain text (a logo). In the side column, the top bar and the drawer. */
   brand?(): unknown;
   /** Under the nav, in the column and the drawer: the account, the store switcher. */
   'nav-footer'?(): unknown;
@@ -45,7 +53,7 @@ defineSlots<{
 const slots = useSlots();
 const strings = useStrings<Required<ShellStrings>>(
   'shell',
-  { menu: 'Menu', skip: 'Skip to content', closeMenu: 'Close menu' },
+  { menu: 'Menu', skip: 'Skip to content', nav: 'Main', closeMenu: 'Close menu' },
   () => props.strings,
 );
 const autoMainId = useQuietId('q-main-');
@@ -95,7 +103,7 @@ function onDrawerClick(e: MouseEvent) {
     <QToaster v-if="toaster" :strings="toastStrings" />
     <QDialog
       v-model:open="open"
-      :title="brand ?? strings.menu"
+      :title="brand || strings.menu"
       placement="start"
       flush
       :close-label="strings.closeMenu"

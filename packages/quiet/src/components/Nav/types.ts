@@ -1,7 +1,9 @@
 import type { IconName } from '../Icon/icons';
 
 export interface NavItem {
+  /** The page's name. */
   label: string;
+  /** Where it goes. Without href the item is a button; handle it with Nav's `navigate` event. */
   href?: string;
   /** Top-level items only. */
   icon?: IconName;
@@ -15,9 +17,12 @@ export interface NavItem {
   items?: NavItem[];
   /** Force the sub-pages open or closed. */
   expanded?: boolean;
+  /** Stable key for the list (default: href, else the index). Handy to tell items apart in `navigate`. */
   key?: string;
 }
 export interface NavSection {
+  /** Heads the section ("Shop") and names its group for screen readers. */
   title?: string;
+  /** The section's links. */
   items: NavItem[];
 }

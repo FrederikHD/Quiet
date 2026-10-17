@@ -52,4 +52,4 @@ An edit page whose fields sit in both columns needs a single Form around them, s
 ## What you provide
 
 - **Required:** `title` and the content (default slot).
-- **Optional:** `back`, `subtitle`, the `#title-meta`, `#actions` and `#aside` slots, `width`, `density`, `class`.
+- **Optional:** `back`, `subtitle` (or the `#subtitle` slot), the `#title-meta`, `#actions` and `#aside` slots, `width`, `density`, `class`.

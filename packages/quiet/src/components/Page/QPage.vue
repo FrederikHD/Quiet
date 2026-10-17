@@ -4,7 +4,9 @@ import QLead from '../../internal/QLead.vue';
 import QPageColumns from './QPageColumns.vue';
 
 export interface PageBack {
+  /** The parent page's name: "Products". */
   label: string;
+  /** The parent page's URL. */
   href?: string;
 }
 export interface PageProps {
@@ -16,13 +18,17 @@ export interface PageProps {
   subtitle?: string;
   /** default 1200px, narrow 720px, full. */
   width?: 'default' | 'narrow' | 'full';
+  /** Sets data-density for everything on the page. Default: inherited. */
   density?: 'comfortable' | 'compact';
 }
 
 withDefaults(defineProps<PageProps>(), { back: undefined, subtitle: undefined, width: 'default', density: undefined });
 const emit = defineEmits<{ /** The back link was clicked (use it for client-side routing). */ back: [event: MouseEvent] }>();
 defineSlots<{
+  /** The content (the main column when there is an aside). */
   default?(): unknown;
+  /** The line under the title, when it needs more than text (a link, a date). */
+  subtitle?(): unknown;
   /** Buttons on the right of the title; the primary one last. */
   actions?(): unknown;
   /** Badges after the title (status). */
@@ -53,7 +59,7 @@ const slots = useSlots();
               <h1 class="q-page__title">{{ title }}</h1>
               <span v-if="slots['title-meta']" class="q-page__meta"><slot name="title-meta" /></span>
             </div>
-            <p v-if="subtitle" class="q-page__subtitle">{{ subtitle }}</p>
+            <p v-if="subtitle || slots.subtitle" class="q-page__subtitle"><slot name="subtitle">{{ subtitle }}</slot></p>
           </div>
           <div v-if="slots.actions" class="q-page__actions"><slot name="actions" /></div>
         </div>

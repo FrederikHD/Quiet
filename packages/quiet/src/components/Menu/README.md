@@ -14,7 +14,7 @@ A button that opens a short list of actions. Use it for the "⋯" on a table row
 />
 ```
 
-Without a `#trigger` slot, the trigger is a ghost "⋯" icon button in `brand` green (`brand-hover` on hover, `brand-tint` behind it while open), named by `label`. Put your own Button in the `#trigger` slot as the child for a text trigger: `<Menu label="More actions" items={…}><Button iconEnd={<Icon name="chevron-down" />}>More actions</Button></Menu>`.
+Without a `#trigger` slot, the trigger is a ghost "⋯" icon button in `brand` green (`brand-hover` on hover, `brand-tint` behind it while open), named by `label`. For a text trigger, put your own Button in the `#trigger` slot: `<QMenu label="More actions" :items="items"><template #trigger><QButton icon-end="chevron-down">More actions</QButton></template></QMenu>`. To show more than text in an item's label, use the `#item="{ item }"` slot.
 
 ## Items
 

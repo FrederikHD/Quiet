@@ -27,6 +27,7 @@ export interface ButtonProps {
   href?: string;
   /** Defaults to "button" so it never submits a form by accident. */
   type?: 'button' | 'submit' | 'reset';
+  /** Dimmed and not clickable. With href: an unfocusable link with aria-disabled. */
   disabled?: boolean;
 }
 

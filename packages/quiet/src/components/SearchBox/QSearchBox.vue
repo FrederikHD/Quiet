@@ -10,25 +10,38 @@ import QIcon from '../Icon/QIcon.vue';
 import QSearchOption from './QSearchOption.vue';
 
 export interface SearchSuggestion {
+  /** Stable id for the list (default: the label). */
   id?: string;
+  /** What the row says: the product's or the page's name. */
   label: string;
+  /** A second, muted line: the category, the colour. */
   description?: string;
   /** A product picture (URL). */
   image?: string;
+  /** An icon instead of a picture (pages, categories). */
   icon?: IconName;
   /** Right side: a price. */
   meta?: string;
   [key: string]: unknown;
 }
 export interface SearchSuggestionGroup {
+  /** Heads the group: "Products", "Pages". */
   label?: string;
+  /** The group's suggestions. */
   items: SearchSuggestion[];
 }
 export interface SearchBoxStrings {
+  /** The field's (hidden) label and the list's name. Default "Search". */
   label?: string;
+  /** Default "Search". */
   placeholder?: string;
+  /** Name of the submit action. Default "Search". */
+  submit?: string;
+  /** Name of the clear (×) button. Default "Clear search". */
   clear?: string;
+  /** The last option: "Search for “linen”". */
   searchFor?: (q: string) => string;
+  /** Announced as the suggestions change: "3 suggestions". */
   count?: (n: number) => string;
 }
 export interface SearchBoxProps {
@@ -38,10 +51,15 @@ export interface SearchBoxProps {
   searchOption?: boolean;
   /** The list in the flow instead of floating (inside a phone dialog). */
   inline?: boolean;
+  /** default follows the density; large (48px) for the storefront header and phones. */
   size?: 'default' | 'large';
+  /** The field's name for screen readers (visually hidden). Default "Search"; say what is searched: "Search products". */
   label?: string;
+  /** Default "Search". */
   placeholder?: string;
+  /** Focus the field when it mounts (a search dialog that just opened). */
   autofocus?: boolean;
+  /** Built-in phrases. */
   strings?: SearchBoxStrings;
 }
 
@@ -68,6 +86,7 @@ const strings = useStrings<Required<SearchBoxStrings>>(
   {
     label: 'Search',
     placeholder: 'Search',
+    submit: 'Search',
     clear: 'Clear search',
     searchFor: (q) => `Search for “${q}”`,
     count: (n) => (n === 0 ? 'No suggestions' : n === 1 ? '1 suggestion' : `${n} suggestions`),

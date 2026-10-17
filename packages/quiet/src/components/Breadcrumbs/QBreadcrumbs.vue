@@ -5,12 +5,15 @@ import QLead from '../../internal/QLead.vue';
 import QIcon from '../Icon/QIcon.vue';
 
 export interface BreadcrumbItem {
+  /** The page's name. */
   label: string;
+  /** Its URL. Leave it out on the last item, the current page. */
   href?: string;
 }
 export interface BreadcrumbsProps {
   /** From the top down; the current page last, without href. */
   items: (BreadcrumbItem | null | false)[];
+  /** The landmark's name. Default "Breadcrumb"; an aria-label on QBreadcrumbs wins. */
   strings?: { label?: string };
 }
 

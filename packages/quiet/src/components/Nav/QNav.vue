@@ -10,6 +10,7 @@ export interface NavProps {
   sections?: NavSection[];
   /** A single section. */
   items?: NavItem[];
+  /** The nav landmark's name. Default "Main"; an aria-label on QNav wins. */
   strings?: { nav?: string };
 }
 

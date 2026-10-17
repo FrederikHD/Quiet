@@ -18,7 +18,7 @@ Switches between views of one thing without leaving the page: an order's details
 - **A panel per tab:** give each tab `content`. All panels stay mounted (the hidden ones with `hidden`), so form fields keep what people typed when they switch.
 - **One shared panel:** give no tab a `#panel-<value>` slot and put the content in the default slot. Use it for saved filters over one table ("All · Unfulfilled 8 · Unpaid 2"); every tab controls the same panel.
 - **Counts:** `count` shows a pill after the label (locale-formatted); add `countLabel` ("8 to fulfil") for screen readers.
-- **Links:** give tabs an `href` and the row becomes navigation between pages: links with `aria-current="page"`, no tab roles and no panels. On a page that is none of the sections (a checkout, an order confirmation) pass `value={null}`: no tab is underlined.
+- **Links:** give tabs an `href` and the row becomes navigation between pages: links with `aria-current="page"`, no tab roles and no panels. On a page that is none of the sections (a checkout, an order confirmation) pass `:model-value="null"`: no tab is underlined.
 
 ## With forms
 

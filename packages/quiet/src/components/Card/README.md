@@ -21,4 +21,4 @@ A panel that groups related content on a page: a form section ("Details", "Inven
 ## What you provide
 
 - **Required:** the content (default slot).
-- **Optional:** `title`, `description`, the `#actions` and `#footer` slots, `flush`, `heading-level`, `class`, `style`.
+- **Optional:** `title`, `description` (or the `#title` and `#description` slots), the `#actions` and `#footer` slots, `flush`, `heading-level`, `class`, `style`.

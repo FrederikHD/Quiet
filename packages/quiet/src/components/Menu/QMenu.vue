@@ -6,26 +6,35 @@ import type { IconName } from '../Icon/icons';
 import QPopover from '../Popover/QPopover.vue';
 
 export interface MenuItem {
+  /** What the item does: "Edit", "Delete". */
   label?: string;
+  /** An icon before the label. */
   icon?: IconName;
+  /** A second, muted line: "Hidden, kept in reports". */
   description?: string;
   /** Called when chosen (the menu also emits `select`). */
   onSelect?: (event: MouseEvent) => void;
+  /** Makes the item a link (navigation instead of an action). */
   href?: string;
+  /** Destructive action: danger text. Put it last, after a divider. */
   danger?: boolean;
+  /** Shown dimmed, skipped by the arrow keys, can't be chosen. Say why in `description`. */
   disabled?: boolean;
   /** A rule between groups (other fields ignored). */
   divider?: boolean;
+  /** Stable key for the list (default: the index). */
   key?: string;
 }
 export interface MenuProps {
   /** Names the menu and the default ⋯ button: "Actions for #10530". */
   label: string;
+  /** The actions, in order. null and false entries are skipped, so an item can be left out with `cond && {…}`. */
   items: (MenuItem | null | false)[];
   /** Default end. */
   align?: 'start' | 'end';
   /** For the default ⋯ trigger. */
   variant?: 'secondary' | 'ghost';
+  /** Size of the default ⋯ trigger, as Button's size. */
   size?: 'slim' | 'default' | 'large';
 }
 
@@ -33,7 +42,12 @@ defineOptions({ inheritAttrs: false });
 
 const props = withDefaults(defineProps<MenuProps>(), { align: 'end', variant: 'ghost', size: 'default' });
 const emit = defineEmits<{ /** An item was chosen. */ select: [item: MenuItem, event: MouseEvent] }>();
-defineSlots<{ /** Your own trigger (a Button). */ trigger?(): unknown }>();
+defineSlots<{
+  /** Your own trigger (a Button). */
+  trigger?(): unknown;
+  /** Your own content for an item's label line (the icon and the row stay): `#item="{ item }"`. */
+  item?(props: { item: MenuItem }): unknown;
+}>();
 
 const attrs = useAttrs();
 const open = ref(false);
@@ -99,7 +113,7 @@ function choose(it: MenuItem, e: MouseEvent) {
             >
               <span v-if="it.icon" class="q-menu__icon" aria-hidden="true"><QIcon :name="it.icon" /></span>
               <span class="q-menu__text">
-                <span class="q-menu__label">{{ it.label }}</span>
+                <span class="q-menu__label"><slot name="item" :item="it">{{ it.label }}</slot></span>
                 <span v-if="it.description" class="q-menu__desc">{{ it.description }}</span>
               </span>
             </component>

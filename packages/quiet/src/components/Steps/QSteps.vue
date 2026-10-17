@@ -1,18 +1,22 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, getCurrentInstance } from 'vue';
 import { useStrings } from '../../config';
 import QIcon from '../Icon/QIcon.vue';
 
 export interface StepItem {
+  /** The step's name: "Shipping". */
   label: string;
-  /** Finished steps link back here. Without href they are buttons that emit `select`. */
+  /** Finished steps link back here. Without href they are buttons that emit `select` — when you listen to it; otherwise plain text. */
   href?: string;
+  /** Stable key for the list (default: the index). */
   key?: string;
 }
 export interface StepsProps {
+  /** The steps, in order. null and false entries are skipped. */
   steps: (StepItem | null | false)[];
   /** Index of the current step. Earlier steps show a check and link back; later ones are plain text (you can't skip ahead). */
   current: number;
+  /** Built-in phrases: the landmark's name ("Checkout steps"), what a finished step is ("completed"), and the narrow counter ("Step 2 of 3"). */
   strings?: { label?: string; done?: string; step?: (i: number, n: number) => string };
 }
 
@@ -27,6 +31,13 @@ const strings = useStrings(
 const steps = computed(() => props.steps.filter((x): x is StepItem => !!x));
 const cur = computed(() => Math.max(0, Math.min(steps.value.length - 1, props.current || 0)));
 const state = (i: number) => (i < cur.value ? 'done' : i === cur.value ? 'current' : 'todo');
+// A finished step is a link (href), a button (when someone listens to `select`), or plain text: no dead buttons.
+const instance = getCurrentInstance();
+const tag = (s: StepItem, i: number) => {
+  if (state(i) !== 'done') return 'span';
+  if (s.href != null) return 'a';
+  return instance?.vnode.props?.onSelect ? 'button' : 'span';
+};
 </script>
 
 <template>
@@ -34,12 +45,12 @@ const state = (i: number) => (i < cur.value ? 'done' : i === cur.value ? 'curren
     <ol class="q-steps__list">
       <li v-for="(s, i) in steps" :key="s.key ?? i" :class="['q-steps__item', `is-${state(i)}`]">
         <component
-          :is="state(i) === 'done' ? (s.href != null ? 'a' : 'button') : 'span'"
+          :is="tag(s, i)"
           class="q-steps__step"
-          :href="state(i) === 'done' ? s.href : undefined"
-          :type="state(i) === 'done' && s.href == null ? 'button' : undefined"
+          :href="tag(s, i) === 'a' ? s.href : undefined"
+          :type="tag(s, i) === 'button' ? 'button' : undefined"
           :aria-current="state(i) === 'current' ? 'step' : undefined"
-          @click="state(i) === 'done' && emit('select', i, $event)"
+          @click="tag(s, i) !== 'span' && emit('select', i, $event)"
         >
           <span class="q-steps__marker" aria-hidden="true">
             <QIcon v-if="state(i) === 'done'" name="check" size="sm" />

@@ -8,6 +8,7 @@ import type { IconName } from '../Icon/icons';
 export interface TabItem {
   /** Identifies the tab; what v-model holds. Its panel is the `panel-<value>` slot. */
   value: string;
+  /** The tab's text. */
   label: string;
   /** An icon before the label. Use on every tab or none. */
   icon?: IconName;
@@ -17,11 +18,13 @@ export interface TabItem {
   countLabel?: string;
   /** Makes the row a navigation between pages instead: links with aria-current, no panels. */
   href?: string;
+  /** Can't be chosen; arrow keys skip it. */
   disabled?: boolean;
 }
 export interface TabsProps {
   /** Names the tab row for screen readers: "Order", "Settings sections". */
   label: string;
+  /** The tabs, in order. null and false entries are skipped, so a tab can be left out with `cond && {…}`. */
   tabs: (TabItem | null | false)[];
   /** First value when you don't use v-model. */
   defaultValue?: string;
@@ -35,6 +38,7 @@ export interface TabsProps {
   activation?: 'auto' | 'manual';
   /** Default true: the panel is a Tab stop, so it can be scrolled and read. Set false when the panel starts with a focusable control. */
   panelFocusable?: boolean;
+  /** Built-in phrases: hasErrors is read after a tab whose panel holds an invalid field ("has errors"). */
   strings?: { hasErrors?: string };
 }
 
@@ -99,6 +103,7 @@ function onReveal(e: Event) {
   if (p && p.parentElement === root.value && (p as HTMLElement).hidden) select(p.getAttribute('data-q-tab') ?? '');
 }
 // Long rows scroll sideways (phones): fade the edges that hide more tabs.
+// The list and each tab are observed, so a late web font or a count that arrives later re-measures too.
 const edges = ref('');
 function measure() {
   const el = list.value;
@@ -107,6 +112,16 @@ function measure() {
   edges.value = max <= 1 ? '' : `${el.scrollLeft > 1 ? ' is-start' : ''}${el.scrollLeft < max - 1 ? ' is-end' : ''}`;
 }
 let ro: ResizeObserver | null = null;
+function observe() {
+  if (!ro || !list.value) return;
+  ro.disconnect();
+  ro.observe(list.value);
+  for (const tab of Array.from(list.value.querySelectorAll('.q-tabs__tab'))) ro.observe(tab);
+}
+watch(items, () => {
+  observe();
+  measure();
+}, { flush: 'post' });
 onMounted(() => {
   if (!shared.value && !links.value && typeof MutationObserver !== 'undefined' && root.value) {
     checkErrors();
@@ -114,11 +129,12 @@ onMounted(() => {
     mo.observe(root.value, { subtree: true, attributes: true, attributeFilter: ['aria-invalid'], childList: true });
   }
   root.value?.addEventListener('q-reveal', onReveal);
+  revealTab();
   measure();
   list.value?.addEventListener('scroll', measure, { passive: true });
   if (typeof ResizeObserver !== 'undefined' && list.value) {
     ro = new ResizeObserver(measure);
-    ro.observe(list.value);
+    observe();
   }
 });
 onBeforeUnmount(() => {
@@ -128,22 +144,20 @@ onBeforeUnmount(() => {
   list.value?.removeEventListener('scroll', measure);
 });
 
-// Keep the chosen tab in view; when errors appear, show the first tab that has them instead.
+// Keep the chosen tab in view; when errors appear, show the first tab that has them instead
+// (its marker is the cue, and a marker scrolled out of sight helps nobody).
 const errKey = computed(() => Object.keys(errs.value).filter((k) => errs.value[k]).join('|'));
-watch(
-  [value, errKey],
-  () => {
-    const el = list.value;
-    const tab = (errKey.value && el?.querySelector<HTMLElement>('.q-tabs__tab.is-invalid')) || el?.querySelector<HTMLElement>('[data-active="true"]');
-    if (!el || !tab) return;
-    const l = tab.offsetLeft;
-    const r = l + tab.offsetWidth;
-    const pad = 24;
-    if (l - pad < el.scrollLeft) el.scrollLeft = Math.max(0, l - pad);
-    else if (r + pad > el.scrollLeft + el.clientWidth) el.scrollLeft = r + pad - el.clientWidth;
-  },
-  { flush: 'post' },
-);
+function revealTab() {
+  const el = list.value;
+  const tab = (errKey.value && el?.querySelector<HTMLElement>('.q-tabs__tab.is-invalid')) || el?.querySelector<HTMLElement>('[data-active="true"]');
+  if (!el || !tab) return;
+  const l = tab.offsetLeft; // the list is the offset parent (position: relative)
+  const r = l + tab.offsetWidth;
+  const pad = 24;
+  if (l - pad < el.scrollLeft) el.scrollLeft = Math.max(0, l - pad);
+  else if (r + pad > el.scrollLeft + el.clientWidth) el.scrollLeft = r + pad - el.clientWidth;
+}
+watch([value, errKey], revealTab, { flush: 'post' });
 
 // Arrow keys move along the tabs; Tab goes into the panel. Links are ordinary Tab stops.
 function onKeyDown(e: KeyboardEvent) {
