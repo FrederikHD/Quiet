@@ -20,7 +20,7 @@ Two themes, `light` (default) and `dark`, built from the same token names — co
 
 ## Density
 
-Every component sizes itself from the density variables in `components/bundle.css`, never from `control-*` tokens directly. Set `data-density` on `<html>` or on any container; the nearest one wins.
+Every component sizes itself from the density variables in Quiet's stylesheet (`styles/density.css`), never from `control-*` tokens directly. Set `data-density` on `<html>` or on any container; the nearest one wins.
 
 | Variable | comfortable (default) | compact |
 | --- | --- | --- |
@@ -54,7 +54,7 @@ Every component follows the same rules, so they look and behave alike next to ea
 - The same three sizes apply to Button, Input, Select and Combobox. Checkbox and Radio rows, table rows and list options follow the density.
 - Controls also take `size` as `slim · default · large` (QuantityStepper and SearchBox: `default · large`). Things you read rather than operate — Price, Rating, Metric, EmptyState — size as `small · default · large` instead, because they're type sizes, not control heights.
 
-**Common props.** Every component takes `class` and `style` (on its outer element) and `strings` (its words, also set once with `configure({ strings })`). Headings inside a component are `h2`–`h6` via `heading-level`. A field-like component takes `label`, `label-hidden`, `required`, `hint`, `error`, `disabled` and `id`, and holds its value in `v-model`. Things that open take `v-model:open` (Dialog also emits `close`).
+**Common props.** Every component takes `class` and `style` (on its outer element). Every component with built-in words takes `strings` for them, which can also be set once for the whole shop with `configure({ strings })`. Headings inside a component are `h2`–`h6` via `headingLevel`. A field-like component takes `label`, `labelHidden`, `required`, `hint`, `error`, `disabled` and `id`, and holds its value in `v-model`. Things that open take `v-model:open` (Dialog also emits `@close`).
 
 **Built from each other.** Bigger components are made of the smaller ones, never re-drawn: a search box is an Input, a folded order summary a Disclosure, a price filter two Fields, every removable chip a Tag. Each component's page lists what it's built from.
 
@@ -86,18 +86,18 @@ Every component follows the same rules, so they look and behave alike next to ea
 - **Room for accents and descenders:** text that's clipped for an ellipsis (button labels, chips, badges, combobox values) keeps a line height of at least 1.2, so Ä, Ö, g and y stay whole.
 
 **Props.**
-- **Values:** `v-model` everywhere — Input, Select and Textarea hold a string, Checkbox a boolean, CheckboxGroup an array, RadioGroup and Combobox the chosen value. Leave `v-model` out and the component keeps its own state (start it with `default-value` where offered). Other values have named models: `v-model:sort`, `v-model:selected`, `v-model:page`, `v-model:open`.
+- **Values:** `v-model` everywhere — Input, Select and Textarea hold a string, Checkbox a boolean, CheckboxGroup an array, RadioGroup and Combobox the chosen value. Leave `v-model` out and the component keeps its own state (start it with `defaultValue` where offered). Other values have named models: `v-model:sort`, `v-model:selected`, `v-model:page`, `v-model:open`.
 - **Errors:** controls take `invalid`; fields and groups take `error` / `warning` / `success` and pass it on to their controls.
 - **Hidden labels:** `labelHidden` (Field, groups, Checkbox) and `captionHidden` (Table) keep the label for screen readers only.
 - **Disabled and read-only:** `disabled` and `readonly` on a field or group reach every control inside.
 - **Ids:** a field's `id` lands on its control, and a group's on its first option or control. Error-summary links use it.
 - **Rich content:** short text goes in props (`title`, `hint`); anything richer goes in a slot of the same name (`#title`, `#hint`, `#actions`, `#footer`).
-- **Refs and classes:** `class` and `style` go on the outer box (on overlays, the panel; on a Menu without a trigger of your own, its ⋯ button); a component's ref exposes `focus()` and the native element.
+- **Refs and classes:** `class` and `style` go on the outer box (on overlays, the panel; on a Menu without a trigger of your own, its ⋯ button). Form controls expose `focus()` and their native element on a template ref (Input `input`, Select `select`, Textarea `textarea`, Checkbox, Radio and QuantityStepper `input`); Combobox exposes `focus()`, `open()` and `close()`, Dialog `close()` and its `panel`, Popover `show()`, `hide()` and `toggle()`, FileUpload `focus()` and `add(files)`.
 
 **Translations and numbers.**
 - Call `configure({ locale: 'de-DE', strings: { form, combobox, table, pagination, shell, tabs, input: { clear }, dialog: { close } } })` once — or pass the same options to `app.use(Quiet, { … })`. Components follow later changes too.
 - Numbers then follow the locale: "1.240".
-- A component's own `strings` (or `clear-label` / `close-label`) still wins.
+- A component's own `strings` (or `clearLabel` / `closeLabel`) still wins.
 
 **Phones.**
 - **Control sizes and overlays** switch on the screen width (640px): slim grows, text goes to 16px, dialogs become sheets. The AppShell nav becomes a drawer under 1024px.
@@ -106,7 +106,7 @@ Every component follows the same rules, so they look and behave alike next to ea
   - FieldGroup stacks by measuring its own width.
   - FormActions stacks under 480px; a sticky bar stays one row.
   - Table switches to cards under 640px.
-  - Pagination drops its extras step by step under 560px.
+  - Pagination drops its extras step by step under 560, 460, 400 and 280px.
   - Tabs scroll sideways when they don't fit, never wrap.
   - Page puts its side column beside the main one from 900px.
 
@@ -140,7 +140,7 @@ Plain, short, sentence case. Buttons are verbs: "Add to cart", "Save changes", "
 - Short, self-contained tasks that block what comes next (confirm a deletion, edit an address) open in a Dialog: `sm` for confirmations, sheets on phones. Anything long or multi-step is a page.
 - One choice from a short known list is a Select (native, so phones use their own picker); 2–5 options people should compare are a RadioGroup (as `cards` when each option carries a price or a description, like delivery and payment); long lists people search, lists fetched from the server, and picking several values are a Combobox, whose status line always says whether the list shown is complete.
 - Several independent yes/no choices are a CheckboxGroup. A single checkbox states what ticking it does ("Send me the newsletter") and takes effect on save, never instantly — instant on/off belongs to a switch.
-- Longer text is a Textarea (autoGrow for descriptions and notes); files and images are added with FileUpload, whose limits are repeated in the hint.
+- Longer text is a Textarea (`autoGrow` for descriptions and notes); files and images are added with FileUpload, whose limits are repeated in the hint.
 - Every control has a visible label. Help that is nice to know goes in a `help` tip; anything needed to answer goes in the visible `hint`.
 - Mark required fields with `danger` asterisks in the back office; mark optional fields "(optional)" in checkout and sign-up.
 - Errors say what's wrong and how to fix it, appear under the control in `danger` with an icon, and are listed in the error summary after a failed submit. Warnings (`warning`) never block saving.
@@ -164,7 +164,7 @@ The Badge component: pill (`radius-full`), `label` type, tint background with th
 - **Tables:** always the Table component — `surface-raised` with a `line` border and `radius-lg`; header row `surface-sunken` in `label`; body rows `--row-h` tall with `--cell-pad-x`/`--cell-pad-y` padding and `--cell-text` text, `line` rules between rows. Rows with a thumbnail use `row-comfortable` and a 32px image at `radius-sm`. Selected rows take `brand-tint`. Search and filters sit in the table's toolbar as slim controls; Pagination goes in its footer; statuses are Badges. Lists people work through on a phone (orders) use `mobile="cards"`; the rest scroll sideways with the first column pinned.
 - **Controls:** sized by the density variables; list screens set `data-density="compact"`, forms stay `comfortable`.
 - **Feedback:** the result of an action shows as a Toast ("Product saved", with Undo where it can be undone); anything people must fix stays in the form; a state that stays true (payment pending, products out of stock) is a Notice at the top of the page. An empty table or list shows an EmptyState (`small`) that says why and what to do. Secondary actions on a row or page go in a Menu ("⋯"); destructive ones last, confirmed in a Dialog.
-- **Details:** read-only facts (a customer's contact data, payment) are a DescriptionList in a Card; an order's items and totals are the same OrderSummary the shop shows, inside a Card (`title={null}`).
+- **Details:** read-only facts (a customer's contact data, payment) are a DescriptionList in a Card; an order's items and totals are the same OrderSummary the shop shows, inside a Card (`:title="null"`).
 - **Views:** saved filters over a list (All · Unfulfilled 8 · Unpaid) and sections of a long form are Tabs; period switches on metrics are segmented Tabs.
 - **Metrics:** KPI cards are a Metric in a Card: the figure in `metric`, the label in `small` `ink-muted`, the change in `success`/`danger` with an arrow and words, never colour alone.
 - **Money:** always `money()` — in the shop's format in both apps ("1.234,50 €" for a German shop), so a price reads the same to the merchant and the customer.
@@ -186,7 +186,7 @@ The Badge component: pill (`radius-full`), `label` type, tint background with th
 
 ## Iconography
 
-Use only the Quiet icon set (the Icon component): 53 outline icons on a 20px grid with a 1.5px round stroke, never filled (rating stars are the one exception — see Rating). Size them with the icon tokens — `--ctl-icon` inside controls (`icon-md` 20 or `icon-sm` 16) and `icon-lg` 24 in the storefront header — and colour them `ink` or `ink-muted` through `currentColor`. Exceptions are icons (in buttons) that trigger actions or open menus they use the `brand` color. A status icon always sits next to its word. Help and explanations open from a `help` icon as a Popover tip, on click, never on hover.
+Use only the Quiet icon set (the Icon component): 53 outline icons on a 20px grid with a 1.5px round stroke, never filled (rating stars are the one exception — see Rating). Size them with the icon tokens — `--ctl-icon` inside controls (`icon-md` 20 or `icon-sm` 16) and `icon-lg` 24 in the storefront header — and colour them `ink` or `ink-muted` through `currentColor`. The exception: icons in buttons that trigger an action or open a menu use `brand`. A status icon always sits next to its word. Help and explanations open from a `help` icon as a Popover tip, on click, never on hover.
 
 ## Logo
 
