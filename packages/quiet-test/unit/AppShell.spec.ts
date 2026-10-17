@@ -96,4 +96,22 @@ describe('QAppShell', () => {
     expect(shell({ toaster: true }).findComponent({ name: 'QToaster' }).exists()).toBe(true);
     expect(shell().findComponent({ name: 'QToaster' }).exists()).toBe(false);
   });
+
+  it('contained: the drawer opens inside the shell, not in document.body', async () => {
+    const w = shell({ contained: true });
+    expect(w.classes()).toContain('q-shell--contained');
+    await w.get('button.q-shell__menu').trigger('click');
+    await flushPromises();
+    const dialog = document.querySelector<HTMLElement>('[role="dialog"].q-shell__drawerpanel')!;
+    expect(dialog).not.toBeNull();
+    expect(w.element.contains(dialog)).toBe(true);
+  });
+
+  it('without contained the drawer is teleported to document.body', async () => {
+    const w = shell();
+    await w.get('button.q-shell__menu').trigger('click');
+    await flushPromises();
+    const dialog = document.querySelector<HTMLElement>('[role="dialog"].q-shell__drawerpanel')!;
+    expect(w.element.contains(dialog)).toBe(false);
+  });
 });

@@ -27,7 +27,7 @@ Call `toast()` from anywhere. A `QToaster` shows the toasts. AppShell includes o
 - **Action** (optional): one underlined word, usually "Undo".
 - **Close:** a × button.
 - **Tone:** `neutral` (default); `success` adds a check icon, `error` a warning icon.
-- **Stacking:** at most three at once, oldest at the top.
+- **Stacking:** at most three at once, newest at the top; errors above the rest.
 
 ## Timing
 

@@ -6,6 +6,8 @@ import { groups } from './catalog';
 
 const route = useRoute();
 const router = useRouter();
+// The Toast playground renders its own Toaster to try out; the shell's would show every toast twice.
+const toasterPlayground = computed(() => route.params.slug === 'toast' && route.params.tab === 'playground');
 
 const sections = computed<NavSection[]>(() => [
   {
@@ -77,7 +79,7 @@ watch(
 </script>
 
 <template>
-  <QAppShell brand="Quiet explorer">
+  <QAppShell brand="Quiet explorer" :toaster="!toasterPlayground">
     <template #nav><QNav :sections="sections" @navigate="navigate" /></template>
     <template #nav-footer>
       <div class="ex-settings">

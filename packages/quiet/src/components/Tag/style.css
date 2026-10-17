@@ -10,6 +10,8 @@ button.q-tag { padding-right: var(--space-2); cursor: pointer; }
 @media (hover: hover) { button.q-tag:not(:disabled):hover { border-color: var(--ink); } button.q-tag:not(:disabled):hover .q-tag__x { color: var(--ink); } }
 button.q-tag:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
 button.q-tag:disabled { cursor: not-allowed; color: var(--ink-muted); border-color: var(--line); }
+span.q-tag.is-disabled { color: var(--ink-muted); }
+span.q-tag.is-disabled:not(.q-tag--field) { border-color: var(--line); }
 .q-tag__label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .q-tag__detail { flex: none; color: var(--ink-muted); white-space: nowrap; }
 .q-tag__dot { flex: none; width: 12px; height: 12px; border-radius: 50%; background: var(--q-swatch); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 20%, transparent); forced-color-adjust: none; }

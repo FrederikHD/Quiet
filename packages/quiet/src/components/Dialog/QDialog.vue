@@ -44,6 +44,9 @@ export interface DialogProps {
   flush?: boolean;
   /** Density inside the dialog. Default: the density around the element that opened it. */
   density?: 'comfortable' | 'compact';
+  /** Where it renders: a selector, default "body". false renders it in place, so it covers the nearest ancestor that
+   *  contains fixed elements (one with a transform) instead of the window — for previews and embedded shells. */
+  teleport?: string | false;
 }
 
 defineOptions({ inheritAttrs: false });
@@ -58,6 +61,7 @@ const props = withDefaults(defineProps<DialogProps>(), {
   closeText: undefined,
   closeLabel: undefined,
   initialFocus: undefined,
+  teleport: 'body',
   density: undefined,
 });
 /** Shown or not. Escape, the backdrop and the × set it to false. */
@@ -188,7 +192,7 @@ defineExpose({ panel, close });
 </script>
 
 <template>
-  <Teleport to="body">
+  <Teleport :to="teleport || 'body'" :disabled="teleport === false">
     <div
       v-if="open"
       ref="root"

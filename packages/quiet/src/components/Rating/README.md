@@ -11,9 +11,9 @@ Stars for a product's average rating, with the number and the count: ★★★�
 
 - Five stars in `rating`; fractions fill part of a star (4.3 = four and a third).
 - The number in label weight, the count in `ink-muted`. Read as one phrase: "Rated 4,3 out of 5, 31 reviews" — the stars themselves are hidden from screen readers.
-- `href` makes it a link (24px+ target); the count underlines on hover.
+- `href` makes it a link (24px+ target); the count underlines on hover. `@click` alone makes it a link too, to open the reviews tab on the same page (it isn't followed).
 - No reviews: "No reviews yet" (as a link it invites the first one).
-- Sizes: `small` 13px stars (cards, review lists), default 16px.
+- Sizes: `small` 13px stars (cards, review lists), default 16px, `large` 20px (beside a large product title).
 
 ## Rules
 

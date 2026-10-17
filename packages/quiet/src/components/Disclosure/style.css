@@ -14,7 +14,7 @@
 .q-disc.is-open .q-disc__chev { transform: rotate(180deg); }
 .q-disc__btn:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: var(--radius-sm); }
 @media (hover: hover) { .q-disc__btn:hover .q-disc__title { text-decoration: underline; text-underline-offset: 3px; } }
-.q-disc__panel { padding: 0 0 var(--space-4); min-width: 0; }
+.q-disc__panel { display: grid; gap: var(--field-gap); padding: 0 0 var(--space-4); min-width: 0; }  /* several fields or paragraphs stack like a Card body */
 .q-disc__panel[hidden] { display: none; }
 @media (max-width: 639px) { .q-disc__btn { min-height: var(--control-lg); } }
 @media (prefers-reduced-motion: reduce) { .q-disc__chev { transition: none; } }

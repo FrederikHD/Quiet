@@ -43,7 +43,9 @@ code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospac
 .ex-toc__link:hover { background: var(--surface-sunken); }
 .ex-toc__link:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
 .ex-example { scroll-margin-top: 72px; }
-.ex-example__stage { display: flex; flex-direction: column; gap: var(--space-4); min-width: 0; }
+/* Plain block flow: a form or table takes the full width, a lone button keeps its own. */
+.ex-example__stage { min-width: 0; }
+.ex-example__stage > * + * { margin-top: var(--space-4); }
 
 /* Playground */
 .ex-playground { display: grid; gap: var(--space-4); min-width: 0; }

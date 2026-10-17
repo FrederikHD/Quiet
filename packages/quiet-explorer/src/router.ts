@@ -17,7 +17,13 @@ export const router = createRouter({
     { path: '/:rest(.*)*', name: 'not-found', component: () => import('./pages/NotFoundPage.vue'), meta: { title: 'Not found' } },
   ],
   // Example links (#button-sizes) scroll to the card, clear of the sticky phone header.
-  scrollBehavior: (to, _from, saved) => saved ?? (to.hash ? { el: to.hash, top: 72, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' } : { top: 0 }),
+  // Other hashes (an example's own #orders link) stay where they are.
+  scrollBehavior: (to, from, saved) => {
+    if (saved) return saved;
+    if (!to.hash) return { top: 0 };
+    if (!document.getElementById(decodeURIComponent(to.hash.slice(1)))) return to.path === from.path ? false : { top: 0 };
+    return { el: to.hash, top: 72, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' };
+  },
 });
 
 router.afterEach((to) => {

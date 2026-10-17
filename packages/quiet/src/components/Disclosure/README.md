@@ -13,6 +13,7 @@ A heading that opens and closes what's under it. Filter groups in the shop, prod
 - The whole row is one button (`aria-expanded`), inside a heading (`headingLevel`, default 3), so the page outline still lists it.
 - Title in label weight; `meta` beside it in `ink-muted` — what's chosen or a count, so a closed group still says what it holds. The chevron turns when open.
 - A `line` divider under each; stack several and they form an accordion. Each opens on its own — opening one never closes another.
+- The content stacks with `--field-gap` between its direct children, like a Card body, so several fields or paragraphs need no wrapper.
 - Closed content is `hidden` (not in the tab order, not read). Printing opens everything.
 - 40px tall, 48px on phones.
 

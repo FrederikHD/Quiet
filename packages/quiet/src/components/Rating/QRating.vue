@@ -11,7 +11,7 @@ export interface RatingProps {
   count?: number;
   /** Makes it a link (to the reviews). */
   href?: string;
-  /** Makes it a link too (href "#" unless given), e.g. to open the reviews tab: @click. */
+  /** Makes it a link too (href "#", not followed, unless given), e.g. to open the reviews tab: @click. */
   onClick?: (event: MouseEvent) => void;
   /** Show the number ("4.6") after the stars. Default true. */
   showValue?: boolean;
@@ -35,6 +35,11 @@ const strings = useStrings<Required<RatingStrings>>('rating', ratingDefaults(), 
 const shown = computed(() => oneDecimal(props.value || 0));
 const none = computed(() => !props.value && !props.count);
 const isLink = computed(() => props.href != null || !!props.onClick);
+// Without an href the link is "#": following it would only jump to the top of the page.
+function onLinkClick(e: MouseEvent) {
+  if (props.href == null) e.preventDefault();
+  props.onClick?.(e);
+}
 </script>
 
 <template>
@@ -42,7 +47,7 @@ const isLink = computed(() => props.href != null || !!props.onClick);
     :is="isLink ? 'a' : 'span'"
     :href="isLink ? (href ?? '#') : undefined"
     :class="['q-rating', size === 'small' && 'q-rating--small', size === 'large' && 'q-rating--large', isLink && 'q-rating--link']"
-    @click="onClick?.($event)"
+    @click="isLink && onLinkClick($event)"
   >
     <QStars :value="value || 0" />
     <span v-if="none" class="q-rating__none">{{ strings.none }}</span>

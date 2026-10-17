@@ -28,6 +28,9 @@ export interface AppShellProps {
   toastStrings?: { dismiss?: string; region?: string };
   /** Built-in phrases (menu button, skip link, close button). */
   strings?: ShellStrings;
+  /** Fill a box instead of the window: the shell scrolls inside its parent (give that a height) and the drawer opens
+   *  over the shell, not the page. For previews and shells embedded in another page. */
+  contained?: boolean;
 }
 
 const props = withDefaults(defineProps<AppShellProps>(), {
@@ -36,6 +39,7 @@ const props = withDefaults(defineProps<AppShellProps>(), {
   toaster: true,
   toastStrings: undefined,
   strings: undefined,
+  contained: false,
 });
 defineSlots<{
   /** The page — usually a Page. */
@@ -60,7 +64,7 @@ const autoMainId = useQuietId('q-main-');
 const mainId = () => props.mainId ?? autoMainId;
 const open = ref(false);
 const topbar = ref<HTMLElement | null>(null);
-useStickyPad(topbar, 'top'); // 0 high on desktop, where the bar is hidden
+if (!props.contained) useStickyPad(topbar, 'top'); // 0 high on desktop, where the bar is hidden
 
 // Growing the window to desktop closes the drawer: the navigation is in its column there.
 let mq: MediaQueryList | null = null;
@@ -87,7 +91,7 @@ function onDrawerClick(e: MouseEvent) {
 </script>
 
 <template>
-  <div class="q-shell">
+  <div :class="['q-shell', contained && 'q-shell--contained']">
     <a :href="`#${mainId()}`" class="q-shell__skip" @click="skip">{{ strings.skip }}</a>
     <header ref="topbar" class="q-shell__topbar">
       <QButton variant="ghost" class="q-shell__menu" icon-start="menu" :aria-label="strings.menu" :expanded="open" @click="open = true" />
@@ -108,6 +112,7 @@ function onDrawerClick(e: MouseEvent) {
       flush
       :close-label="strings.closeMenu"
       class="q-shell__drawerpanel"
+      :teleport="contained ? false : 'body'"
     >
       <div class="q-shell__drawer" @click="onDrawerClick">
         <div class="q-shell__nav"><slot name="nav" /></div>

@@ -70,12 +70,19 @@ const inertCounts = new Map<Element, number>();
 /** Makes every top-level element but `keep` inert. The toaster stays live, so toasts are still announced. */
 export function inertAllBut(keep: Element | null): Element[] {
   const mine: Element[] = [];
-  for (const el of Array.from(document.body.children)) {
-    if (el === keep || el.tagName === 'SCRIPT' || el.classList.contains('q-toaster')) continue;
-    if (el.hasAttribute('inert') && !inertCounts.has(el)) continue; // someone else's
+  const mark = (el: Element) => {
+    if (el.tagName === 'SCRIPT' || el.classList.contains('q-toaster')) return;
+    if (el.hasAttribute('inert') && !inertCounts.has(el)) return; // someone else's
     inertCounts.set(el, (inertCounts.get(el) ?? 0) + 1);
     el.setAttribute('inert', '');
     mine.push(el);
+  };
+  // Everything except the path down to `keep`: the siblings of keep and of each of its ancestors, up to <body>.
+  // A teleported dialog is a child of <body>, so that is just the other body children; one rendered in place
+  // (a contained AppShell drawer) leaves its ancestors live and inerts what is around them.
+  if (!keep) Array.from(document.body.children).forEach(mark);
+  for (let node: Element | null = keep; node && node !== document.body; node = node.parentElement) {
+    for (const sibling of Array.from(node.parentElement?.children ?? [])) if (sibling !== node) mark(sibling);
   }
   return mine;
 }

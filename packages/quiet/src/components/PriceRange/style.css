@@ -19,5 +19,7 @@
 .q-range__thumb:focus-visible::-webkit-slider-thumb { outline: 2px solid var(--brand); outline-offset: 2px; }
 .q-range__thumb:focus-visible::-moz-range-thumb { outline: 2px solid var(--brand); outline-offset: 2px; }
 .q-range__thumb:disabled::-webkit-slider-thumb { border-color: var(--line-strong); cursor: not-allowed; }
+.q-range__thumb:disabled::-moz-range-thumb { border-color: var(--line-strong); cursor: not-allowed; }
+.q-range:has(.q-range__thumb:disabled) .q-range__fill { background: var(--line-strong); }
 @media (pointer: coarse) { .q-range__track { height: 44px; } .q-range__thumb { height: 44px; } .q-range__thumb::-webkit-slider-thumb { width: 28px; height: 28px; } }
 @media (forced-colors: active) { .q-range__fill { background: Highlight; } .q-range__track::before { background: CanvasText; } }

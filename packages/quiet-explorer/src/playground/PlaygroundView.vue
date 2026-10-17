@@ -116,7 +116,8 @@ const panel = ref('controls');
       :data-theme="view.theme === 'inherit' ? undefined : view.theme"
       :data-density="view.density === 'inherit' ? undefined : view.density"
     >
-      <div :class="['ex-preview__stage', story.layout === 'block' && 'is-block']" :style="{ maxWidth: WIDTHS[view.width] }">
+      <!-- A preview never posts a form: that would reload the explorer. The submit still reaches the component's own listeners. -->
+      <div :class="['ex-preview__stage', story.layout === 'block' && 'is-block']" :style="{ maxWidth: WIDTHS[view.width] }" @submit.prevent>
         <QButton v-if="story.opener" @click="modelProp && (values[modelProp] = true)">{{ story.opener }}</QButton>
         <QField v-if="story.field" :label="story.field.label" :hint="story.field.hint">
           <PreviewTarget :story="story" :values="values" :slot-text="slotText" :events="events" @event="onEvent" />

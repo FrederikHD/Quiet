@@ -22,6 +22,16 @@ The back-office frame: navigation on the left, the page beside it.
 - Growing the window past 1024px closes it. The navigation is then in its column.
 - It's a Dialog with `placement="start"`, so it behaves exactly like every other dialog.
 
+## Contained
+
+`contained` puts the shell in a box instead of the window: it fills its parent (give the parent a height), scrolls inside it, and the drawer opens over the shell only, not the whole page. Use it for previews and for a shell embedded in another page, like the examples here. A real back office leaves it off.
+
+```vue
+<div style="height: 520px">
+  <QAppShell brand="Leinen & Co" contained>…</QAppShell>
+</div>
+```
+
 ## Rules
 
 - One AppShell per app, around everything. Pages change inside it.
@@ -31,5 +41,5 @@ The back-office frame: navigation on the left, the page beside it.
 ## What you provide
 
 - **Required:** the `#nav` slot (a Nav) and the page as the default slot.
-- **Optional:** `brand` (or `#brand`), the `#nav-footer` and `#top-bar-end` slots, `main-id`.
+- **Optional:** `brand` (or `#brand`), the `#nav-footer` and `#top-bar-end` slots, `main-id`, `contained` (fill a parent box instead of the window), `:toaster="false"`.
 - **`strings`:** the menu button, the skip link and the close button ("Menü", "Zum Inhalt springen", "Menü schließen"). You can also set them once for the shop with `configure({ strings: { shell: … } })`.

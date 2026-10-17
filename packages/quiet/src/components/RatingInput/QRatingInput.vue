@@ -62,7 +62,7 @@ const inputId = (n: number) => (n === (model.value || 1) && props.id ? props.id 
 <template>
   <div
     ref="root"
-    class="q-field q-rinput q-field--top"
+    :class="['q-field q-rinput q-field--top', disabled && 'q-field--disabled']"
     role="radiogroup"
     :aria-labelledby="`${gid}-label`"
     :aria-required="required ? 'true' : undefined"
@@ -80,7 +80,7 @@ const inputId = (n: number) => (n === (model.value || 1) && props.id ? props.id 
             v-for="n in 5"
             :key="n"
             :class="['q-rinput__star', n <= shown && 'is-on', status[0] === 'error' && 'is-invalid']"
-            @mouseenter="hover = n"
+            @mouseenter="hover = disabled ? 0 : n"
           >
             <input
               :id="inputId(n)"

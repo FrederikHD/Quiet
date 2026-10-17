@@ -41,4 +41,13 @@
   .q-shell__topend { display: flex; align-items: center; gap: var(--space-1); flex: none; }
   .q-shell__main { grid-column: 1; grid-row: 2; }
 }
+/* contained: the shell fills its parent and scrolls inside it. `contain: layout` makes it the box that fixed
+   elements (the drawer, the skip link) are placed in, so they stay inside the shell. */
+.q-shell--contained { height: 100%; min-height: 0; overflow: hidden; contain: layout; grid-template-rows: minmax(0, 1fr); }
+.q-shell--contained .q-shell__side { position: static; height: auto; }
+.q-shell--contained .q-shell__main { overflow-y: auto; }
+@media (max-width: 1023px) {
+  .q-shell--contained { grid-template-rows: auto minmax(0, 1fr); }
+  .q-shell--contained .q-shell__topbar { position: static; }
+}
 @media (forced-colors: active) { .q-shell__side, .q-shell__topbar { border-color: CanvasText; } }

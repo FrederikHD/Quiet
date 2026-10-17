@@ -36,3 +36,4 @@ a.q-summary__name:focus-visible { outline: 2px solid var(--brand); outline-offse
 .q-summary__disc .q-disc__meta { margin-left: auto; max-width: none; color: var(--ink); font-size: 17px; line-height: 24px; font-weight: 600; font-variant-numeric: tabular-nums; }
 .q-summary__toggletext { display: inline-flex; align-items: center; gap: var(--space-2); }
 .q-summary__disc .q-disc__panel { padding: var(--space-2) 0 var(--space-4); }
+.q-summary__note a { color: inherit; text-underline-offset: 2px; }

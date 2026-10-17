@@ -30,7 +30,7 @@ Icon · title (label weight) · text · actions (slim buttons or links) · optio
 
 ## Keyboard and screen readers
 
-A Notice is part of the page, not announced on its own. When it appears in response to something (after saving), pass `role="status"` (or `"alert"` for danger) so it's read.
+A Notice is part of the page, not announced on its own. When it appears in response to something (after saving), it must be read out: pass `role="status"` (or `"alert"` for danger) to a notice that stays rendered while its text changes, or put the spot where it appears in a `role="status"` element that is on the page before the notice is (screen readers only announce changes inside a live region that already exists).
 
 ## Built from
 

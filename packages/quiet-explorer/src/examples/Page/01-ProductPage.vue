@@ -1,8 +1,9 @@
+<!-- A product edit page: back link, status badge, record actions, and a side column for what people check rather than edit. -->
 <script setup lang="ts">
 import { QBadge, QButton, QCard, QField, QFieldGroup, QForm, QInput, QPage, QSelect } from 'quiet';
 import { reactive } from 'vue';
 
-const v = reactive({ status: 'Active', vendor: 'Leinenweberei Rhön', type: 'Shirts', title: 'Linen shirt, blue', price: '59,00', compare: '', berlin: '24', hamburg: '6' });
+const v = reactive({ title: 'Linen shirt, blue', price: '59,00', compare: '', status: 'Active', vendor: 'Leinenweberei Rhön' });
 </script>
 
 <template>
@@ -22,25 +23,12 @@ const v = reactive({ status: 'Active', vendor: 'Leinenweberei Rhön', type: 'Shi
           </QFieldGroup>
         </QForm>
       </QCard>
-      <QCard title="Inventory" description="Stock at each location">
-        <template #actions><QButton size="slim" variant="ghost">Adjust</QButton></template>
-        <QForm label-placement="side">
-          <QField label="Berlin" width="s"><QInput v-model="v.berlin" numeric align="end" suffix="pcs" /></QField>
-          <QField label="Hamburg" width="s"><QInput v-model="v.hamburg" numeric align="end" suffix="pcs" /></QField>
-        </QForm>
-      </QCard>
       <template #aside>
         <QCard title="Status">
-          <QForm label-placement="top">
-            <QField label="Status" label-hidden><QSelect v-model="v.status" :options="['Active', 'Draft', 'Archived']" /></QField>
-            <p class="note">Visible in the online store and point of sale.</p>
-          </QForm>
+          <QField label="Status" label-hidden hint="Visible in the online store."><QSelect v-model="v.status" :options="['Active', 'Draft', 'Archived']" /></QField>
         </QCard>
         <QCard title="Organisation">
-          <QForm label-placement="top">
-            <QField label="Vendor"><QInput v-model="v.vendor" /></QField>
-            <QField label="Product type"><QInput v-model="v.type" /></QField>
-          </QForm>
+          <QField label="Vendor"><QInput v-model="v.vendor" /></QField>
         </QCard>
       </template>
     </QPage>
@@ -49,5 +37,4 @@ const v = reactive({ status: 'Active', vendor: 'Leinenweberei Rhön', type: 'Shi
 
 <style scoped>
 .frame { border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--surface); }
-.note { margin: 0; font: var(--text-small); color: var(--ink-muted); }
 </style>
