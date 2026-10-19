@@ -20,7 +20,7 @@ export interface NoticeProps {
   dismissible?: boolean;
   /** Replaces the tone's own icon. */
   icon?: IconName;
-  /** "status" or "alert" when it appears in response to something; none for a notice that is part of the page. */
+  /** "status" or "alert" when it appears in response to something; none (default) for a notice that is part of the page. */
   role?: 'status' | 'alert';
   /** Translations: { dismiss: 'Dismiss', prefix: { warning: 'Warning:', danger: 'Error:' } }. */
   strings?: NoticeStrings;

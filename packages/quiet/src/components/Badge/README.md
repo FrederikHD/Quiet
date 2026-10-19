@@ -6,7 +6,7 @@ A status pill for orders, payments, fulfilment and stock: "Paid", "Unfulfilled",
 
 - **Shape:** a pill (`radius-full`), padded `space-1` × `space-2`.
 - **Text:** `label` type, 13/16 medium.
-- **Colour:** the tone's tint background with its strong colour for the text.
+- **Colour:** the tone's tint background with its strong colour for the text; `neutral` is `ink-muted` on `surface-sunken`.
 - **Icon** (optional): a 14px icon before the word.
 - **Long text** ends in an ellipsis.
 
@@ -23,6 +23,13 @@ One mapping, used everywhere:
 | `neutral` (default) | Draft, Archived, Refunded |
 | `sale` | The storefront Sale tag: white on `sale` |
 
+An unknown tone falls back to `neutral`.
+
+```vue
+<QBadge tone="success">Paid</QBadge>
+<QBadge tone="warning" icon="clock">Unfulfilled</QBadge>
+```
+
 ## Rules
 
 - Always a word. The colour repeats the meaning but never carries it alone.
@@ -30,6 +37,11 @@ One mapping, used everywhere:
 - A badge is not a button and is not clickable. To filter by a status, use the table's filter.
 - Keep the wording to one or two words.
 
+## Keyboard and screen readers
+
+A badge is plain text: screen readers read the word, and the icon is hidden from them. It is never focusable.
+
 ## What you provide
 
-The text, plus an optional `tone` and `icon`.
+- **Required:** the word ("Paid"), in the default slot.
+- **Optional:** `tone` (`neutral` | `success` | `warning` | `info` | `danger` | `sale`, default `neutral`), `icon` (a 14px icon before the word).

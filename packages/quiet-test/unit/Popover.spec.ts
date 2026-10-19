@@ -239,3 +239,19 @@ describe('QPopover', () => {
     w.unmount();
   });
 });
+
+describe('QPopover attributes', () => {
+  it('passes data- and aria- attributes to the panel along with class and style', async () => {
+    mount(QPopover, {
+      props: { open: true, content: 'Ships in 2 days' },
+      attrs: { class: 'mine', 'data-testid': 'tip', 'aria-describedby': 'x' },
+      slots: { default: '<button>Info</button>' },
+      attachTo: document.body,
+    });
+    await flushPromises();
+    const panel = document.querySelector('.q-popover')!;
+    expect(panel.classList.contains('mine')).toBe(true);
+    expect(panel.getAttribute('data-testid')).toBe('tip');
+    expect(panel.getAttribute('aria-describedby')).toBe('x');
+  });
+});

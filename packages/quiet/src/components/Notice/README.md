@@ -16,11 +16,11 @@ A message that stays on the page until it no longer applies: "Payment pending �
 - **warning** — something needs attention soon ("Payment pending").
 - **danger** — something is wrong and blocks ("Payment failed — the order won't ship").
 
-Background in the tone's tint, the icon in its strong colour, text in `ink`. Screen readers hear "Warning:" / "Error:" before warning and danger text.
+Background in the tone's tint, the icon in its strong colour, text in `ink`. Screen readers hear "Warning:" / "Error:" before warning and danger text. `icon` replaces the tone's own icon. An unknown tone falls back to `info`.
 
 ## Anatomy
 
-Icon · title (label weight) · text · actions (slim buttons or links) · optional × (`dismissible`, emits `dismiss`).
+Icon (20px) · title (semibold; `title` or the `#title` slot) · text (13px) · actions (`#actions`: slim buttons or links) · optional × (`dismissible`, emits `@dismiss`; you remove the notice).
 
 ## Notice, Toast or field message?
 
@@ -30,7 +30,7 @@ Icon · title (label weight) · text · actions (slim buttons or links) · optio
 
 ## Keyboard and screen readers
 
-A Notice is part of the page, not announced on its own. When it appears in response to something (after saving), it must be read out: pass `role="status"` (or `"alert"` for danger) to a notice that stays rendered while its text changes, or put the spot where it appears in a `role="status"` element that is on the page before the notice is (screen readers only announce changes inside a live region that already exists).
+The icon is hidden from screen readers; the hidden "Warning:" / "Error:" prefix goes before the title, or before the text when there's no title. The × is a button named "Dismiss". A Notice is part of the page, not announced on its own. When it appears in response to something (after saving), it must be read out: pass `role="status"` (or `"alert"` for danger) to a notice that stays rendered while its text changes, or put the spot where it appears in a `role="status"` element that is on the page before the notice is (screen readers only announce changes inside a live region that already exists).
 
 ## Built from
 
@@ -38,4 +38,9 @@ Icon and Button (dismiss).
 
 ## What you provide
 
-The tone, a short title that says what's going on, one sentence of what to do, and at most two actions.
+Write a short title that says what's going on, one sentence of what to do, and at most two actions.
+
+- **Optional:** `tone` (`info` | `success` | `warning` | `danger`, default `info`), `title`, `dismissible`, `icon`, `role` (`status` | `alert`; none by default).
+- **Events:** `@dismiss` (the × was pressed).
+- **Slots:** the default slot (the text), `#title` (in place of `title`), `#actions`.
+- **Translations:** `strings` — `dismiss` ("Dismiss") and `prefix` (`{ warning: 'Warning:', danger: 'Error:' }`); or once for the shop with `configure({ strings: { notice: … } })`.

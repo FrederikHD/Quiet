@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { onMounted, onUpdated, ref, watch, watchEffect } from 'vue';
+import { computed, onMounted, onUpdated, ref, useAttrs, watch, watchEffect } from 'vue';
 import { useQuietId } from '../../composables/useQuietId';
 import QPopoverPanel from '../../internal/QPopoverPanel.vue';
 import { warnOnce } from '../../utils/dom';
 import { lastFocusTrigger } from '../../utils/overlay';
 
 export interface PopoverProps {
-  /** Names the panel for screen readers: "Help: SKU", "Change order status". Required. */
+  /** Names the panel for screen readers: "Help: SKU", "Change order status". Required; a tip is read out by its text. */
   label: string;
   /** Short text to show (or use the `content` slot). */
   content?: string;
@@ -18,17 +18,23 @@ export interface PopoverProps {
   align?: 'start' | 'center' | 'end';
   /** Fixed panel width (px number or CSS length). Default: fits the content, up to 320px (280px for tips). */
   width?: number | string;
-  /** Opens on first render (uncontrolled). */
+  /** Opens on first render. */
   defaultOpen?: boolean;
   /** Dialog kind: the element focused when it opens. Default: the first control in the panel. */
   initialFocus?: HTMLElement | null;
   /** No padding inside the panel (lists that reach the edges). */
   flush?: boolean;
-  /** Class for the floating panel (a `class` or `style` set on the Popover goes there too). */
+  /** Class for the floating panel; a `class` or `style` set on the Popover goes there too. */
   panelClass?: unknown;
 }
 
 defineOptions({ inheritAttrs: false });
+// Attributes set on the Popover belong to its panel: class and style, and the rest (data-*, aria-*) too.
+const attrs = useAttrs();
+const panelAttrs = computed(() => {
+  const { class: _c, style: _s, ...rest } = attrs;
+  return rest;
+});
 
 const props = withDefaults(defineProps<PopoverProps>(), {
   kind: 'dialog',
@@ -120,6 +126,7 @@ defineExpose({
     :initial-focus="initialFocus"
     :panel-class="[panelClass, $attrs.class]"
     :panel-style="$attrs.style"
+    :panel-attrs="panelAttrs"
     @close="onClose"
   >
     <slot name="content">{{ content }}</slot>

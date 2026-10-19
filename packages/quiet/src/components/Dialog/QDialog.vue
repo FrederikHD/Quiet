@@ -32,7 +32,7 @@ export interface DialogProps {
   mobile?: 'sheet' | 'inset' | 'full';
   /** dialog (default), or alertdialog for confirmations that interrupt — "Delete product?". */
   role?: 'dialog' | 'alertdialog';
-  /** Default true. false: Escape and the backdrop don't close it, and there's no close button — only for a step that must be answered. */
+  /** Default true. false: Escape and the backdrop don't close it, and there's no × (a `closeText` button still shows) — only for a step that must be answered. */
   dismissible?: boolean;
   /** Text button instead of the × in the header, e.g. "Done". */
   closeText?: string;
@@ -71,7 +71,7 @@ const emit = defineEmits<{
   close: [];
 }>();
 defineSlots<{
-  /** The content. */
+  /** The content: the body, which scrolls on its own when long. */
   default?(): unknown;
   /** A rich title, in place of the title prop. */
   title?(): unknown;

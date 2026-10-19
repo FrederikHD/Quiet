@@ -27,6 +27,8 @@ const props = defineProps<{
   initialFocus?: HTMLElement | null;
   panelClass?: unknown;
   panelStyle?: unknown;
+  /** Other attributes for the panel (data-*, aria-*) — what the consumer set on the Popover. */
+  panelAttrs?: Record<string, unknown>;
 }>();
 
 const emit = defineEmits<{ close: [returnFocus: boolean] }>();
@@ -243,6 +245,7 @@ defineExpose({ panel, reposition });
   <Teleport to="body">
     <div
       v-if="open"
+      v-bind="panelAttrs"
       :id="id"
       ref="panel"
       :class="['q-popover', kind === 'tip' && 'q-popover--tip', flush && 'q-popover--flush', panelClass]"

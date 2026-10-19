@@ -22,26 +22,27 @@ Call `toast()` from anywhere. A `QToaster` shows the toasts. AppShell includes o
 ## Anatomy
 
 - **Shape:** a bar in inverted colours (`ink` background, `surface` text), `radius-md`, at least 48px tall.
-- **Position:** top centre, up to 480px wide — under the AppShell top bar on phones and clear of the notch. It drops in from above; the newest sits nearest the top, errors first. At most three show at once.
+- **Position:** top centre, up to 480px wide — under the AppShell top bar on phones and clear of the notch. It drops in from above.
 - **Message:** one short sentence, in the past tense, about what happened.
 - **Action** (optional): one underlined word, usually "Undo".
 - **Close:** a × button.
-- **Tone:** `neutral` (default); `success` adds a check icon, `error` a warning icon.
-- **Stacking:** at most three at once, newest at the top; errors above the rest.
+- **Tone:** `neutral` (default); `success` adds a check icon, `error` an alert icon.
+- **Stacking:** at most three at once (a fourth pushes out the oldest), newest at the top; errors above the rest.
 
 ## Timing
 
 - Toasts close themselves after 5 seconds, or 8 with an action or as an error.
-- They pause while the pointer is over them or one has focus.
+- They pause while the pointer is over them or one has focus, and get at least one more second when they resume.
 - `duration: 0` keeps a toast until it's dismissed. Use it for errors people must read.
-- `toast.dismiss(id)` closes one early.
+- `toast.dismiss(id)` (also exported as `dismissToast`) closes one early.
+- Pressing the action runs its `onClick` and closes the toast.
 
 ## Keyboard and screen readers
 
 - **No focus moves:** a toast never takes focus, so people can keep working.
-- **Announcements:** toasts are read out politely, in a `status` region; errors are read immediately, in an `alert` region. Both regions exist before the first toast, so it's announced too.
-- **Inside dialogs:** a dialog leaves the toaster reachable, so a toast shown while a dialog is open is still read.
-- **Undo by keyboard:** Tab reaches the action and the close button.
+- **Announcements:** toasts are read out politely, in a `status` region; errors are read immediately, in an `alert` region. Both regions exist before the first toast, so it's announced too. The toaster is a region named "Notifications"; icons are hidden.
+- **Inside dialogs:** a dialog doesn't make the toaster inert, so a toast shown while a dialog is open is still read.
+- **Undo by keyboard:** the toaster sits at the end of the page, so Tab reaches the action and the close button (named "Dismiss") after the page's other controls.
 
 ## Writing it
 
@@ -51,5 +52,13 @@ Call `toast()` from anywhere. A `QToaster` shows the toasts. AppShell includes o
 
 ## What you provide
 
-- `toast(message, { tone, action: { label, onClick }, duration })`, which returns an id.
-- One `<QToaster />`, unless AppShell already provides it. Translate its labels with `strings` or `configure({ strings: { toast: { dismiss, region } } })`.
+`toast(message, options)` shows a toast and returns its id.
+
+- **Required:** `message` ("Product saved").
+- **Optional:** `tone` (`neutral` | `success` | `error`, default `neutral`), `action` (`{ label, onClick }`, usually Undo), `duration` (ms; default 5000, 8000 with an action or as an error; 0 = until dismissed).
+
+### QToaster
+
+Place one, unless AppShell already provides it.
+
+- **Translations:** `strings` — `dismiss` ("Dismiss") and `region` ("Notifications"); or once for the shop with `configure({ strings: { toast: { dismiss, region } } })`.

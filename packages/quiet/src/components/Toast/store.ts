@@ -2,7 +2,9 @@
 import { reactive } from 'vue';
 
 export interface ToastAction {
+  /** The button's text, usually "Undo". */
   label: string;
+  /** Runs when it's pressed; the toast then closes. */
   onClick: () => void;
 }
 export interface ToastOptions {

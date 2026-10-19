@@ -13,7 +13,7 @@ export interface TagStrings {
 export interface TagProps {
   /** Makes it removable (emits `remove`). Pill: the whole tag is the button. Field: a small × of its own. */
   removable?: boolean;
-  /** Names the remove button; default "Remove <text>". */
+  /** Names the remove button; default "Remove <text>". On a pill it should contain the visible text. */
   removeLabel?: string;
   /** pill (default): filters in use, applied codes. field: a chosen option inside a multi-select field. */
   variant?: 'pill' | 'field';
@@ -25,7 +25,7 @@ export interface TagProps {
   detail?: string;
   /** Can't be removed: a dimmed pill, or a field tag without its ×. */
   disabled?: boolean;
-  /** Translations: { remove: (label) => `Remove ${label}` }. */
+  /** Translations: { remove: (label) => string }, default "Remove <label>". */
   strings?: TagStrings;
 }
 
