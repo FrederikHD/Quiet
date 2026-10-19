@@ -49,11 +49,11 @@ export interface FileUploadProps {
   disabled?: boolean;
   /** Also follows the surrounding Field's error. */
   invalid?: boolean;
-  /** Name of the native file input, for form posts. */
+  /** Name of the native file input. It is emptied after each pick, so a plain form post carries no files: upload `file` from the value yourself. */
   name?: string;
-  /** Goes on the choose button; defaults to the Field's id, so its label names the button. */
+  /** Goes on the choose button. Inside a Field the Field's id wins (this one is handed to it), so its label names the button. */
   id?: string;
-  /** Overrides the texts, e.g. for another language. */
+  /** Overrides the button, hint and rejection texts, e.g. for another language. */
   strings?: FileUploadStrings;
 }
 

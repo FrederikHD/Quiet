@@ -68,6 +68,17 @@ describe('QAppShell', () => {
     expect(menu.attributes('aria-expanded')).toBe('false');
   });
 
+  it('closes the drawer when a Nav item without href is chosen (client-side routing)', async () => {
+    const onNavigate = vi.fn();
+    const w = shell({}, { nav: () => h(QNav, { items: [{ label: 'Orders', key: 'orders' }], onNavigate }) });
+    await w.get('button.q-shell__menu').trigger('click');
+    await flushPromises();
+    document.querySelector<HTMLButtonElement>('[role="dialog"] button.q-nav__link')!.click();
+    await flushPromises();
+    expect(onNavigate).toHaveBeenCalledOnce();
+    expect(document.querySelector('[role="dialog"]')).toBeNull();
+  });
+
   it('titles the drawer "Menu" without a brand, and takes strings', async () => {
     const w = shell({ brand: undefined, strings: { menu: 'Menü', skip: 'Zum Inhalt', closeMenu: 'Menü schließen' } });
     expect(w.get('a.q-shell__skip').text()).toBe('Zum Inhalt');

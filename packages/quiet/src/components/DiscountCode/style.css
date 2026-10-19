@@ -4,7 +4,9 @@
 .q-discount__row { display: flex; gap: var(--space-2); min-width: 0; }
 .q-discount__row > .q-input { flex: 1 1 auto; min-width: 0; }
 .q-discount__row > .q-btn { flex: none; }
-.q-discount__field .q-field__live:empty { display: none; }
+/* The message's live region stays in the accessibility tree (it is never taken out of the layout), so a rejection is announced;
+   while empty it is taken out of the layout so the grid leaves no gap for it. */
+.q-discount__field .q-field__live:empty { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .q-discount__reveal { justify-self: start; margin-left: calc(var(--control-pad-slim) * -1); }
 .q-discount__tags { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
 .q-discount__tag .q-tag__label { font-weight: 600; letter-spacing: 0.02em; }

@@ -94,11 +94,11 @@ export function provideNoField(): void {
 }
 
 export interface FieldCommonProps {
-  /** The question the field asks: "Product title", "Email". Always give one (or use the `label` slot). */
+  /** The question the field asks: "Product title", "Email". Always give one (Field and FieldGroup also take a `#label` slot). */
   label?: string;
-  /** Opens from a help icon after the label, as a Popover tip. One or two sentences. (Or the `help` slot.) */
+  /** Opens from a help icon after the label, as a Popover tip. One or two sentences (Field and FieldGroup also take a `#help` slot). */
   help?: string;
-  /** Visible guidance under the control: format, limits, where it shows up. (Or the `hint` slot.) */
+  /** Visible guidance under the control: format, limits, where it shows up (Field, FieldGroup, CheckboxGroup and RadioGroup also take a `#hint` slot). */
   hint?: string;
   /** Error message; also marks the control invalid. Wins over warning and success. */
   error?: string | null;

@@ -7,7 +7,7 @@ import { useChoiceGroup, type ChoiceGroupProps } from '../../internal/useChoiceG
 import { warnOnce } from '../../utils/dom';
 
 export interface RadioGroupProps extends ChoiceGroupProps {
-  /** Starting value when you don't use v-model. */
+  /** Starting value when you don't use v-model; a form reset goes back to it (or to null without one). */
   defaultValue?: string | null;
   /** Needed when there is no visible label. */
   ariaLabel?: string;

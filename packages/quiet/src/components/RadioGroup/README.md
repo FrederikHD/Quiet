@@ -36,13 +36,15 @@ It is to Radio what Field is to Input. You put `<QRadio>`s inside, and the group
 - `swatches`: colour dots for a product's colours. Give each Radio a `swatch` colour (or an `image` of the fabric). The chosen colour's name shows next to the question ("Colour Navy"), and each dot shows its name on hover.
 - `buttons`: size tiles (XS · S · M · L), chosen = `brand` border on `brand-tint`. For short options: sizes, lengths, pack sizes.
 
-**Sold out** (`soldOut` on a Radio, in `swatches` and `buttons`): crossed out but still choosable, and read as "XL, sold out" — so people can pick it and be offered "Notify me" instead of Add to cart. Use `disabled` only for options that can't be chosen at all. Swatch and size tiles are 40px (48px on phones) tap targets.
+**Sold out** (`soldOut` on a Radio, in `swatches` and `buttons`): crossed out but still choosable, and read as "XL, sold out" — so people can pick it and be offered "Notify me" instead of Add to cart. Use `disabled` only for options that can't be chosen at all. Swatch and size tiles are 40px tap targets (32px compact, 48px on phones).
 
 ## States
 
 - **`error`:** unchosen options turn `danger`, and the message shows under the group. Use it for "Choose a delivery method".
 - **`warning` / `success`:** a message only.
 - **`disabled`:** disables every option. To disable one option, set `disabled` on that Radio and say why in its `description`.
+
+**Form reset** puts the group back to `defaultValue`, or to `null` without one.
 
 ## Writing it
 
@@ -54,9 +56,17 @@ It is to Radio what Field is to Input. You put `<QRadio>`s inside, and the group
 
 `labelHidden` keeps the question for screen readers but hides it — as on Field — when a heading above already asks it. The options stay in the control column, lined up with the fields around them.
 
+## Keyboard and screen readers
+
+- The group is a `radiogroup` named by its label (or `ariaLabel`): "radio group, Delivery". It carries `aria-required` when `required`, and `aria-invalid` while it has an `error`.
+- The options are native radios sharing one `name`: Tab enters the set on the chosen option (or the first) and leaves it in one step; ↑ ↓ ← → move and choose, skipping disabled options.
+- The hint and the message are tied to every option, so they are read with each one. The message is a polite live region, announced when it appears; it stays quiet while the Form's error summary is showing.
+- The chosen name beside the label (swatches and buttons) is hidden from screen readers; the chosen tile already says so.
+
 ## What you provide
 
-- **`label`**, or `aria-label` when something else on the page already asks the question.
-- **Children:** Radios, each with a `value` and a `label` (plus `swatch` or `image`, and `soldOut`, in the tile layouts).
-- **Value:** `v-model`, or `default-value` to start it without one.
-- **Optional:** `layout`, `columns`, `required`, `hint`, `help`, `error`, `warning`, `success`, `disabled`, `id`, `name`, `labelPlacement`, `labelWidth`.
+- **Required:** `label` ("Delivery"), or `ariaLabel` when something else on the page already asks the question.
+- **Optional:** `layout` (`list` | `inline` | `cards` | `swatches` | `buttons`, default `list`), `columns` (cards only, default 1), `required`, `help`, `hint`, `error`, `warning`, `success`, `disabled`, `labelHidden`, `labelPlacement` (`auto` | `top` | `side`, default the Form's), `labelWidth` (default 200px), `markers` (`required` | `optional` | `none`, default the Form's), `id` (lands on the chosen option, or the first enabled one), `name` (generated when missing), `defaultValue` (starts the value without v-model; a form reset goes back to it).
+- **v-model:** `v-model` (the chosen Radio's `value`, or `null` for none yet).
+- **Slots:** the default slot (the Radios, each with a `value` and a `label`, plus `swatch` or `image` and `soldOut` in the tile layouts), `#hint` (rich hint content instead of `hint`).
+- **Translations:** `strings` — `optional` ("optional"), `help` ("Help"), `errorPrefix` ("Error:"), `warningPrefix` ("Warning:"), `successPrefix` (""); it overrides the Form's, or set them once with `configure({ strings: { form: … } })`. The "sold out" word comes from `configure({ strings: { choice: { soldOut } } })`.

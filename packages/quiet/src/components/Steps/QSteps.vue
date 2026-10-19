@@ -16,7 +16,7 @@ export interface StepsProps {
   steps: (StepItem | null | false)[];
   /** Index of the current step. Earlier steps show a check and link back; later ones are plain text (you can't skip ahead). */
   current: number;
-  /** Built-in phrases: the landmark's name ("Checkout steps"), what a finished step is ("completed"), and the narrow counter ("Step 2 of 3"). */
+  /** Translations: the landmark's name ("Checkout steps"), what a finished step is ("completed"), and the narrow counter ("Step 2 of 3"); or once with configure({ strings: { steps } }). */
   strings?: { label?: string; done?: string; step?: (i: number, n: number) => string };
 }
 

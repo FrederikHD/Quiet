@@ -27,12 +27,13 @@ export interface DiscountCodeProps {
   apply: (code: string) => void | string | null | undefined | Promise<void | string | null | undefined>;
   /** The codes in use, shown as removable tags. */
   applied?: AppliedCode[];
-  /** Start as a quiet "Add a discount code" button. */
+  /** Start as a quiet "Add a discount code" button; it stays open while codes are applied. */
   collapsible?: boolean;
   /** The field's label. Default "Discount code". */
   label?: string;
-  /** Goes on the code field. */
+  /** Goes on the code field; generated when missing. */
   id?: string;
+  /** Disables the field, Apply and the applied codes' tags. */
   disabled?: boolean;
   /** Overrides the texts, e.g. for another language. */
   strings?: DiscountCodeStrings;

@@ -5,7 +5,7 @@ import { useStickyPad } from '../../composables/useStickyPad';
 export interface FormActionsProps {
   /** end (default): buttons on the right, primary last. start, or between (e.g. Delete on the left, Cancel + Save on the right). */
   align?: 'end' | 'start' | 'between';
-  /** Sticks to the bottom of the scroll area — long back-office forms. */
+  /** Sticks to the bottom of the scroll area — long back-office forms. Focused fields scroll clear of it. */
   sticky?: boolean;
 }
 

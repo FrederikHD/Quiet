@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+import { URL as NodeURL } from 'node:url';
 import { mount } from '@vue/test-utils';
 import { QDiscountCode } from 'quiet';
 import { describe, expect, it, vi } from 'vitest';
@@ -123,5 +125,12 @@ describe('QDiscountCode', () => {
     const w = mount(QDiscountCode, { props: { apply: () => undefined, label: 'Gutschein', strings: { apply: 'Einlösen' } } });
     expect(w.get('label').text()).toBe('Gutschein');
     expect(w.get('.q-btn').text()).toBe('Einlösen');
+  });
+
+  it('never hides its message live region with display:none, so a later message is announced', () => {
+    const css = readFileSync(new NodeURL('../../quiet/src/components/DiscountCode/style.css', import.meta.url), 'utf8');
+    const rules = css.split('}').filter((r) => r.includes('.q-field__live'));
+    expect(rules.length).toBeGreaterThan(0);
+    for (const r of rules) expect(r).not.toMatch(/display:\s*none/);
   });
 });

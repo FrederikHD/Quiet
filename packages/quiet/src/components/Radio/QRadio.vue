@@ -24,8 +24,9 @@ export interface RadioProps {
   invalid?: boolean;
   /** A bordered tile instead of a row; follows the group's cards layout by default. */
   card?: boolean;
+  /** Can't be chosen; say why in the `description`. The group's `disabled` disables every option. */
   disabled?: boolean;
-  /** Goes on the native input. */
+  /** Goes on the native input; the group's `id` already lands on the chosen or first option. */
   id?: string;
 }
 

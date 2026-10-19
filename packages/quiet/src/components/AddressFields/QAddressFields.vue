@@ -24,17 +24,17 @@ export interface AddressFieldsProps {
   kind?: 'shipping' | 'billing' | 'none';
   /** Adds "section-<name>" to autocomplete, for two addresses of the same kind on one page. */
   section?: string;
-  /** Which optional parts show: { company: 'hidden', phone: 'required' }. */
+  /** Company, second line and phone: optional (default), required or hidden, e.g. { company: 'hidden', phone: 'required' }. Pass the same to validateAddress. */
   fields?: AddressFieldOptions;
   /** The countries you deliver to. Default: the 13 countries in addressCountries. */
   countries?: { value: string; label: string }[];
-  /** Shown in the country select while none is chosen: "Choose a country". */
+  /** Shown in the country select while none is chosen, e.g. "Choose a country". No default. */
   countryPlaceholder?: string;
   /** Hint under the phone field. Default "Only used if the courier needs to reach you"; null for none. */
   phoneHint?: string | null;
   /** Disables every part. */
   disabled?: boolean;
-  /** Overrides the labels and messages, e.g. for another language. */
+  /** Overrides the labels and the phone hint, e.g. for another language; pass the same to validateAddress for its messages. */
   strings?: AddressStrings;
 }
 

@@ -5,7 +5,7 @@ export interface NavItem {
   label: string;
   /** Where it goes. Without href the item is a button; handle it with Nav's `navigate` event. */
   href?: string;
-  /** Top-level items only. */
+  /** An icon name; shown on top-level items only. */
   icon?: IconName;
   /** The page being shown: highlighted, aria-current="page". */
   current?: boolean;
@@ -15,7 +15,7 @@ export interface NavItem {
   badgeLabel?: string;
   /** Sub-pages, shown while this item or one of them is current. */
   items?: NavItem[];
-  /** Force the sub-pages open or closed. */
+  /** Force the sub-pages open (true) or closed (false); by default they show while this item or one of them is current. */
   expanded?: boolean;
   /** Stable key for the list (default: href, else the index). Handy to tell items apart in `navigate`. */
   key?: string;

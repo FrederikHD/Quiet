@@ -28,6 +28,7 @@ export interface PriceRangeProps {
   labelHidden?: boolean;
   /** ISO code for the symbol in the fields and the handles' spoken value; defaults to the configured currency. */
   currency?: string;
+  /** Disables both handles and both fields. */
   disabled?: boolean;
   /** Overrides the texts, e.g. for another language. */
   strings?: PriceRangeStrings;
@@ -36,7 +37,7 @@ export interface PriceRangeProps {
 const props = withDefaults(defineProps<PriceRangeProps>(), { step: 1, label: undefined, currency: undefined, strings: undefined });
 /** [from, to]: updated on every move of a handle and every committed field. */
 const model = defineModel<[number, number]>({ required: true });
-const emit = defineEmits<{ /** A handle was let go, or a field left — apply the filter here. */ commit: [value: [number, number]] }>();
+const emit = defineEmits<{ /** A moved handle was let go (pointer or key released), or a typed price committed — apply the filter here. */ commit: [value: [number, number]] }>();
 
 const strings = useStrings<Required<PriceRangeStrings>>(
   'priceRange',
@@ -55,6 +56,11 @@ function emitValue(a: number, b: number, done = false) {
   model.value = [a, b];
   if (done) emit('commit', [a, b]);
 }
+function commitSlide() {
+  if (!moved) return;
+  moved = false;
+  emit('commit', [lo.value, hi.value]);
+}
 function commitField(which: 0 | 1) {
   const raw = draft.value[which];
   draft.value = which === 0 ? [null, draft.value[1]] : [draft.value[0], null];
@@ -70,7 +76,11 @@ function onDraft(which: 0 | 1, v: unknown) {
   next[which] = String(v ?? '').replace(/[^\d.,]/g, '');
   draft.value = next;
 }
+// A handle moved since the last commit: letting go (or releasing the key) commits once, and Tab or a click that
+// moves nothing doesn't refilter.
+let moved = false;
 function onSlide(which: 0 | 1, e: Event) {
+  moved = true;
   const n = +(e.target as HTMLInputElement).value;
   if (which === 0) emitValue(Math.min(n, hi.value), hi.value);
   else emitValue(lo.value, Math.max(n, lo.value));
@@ -102,8 +112,8 @@ const fieldValue = (which: 0 | 1) => draft.value[which] ?? String(which === 0 ? 
         :aria-label="which === 0 ? strings.minimum : strings.maximum"
         :aria-valuetext="money(which === 0 ? lo : hi, currency)"
         @input="onSlide(which, $event)"
-        @pointerup="emit('commit', [lo, hi])"
-        @keyup="emit('commit', [lo, hi])"
+        @pointerup="commitSlide"
+        @keyup="commitSlide"
       />
     </div>
     <QFieldGroup class="q-range__fields" :columns="[1, 1]" stack="late">

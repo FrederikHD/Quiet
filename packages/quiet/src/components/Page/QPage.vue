@@ -12,18 +12,18 @@ export interface PageBack {
 export interface PageProps {
   /** The page's h1. */
   title: string;
-  /** Back link to the parent: { href, label: 'Products' }. Without href it is a button that emits `back`. */
+  /** Back link to the parent: { href, label: 'Products' }. Without href it is a button. A click emits `back` either way. */
   back?: PageBack;
   /** One line under the title, ink-muted. */
   subtitle?: string;
-  /** default 1200px, narrow 720px, full. */
+  /** Content width: default 1200px, narrow 720px, full (the whole window). */
   width?: 'default' | 'narrow' | 'full';
   /** Sets data-density for everything on the page. Default: inherited. */
   density?: 'comfortable' | 'compact';
 }
 
 withDefaults(defineProps<PageProps>(), { back: undefined, subtitle: undefined, width: 'default', density: undefined });
-const emit = defineEmits<{ /** The back link was clicked (use it for client-side routing). */ back: [event: MouseEvent] }>();
+const emit = defineEmits<{ /** The back link or button was clicked (use it for client-side routing). */ back: [event: MouseEvent] }>();
 defineSlots<{
   /** The content (the main column when there is an aside). */
   default?(): unknown;

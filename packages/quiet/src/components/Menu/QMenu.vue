@@ -30,11 +30,11 @@ export interface MenuProps {
   label: string;
   /** The actions, in order. null and false entries are skipped, so an item can be left out with `cond && {…}`. */
   items: (MenuItem | null | false)[];
-  /** Default end. */
+  /** Which edge of the trigger the menu lines up with. Default end. */
   align?: 'start' | 'end';
-  /** For the default ⋯ trigger. */
+  /** Variant of the default ⋯ trigger. Default ghost. */
   variant?: 'secondary' | 'ghost';
-  /** Size of the default ⋯ trigger, as Button's size. */
+  /** Size of the default ⋯ trigger, as Button's size. Default `default` (follows the density). */
   size?: 'slim' | 'default' | 'large';
 }
 
@@ -43,7 +43,7 @@ defineOptions({ inheritAttrs: false });
 const props = withDefaults(defineProps<MenuProps>(), { align: 'end', variant: 'ghost', size: 'default' });
 const emit = defineEmits<{ /** An item was chosen. */ select: [item: MenuItem, event: MouseEvent] }>();
 defineSlots<{
-  /** Your own trigger (a Button). */
+  /** Your own trigger (a Button), instead of the ⋯ icon button. */
   trigger?(): unknown;
   /** Your own content for an item's label line (the icon and the row stay): `#item="{ item }"`. */
   item?(props: { item: MenuItem }): unknown;
@@ -54,8 +54,14 @@ const open = ref(false);
 const list = ref<HTMLElement | null>(null);
 const items = computed(() => props.items.filter((x): x is MenuItem => !!x));
 
-// ↑ ↓ Home End and typing a letter move between items; Enter / Space choose (native buttons and links).
+// ↑ ↓ Home End and typing a letter move between items; Enter / Space choose (native buttons; links take Space here).
 function onKeyDown(e: KeyboardEvent) {
+  const t = e.target as HTMLElement | null;
+  if (e.key === ' ' && t?.tagName === 'A' && t.getAttribute('role') === 'menuitem') {
+    e.preventDefault();
+    t.click();
+    return;
+  }
   const nodes = Array.from(list.value?.querySelectorAll<HTMLElement>('[role="menuitem"]:not([aria-disabled="true"])') ?? []);
   const i = nodes.indexOf(document.activeElement as HTMLElement);
   let next: HTMLElement | undefined;

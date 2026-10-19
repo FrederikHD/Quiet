@@ -13,7 +13,9 @@ const check = computed(() => validateAddress(ship.value, { idPrefix: 'ship' }));
 function submit(e: SubmitEvent) {
   e.preventDefault();
   tried.value = true;
-  if (check.value.valid) next();
+  if (check.value.valid) {
+    // continue to the next step
+  }
 }
 </script>
 
@@ -32,20 +34,20 @@ function submit(e: SubmitEvent) {
   - most of Europe: **Postcode · City** in one row (1 : 2);
   - United States: City, then **State · ZIP code**;
   - United Kingdom: Town or city, then Postcode (short field).
-  Phone last, with "Only used if the courier needs to reach you".
-- **Autocomplete:** `shipping given-name`, `shipping postal-code`, … (`kind="billing"` for billing; `section` for two addresses of the same kind). Postcodes get the numeric keyboard where they are digits only.
+  Phone last, with the hint "Only used if the courier needs to reach you" (`phoneHint` changes it; `null` removes it).
+- **Autocomplete:** `shipping given-name`, `shipping postal-code`, … (`kind="billing"` for billing; `section` for two addresses of the same kind). `kind="none"` leaves the prefix out. Postcodes get the numeric keyboard where they are digits only, and the phone field the phone keyboard.
 - **Required:** everything except company, the second address line and phone. `:fields="{ company: 'hidden', phone: 'required' }"` changes that.
 - **Validation** (`validateAddress(value, { idPrefix, fields })`) returns `{ errors, list, valid }`:
   - missing parts: "Enter your city";
   - a postcode in the wrong shape for its country: "Enter a valid postcode, like 10115";
   - no house number where addresses need one (DE, AT, CH, NL, BE, LU, DK, PL): "Add the house number";
-  - a phone with letters in it.
-  `errors` goes back into the component; `list` goes to the Form's error summary (the ids are `${idPrefix}-${key}`).
-- `v-model` holds the whole address; `change` also tells you which part changed: `(nextAddress, changedKey)`.
+  - a phone that isn't at least 6 digits, spaces, `+`, `(`, `)`, `/` or `-`: "Enter a phone number with digits only, + and spaces".
+  Pass it the same `fields` as the component, and `strings` if you translate the messages. `errors` goes back into the component; `list` goes to the Form's error summary (the ids are `${idPrefix}-${key}`).
+- `v-model` holds the whole address; `@change` also tells you which part changed: `(nextAddress, changedKey)`.
 
 ## Countries
 
-Germany, Austria, Switzerland, the Netherlands, Belgium, Luxembourg, France, Italy, Spain, Denmark, Poland, the UK and the US by default. Pass `countries` to limit or extend the list; a country without a known format gets the European layout and no postcode check.
+Germany, Austria, Switzerland, the Netherlands, Belgium, Luxembourg, France, Italy, Spain, Denmark, Poland, the UK and the US by default. Pass `countries` to limit or extend the list; a country without a known format gets the European layout and no postcode or house-number check. The country is always required; `countryPlaceholder` ("Choose a country") shows in the select until one is chosen.
 
 ## Not for
 
@@ -53,7 +55,7 @@ Addresses you only show — write them on one line or in a DescriptionList.
 
 ## Keyboard and screen readers
 
-Every part is a labelled field with its autocomplete token, so browsers and password managers fill it. Messages are tied to their fields and listed in the Form's error summary, which jumps to them.
+Every part is an ordinary labelled field (Input, or Select for the country) with its autocomplete token, so browsers and password managers fill it. Required parts carry `aria-required`. Each message is tied to its field and read with it; the Form's error summary lists them and jumps to the field by its id (`${idPrefix}-${key}`). Changing the country can change the labels and parts that follow (ZIP code, State); the country select keeps focus.
 
 ## Built from
 
@@ -61,4 +63,7 @@ Field, FieldGroup, Input and Select.
 
 ## What you provide
 
-`v-model`, an `id-prefix` per address, and the `errors` from `validateAddress` once someone has tried to continue.
+- **Optional:** `idPrefix` (default "address"; one per address on the page), `errors` (from `validateAddress`, once someone has tried to continue; default none), `kind` (`shipping` | `billing` | `none`, default `shipping`), `section` (for two addresses of the same kind), `fields` (`{ company, line2, phone }`, each `optional` | `required` | `hidden`; all optional by default), `countries` (default the 13 above), `countryPlaceholder`, `phoneHint` (default "Only used if the courier needs to reach you"; `null` for none), `disabled` (disables every part).
+- **v-model:** `v-model` (the whole `Address`: `country`, `firstName`, `lastName`, `company`, `line1`, `line2`, `postalCode`, `city`, `state`, `phone`).
+- **Events:** `@change(nextAddress, changedKey)` after every edit.
+- **Translations:** `strings`, or once with `configure({ strings: { address: … } })` — labels `country` ("Country"), `firstName` ("First name"), `lastName` ("Last name"), `company` ("Company"), `line1` ("Street and house number"), `line2` ("Apartment, floor, etc."), `postalCode` ("Postcode"), `zip` ("ZIP code"), `city` ("City"), `town` ("Town or city"), `state` ("State"), `phone` ("Phone"), `phoneHint`; messages `missing(label)` ("Enter your city"), `chooseCountry` ("Choose a country"), `badPostal(label, example)` ("Enter a valid postcode, like 10115"), `noNumber` ("Add the house number"), `badPhone` ("Enter a phone number with digits only, + and spaces").

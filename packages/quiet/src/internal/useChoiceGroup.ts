@@ -17,6 +17,7 @@ export interface ChoiceGroupProps extends FieldCommonProps {
   name?: string;
   /** Lands on the first enabled option (or the chosen radio) — use it to link errors in the Form summary. */
   id?: string;
+  /** Disables every option in the group. */
   disabled?: boolean;
   /** Keeps the label for screen readers only (as on Field). */
   labelHidden?: boolean;

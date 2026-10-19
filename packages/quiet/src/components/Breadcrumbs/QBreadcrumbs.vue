@@ -13,7 +13,7 @@ export interface BreadcrumbItem {
 export interface BreadcrumbsProps {
   /** From the top down; the current page last, without href. */
   items: (BreadcrumbItem | null | false)[];
-  /** The landmark's name. Default "Breadcrumb"; an aria-label on QBreadcrumbs wins. */
+  /** Translations: { label: "Breadcrumb" }, the landmark's name; or once with configure({ strings: { breadcrumbs } }). An aria-label on QBreadcrumbs wins. */
   strings?: { label?: string };
 }
 

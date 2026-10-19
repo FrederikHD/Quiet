@@ -37,7 +37,8 @@ It is to Checkbox what Field is to Input. You put `<QCheckbox>`es inside, and th
 
 - `list` (default): one option per row.
 - `inline`: side by side, wrapping when space runs out. For 2–5 short options such as sizes or columns.
-- `cards`: bordered tiles with a description and a `meta` (price). One per row by default; `:columns="2"` or `3` puts several per row, each at least 180px wide, so phones drop back to fewer.
+- `cards`: bordered tiles with a description and a `meta` (price). One per row by default; `:columns="2"` or `3` puts several per row, each at least 180px wide, so narrow screens drop back to fewer.
+- `swatches` and `buttons`: colour dots and size tiles, for filters. See below.
 
 ## States
 
@@ -48,10 +49,10 @@ It is to Checkbox what Field is to Input. You put `<QCheckbox>`es inside, and th
 ## Values
 
 - **`v-model`:** the ticked values, `['email', 'sms']`.
-- **Without v-model:** `default-value` starts it; the group keeps its own state.
+- **Without v-model:** `defaultValue` starts it; the group keeps its own state.
 - **Neither:** each Checkbox manages itself (its own `v-model`). This suits a single checkbox.
 - **`name`:** used for plain form posts; a name is generated when you don't pass one.
-- **Form reset:** the group goes back to `default-value`.
+- **Form reset:** the group goes back to `defaultValue`. Without one, a reset leaves the value alone.
 
 ## Hidden label
 
@@ -59,10 +60,20 @@ It is to Checkbox what Field is to Input. You put `<QCheckbox>`es inside, and th
 
 ## Swatches and size tiles (filters)
 
-`layout="swatches"` shows colour dots (`swatch` on each Checkbox) and `layout="buttons"` size tiles — the same look as RadioGroup's, but several can be on: a shop filter for colour and size. The chosen names show beside the group label ("Colour  Navy, Sand"); give each option a `description` with its count ("4 products") for screen readers, and disable options with nothing behind them. In a Disclosure, use `labelHidden` — the Disclosure title names the group.
+`layout="swatches"` shows colour dots (`swatch` or `image` on each Checkbox) and `layout="buttons"` size tiles — the same look as RadioGroup's, but several can be on: a shop filter for colour and size. The chosen names show beside the group label ("Colour  Navy, Sand"); give each option a `description` with its count ("4 products"), which screen readers read after the name, and disable options with nothing behind them. In a Disclosure, use `labelHidden` — the Disclosure title names the group.
+
+## Keyboard and screen readers
+
+- The group is a `group` named by its label (or `ariaLabel`): "group, Notify the customer by".
+- Each option is a native checkbox: Tab moves from box to box, Space ticks and unticks.
+- The hint and the message are tied to every checkbox, so they are read with each one. The message is a polite live region, announced when it appears; it stays quiet while the Form's error summary is showing.
+- A required group around a single checkbox marks that checkbox `aria-required`.
+- The chosen names beside the label (swatches and buttons) are hidden from screen readers; each tile already says whether it is ticked.
 
 ## What you provide
 
-- **`label`:** the question. Leave it out only for a single checkbox, or pass `aria-label` when something else on the page already says it.
-- **Children:** Checkboxes, each with a `value` and a `label`.
-- **Optional:** `layout`, `columns`, `required`, `hint`, `help`, `error`, `warning`, `success`, `disabled`, `id`, `name`, `labelPlacement`, `labelWidth`.
+- **Required:** `label` ("Notify the customer by") — leave it out only for a single checkbox, or pass `ariaLabel` when something else on the page already says it.
+- **Optional:** `layout` (`list` | `inline` | `cards` | `swatches` | `buttons`, default `list`), `columns` (cards only, default 1), `required`, `help`, `hint`, `error`, `warning`, `success`, `disabled`, `labelHidden`, `labelPlacement` (`auto` | `top` | `side`, default the Form's), `labelWidth` (default 200px), `markers` (`required` | `optional` | `none`, default the Form's), `id` (lands on the first enabled option), `name` (generated when missing), `defaultValue`, `ariaLabel`.
+- **v-model:** `v-model` (the ticked values, `string[]`).
+- **Slots:** the default slot (the Checkboxes, each with a `value` and a `label`), `#hint` (rich hint content instead of `hint`).
+- **Translations:** `strings` — `optional` ("optional"), `help` ("Help"), `errorPrefix` ("Error:"), `warningPrefix` ("Warning:"), `successPrefix` (""); it overrides the Form's, or set them once with `configure({ strings: { form: … } })`.

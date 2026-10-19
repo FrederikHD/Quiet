@@ -33,9 +33,9 @@ export interface SearchSuggestionGroup {
 export interface SearchBoxStrings {
   /** The field's (hidden) label and the list's name. Default "Search". */
   label?: string;
-  /** Default "Search". */
+  /** The placeholder. Default "Search". */
   placeholder?: string;
-  /** Name of the submit action. Default "Search". */
+  /** Not used at present: SearchBox has no submit button (Enter searches). Default "Search". */
   submit?: string;
   /** Name of the clear (×) button. Default "Clear search". */
   clear?: string;
@@ -47,19 +47,19 @@ export interface SearchBoxStrings {
 export interface SearchBoxProps {
   /** A flat list, or groups: [{ label: 'Products', items: [...] }]. */
   suggestions?: SearchSuggestion[] | SearchSuggestionGroup[];
-  /** false: no "Search for “…”" option at the end. */
+  /** The "Search for “…”" option at the end of the list. Default true; false leaves it out. */
   searchOption?: boolean;
   /** The list in the flow instead of floating (inside a phone dialog). */
   inline?: boolean;
-  /** default follows the density; large (48px) for the storefront header and phones. */
+  /** default follows the density (40px comfortable, 32px compact); large (48px) for the storefront header and phones. */
   size?: 'default' | 'large';
   /** The field's name for screen readers (visually hidden). Default "Search"; say what is searched: "Search products". */
   label?: string;
-  /** Default "Search". */
+  /** The placeholder. Default "Search" (strings.placeholder). */
   placeholder?: string;
   /** Focus the field when it mounts (a search dialog that just opened). */
   autofocus?: boolean;
-  /** Built-in phrases. */
+  /** Translations: label, placeholder, clear, searchFor, count (and the unused submit); or once with configure({ strings: { search } }). */
   strings?: SearchBoxStrings;
 }
 

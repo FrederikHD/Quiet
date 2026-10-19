@@ -12,9 +12,9 @@ export interface DisclosureProps {
   defaultOpen?: boolean;
   /** The heading around the button. Default 3; null for no heading. */
   headingLevel?: 2 | 3 | 4 | 5 | 6 | null;
-  /** Name the panel as a region (for long content people jump to). */
+  /** Makes the panel a region named by the button, for long content people jump to. */
   region?: boolean;
-  /** false: no divider line under it. */
+  /** The line under it. Default true; false removes it. */
   divider?: boolean;
 }
 

@@ -12,6 +12,7 @@ import { STAR_PATH, ratingDefaults, type RatingStrings } from '../Rating/stars';
 export interface RatingInputProps {
   /** The question. Default "Your rating". */
   label?: string;
+  /** A rating must be given: the required marker, aria-required and the native required. */
   required?: boolean;
   /** Error message; also marks the stars invalid. */
   error?: string | null;
@@ -21,12 +22,13 @@ export interface RatingInputProps {
   id?: string;
   /** Name for form posts; generated when missing. */
   name?: string;
+  /** Greys the stars and stops hover and choosing. */
   disabled?: boolean;
   /** Overrides the Form's markers for this one field. */
   markers?: Markers;
   /** Starting value when you don't use v-model; a form reset goes back to it. */
   defaultValue?: number;
-  /** Overrides the texts, e.g. for another language. */
+  /** Overrides the texts (yours, stars, words, and the Form's optional and errorPrefix), e.g. for another language. */
   strings?: RatingStrings & FormStrings;
 }
 

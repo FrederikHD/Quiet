@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+import { URL as NodeURL } from 'node:url';
 import { mount } from '@vue/test-utils';
 import { QField, QFileUpload, formatSize, type FileUploadItem } from 'quiet';
 import { beforeEach, describe, expect, it } from 'vitest';
@@ -141,5 +143,12 @@ describe('QFileUpload', () => {
     const w = mount(QFileUpload, { props: { strings: { chooseOne: 'Datei wählen', dropOne: 'oder hierher ziehen' } } });
     expect(w.get('.q-btn').text()).toBe('Datei wählen');
     expect(w.get('.q-upload__hint').text()).toBe('oder hierher ziehen');
+  });
+
+  it('never hides its message live region with display:none, so a later message is announced', () => {
+    const css = readFileSync(new NodeURL('../../quiet/src/components/FileUpload/style.css', import.meta.url), 'utf8');
+    const rules = css.split('}').filter((r) => r.includes('.q-upload__msg'));
+    expect(rules.length).toBeGreaterThan(0);
+    for (const r of rules) expect(r).not.toMatch(/display:\s*none/);
   });
 });

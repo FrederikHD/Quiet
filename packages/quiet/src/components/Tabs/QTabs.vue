@@ -26,19 +26,19 @@ export interface TabsProps {
   label: string;
   /** The tabs, in order. null and false entries are skipped, so a tab can be left out with `cond && {…}`. */
   tabs: (TabItem | null | false)[];
-  /** First value when you don't use v-model. */
+  /** The tab chosen first when you don't use v-model. Default: the first enabled tab. */
   defaultValue?: string;
   /** line (default): tabs on a rule, for sections of a page. segmented: a pill track, for switching a view (7 days | 30 days). */
   variant?: 'line' | 'segmented';
   /** Tabs share the full width equally. */
   fill?: boolean;
-  /** 28px on desktop, like other slim controls; density height on phones. */
+  /** default follows the density (40px comfortable, 32px compact). slim is 28px on desktop, like other slim controls, and the density height on phones. */
   size?: 'default' | 'slim';
   /** auto (default): arrow keys choose as they move. manual: arrows move focus, Enter or Space chooses — for panels that are slow to show. */
   activation?: 'auto' | 'manual';
   /** Default true: the panel is a Tab stop, so it can be scrolled and read. Set false when the panel starts with a focusable control. */
   panelFocusable?: boolean;
-  /** Built-in phrases: hasErrors is read after a tab whose panel holds an invalid field ("has errors"). */
+  /** Translations: { hasErrors: "has errors" }, read after a tab whose panel holds an invalid field; or once with configure({ strings: { tabs } }). */
   strings?: { hasErrors?: string };
 }
 

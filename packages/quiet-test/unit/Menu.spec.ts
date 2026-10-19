@@ -107,6 +107,19 @@ describe('QMenu', () => {
     expect(b.hasAttribute('href')).toBe(false);
   });
 
+  it('chooses a link item with Space, as with Enter', async () => {
+    const onSelect = vi.fn((e: MouseEvent) => e.preventDefault());
+    const { w } = await openMenu([{ label: 'View in shop', href: '/p/1', onSelect }]);
+    const a = panelItems()[0];
+    a.focus();
+    const ev = new KeyboardEvent('keydown', { key: ' ', bubbles: true, cancelable: true });
+    a.dispatchEvent(ev);
+    await flushPromises();
+    expect(ev.defaultPrevented).toBe(true);
+    expect(onSelect).toHaveBeenCalledOnce();
+    expect(w.emitted('select')).toHaveLength(1);
+  });
+
   it('closes on Escape and gives focus back to the trigger', async () => {
     const { trigger } = await openMenu([{ label: 'Edit' }]);
     document.activeElement!.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));

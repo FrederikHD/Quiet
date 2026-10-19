@@ -6,7 +6,7 @@ import QChoiceGroupFrame from '../../internal/QChoiceGroupFrame.vue';
 import { useChoiceGroup, type ChoiceGroupProps } from '../../internal/useChoiceGroup';
 
 export interface CheckboxGroupProps extends ChoiceGroupProps {
-  /** Starting value when you don't use v-model. Leave both out to let each Checkbox manage itself. */
+  /** Starting value when you don't use v-model; a form reset goes back to it. Leave both out to let each Checkbox manage itself. */
   defaultValue?: string[];
   /** Needed when there is no visible label. */
   ariaLabel?: string;

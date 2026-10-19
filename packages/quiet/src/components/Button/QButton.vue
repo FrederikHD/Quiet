@@ -15,7 +15,7 @@ export interface ButtonProps {
   iconStart?: IconName;
   /** Icon after the label, e.g. a chevron or arrow (or use the `icon-end` slot). */
   iconEnd?: IconName;
-  /** Square button with only an icon. Inferred when there is no label; requires aria-label. */
+  /** Square button with only an icon. Inferred when there is an icon and no label; requires aria-label. */
   iconOnly?: boolean;
   /** Makes the button a toggle and sets aria-pressed. true = selected. secondary and ghost only. */
   pressed?: boolean;

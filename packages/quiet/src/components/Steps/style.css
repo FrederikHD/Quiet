@@ -1,6 +1,7 @@
 /* ---------- Steps ----------
    24px markers joined by a line. Done: brand-tint with a brand check, a link back. Current: brand fill.
-   Later: outlined, ink-muted. Under 520px of its own width only the current step keeps its label. */
+   Later: outlined, ink-muted. Under 520px of its own width only the current step keeps its label, and a
+   "Step 2 of 3" counter shows under the row. */
 .q-steps { container-type: inline-size; min-width: 0; font-family: var(--font-sans); font-size: var(--control-text-sm); line-height: 18px; color: var(--ink); }
 .q-steps__list { display: flex; align-items: center; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
 .q-steps__item { display: flex; align-items: center; gap: var(--space-2); min-width: 0; }
@@ -23,6 +24,8 @@ a.q-steps__step:focus-visible, button.q-steps__step:focus-visible { outline: 2px
 @container (max-width: 519px) {
   .q-steps__item:not(.is-current) .q-steps__label { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   .q-steps__item:not(.is-current) .q-steps__step { padding: 0; min-width: 32px; justify-content: center; }
+  /* "Step 2 of 3" under the row: the other labels are hidden, so say how far along the flow is. */
+  .q-steps__count { display: block; margin-top: var(--space-1); color: var(--ink-muted); font-size: 12px; line-height: 16px; }
 }
 @media (forced-colors: active) {
   .q-steps__item.is-current .q-steps__marker { forced-color-adjust: none; background: Highlight; color: HighlightText; border-color: Highlight; }

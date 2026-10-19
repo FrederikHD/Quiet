@@ -9,7 +9,7 @@ export interface CardProps {
   description?: string;
   /** No padding around the body (lists that reach the edges). */
   flush?: boolean;
-  /** Default 2. */
+  /** The heading level of the title, h2 to h6. Default 2. */
   headingLevel?: 2 | 3 | 4 | 5 | 6;
 }
 

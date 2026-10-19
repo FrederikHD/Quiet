@@ -6,11 +6,11 @@ import QNavItem from './QNavItem.vue';
 import type { NavItem, NavSection } from './types';
 
 export interface NavProps {
-  /** Sections of links, each with an optional title. */
+  /** Sections of links, each with an optional title. Use this or `items`. */
   sections?: NavSection[];
-  /** A single section. */
+  /** The links of a single, untitled section (when there is no `sections`). */
   items?: NavItem[];
-  /** The nav landmark's name. Default "Main"; an aria-label on QNav wins. */
+  /** Translations: { nav: "Main" }, the nav landmark's name; or once with configure({ strings: { shell } }). An aria-label on QNav wins. */
   strings?: { nav?: string };
 }
 

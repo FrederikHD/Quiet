@@ -7,21 +7,30 @@ The shop's search field with suggestions as you type: collections and products (
   v-model="q"
   :suggestions="[{ label: 'Products', items: hits.map((p) => ({ id: p.id, label: p.name, image: p.thumb, meta: money(p.price), description: p.type })) }]"
   @select="go"
-  @submit="(query) => go(`/search?q=${query}`)"
+  @submit="(query) => go(`/search?q=${encodeURIComponent(query)}`)"
 />
 ```
 
 ## Behaviour
 
-- It's a search landmark (`<form role="search">`) with a combobox field and a listbox under it — the field keeps focus while ↓ ↑ move through the suggestions (`aria-activedescendant`), Enter opens the highlighted one or searches, Esc closes the list, Esc again empties the field.
-- Groups get a small heading ("Collections", "Products") and are announced as groups. The number of suggestions is announced politely.
-- Clicking outside or tabbing away closes the list. A × clears the field.
+- The list opens when the field has text and focus, and there is something to show. Each row has a picture (`image`) or an icon (`icon`), the `label`, an optional `description` line and `meta` (a price) on the right. Pass a flat list, or groups `[{ label: 'Products', items: [...] }]`.
+- "Search for “…”" is always the last option while there is text (`:search-option="false"` leaves it out). It, Enter without a highlighted suggestion, and submitting the form emit `@submit(query)` with the trimmed text; an empty field never submits.
+- Choosing a suggestion emits `@select(item)` with your item as you passed it, and closes the list.
+- Groups get a small heading ("Collections", "Products"), with a rule between groups.
+- Clicking outside or tabbing away closes the list. A × ("Clear search") clears the field and closes the list.
 - No autocorrect, no autocapitalise; the phone keyboard shows "Search" on its Enter key.
+- `size="large"` (48px) for the storefront header and phones; `default` follows the density (40px comfortable, 32px compact).
+- `autofocus` focuses the field when it mounts, for a search dialog that has just opened.
 - `inline`: the list stays in the page flow — use it inside a full-screen Dialog on phones, where a floating list would be cut off by the keyboard.
 
 ## Keyboard and screen readers
 
-A search landmark with a combobox: the field keeps focus while ↓ ↑ move through the suggestions (read as "Linen shirt, 2 of 6"), Enter opens one or searches, Esc closes the list and Esc again clears. The number of suggestions is announced as you type.
+- A search landmark (`<form role="search">`). The field is a `combobox` with a visually hidden label (`label`, default "Search") and `aria-expanded`; the list is a `listbox` with the same name.
+- Focus stays in the field. ↓ opens the list, or moves down; ↑ moves up; both wrap round. The highlighted row is announced through `aria-activedescendant` and `aria-selected`.
+- Enter opens the highlighted suggestion, or searches when none is highlighted. Escape closes the list; Escape again empties the field. Tab closes the list and moves on.
+- Group headings are hidden as text but name their `role="group"`, so screen readers say which group a suggestion is in.
+- The number of suggestions ("3 suggestions", "No suggestions") is announced politely as it changes; "Search for “…”" isn't counted.
+- Pictures and icons are hidden from screen readers; the label names each row.
 
 ## Not for
 
@@ -33,4 +42,7 @@ Input (with its search icon and clear button), Icon.
 
 ## What you provide
 
-The matching (and its speed): pass suggestions for the current text. Keep it to about eight. Searching without suggestions works too — leave `suggestions` empty.
+- **Optional:** `suggestions` (`{ id?, label, description?, image?, icon?, meta? }`, flat or in groups `{ label?, items }`; keep it to about eight, matched to the current text — leave it empty to search without suggestions), `searchOption` (default `true`), `inline`, `size` (`default` | `large`, default `default`), `label` (the hidden field name: "Search products"), `placeholder` (default "Search"), `autofocus`.
+- **v-model:** `v-model` (the text in the field).
+- **Events:** `@submit(query)` (Enter, the "Search for “…”" option or a form submit), `@select(item)` (a suggestion was chosen).
+- **Translations:** `strings` — `label` ("Search"), `placeholder` ("Search"), `clear` ("Clear search"), `searchFor` (`(q) => "Search for “q”"`), `count` (`(n) => "3 suggestions"`; "1 suggestion", "No suggestions"). `submit` ("Search") is accepted but not shown. Or set them once with `configure({ strings: { search: … } })`.

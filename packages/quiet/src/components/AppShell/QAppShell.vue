@@ -12,21 +12,21 @@ export interface ShellStrings {
   menu?: string;
   /** The skip link. Default "Skip to content". */
   skip?: string;
-  /** Name of the Nav landmark (Nav reads it from the same `shell` namespace). Default "Main". */
+  /** Name of the Nav landmark. Nav reads it from `configure({ strings: { shell } })` or its own `strings`; set here on AppShell it has no effect. Default "Main". */
   nav?: string;
   /** Name of the drawer's close button. Default "Close menu". */
   closeMenu?: string;
 }
 export interface AppShellProps {
-  /** The shop name (plain type) — or the `brand` slot. */
+  /** The shop name in plain type (or use the `brand` slot). Also titles the drawer. */
   brand?: string;
   /** Id of the main element (the skip link's target). Generated when missing. */
   mainId?: string;
-  /** AppShell renders a Toaster; false leaves it out. */
+  /** AppShell renders a Toaster, so toast() works on every page; false leaves it out. Default true. */
   toaster?: boolean;
-  /** Phrases for the built-in Toaster: the dismiss button and the region's name. */
+  /** Phrases for the built-in Toaster: the dismiss button and the region's name (as Toaster's `strings`). */
   toastStrings?: { dismiss?: string; region?: string };
-  /** Built-in phrases (menu button, skip link, close button). */
+  /** Built-in phrases: the menu button, the skip link and the drawer's close button. */
   strings?: ShellStrings;
   /** Fill a box instead of the window: the shell scrolls inside its parent (give that a height) and the drawer opens
    *  over the shell, not the page. For previews and shells embedded in another page. */
@@ -50,7 +50,7 @@ defineSlots<{
   brand?(): unknown;
   /** Under the nav, in the column and the drawer: the account, the store switcher. */
   'nav-footer'?(): unknown;
-  /** Phones: icon buttons at the end of the top bar (Search). */
+  /** Below 1024px: one or two icon buttons at the end of the top bar (Search). */
   'top-bar-end'?(): unknown;
 }>();
 
@@ -84,9 +84,9 @@ function skip(e: MouseEvent) {
   m.focus();
   m.scrollIntoView({ block: 'start' });
 }
-// Choosing a page in the drawer closes it.
+// Choosing a page in the drawer closes it: a link, a Nav item (also one without href, for a router), or anything marked data-nav-close.
 function onDrawerClick(e: MouseEvent) {
-  if ((e.target as Element).closest?.('a[href], [data-nav-close]')) open.value = false;
+  if ((e.target as Element).closest?.('a[href], .q-nav__link, [data-nav-close]')) open.value = false;
 }
 </script>
 

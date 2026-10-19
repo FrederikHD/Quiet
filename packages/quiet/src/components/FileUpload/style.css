@@ -28,6 +28,8 @@
 .q-upload__thumb { display: flex; align-items: center; justify-content: center; aspect-ratio: 1; max-width: 100%; overflow: hidden; border-radius: var(--radius-sm); background: var(--surface-sunken); color: var(--ink-muted); }
 .q-upload__thumb > img { width: 100%; height: 100%; object-fit: cover; }
 .q-upload__list--images .q-upload__remove { position: absolute; top: var(--space-3); right: var(--space-3); background: var(--surface-raised); color: var(--ink); box-shadow: 0 0 0 1px var(--line-strong); }
-.q-upload__msg:empty { display: none; }
+/* The live region stays in the accessibility tree (it is never taken out of the layout), so a message that appears is announced;
+   while empty it is taken out of the layout so the grid leaves no gap for it. */
+.q-upload__msg:empty { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .q-upload__msg { display: grid; gap: var(--space-1); }
 @media (prefers-reduced-motion: reduce) { .q-upload__zone { transition: none; } }

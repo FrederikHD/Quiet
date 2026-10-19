@@ -14,14 +14,15 @@ export interface FilterChipsStrings {
   label?: string;
   /** Names a chip's button. Default "Remove filter: <label>". */
   remove?: (label: string) => string;
+  /** The button that removes every filter. Default "Clear all". */
   clear?: string;
 }
 export interface FilterChipsProps {
   /** The filters in use; null and false are skipped, so you can write `inStock && { … }`. */
   items: (FilterChip | null | false)[];
-  /** Shows "Clear all" from two chips up (emits `clear`). */
+  /** Shows "Clear all" from two chips up (emits `clear`). Default true. */
   clearable?: boolean;
-  /** Where focus goes when the last chip is removed (default: the chip list itself). */
+  /** Where focus goes when the last chip is removed or after Clear all (default: the chip row itself). */
   emptyFocus?: HTMLElement | null;
   /** Overrides the texts, e.g. for another language. */
   strings?: FilterChipsStrings;

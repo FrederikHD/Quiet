@@ -45,8 +45,22 @@ describe('QPriceRange', () => {
     expect(w.emitted('commit')).toBeUndefined();
     await lo.trigger('keyup');
     expect(w.emitted('commit')!.at(-1)).toEqual([[50, 90]]);
+    await lo.setValue('55');
     await lo.trigger('pointerup');
     expect(w.emitted('commit')).toHaveLength(2);
+    expect(w.emitted('commit')!.at(-1)).toEqual([[55, 90]]);
+  });
+
+  it("doesn't commit when a handle is focused or clicked without moving", async () => {
+    const w = mountRange();
+    const [lo, hi] = w.findAll('input[type="range"]');
+    await hi.trigger('keyup', { key: 'Tab' });
+    await lo.trigger('pointerup');
+    expect(w.emitted('commit')).toBeUndefined();
+    await lo.setValue('50');
+    await lo.trigger('keyup', { key: 'ArrowRight' });
+    await lo.trigger('keyup', { key: 'ArrowRight' });
+    expect(w.emitted('commit')).toHaveLength(1);
   });
 
   it('keeps the handles from crossing', async () => {

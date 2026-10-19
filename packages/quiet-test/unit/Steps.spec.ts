@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { mount } from '@vue/test-utils';
 import { QSteps } from 'quiet';
 import { describe, expect, it } from 'vitest';
@@ -56,6 +58,13 @@ describe('QSteps', () => {
     expect(count.text()).toBe('Step 3 of 3');
     expect(count.attributes('aria-hidden')).toBe('true');
     expect(mount(QSteps, { props: { steps, current: -2 } }).findAll('li')[0].classes()).toContain('is-current');
+  });
+
+  it('shows the counter only when narrow (under 520px of its own width)', () => {
+    const css = readFileSync(resolve(__dirname, '../../quiet/src/components/Steps/style.css'), 'utf8');
+    expect(css).toMatch(/^\.q-steps__count \{ display: none; \}/m);
+    const narrow = css.slice(css.indexOf('@container (max-width: 519px)'));
+    expect(narrow).toMatch(/\.q-steps__count \{ display: block;/);
   });
 
   it('translates its phrases', () => {
