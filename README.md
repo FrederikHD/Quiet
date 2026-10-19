@@ -95,7 +95,8 @@ Releases of `@frederikhd/quiet` are published to npm by `.github/workflows/relea
    the minor version) and move the entries under `## [Unreleased]` in `packages/quiet/CHANGELOG.md` into a
    `## [x.y.z] - YYYY-MM-DD` section. Commit both.
 2. Run `npm run typecheck && npm test && npm run test:package` locally (CI runs them too).
-3. Tag the commit and push the tag: `git tag vx.y.z && git push origin vx.y.z`.
+3. Start the release: Actions → **Release** → **Run workflow** on `develop` (it creates the `vx.y.z` tag), or tag the
+   commit and push the tag yourself: `git tag vx.y.z && git push origin vx.y.z`.
 
 The workflow checks that the tag, the package version and the changelog agree, runs the whole CI suite, publishes to
 npm with provenance (a version with a suffix such as `0.2.0-beta.1` goes out under the `next` tag) and creates a

@@ -1,5 +1,9 @@
-# Publishes @frederikhd/quiet to npm when a version tag is pushed:
-#   1. the tag must match packages/quiet/package.json and have a section in CHANGELOG.md;
+# Publishes @frederikhd/quiet to npm, started either way:
+#   - push a version tag (git tag v0.2.0 && git push origin v0.2.0), or
+#   - Actions → Release → "Run workflow" on a branch: releases the version in packages/quiet/package.json and creates
+#     its tag (v<version>) on that commit.
+# Then:
+#   1. the version must have a section in CHANGELOG.md (and match the tag, or have no tag yet);
 #   2. the full CI suite runs (types, unit, package check, browser tests);
 #   3. the package is published with provenance, and a GitHub Release is created from the changelog section.
 # How to release: see "Releasing" in the root README. Needs the repository secret NPM_TOKEN (an npm automation token).
@@ -8,6 +12,7 @@ name: Release
 on:
   push:
     tags: ['v*.*.*']
+  workflow_dispatch:
 
 concurrency:
   group: release
@@ -24,10 +29,13 @@ jobs:
       - id: version
         name: Tag, package version and changelog agree
         run: |
-          tag="${GITHUB_REF_NAME#v}"
           pkg="$(node -p "require('./packages/quiet/package.json').version")"
-          if [ "$tag" != "$pkg" ]; then
-            echo "::error::Tag v$tag does not match packages/quiet/package.json version $pkg"; exit 1
+          if [ "$GITHUB_REF_TYPE" = "tag" ]; then
+            if [ "${GITHUB_REF_NAME#v}" != "$pkg" ]; then
+              echo "::error::Tag $GITHUB_REF_NAME does not match packages/quiet/package.json version $pkg"; exit 1
+            fi
+          elif git ls-remote --exit-code --tags origin "refs/tags/v$pkg" > /dev/null; then
+            echo "::error::v$pkg is already released. Bump the version in packages/quiet/package.json first."; exit 1
           fi
           if ! grep -q "^## \[$pkg\]" packages/quiet/CHANGELOG.md; then
             echo "::error::packages/quiet/CHANGELOG.md has no '## [$pkg]' section"; exit 1
@@ -65,7 +73,9 @@ jobs:
           v="${{ needs.verify.outputs.version }}"
           awk -v v="$v" '$0 ~ "^## \\[" v "\\]" {on=1; next} /^## \[|^\[[^]]+\]: / {if (on) exit} on' packages/quiet/CHANGELOG.md > notes.md
           printf '\n---\nnpm: https://www.npmjs.com/package/@frederikhd/quiet/v/%s\n' "$v" >> notes.md
-          gh release create "$GITHUB_REF_NAME" --title "@frederikhd/quiet $v" --notes-file notes.md \
+          # --target: on a manual run this creates the tag on the commit that was tested (a tag made with the workflow's own
+          # token doesn't start another run); on a tag push the tag already exists there.
+          gh release create "v$v" --target "$GITHUB_SHA" --title "@frederikhd/quiet $v" --notes-file notes.md \
             ${{ needs.verify.outputs.prerelease == 'true' && '--prerelease' || '' }}
         env:
           GH_TOKEN: ${{ github.token }}
