@@ -20,11 +20,10 @@ export default defineComponent({
       }
       const slots: Record<string, () => VNodeChild> = {};
       for (const [name, content] of Object.entries(props.story.slots ?? {})) {
-        if (typeof content === 'function') slots[name] = content;
-      }
-      // Text slots: whatever the controls hold; an empty one is left out, so the component's own fallback shows.
-      for (const [name, text] of Object.entries(props.slotText)) {
-        if (text) slots[name] = () => text;
+        // A slot with a control shows what the control holds; emptied, it is left out so the component's fallback shows.
+        const text = name in props.slotText ? props.slotText[name] : content;
+        if (typeof text === 'function') slots[name] = text;
+        else if (text) slots[name] = () => text;
       }
       const target = () => h(props.story.component, { ...props.values, ...listeners }, slots);
       return props.story.wrap ? props.story.wrap(target) : target();

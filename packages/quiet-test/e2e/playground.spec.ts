@@ -8,7 +8,7 @@ test.describe('Button playground', () => {
   test('slot text, booleans and enums change the preview', async ({ page }) => {
     const preview = page.getByTestId('playground-preview');
     const controls = page.getByTestId('playground-controls');
-    await controls.getByLabel('Slot: default').fill('Place order');
+    await controls.getByLabel('Content (default slot)').fill('Place order');
     const button = preview.getByRole('button', { name: 'Place order' });
     await expect(button).toBeVisible();
 
@@ -30,7 +30,7 @@ test.describe('Button playground', () => {
 
   test('reset restores the story', async ({ page }) => {
     const controls = page.getByTestId('playground-controls');
-    await controls.getByLabel('Slot: default').fill('Changed');
+    await controls.getByLabel('Content (default slot)').fill('Changed');
     await page.getByRole('button', { name: 'Reset' }).click();
     await expect(page.getByTestId('playground-preview').getByRole('button', { name: 'Save changes' })).toBeVisible();
   });
@@ -93,4 +93,14 @@ test('EmptyState: the icon can be changed and removed', async ({ page }) => {
   await expect(preview.locator('.q-empty__icon')).toHaveCount(0);
   await page.getByRole('tab', { name: 'Code' }).click();
   await expect(page.getByText(':icon="null"')).toBeVisible();
+});
+
+test('named slots have no controls: their props do (Input prefix, Card title)', async ({ page }) => {
+  for (const [slug, prop] of [['input', 'prefix'], ['card', 'title']] as const) {
+    await page.goto(`/components/${slug}/playground`);
+    const controls = page.getByTestId('playground-controls');
+    await expect(controls.getByLabel(prop, { exact: true })).toBeVisible();
+    await expect(controls.getByText(/^Slot:/)).toHaveCount(0);
+    await expect(controls.getByText(`#${prop}`)).toHaveCount(0);
+  }
 });

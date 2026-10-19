@@ -32,11 +32,11 @@ function reset() {
   for (const k of Object.keys(json)) delete json[k];
   Object.assign(values, structuredCloneSafe(story.value.props ?? {}));
   if (modelProp.value) values[modelProp.value] = structuredCloneSafe(story.value.model!.value);
-  // Every slot can be filled with text; the story's text is the starting point, empty leaves the slot out.
-  for (const sl of api.value?.slots ?? []) {
-    const c = story.value.slots?.[sl.name];
-    if (typeof c !== 'function') slotText[sl.name] = c ?? '';
-  }
+  // The one slot with a control is the content (the default slot, when the story gives it as text: a Button's label).
+  // Named slots are the rich versions of props (#title next to title, #prefix next to prefix), so the props are the
+  // controls; the story's slot content still renders, and the API tab lists every slot.
+  const content = story.value.slots?.default;
+  if (typeof content === 'string') slotText.default = content;
   for (const p of api.value?.props ?? []) {
     if (p.control.kind !== 'json') continue;
     const v = values[p.name];
@@ -114,7 +114,10 @@ function safeJson(v: unknown) {
 // to see the phone layouts of Table, Field, FieldGroup …).
 const view = reactive({ theme: 'inherit', density: 'inherit', width: 'full' });
 const WIDTHS: Record<string, string | undefined> = { full: undefined, tablet: '768px', phone: '375px' };
-const code = computed(() => templateFor(story.value, values, defaults.value, slotText));
+const storyText = computed(() =>
+  Object.fromEntries(Object.entries(story.value.slots ?? {}).filter((e): e is [string, string] => typeof e[1] === 'string')),
+);
+const code = computed(() => templateFor(story.value, values, defaults.value, { ...storyText.value, ...slotText }));
 const panel = ref('controls');
 </script>
 
@@ -157,7 +160,7 @@ const panel = ref('controls');
       <template #panel-controls>
         <div class="ex-controls" data-testid="playground-controls">
           <template v-for="(_text, name) in slotText" :key="`slot-${name}`">
-            <QField :label="name === 'default' ? 'Slot: default' : `Slot: #${name}`" hint="Text; empty leaves the slot out.">
+            <QField label="Content (default slot)" hint="Text; empty leaves it out.">
               <QInput v-model="slotText[name]" />
             </QField>
           </template>
