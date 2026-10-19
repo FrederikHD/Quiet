@@ -18,6 +18,26 @@ export default defineConfig({
       { find: '@quiet', replacement: libraryRoot },
     ],
   },
+  build: {
+    rolldownOptions: {
+      output: {
+        // A component's examples (compiled and as source) load together with its page: one chunk per component
+        // instead of two per example.
+        codeSplitting: {
+          // Only the example files themselves; the library code they share stays in shared chunks.
+          includeDependenciesRecursively: false,
+          groups: [
+            {
+              name: (id) => {
+                const folder = id.match(/\/src\/examples\/(\w+)\//)?.[1];
+                return folder ? `examples-${folder}` : null;
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
   server: { port: 5173, fs: { allow: ['..'] } },
   preview: { port: 4173 },
 });

@@ -114,8 +114,9 @@ test('the examples index links to each example', async ({ page }) => {
   await page.goto('/components/button/examples');
   const index = page.getByRole('navigation', { name: 'Examples on this page' });
   const links = index.getByRole('link');
-  const count = await links.count();
-  expect(count).toBe(await page.getByTestId('example').count());
+  // The page renders once its examples have loaded, which can be after the load event.
+  await expect(index).toBeVisible();
+  await expect(links).toHaveCount(await page.getByTestId('example').count());
   const last = links.last();
   const hash = (await last.getAttribute('href'))!.split('#')[1];
   await last.click();
