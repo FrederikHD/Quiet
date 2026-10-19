@@ -3,24 +3,17 @@
 // - guidelines from each component's README.md,
 // - props, events, slots and exposed methods from the TypeScript (virtual:quiet-meta),
 // - playground setups from ./stories, examples from ./examples.
+// The navigation needs only names and groups. The guidelines, API, playground and examples of a component
+// load with its page (loadDetails, awaited by the router), so no page downloads the whole catalogue.
 import componentsIndex from '@quiet/src/components.ts?raw';
-import meta from 'virtual:quiet-meta';
 import type { Component } from 'vue';
 import type { ComponentDoc } from '../plugins/quiet-meta';
 import type { Story } from './stories/story';
 
-const readmes = import.meta.glob<string>('@quiet/src/components/*/README.md', {
-  query: '?raw',
-  import: 'default',
-  eager: true,
-});
-const stories = import.meta.glob<Story>('./stories/*.story.ts', { import: 'default', eager: true });
-const exampleModules = import.meta.glob<Component>('./examples/*/*.vue', { import: 'default', eager: true });
-const exampleSources = import.meta.glob<string>('./examples/*/*.vue', {
-  query: '?raw',
-  import: 'default',
-  eager: true,
-});
+const readmes = import.meta.glob<string>('@quiet/src/components/*/README.md', { query: '?raw', import: 'default' });
+const stories = import.meta.glob<Story>('./stories/*.story.ts', { import: 'default' });
+const exampleModules = import.meta.glob<Component>('./examples/*/*.vue', { import: 'default' });
+const exampleSources = import.meta.glob<string>('./examples/*/*.vue', { query: '?raw', import: 'default' });
 
 export interface Example {
   title: string;
@@ -37,6 +30,11 @@ export interface Entry {
   slug: string;
   title: string;
   group: string;
+  hasStory: boolean;
+  exampleCount: number;
+}
+/** What a component's page shows beyond its guidelines; see loadDetails. */
+export interface Details {
   /** The README's first paragraph. */
   summary: string;
   /** The README without its title and first paragraph. */
@@ -73,27 +71,65 @@ function splitReadme(md: string) {
   return { summary: plain(first), rest };
 }
 
-function examplesFor(folder: string): Example[] {
-  return Object.keys(exampleModules)
+const examplePaths = (folder: string) =>
+  Object.keys(exampleModules)
     .filter((p) => p.startsWith(`./examples/${folder}/`))
-    .sort()
-    .map((p) => {
-      // 01-Variants.vue → "Variants"
-      const name = p
-        .split('/')
-        .pop()!
-        .replace(/\.vue$/, '')
-        .replace(/^\d+-/, '');
-      const lead = exampleSources[p].match(/^<!--\s*([\s\S]*?)\s*-->\s*/);
-      return {
-        title: sentenceCase(name),
-        description: lead?.[1].replace(/\s+/g, ' '),
-        id: `${slugOf(folder)}-${slugOf(name)}`,
-        component: exampleModules[p],
-        // The shown source starts at the code: the description is already above it.
-        source: lead ? exampleSources[p].slice(lead[0].length) : exampleSources[p],
-      };
-    });
+    .sort();
+
+async function examplesFor(folder: string): Promise<Example[]> {
+  const paths = examplePaths(folder);
+  const [modules, sources] = await Promise.all([
+    Promise.all(paths.map((p) => exampleModules[p]())),
+    Promise.all(paths.map((p) => exampleSources[p]())),
+  ]);
+  return paths.map((p, i) => {
+    // 01-Variants.vue → "Variants"
+    const name = p
+      .split('/')
+      .pop()!
+      .replace(/\.vue$/, '')
+      .replace(/^\d+-/, '');
+    const lead = sources[i].match(/^<!--\s*([\s\S]*?)\s*-->\s*/);
+    return {
+      title: sentenceCase(name),
+      description: lead?.[1].replace(/\s+/g, ' '),
+      id: `${slugOf(folder)}-${slugOf(name)}`,
+      component: modules[i],
+      // The shown source starts at the code: the description is already above it.
+      source: lead ? sources[i].slice(lead[0].length) : sources[i],
+    };
+  });
+}
+
+const loaded = new Map<string, Details>();
+/** Loads a component's guidelines, API, playground setup and examples (once; the router awaits it before showing the page). */
+export async function loadDetails(entry: Entry): Promise<Details> {
+  const cached = loaded.get(entry.folder);
+  if (cached) return cached;
+  const story = stories[`./stories/${entry.folder}.story.ts`];
+  const readme = readmes[Object.keys(readmes).find((k) => k.endsWith(`/components/${entry.folder}/README.md`)) ?? ''];
+  const [md, meta, storyValue, examples] = await Promise.all([
+    readme?.() ?? '',
+    import('virtual:quiet-meta').then((m) => m.default),
+    story?.(),
+    examplesFor(entry.folder),
+  ]);
+  const { summary, rest } = splitReadme(md);
+  const details = {
+    summary,
+    readme: rest,
+    apis: Object.values(meta).filter((d) => d.folder === entry.folder),
+    story: storyValue,
+    examples,
+  };
+  loaded.set(entry.folder, details);
+  return details;
+}
+/** The details loadDetails already loaded. */
+export function detailsOf(entry: Entry): Details {
+  const details = loaded.get(entry.folder);
+  if (!details) throw new Error(`Details of ${entry.folder} are not loaded yet`);
+  return details;
 }
 
 export const entries: Entry[] = [];
@@ -104,18 +140,13 @@ for (const line of componentsIndex.split('\n')) {
   const c = line.match(/^export \* from '\.\/components\/(\w+)';/);
   if (!c) continue;
   const folder = c[1];
-  const md = readmes[Object.keys(readmes).find((k) => k.endsWith(`/components/${folder}/README.md`)) ?? ''] ?? '';
-  const { summary, rest } = splitReadme(md);
   entries.push({
     folder,
     slug: slugOf(folder),
     title: folder,
     group,
-    summary,
-    readme: rest,
-    apis: Object.values(meta).filter((d) => d.folder === folder),
-    story: stories[`./stories/${folder}.story.ts`],
-    examples: examplesFor(folder),
+    hasStory: `./stories/${folder}.story.ts` in stories,
+    exampleCount: examplePaths(folder).length,
   });
 }
 

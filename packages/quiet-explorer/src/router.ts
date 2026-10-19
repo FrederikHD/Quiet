@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import { entries } from './catalog';
+import { entries, loadDetails } from './catalog';
 
 export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,6 +44,12 @@ export const router = createRouter({
       behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
     };
   },
+});
+
+// A component page renders with its examples in place, so a link to one (#button-sizes) can scroll to it.
+router.beforeResolve(async (to) => {
+  const entry = to.name === 'component' ? entries.find((e) => e.slug === to.params.slug) : undefined;
+  if (entry) await loadDetails(entry);
 });
 
 router.afterEach((to) => {

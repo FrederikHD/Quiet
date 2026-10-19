@@ -2,7 +2,7 @@
 import { QBadge, QPage, QTable, QTabs, type TabItem } from '@frederikhd/quiet';
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
-import { entries } from '../catalog';
+import { detailsOf, entries } from '../catalog';
 import PlaygroundView from '../playground/PlaygroundView.vue';
 import CodeBlock from './CodeBlock.vue';
 import ExampleView from './ExampleView.vue';
@@ -12,12 +12,13 @@ const props = defineProps<{ slug: string; tab?: string }>();
 const router = useRouter();
 
 const entry = computed(() => entries.find((e) => e.slug === props.slug)!);
+const details = computed(() => detailsOf(entry.value));
 const tabs = computed(() =>
   [
     { value: 'docs', label: 'Guidelines' },
-    entry.value.story && { value: 'playground', label: 'Playground' },
+    entry.value.hasStory && { value: 'playground', label: 'Playground' },
     { value: 'api', label: 'API' },
-    { value: 'examples', label: 'Examples', count: entry.value.examples.length || undefined },
+    { value: 'examples', label: 'Examples', count: entry.value.exampleCount || undefined },
   ]
     .filter((t): t is { value: string; label: string; count?: number } => !!t)
     .map((t) => {
@@ -33,25 +34,27 @@ function go(tab: TabItem, e: MouseEvent) {
   e.preventDefault();
   void router.push(path);
 }
-const usage = computed(() => `import { ${entry.value.apis.map((a) => a.name).join(', ')} } from '@frederikhd/quiet';`);
+const usage = computed(
+  () => `import { ${details.value.apis.map((a) => a.name).join(', ')} } from '@frederikhd/quiet';`,
+);
 </script>
 
 <template>
-  <QPage :title="entry.title" :subtitle="entry.summary">
+  <QPage :title="entry.title" :subtitle="details.summary">
     <template #title-meta
       ><QBadge>{{ entry.group }}</QBadge></template
     >
     <QTabs :model-value="current" :label="`${entry.title} documentation`" :tabs="tabs" @navigate="go">
       <div v-if="current === 'docs'" class="ex-stack">
-        <ExampleView v-if="entry.examples[0]" :example="entry.examples[0]" />
+        <ExampleView v-if="details.examples[0]" :example="details.examples[0]" />
         <CodeBlock :code="usage" lang="ts" />
-        <MarkdownView :source="entry.readme" />
+        <MarkdownView :source="details.readme" />
       </div>
 
-      <PlaygroundView v-else-if="current === 'playground' && entry.story" :entry="entry" />
+      <PlaygroundView v-else-if="current === 'playground' && details.story" :entry="entry" :details="details" />
 
       <div v-else-if="current === 'api'" class="ex-stack" data-testid="api">
-        <section v-for="api in entry.apis" :key="api.name" class="ex-api" :aria-labelledby="`api-${api.name}`">
+        <section v-for="api in details.apis" :key="api.name" class="ex-api" :aria-labelledby="`api-${api.name}`">
           <header>
             <h2 :id="`api-${api.name}`" class="ex-h2">{{ api.name }}</h2>
             <p class="ex-muted">{{ api.file }}</p>
@@ -144,13 +147,13 @@ const usage = computed(() => `import { ${entry.value.apis.map((a) => a.name).joi
       </div>
 
       <div v-else class="ex-stack">
-        <nav v-if="entry.examples.length > 2" class="ex-toc" aria-label="Examples on this page">
-          <RouterLink v-for="ex in entry.examples" :key="ex.id" :to="{ hash: `#${ex.id}` }" class="ex-toc__link">{{
+        <nav v-if="details.examples.length > 2" class="ex-toc" aria-label="Examples on this page">
+          <RouterLink v-for="ex in details.examples" :key="ex.id" :to="{ hash: `#${ex.id}` }" class="ex-toc__link">{{
             ex.title
           }}</RouterLink>
         </nav>
-        <ExampleView v-for="ex in entry.examples" :key="ex.id" :example="ex" />
-        <p v-if="!entry.examples.length" class="ex-muted">No examples yet.</p>
+        <ExampleView v-for="ex in details.examples" :key="ex.id" :example="ex" />
+        <p v-if="!details.examples.length" class="ex-muted">No examples yet.</p>
       </div>
     </QTabs>
   </QPage>

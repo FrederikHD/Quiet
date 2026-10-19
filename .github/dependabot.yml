@@ -1,0 +1,24 @@
+# Weekly dependency updates, grouped so they arrive as a few PRs, not dozens. Playwright gets its own PR: CI runs the
+# screenshot tests in the Playwright image of the same version, so a new Playwright can render differently. If the
+# visual job fails on that PR, regenerate the baselines on its branch (CONTRIBUTING.md, Visual tests).
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      playwright:
+        patterns: ['@playwright/test', 'playwright', 'playwright-core']
+      vue:
+        patterns: ['vue', '@vue/*', 'vue-router', 'vue-tsc', 'vue-component-meta', '@vitejs/plugin-vue']
+      build-and-test:
+        patterns: ['*']
+        update-types: [minor, patch]
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      actions:
+        patterns: ['*']

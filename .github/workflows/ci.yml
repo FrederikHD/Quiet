@@ -4,10 +4,17 @@
 name: CI
 
 on:
+  # A PR runs it once (pull_request); pushes run it only on the long-lived branches, so a PR's branch isn't tested
+  # twice. Tags run it through the release workflow.
   push:
-    branches: ['**'] # tags run it through the release workflow
+    branches: [develop, main]
   pull_request:
   workflow_call:
+
+# A new push to a PR cancels its run that is still going.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   test:
@@ -60,13 +67,25 @@ jobs:
           path: packages/quiet-test/playwright-report
           retention-days: 7
 
+  playwright:
+    # The installed @playwright/test version, from the lockfile: the visual job's image follows it, so a Playwright
+    # update (Dependabot's included) moves both together.
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: version
+        run: echo "version=$(node -p "require('./package-lock.json').packages['node_modules/@playwright/test'].version")" >> "$GITHUB_OUTPUT"
+
   visual:
     # Every example, light and dark, compared with the baselines in packages/quiet-test/e2e/__screenshots__. It runs in
     # the Playwright image the baselines are made in (`npm run test:visual:update`), so fonts and rendering match pixel
-    # for pixel. The image's tag is the pinned @playwright/test version: bump both together.
+    # for pixel.
+    needs: playwright
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.64.1-noble
+      image: mcr.microsoft.com/playwright:v${{ needs.playwright.outputs.version }}-noble
       options: --ipc=host
     env:
       HOME: /root

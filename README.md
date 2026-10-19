@@ -14,6 +14,8 @@ A calm, neutral-first design system for commerce — storefront and back office 
 
 ## Getting started
 
+How to work on Quiet (branches, checks, screenshot tests, releases) is in [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ```sh
 npm install
 npm run dev        # the explorer on http://localhost:5173, running on the library's source
@@ -94,10 +96,10 @@ In the repository settings, Pages → Source must be "GitHub Actions".
 
 Releases of `@frederikhd/quiet` are published to npm by `.github/workflows/release.yml` when a version tag is pushed.
 
-1. On `develop`, set the new version in `packages/quiet/package.json` (semver; before 1.0, breaking changes bump
-   the minor version) and move the entries under `## [Unreleased]` in `packages/quiet/CHANGELOG.md` into a
-   `## [x.y.z] - YYYY-MM-DD` section. Commit both.
-2. Run `npm run typecheck && npm test && npm run test:package` locally (CI runs them too).
+1. In a PR into `develop`, set the new version in `packages/quiet/package.json` (semver; before 1.0, breaking changes
+   bump the minor version) and move the entries under `## [Unreleased]` in `packages/quiet/CHANGELOG.md` into a
+   `## [x.y.z] - YYYY-MM-DD` section.
+2. Merge it once CI is green.
 3. Start the release: Actions → **Release** → **Run workflow** on `develop` (it creates the `vx.y.z` tag), or tag the
    commit and push the tag yourself: `git tag vx.y.z && git push origin vx.y.z`.
 

@@ -2,16 +2,16 @@
 import { QButton, QField, QInput, QSelect, QTabs } from '@frederikhd/quiet';
 import { computed, reactive, ref, watch } from 'vue';
 import type { PropMeta } from '../../plugins/quiet-meta';
-import type { Entry } from '../catalog';
+import type { Details, Entry } from '../catalog';
 import CodeBlock from '../pages/CodeBlock.vue';
 import { templateFor } from './code';
 import PreviewTarget from './PreviewTarget';
 import PropControl from './PropControl.vue';
 
-const props = defineProps<{ entry: Entry }>();
+const props = defineProps<{ entry: Entry; details: Details }>();
 
-const story = computed(() => props.entry.story!);
-const api = computed(() => props.entry.apis.find((a) => a.name === story.value.name) ?? props.entry.apis[0]);
+const story = computed(() => props.details.story!);
+const api = computed(() => props.details.apis.find((a) => a.name === story.value.name) ?? props.details.apis[0]);
 const modelProp = computed(() => (story.value.model ? (story.value.model.prop ?? 'modelValue') : null));
 
 // What the controls change. Objects and arrays are edited as JSON (as long as they hold no functions).
