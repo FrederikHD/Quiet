@@ -1,6 +1,6 @@
 # Lint, formatting, type-checks, unit tests, the package check (the packed tarball installed into a fresh app) and the
 # Playwright suite (e2e, keyboard, accessibility, responsive) on every push and PR, in Chromium, Firefox and WebKit
-# (Safari's engine). The release workflow runs it too, before publishing.
+# (Safari's engine), plus the screenshot comparison. The release workflow runs it too, before publishing.
 name: CI
 
 on:
@@ -35,7 +35,7 @@ jobs:
           retention-days: 7
 
   browsers:
-    # The same e2e suite in the other engines. Screenshots stay Chromium-only (in the test job's browser).
+    # The same e2e suite in the other engines. Screenshots stay Chromium-only (the visual job).
     strategy:
       fail-fast: false
       matrix:
@@ -57,5 +57,31 @@ jobs:
         if: failure()
         with:
           name: playwright-report-${{ matrix.browser }}
+          path: packages/quiet-test/playwright-report
+          retention-days: 7
+
+  visual:
+    # Every example, light and dark, compared with the baselines in packages/quiet-test/e2e/__screenshots__. It runs in
+    # the Playwright image the baselines are made in (`npm run test:visual:update`), so fonts and rendering match pixel
+    # for pixel. The image's tag is the pinned @playwright/test version: bump both together.
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.64.1-noble
+      options: --ipc=host
+    env:
+      HOME: /root
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright test --project=visual
+        working-directory: packages/quiet-test
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report-visual
           path: packages/quiet-test/playwright-report
           retention-days: 7
