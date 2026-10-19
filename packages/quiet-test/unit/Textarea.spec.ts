@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { QField, QTextarea } from 'quiet';
+import { QField, QTextarea } from '@frederikhd/quiet';
 import { describe, expect, it } from 'vitest';
 import { h, nextTick } from 'vue';
 

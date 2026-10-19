@@ -1,6 +1,6 @@
 <!-- Short options side by side, wrapping when space runs out; here in a compact back-office table setting. -->
 <script setup lang="ts">
-import { QCheckbox, QCheckboxGroup, QForm } from 'quiet';
+import { QCheckbox, QCheckboxGroup, QForm } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const columns = ref<string[]>(['sku', 'stock']);

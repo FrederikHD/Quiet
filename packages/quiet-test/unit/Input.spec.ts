@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { QIcon, QInput } from 'quiet';
+import { QIcon, QInput } from '@frederikhd/quiet';
 import { describe, expect, it } from 'vitest';
 import { h } from 'vue';
 

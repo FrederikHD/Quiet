@@ -1,6 +1,6 @@
 <!-- flush drops the body padding, so list rows reach the card's edges. -->
 <script setup lang="ts">
-import { QButton, QCard } from 'quiet';
+import { QButton, QCard } from '@frederikhd/quiet';
 
 const top = [
   ['Linen shirt, blue', '128 sold'],

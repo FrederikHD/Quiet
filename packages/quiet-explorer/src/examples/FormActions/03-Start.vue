@@ -1,6 +1,6 @@
 <!-- A single action on the left, under a short top-labelled form such as the newsletter sign-up. -->
 <script setup lang="ts">
-import { QButton, QField, QForm, QFormActions, QInput } from 'quiet';
+import { QButton, QField, QForm, QFormActions, QInput } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const email = ref('');

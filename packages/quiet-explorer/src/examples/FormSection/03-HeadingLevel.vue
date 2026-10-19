@@ -1,6 +1,6 @@
 <!-- When the form sits under its own h2, heading-level="3" keeps the page outline right. -->
 <script setup lang="ts">
-import { QField, QForm, QFormSection, QInput } from 'quiet';
+import { QField, QForm, QFormSection, QInput } from '@frederikhd/quiet';
 import { reactive } from 'vue';
 
 const values = reactive({ street: 'Torstraße 12', postcode: '10115', city: 'Berlin' });

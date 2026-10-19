@@ -1,6 +1,6 @@
 <!-- A collection page: two columns on phones, 200px+ columns above. On a computer the second image fades in on hover. -->
 <script setup lang="ts">
-import { QProductCard } from 'quiet';
+import { QProductCard } from '@frederikhd/quiet';
 import { ref } from 'vue';
 import { photo, swatchOf } from '../../fixtures/pictures';
 

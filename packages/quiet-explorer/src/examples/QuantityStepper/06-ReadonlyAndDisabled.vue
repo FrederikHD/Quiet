@@ -1,6 +1,6 @@
 <!-- Read-only for a quantity that is fixed, such as on a shipped order; disabled while it can't be changed. -->
 <script setup lang="ts">
-import { QField, QForm, QQuantityStepper } from 'quiet';
+import { QField, QForm, QQuantityStepper } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const shipped = ref(2);

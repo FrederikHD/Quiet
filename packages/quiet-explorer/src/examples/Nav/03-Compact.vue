@@ -1,6 +1,6 @@
 <!-- In compact density each item is 32px tall, so more of a long navigation fits. -->
 <script setup lang="ts">
-import { QNav, type NavItem } from 'quiet';
+import { QNav, type NavItem } from '@frederikhd/quiet';
 
 const items: NavItem[] = [
   { label: 'Home', href: '#home', icon: 'home' },

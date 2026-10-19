@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { QReviewSummary, configure } from 'quiet';
+import { QReviewSummary, configure } from '@frederikhd/quiet';
 import { beforeAll, describe, expect, it } from 'vitest';
 import { h } from 'vue';
 

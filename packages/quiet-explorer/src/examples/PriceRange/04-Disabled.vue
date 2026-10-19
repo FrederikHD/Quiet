@@ -1,6 +1,6 @@
 <!-- Disabled while the results load: the handles and fields stay readable but can't be moved. -->
 <script setup lang="ts">
-import { QPriceRange } from 'quiet';
+import { QPriceRange } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const range = ref<[number, number]>([30, 90]);

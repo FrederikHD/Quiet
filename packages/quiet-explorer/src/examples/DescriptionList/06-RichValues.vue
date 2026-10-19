@@ -1,6 +1,6 @@
 <!-- The #description-<key> slots hold links, badges and other rich content. -->
 <script setup lang="ts">
-import { QBadge, QDescriptionList } from 'quiet';
+import { QBadge, QDescriptionList } from '@frederikhd/quiet';
 </script>
 
 <template>

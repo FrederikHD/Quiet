@@ -1,6 +1,6 @@
 <!-- card turns the row into a bordered tile; the ticked one gets a brand border and tint. -->
 <script setup lang="ts">
-import { QCheckbox } from 'quiet';
+import { QCheckbox } from '@frederikhd/quiet';
 import { reactive } from 'vue';
 
 const extras = reactive({ insurance: true, express: false });

@@ -1,4 +1,4 @@
-import { QFilterChips } from 'quiet';
+import { QFilterChips } from '@frederikhd/quiet';
 import { defineStory } from './story';
 
 export default defineStory({

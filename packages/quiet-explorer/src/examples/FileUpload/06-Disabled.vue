@@ -1,6 +1,6 @@
 <!-- Disabled through the Field, with the reason in the hint. -->
 <script setup lang="ts">
-import { QField, QFileUpload } from 'quiet';
+import { QField, QFileUpload } from '@frederikhd/quiet';
 </script>
 
 <template>

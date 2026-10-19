@@ -1,6 +1,6 @@
 <!-- Your own Button as the trigger: "More actions ▾" beside a page's main buttons. -->
 <script setup lang="ts">
-import { QButton, QMenu } from 'quiet';
+import { QButton, QMenu } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const chose = ref('');

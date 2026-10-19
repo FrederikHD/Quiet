@@ -1,6 +1,6 @@
 <!-- A hint under the stars says what to rate. -->
 <script setup lang="ts">
-import { QRatingInput } from 'quiet';
+import { QRatingInput } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const fit = ref(0);

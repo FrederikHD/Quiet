@@ -1,6 +1,6 @@
 <!-- An icon beside a word takes the text's colour and is hidden from screen readers, so nothing is read twice. -->
 <script setup lang="ts">
-import { QIcon } from 'quiet';
+import { QIcon } from '@frederikhd/quiet';
 </script>
 
 <template>

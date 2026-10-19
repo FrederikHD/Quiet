@@ -1,6 +1,6 @@
 <!-- Connected to an Input in a FieldGroup, for an amount and its currency. -->
 <script setup lang="ts">
-import { QField, QFieldGroup, QForm, QInput, QSelect } from 'quiet';
+import { QField, QFieldGroup, QForm, QInput, QSelect } from '@frederikhd/quiet';
 import { reactive } from 'vue';
 
 const values = reactive({ amount: '120,00', currency: 'EUR' });

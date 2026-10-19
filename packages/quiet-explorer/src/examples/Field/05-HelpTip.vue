@@ -1,6 +1,6 @@
 <!-- help adds a tip button after the label for background people may want; anything they need to answer goes in the hint. -->
 <script setup lang="ts">
-import { QField, QInput } from 'quiet';
+import { QField, QInput } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const sku = ref('LS-2041-BL-M');

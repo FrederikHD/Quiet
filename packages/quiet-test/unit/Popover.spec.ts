@@ -1,5 +1,5 @@
 import { flushPromises, mount } from '@vue/test-utils';
-import { QButton, QPopover } from 'quiet';
+import { QButton, QPopover } from '@frederikhd/quiet';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { defineComponent, h, ref } from 'vue';
 
@@ -243,7 +243,7 @@ describe('QPopover', () => {
 describe('QPopover attributes', () => {
   it('passes data- and aria- attributes to the panel along with class and style', async () => {
     mount(QPopover, {
-      props: { open: true, content: 'Ships in 2 days' },
+      props: { open: true, label: 'Delivery', content: 'Ships in 2 days' },
       attrs: { class: 'mine', 'data-testid': 'tip', 'aria-describedby': 'x' },
       slots: { default: '<button>Info</button>' },
       attachTo: document.body,

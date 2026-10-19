@@ -1,5 +1,5 @@
 import { enableAutoUnmount, flushPromises, mount } from '@vue/test-utils';
-import { QSearchBox, type SearchSuggestion } from 'quiet';
+import { QSearchBox, type SearchSuggestion } from '@frederikhd/quiet';
 import { afterEach, describe, expect, it } from 'vitest';
 
 enableAutoUnmount(afterEach);

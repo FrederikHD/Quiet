@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { QButton, QEmptyState, QPage } from 'quiet';
+import { QButton, QEmptyState, QPage } from '@frederikhd/quiet';
 </script>
 
 <template>

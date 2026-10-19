@@ -1,6 +1,6 @@
 <!-- Disabled while the payment is processed: applied codes stay, but can't be removed or added. -->
 <script setup lang="ts">
-import { QDiscountCode } from 'quiet';
+import { QDiscountCode } from '@frederikhd/quiet';
 </script>
 
 <template>

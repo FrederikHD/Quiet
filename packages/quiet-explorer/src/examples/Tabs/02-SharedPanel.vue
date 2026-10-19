@@ -1,6 +1,6 @@
 <!-- Saved filters over one list: no tab has its own panel, so every tab controls the same one. -->
 <script setup lang="ts">
-import { QBadge, QTabs } from 'quiet';
+import { QBadge, QTabs } from '@frederikhd/quiet';
 import { computed, ref } from 'vue';
 
 const orders = [

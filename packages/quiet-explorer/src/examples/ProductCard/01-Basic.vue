@@ -1,6 +1,6 @@
 <!-- The image, the name and the price. The name is the card's one link, and it covers the whole card. -->
 <script setup lang="ts">
-import { QProductCard } from 'quiet';
+import { QProductCard } from '@frederikhd/quiet';
 import { photo } from '../../fixtures/pictures';
 </script>
 

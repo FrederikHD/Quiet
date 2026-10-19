@@ -1,6 +1,6 @@
 <!-- search fetches options as people type; older requests are aborted. The status line says how many of the 1,240 products are shown. -->
 <script setup lang="ts">
-import { QCombobox, QField, type ComboboxOption } from 'quiet';
+import { QCombobox, QField, type ComboboxOption } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 // 1,240 fake products, as a server would hold them.

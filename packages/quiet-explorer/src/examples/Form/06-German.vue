@@ -1,6 +1,6 @@
 <!-- strings translates the form's own words: the summary title, "(optional)", "Hilfe" and the "Fehler:" read before each message. -->
 <script setup lang="ts">
-import { QButton, QField, QForm, QFormActions, QInput, type FormError } from 'quiet';
+import { QButton, QField, QForm, QFormActions, QInput, type FormError } from '@frederikhd/quiet';
 import { reactive, ref } from 'vue';
 
 const strings = { optional: 'optional', help: 'Hilfe', errorPrefix: 'Fehler:', warningPrefix: 'Hinweis:', errorSummaryTitle: 'Bitte korrigieren Sie Folgendes' };

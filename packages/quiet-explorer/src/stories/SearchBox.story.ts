@@ -1,4 +1,4 @@
-import { QSearchBox } from 'quiet';
+import { QSearchBox } from '@frederikhd/quiet';
 import { defineStory } from './story';
 
 export default defineStory({

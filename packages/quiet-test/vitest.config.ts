@@ -6,7 +6,7 @@ import { defineConfig } from 'vitest/config';
 export default defineConfig({
   plugins: [vue()],
   resolve: {
-    alias: { quiet: fileURLToPath(new URL('../quiet/src/index.ts', import.meta.url)) },
+    alias: [{ find: /^@frederikhd\/quiet$/, replacement: fileURLToPath(new URL('../quiet/src/index.ts', import.meta.url)) }],
   },
   test: {
     include: ['unit/**/*.spec.ts'],

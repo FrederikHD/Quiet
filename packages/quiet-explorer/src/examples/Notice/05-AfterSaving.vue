@@ -1,6 +1,6 @@
 <!-- A notice that appears after an action sits in a role="status" region that is already on the page, so it is announced. -->
 <script setup lang="ts">
-import { QButton, QNotice } from 'quiet';
+import { QButton, QNotice } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const saved = ref(false);

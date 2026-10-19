@@ -1,6 +1,6 @@
 <!-- density="compact" gives 32px controls and tighter gaps for back-office screens with many fields. -->
 <script setup lang="ts">
-import { QField, QFieldGroup, QForm, QInput } from 'quiet';
+import { QField, QFieldGroup, QForm, QInput } from '@frederikhd/quiet';
 import { reactive } from 'vue';
 
 const values = reactive({ stock: '24', reorder: '10', location: 'Regal B · Fach 12' });

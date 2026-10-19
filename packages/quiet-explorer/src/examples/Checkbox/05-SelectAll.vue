@@ -1,6 +1,6 @@
 <!-- A "Select all" checkbox shows a dash while only some of the items below are ticked. -->
 <script setup lang="ts">
-import { QCheckbox, QCheckboxGroup } from 'quiet';
+import { QCheckbox, QCheckboxGroup } from '@frederikhd/quiet';
 import { computed, ref } from 'vue';
 
 const stores = ['Berlin', 'Hamburg', 'Munich'];

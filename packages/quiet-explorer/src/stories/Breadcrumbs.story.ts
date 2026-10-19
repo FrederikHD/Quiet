@@ -1,4 +1,4 @@
-import { QBreadcrumbs } from 'quiet';
+import { QBreadcrumbs } from '@frederikhd/quiet';
 import { defineStory } from './story';
 
 export default defineStory({

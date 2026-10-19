@@ -1,6 +1,6 @@
 <!-- Continue without choosing: unchosen options turn red and the message shows under the group. -->
 <script setup lang="ts">
-import { QButton, QForm, QFormActions, QRadio, QRadioGroup } from 'quiet';
+import { QButton, QForm, QFormActions, QRadio, QRadioGroup } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const reason = ref<string | null>(null);

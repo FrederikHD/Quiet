@@ -1,6 +1,6 @@
 <!-- Sold out dims the image and hides quick add; the card still opens the product. -->
 <script setup lang="ts">
-import { QProductCard } from 'quiet';
+import { QProductCard } from '@frederikhd/quiet';
 import { photo } from '../../fixtures/pictures';
 </script>
 

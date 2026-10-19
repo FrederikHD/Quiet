@@ -1,6 +1,6 @@
 <!-- The back office's home page: a grid of Cards, each at least 200px wide. -->
 <script setup lang="ts">
-import { QCard, QMetric, money } from 'quiet';
+import { QCard, QMetric, money } from '@frederikhd/quiet';
 </script>
 
 <template>

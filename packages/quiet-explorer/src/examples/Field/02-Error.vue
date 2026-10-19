@@ -1,6 +1,6 @@
 <!-- An error blocks saving: it turns the control red and says how to fix the value. -->
 <script setup lang="ts">
-import { QField, QInput } from 'quiet';
+import { QField, QInput } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const email = ref('anna@example');

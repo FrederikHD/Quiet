@@ -1,6 +1,6 @@
 <!-- @row-click (or row-href for a link) makes the first column the real button, and a click anywhere on the row follows it. -->
 <script setup lang="ts">
-import { QTable, money } from 'quiet';
+import { QTable, money } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const customers = [

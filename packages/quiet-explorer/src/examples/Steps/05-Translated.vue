@@ -1,6 +1,6 @@
 <!-- A German checkout: strings names the landmark, the finished state and the narrow counter. -->
 <script setup lang="ts">
-import { QSteps } from 'quiet';
+import { QSteps } from '@frederikhd/quiet';
 </script>
 
 <template>

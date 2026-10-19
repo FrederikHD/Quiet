@@ -1,6 +1,6 @@
 <!-- currency changes the symbol in the fields and the amounts the handles read out, for the Swiss shop. -->
 <script setup lang="ts">
-import { QPriceRange } from 'quiet';
+import { QPriceRange } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const range = ref<[number, number]>([40, 150]);

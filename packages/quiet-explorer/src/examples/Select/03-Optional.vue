@@ -1,6 +1,6 @@
 <!-- On an optional Select the placeholder stays in the list as the "none" choice. -->
 <script setup lang="ts">
-import { QField, QSelect } from 'quiet';
+import { QField, QSelect } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const category = ref('');

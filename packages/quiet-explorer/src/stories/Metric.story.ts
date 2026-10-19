@@ -1,4 +1,4 @@
-import { QMetric } from 'quiet';
+import { QMetric } from '@frederikhd/quiet';
 import { h } from 'vue';
 import { defineStory } from './story';
 

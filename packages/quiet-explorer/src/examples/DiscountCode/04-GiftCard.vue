@@ -1,6 +1,6 @@
 <!-- label renames the field, here for gift cards; a code without a label shows on its own in the tag. -->
 <script setup lang="ts">
-import { QDiscountCode } from 'quiet';
+import { QDiscountCode } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const cards = ref<string[]>([]);

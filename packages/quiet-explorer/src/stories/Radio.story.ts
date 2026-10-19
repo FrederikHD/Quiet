@@ -1,4 +1,4 @@
-import { QRadio, QRadioGroup } from 'quiet';
+import { QRadio, QRadioGroup } from '@frederikhd/quiet';
 import { h } from 'vue';
 import { defineStory } from './story';
 

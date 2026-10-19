@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { QNav, configure, type NavItem } from 'quiet';
+import { QNav, configure, type NavItem } from '@frederikhd/quiet';
 import { describe, expect, it } from 'vitest';
 
 const sections = (current: string) => {

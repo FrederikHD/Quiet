@@ -1,6 +1,6 @@
 <!-- role="alertdialog" for a confirmation: the title asks, the description gives the consequence, and focus starts on Cancel. -->
 <script setup lang="ts">
-import { QButton, QDialog } from 'quiet';
+import { QButton, QDialog } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const open = ref(false);

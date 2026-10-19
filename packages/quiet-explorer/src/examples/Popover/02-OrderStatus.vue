@@ -1,6 +1,6 @@
 <!-- kind="dialog" (the default) holds a few controls next to what they change; focus moves into the panel. -->
 <script setup lang="ts">
-import { QButton, QPopover } from 'quiet';
+import { QButton, QPopover } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const options = ['Unfulfilled', 'Fulfilled', 'Shipped', 'Cancelled'];

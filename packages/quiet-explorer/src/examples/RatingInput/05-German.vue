@@ -1,6 +1,6 @@
 <!-- strings translates the label, the stars' names and the words for each level. -->
 <script setup lang="ts">
-import { QRatingInput } from 'quiet';
+import { QRatingInput } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const stars = ref(5);

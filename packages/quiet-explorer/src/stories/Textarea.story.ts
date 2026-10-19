@@ -1,4 +1,4 @@
-import { QTextarea } from 'quiet';
+import { QTextarea } from '@frederikhd/quiet';
 import { defineStory } from './story';
 
 export default defineStory({

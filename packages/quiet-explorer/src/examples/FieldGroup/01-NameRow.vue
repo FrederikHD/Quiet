@@ -1,6 +1,6 @@
 <!-- Two short parts of one answer side by side, in equal columns. They stay side by side down to phone width. -->
 <script setup lang="ts">
-import { QField, QFieldGroup, QForm, QInput } from 'quiet';
+import { QField, QFieldGroup, QForm, QInput } from '@frederikhd/quiet';
 import { reactive } from 'vue';
 
 const values = reactive({ first: 'Anna', last: 'Schmidt' });

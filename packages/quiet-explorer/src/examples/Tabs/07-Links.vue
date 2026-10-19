@@ -1,6 +1,6 @@
 <!-- With href the row is navigation between pages: links with aria-current and no panels. -->
 <script setup lang="ts">
-import { QTabs } from 'quiet';
+import { QTabs } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const page = ref('orders');

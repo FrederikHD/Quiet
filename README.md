@@ -40,14 +40,14 @@ Playwright needs a Chromium: run `npx playwright install chromium` once, or poin
 
 ```ts
 import { createApp } from 'vue';
-import { Quiet } from 'quiet';
-import 'quiet/style.css';
+import { Quiet } from '@frederikhd/quiet';
+import '@frederikhd/quiet/style.css';
 
 createApp(App).use(Quiet, { locale: 'de-DE', currency: 'EUR' }).mount('#app');
 ```
 
-`app.use(Quiet)` registers every component globally (add `"types": ["quiet/global"]` to your tsconfig for template types).
-Pass `{ components: false }` to import them one by one instead: `import { QButton } from 'quiet'`.
+`app.use(Quiet)` registers every component globally (add `"types": ["@frederikhd/quiet/global"]` to your tsconfig for template types).
+Pass `{ components: false }` to import them one by one instead: `import { QButton } from '@frederikhd/quiet'`.
 
 Load Inter from Google Fonts and set `data-theme="light|dark"` and `data-density="comfortable|compact"` on `<html>`.
 

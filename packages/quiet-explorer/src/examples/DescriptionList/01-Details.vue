@@ -1,6 +1,6 @@
 <!-- Facts people read: the term on the left and the value beside it, stacked when the list is under 480px wide. -->
 <script setup lang="ts">
-import { QDescriptionList } from 'quiet';
+import { QDescriptionList } from '@frederikhd/quiet';
 </script>
 
 <template>

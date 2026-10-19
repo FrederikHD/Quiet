@@ -1,6 +1,6 @@
 <!-- A DiscountCode goes in the default slot, between the lines and the totals. Try LINEN10. -->
 <script setup lang="ts">
-import { QDiscountCode, QOrderSummary, money } from 'quiet';
+import { QDiscountCode, QOrderSummary, money } from '@frederikhd/quiet';
 import { computed, ref } from 'vue';
 import { photo } from '../../fixtures/pictures';
 

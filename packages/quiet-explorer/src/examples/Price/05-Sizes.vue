@@ -1,6 +1,6 @@
 <!-- Small in cards and the cart, default in lists, large on the product page. -->
 <script setup lang="ts">
-import { QPrice } from 'quiet';
+import { QPrice } from '@frederikhd/quiet';
 </script>
 
 <template>

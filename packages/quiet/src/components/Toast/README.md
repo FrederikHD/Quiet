@@ -3,7 +3,7 @@
 A short confirmation that something happened — "Product saved", "Archived 1 product" — shown at the top of the screen for a few seconds.
 
 ```ts
-import { toast } from 'quiet';
+import { toast } from '@frederikhd/quiet';
 
 toast('Product saved');
 toast('Archived 1 product', { action: { label: 'Undo', onClick: restore } });

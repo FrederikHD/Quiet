@@ -1,6 +1,6 @@
 <!-- Beside the checkout form on surface-sunken: the lines, a discount and shipping, then the total with VAT. -->
 <script setup lang="ts">
-import { QOrderSummary, type OrderSummaryItem } from 'quiet';
+import { QOrderSummary, type OrderSummaryItem } from '@frederikhd/quiet';
 import { photo } from '../../fixtures/pictures';
 
 const items: OrderSummaryItem[] = [

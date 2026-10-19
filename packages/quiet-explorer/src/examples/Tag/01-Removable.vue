@@ -1,6 +1,6 @@
 <!-- Removable tags for the filters in use. The whole pill is the button; after a removal, focus moves to the next tag. -->
 <script setup lang="ts">
-import { QButton, QTag } from 'quiet';
+import { QButton, QTag } from '@frederikhd/quiet';
 import { nextTick, ref } from 'vue';
 
 const filters = ref(['Linen', 'Size M', 'Under 60,00 €']);

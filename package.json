@@ -10,9 +10,9 @@
   ],
   "scripts": {
     "dev": "npm run dev -w quiet-explorer",
-    "build": "npm run build -w quiet && npm run build -w quiet-explorer",
-    "tokens": "npm run tokens -w quiet",
-    "typecheck": "npm run typecheck -w quiet && npm run typecheck -w quiet-explorer",
+    "build": "npm run build -w @frederikhd/quiet && npm run build -w quiet-explorer",
+    "tokens": "npm run tokens -w @frederikhd/quiet",
+    "typecheck": "npm run typecheck -w @frederikhd/quiet && npm run typecheck -w quiet-explorer && npm run typecheck -w quiet-test",
     "test": "npm run test -w quiet-test",
     "test:unit": "npm run test:unit -w quiet-test",
     "test:e2e": "npm run test:e2e -w quiet-test",

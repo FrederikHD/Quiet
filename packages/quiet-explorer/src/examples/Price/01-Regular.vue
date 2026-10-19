@@ -1,6 +1,6 @@
 <!-- The amount, formatted for the shop's locale and currency: 59,00 €. -->
 <script setup lang="ts">
-import { QPrice } from 'quiet';
+import { QPrice } from '@frederikhd/quiet';
 </script>
 
 <template>

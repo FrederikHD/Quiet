@@ -1,6 +1,6 @@
 <!-- An icon that carries meaning on its own gets a label: it becomes an image named "In stock" or "Sold out". -->
 <script setup lang="ts">
-import { QIcon } from 'quiet';
+import { QIcon } from '@frederikhd/quiet';
 
 const stock = [
   { name: 'Linen shirt, blue', available: true },

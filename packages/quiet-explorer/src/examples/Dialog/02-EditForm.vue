@@ -1,6 +1,6 @@
 <!-- A short form in a dialog. The submit button sits in the footer and points at the form with form="…". -->
 <script setup lang="ts">
-import { QButton, QCombobox, QDialog, QField, QFieldGroup, QForm, QInput, type ComboboxOption } from 'quiet';
+import { QButton, QCombobox, QDialog, QField, QFieldGroup, QForm, QInput, type ComboboxOption } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const countries = ['Germany', 'Austria', 'Switzerland', 'Belgium', 'Denmark', 'France', 'Italy', 'Netherlands', 'Poland', 'Spain'].map(

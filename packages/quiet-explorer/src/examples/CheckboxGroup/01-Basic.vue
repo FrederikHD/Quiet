@@ -1,6 +1,6 @@
 <!-- A question with several independent answers: tick any number of them, or none. -->
 <script setup lang="ts">
-import { QCheckbox, QCheckboxGroup } from 'quiet';
+import { QCheckbox, QCheckboxGroup } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const notify = ref<string[]>(['email']);

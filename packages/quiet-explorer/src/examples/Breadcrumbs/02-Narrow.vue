@@ -1,6 +1,6 @@
 <!-- Under 480px of its own width only the parent is left, as "← Shirts": the step people want on a phone. -->
 <script setup lang="ts">
-import { QBreadcrumbs } from 'quiet';
+import { QBreadcrumbs } from '@frederikhd/quiet';
 </script>
 
 <template>

@@ -1,6 +1,6 @@
 <!-- "6 / 25" between the arrows, for side panels and dialogs. -->
 <script setup lang="ts">
-import { QPagination } from 'quiet';
+import { QPagination } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const page = ref(6);

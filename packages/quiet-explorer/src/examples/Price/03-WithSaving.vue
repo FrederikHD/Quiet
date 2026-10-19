@@ -1,6 +1,6 @@
 <!-- show-saving adds a sale badge with the saving, read out as "20% off". -->
 <script setup lang="ts">
-import { QPrice } from 'quiet';
+import { QPrice } from '@frederikhd/quiet';
 </script>
 
 <template>

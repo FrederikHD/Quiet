@@ -1,6 +1,6 @@
 <!-- The Field's error turns the drop zone's border red. -->
 <script setup lang="ts">
-import { QField, QFileUpload, type FileUploadItem } from 'quiet';
+import { QField, QFileUpload, type FileUploadItem } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const images = ref<FileUploadItem[]>([]);

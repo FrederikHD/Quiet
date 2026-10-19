@@ -1,6 +1,6 @@
 <!-- One action, usually Undo. A toast with an action stays for 8 seconds and pauses while hovered or focused. -->
 <script setup lang="ts">
-import { QButton, toast } from 'quiet';
+import { QButton, toast } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const active = ref(3);

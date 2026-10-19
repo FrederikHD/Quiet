@@ -1,6 +1,6 @@
 <!-- After a search, name the query in the title and pass role="status" so the change is announced. -->
 <script setup lang="ts">
-import { QButton, QEmptyState } from 'quiet';
+import { QButton, QEmptyState } from '@frederikhd/quiet';
 </script>
 
 <template>

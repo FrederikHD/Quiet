@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { QRating, configure } from 'quiet';
+import { QRating, configure } from '@frederikhd/quiet';
 import { beforeAll, describe, expect, it, vi } from 'vitest';
 
 beforeAll(() => configure({ locale: 'en-US' }));

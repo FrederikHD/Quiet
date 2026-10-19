@@ -1,6 +1,6 @@
 <!-- The #tax-note slot takes your own text, with a link to the shipping costs. -->
 <script setup lang="ts">
-import { QOrderSummary } from 'quiet';
+import { QOrderSummary } from '@frederikhd/quiet';
 import { photo } from '../../fixtures/pictures';
 </script>
 

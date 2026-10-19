@@ -1,6 +1,6 @@
 <!-- disabled while the next page loads: the controls rest and aria-busy is set. -->
 <script setup lang="ts">
-import { QPagination } from 'quiet';
+import { QPagination } from '@frederikhd/quiet';
 import { ref, watch } from 'vue';
 
 const page = ref(1);

@@ -1,6 +1,6 @@
 <!-- Folded into one row with the total, so the form comes first on a phone. collapsible="auto" folds it under 900px; true always does. -->
 <script setup lang="ts">
-import { QOrderSummary } from 'quiet';
+import { QOrderSummary } from '@frederikhd/quiet';
 import { photo } from '../../fixtures/pictures';
 </script>
 

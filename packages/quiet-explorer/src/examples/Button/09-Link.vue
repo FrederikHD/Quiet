@@ -1,6 +1,6 @@
 <!-- With href the button is a link, for navigation; disabled, it can't be focused or followed. -->
 <script setup lang="ts">
-import { QButton } from 'quiet';
+import { QButton } from '@frederikhd/quiet';
 </script>
 
 <template>

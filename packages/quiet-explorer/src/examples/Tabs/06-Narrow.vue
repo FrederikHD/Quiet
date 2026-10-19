@@ -1,6 +1,6 @@
 <!-- When the tabs don't fit, the row scrolls sideways and the cut-off edge fades; labels never wrap or truncate. -->
 <script setup lang="ts">
-import { QTabs } from 'quiet';
+import { QTabs } from '@frederikhd/quiet';
 </script>
 
 <template>

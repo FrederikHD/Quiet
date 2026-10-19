@@ -1,6 +1,6 @@
 <!-- Above a product's title: links up the shop's tree, the current page last and not a link. -->
 <script setup lang="ts">
-import { QBreadcrumbs } from 'quiet';
+import { QBreadcrumbs } from '@frederikhd/quiet';
 </script>
 
 <template>

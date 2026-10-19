@@ -1,6 +1,6 @@
 <!-- The tax-note slot takes your own wording, with a link to the shipping costs. -->
 <script setup lang="ts">
-import { QPrice } from 'quiet';
+import { QPrice } from '@frederikhd/quiet';
 </script>
 
 <template>

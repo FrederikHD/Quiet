@@ -1,5 +1,5 @@
 import { enableAutoUnmount, flushPromises, mount } from '@vue/test-utils';
-import { QTabs, type TabItem } from 'quiet';
+import { QTabs, type TabItem } from '@frederikhd/quiet';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { h, nextTick } from 'vue';
 

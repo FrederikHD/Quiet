@@ -1,4 +1,4 @@
-import { QDisclosure } from 'quiet';
+import { QDisclosure } from '@frederikhd/quiet';
 import { defineStory } from './story';
 
 export default defineStory({

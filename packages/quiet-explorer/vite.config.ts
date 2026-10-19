@@ -10,10 +10,11 @@ export default defineConfig({
   base: process.env.EXPLORER_BASE ?? '/',
   plugins: [vue(), quietMeta({ libraryRoot })],
   resolve: {
-    alias: {
-      quiet: fileURLToPath(new URL('../quiet/src/index.ts', import.meta.url)),
-      '@quiet': `${libraryRoot}`,
-    },
+    alias: [
+      // The library's source, not its build: edits show up at once. Exact match, so subpaths keep their own resolution.
+      { find: /^@frederikhd\/quiet$/, replacement: fileURLToPath(new URL('../quiet/src/index.ts', import.meta.url)) },
+      { find: '@quiet', replacement: libraryRoot },
+    ],
   },
   server: { port: 5173, fs: { allow: ['..'] } },
   preview: { port: 4173 },

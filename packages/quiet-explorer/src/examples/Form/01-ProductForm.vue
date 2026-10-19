@@ -1,6 +1,6 @@
 <!-- A full back-office product form with sections, a field group and every message type. Save with an empty title or a missing width to see the error summary. -->
 <script setup lang="ts">
-import { QButton, QField, QFieldGroup, QForm, QFormActions, QFormSection, QInput, type FormError } from 'quiet';
+import { QButton, QField, QFieldGroup, QForm, QFormActions, QFormSection, QInput, type FormError } from '@frederikhd/quiet';
 import { computed, reactive, ref } from 'vue';
 
 const values = reactive({ title: '', sku: 'LS-2041-BL-M', price: '29,90', compare: '', cost: '32,00', length: '30', width: '', height: '4', code: 'AUTUMN10', origin: 'Portugal' });

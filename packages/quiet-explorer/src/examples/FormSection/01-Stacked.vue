@@ -1,6 +1,6 @@
 <!-- Sections split a long form into short, titled parts; a rule separates one from the next. -->
 <script setup lang="ts">
-import { QField, QForm, QFormSection, QInput } from 'quiet';
+import { QField, QForm, QFormSection, QInput } from '@frederikhd/quiet';
 import { reactive } from 'vue';
 
 const values = reactive({ title: 'Linen shirt, blue', vendor: 'Leinenweberei Rhön', price: '59,00' });

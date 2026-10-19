@@ -1,4 +1,4 @@
-import { QOrderSummary } from 'quiet';
+import { QOrderSummary } from '@frederikhd/quiet';
 import { h } from 'vue';
 import { photo } from '../fixtures/pictures';
 import { defineStory } from './story';

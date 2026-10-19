@@ -1,6 +1,6 @@
 <!-- PageColumns inside one Form, when fields sit in both columns: one error summary and one Save. Save with the title empty. -->
 <script setup lang="ts">
-import { QButton, QCard, QField, QForm, QFormActions, QInput, QPage, QPageColumns, QSelect, type FormError } from 'quiet';
+import { QButton, QCard, QField, QForm, QFormActions, QInput, QPage, QPageColumns, QSelect, type FormError } from '@frederikhd/quiet';
 import { reactive, ref } from 'vue';
 
 const v = reactive({ title: '', price: '59,00', status: 'Draft' });

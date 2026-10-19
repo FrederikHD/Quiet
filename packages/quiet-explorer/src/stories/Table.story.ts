@@ -1,4 +1,4 @@
-import { QTable } from 'quiet';
+import { QTable } from '@frederikhd/quiet';
 import { defineStory } from './story';
 
 export default defineStory({

@@ -1,6 +1,6 @@
 <!-- The stacked layout puts the term above the value, for narrow side columns. -->
 <script setup lang="ts">
-import { QCard, QDescriptionList } from 'quiet';
+import { QCard, QDescriptionList } from '@frederikhd/quiet';
 </script>
 
 <template>

@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { QFormSection } from 'quiet';
+import { QFormSection } from '@frederikhd/quiet';
 import { describe, expect, it } from 'vitest';
 
 describe('QFormSection', () => {

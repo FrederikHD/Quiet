@@ -1,6 +1,6 @@
 <!-- Small on product cards and reviews, default under the product title, large beside a large title. -->
 <script setup lang="ts">
-import { QRating } from 'quiet';
+import { QRating } from '@frederikhd/quiet';
 </script>
 
 <template>

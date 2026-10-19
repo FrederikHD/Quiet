@@ -1,4 +1,4 @@
-import { QDescriptionList } from 'quiet';
+import { QDescriptionList } from '@frederikhd/quiet';
 import { defineStory } from './story';
 
 export default defineStory({

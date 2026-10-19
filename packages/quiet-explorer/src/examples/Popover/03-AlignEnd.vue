@@ -1,6 +1,6 @@
 <!-- align="end" lines the panel up with the trigger's right edge, for a button at the end of a toolbar. -->
 <script setup lang="ts">
-import { QButton, QCheckbox, QCheckboxGroup, QPopover } from 'quiet';
+import { QButton, QCheckbox, QCheckboxGroup, QPopover } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const columns = ['Product', 'SKU', 'Price', 'Stock', 'Status'];

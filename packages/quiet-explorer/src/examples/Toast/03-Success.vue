@@ -1,6 +1,6 @@
 <!-- tone="success" adds a check icon, for a result that matters a little more than a save. -->
 <script setup lang="ts">
-import { QButton, toast } from 'quiet';
+import { QButton, toast } from '@frederikhd/quiet';
 </script>
 
 <template>

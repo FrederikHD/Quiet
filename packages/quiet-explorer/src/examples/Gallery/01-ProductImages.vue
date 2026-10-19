@@ -1,6 +1,6 @@
 <!-- Swipe on a phone; arrows, thumbnails and ← → on a computer; click the image to enlarge it. -->
 <script setup lang="ts">
-import { QGallery } from 'quiet';
+import { QGallery } from '@frederikhd/quiet';
 import { photo } from '../../fixtures/pictures';
 
 const images = [

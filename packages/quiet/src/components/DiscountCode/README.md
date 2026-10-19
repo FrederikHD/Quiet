@@ -5,7 +5,7 @@ A field for a discount or gift code, with Apply, and the codes that are in use a
 ```vue
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { AppliedCode } from 'quiet';
+import type { AppliedCode } from '@frederikhd/quiet';
 
 const codes = ref<AppliedCode[]>([]);
 async function apply(code: string) {

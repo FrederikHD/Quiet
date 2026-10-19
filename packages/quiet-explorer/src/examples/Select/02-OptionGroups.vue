@@ -1,6 +1,6 @@
 <!-- Groups put the most common choices first. On a required Select the placeholder can't be picked again. Press Continue with no country. -->
 <script setup lang="ts">
-import { QButton, QField, QForm, QFormActions, QSelect } from 'quiet';
+import { QButton, QField, QForm, QFormActions, QSelect } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const countries = [

@@ -1,4 +1,4 @@
-import { QSteps } from 'quiet';
+import { QSteps } from '@frederikhd/quiet';
 import { defineStory } from './story';
 
 export default defineStory({

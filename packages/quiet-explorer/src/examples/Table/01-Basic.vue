@@ -1,6 +1,6 @@
 <!-- A caption, columns and rows. Click a sortable header to sort, again to reverse; numbers sit right with tabular figures. -->
 <script setup lang="ts">
-import { QBadge, QTable, money, type BadgeTone } from 'quiet';
+import { QBadge, QTable, money, type BadgeTone } from '@frederikhd/quiet';
 
 const orders = [
   { id: 10500, customer: 'Anna Schmidt', status: 'Unfulfilled', total: 118 },

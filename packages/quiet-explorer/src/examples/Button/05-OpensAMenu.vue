@@ -1,6 +1,6 @@
 <!-- A button that opens a menu keeps its hover look while the menu is open; a chevron after the label says it opens. -->
 <script setup lang="ts">
-import { QButton, QMenu } from 'quiet';
+import { QButton, QMenu } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const done = ref('');

@@ -1,6 +1,6 @@
 <!-- Under a filter heading that already says "Price", labelHidden keeps the name for screen readers only. -->
 <script setup lang="ts">
-import { QDisclosure, QPriceRange } from 'quiet';
+import { QDisclosure, QPriceRange } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const range = ref<[number, number]>([20, 120]);

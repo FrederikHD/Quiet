@@ -1,6 +1,6 @@
 <!-- Invalid shows a red border (the message comes from Field), read-only stays copyable, disabled can't be used at all. -->
 <script setup lang="ts">
-import { QInput } from 'quiet';
+import { QInput } from '@frederikhd/quiet';
 import { reactive } from 'vue';
 
 const values = reactive({ email: 'anna@example', order: 'ORD-2026-01049', weight: '1,2' });

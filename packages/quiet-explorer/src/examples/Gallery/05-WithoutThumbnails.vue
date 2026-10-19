@@ -1,6 +1,6 @@
 <!-- :thumbnails="false" leaves only the arrows, for quick views and narrow columns. -->
 <script setup lang="ts">
-import { QGallery } from 'quiet';
+import { QGallery } from '@frederikhd/quiet';
 import { photo } from '../../fixtures/pictures';
 
 const images = [

@@ -1,6 +1,6 @@
 <!-- kind="tip" explains a term in a sentence or two. It opens on click or tap, and focus stays on the button. -->
 <script setup lang="ts">
-import { QButton, QPopover } from 'quiet';
+import { QButton, QPopover } from '@frederikhd/quiet';
 </script>
 
 <template>

@@ -1,6 +1,6 @@
 <!-- While the first rows load, loading shows skeleton rows and sets aria-busy; with rows already there it dims them. -->
 <script setup lang="ts">
-import { QTable } from 'quiet';
+import { QTable } from '@frederikhd/quiet';
 </script>
 
 <template>

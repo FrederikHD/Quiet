@@ -1,6 +1,6 @@
 <!-- Cursor-based APIs don't know the total: leave it out and say whether there is a next page. -->
 <script setup lang="ts">
-import { QPagination } from 'quiet';
+import { QPagination } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const page = ref(1);

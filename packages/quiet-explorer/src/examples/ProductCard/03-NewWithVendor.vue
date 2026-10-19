@@ -1,6 +1,6 @@
 <!-- A New badge, the maker above the name, and a from-price when the variants cost different amounts. -->
 <script setup lang="ts">
-import { QProductCard } from 'quiet';
+import { QProductCard } from '@frederikhd/quiet';
 import { photo } from '../../fixtures/pictures';
 </script>
 

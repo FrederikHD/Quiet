@@ -1,4 +1,4 @@
-import { QButton, QToaster, toast } from 'quiet';
+import { QButton, QToaster, toast } from '@frederikhd/quiet';
 import { h } from 'vue';
 import { defineStory } from './story';
 

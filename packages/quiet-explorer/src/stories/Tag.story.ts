@@ -1,4 +1,4 @@
-import { QTag } from 'quiet';
+import { QTag } from '@frederikhd/quiet';
 import { defineStory } from './story';
 
 export default defineStory({

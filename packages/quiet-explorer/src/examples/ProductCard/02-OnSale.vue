@@ -1,6 +1,6 @@
 <!-- A sale shows the old price struck through, with a Sale badge on the image. -->
 <script setup lang="ts">
-import { QProductCard } from 'quiet';
+import { QProductCard } from '@frederikhd/quiet';
 import { photo } from '../../fixtures/pictures';
 </script>
 

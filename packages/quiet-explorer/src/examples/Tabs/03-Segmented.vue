@@ -1,6 +1,6 @@
 <!-- Segmented and slim, for switching how something is shown: the period of a sales figure. -->
 <script setup lang="ts">
-import { QMetric, QTabs } from 'quiet';
+import { QMetric, QTabs } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const period = ref('7');

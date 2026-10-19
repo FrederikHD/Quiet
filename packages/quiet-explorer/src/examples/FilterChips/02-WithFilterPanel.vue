@@ -1,6 +1,6 @@
 <!-- Chips mirror the filter panel: removing a chip unticks its option, and ticking an option adds a chip. -->
 <script setup lang="ts">
-import { QCheckbox, QCheckboxGroup, QFilterChips } from 'quiet';
+import { QCheckbox, QCheckboxGroup, QFilterChips } from '@frederikhd/quiet';
 import { computed, ref } from 'vue';
 import { swatchOf } from '../../fixtures/pictures';
 

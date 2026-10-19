@@ -1,6 +1,6 @@
 <!-- variant="field": the compact tag for chosen options inside a multi-select, with its own small ×. -->
 <script setup lang="ts">
-import { QTag } from 'quiet';
+import { QTag } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const collections = ref(['Summer linen', 'Gifts', 'New in']);

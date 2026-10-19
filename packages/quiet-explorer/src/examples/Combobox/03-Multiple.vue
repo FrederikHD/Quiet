@@ -1,6 +1,6 @@
 <!-- multiple picks several values; they show as tags in the box, and the panel stays open until Done. -->
 <script setup lang="ts">
-import { QCombobox, QField, type ComboboxOption } from 'quiet';
+import { QCombobox, QField, type ComboboxOption } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const countries: ComboboxOption[] = ['Austria', 'Belgium', 'Czechia', 'Denmark', 'France', 'Germany', 'Italy', 'Luxembourg', 'Netherlands', 'Poland', 'Spain', 'Sweden', 'Switzerland'].map(

@@ -1,4 +1,4 @@
-/* Quiet — the whole stylesheet, in cascade order. Ships as dist/quiet.css (`import 'quiet/style.css'`). */
+/* Quiet — the whole stylesheet, in cascade order. Ships as dist/quiet.css (`import '@frederikhd/quiet/style.css'`). */
 @import './tokens.css';
 @import './density.css';
 @import './base.css';

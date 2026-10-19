@@ -1,6 +1,6 @@
 <!-- A whole back-office screen: the navigation, the account under it, and a page. contained keeps it inside this box. -->
 <script setup lang="ts">
-import { QAppShell, QBadge, QButton, QCard, QMetric, QNav, QPage, QTable, type NavItem, type NavSection } from 'quiet';
+import { QAppShell, QBadge, QButton, QCard, QMetric, QNav, QPage, QTable, type NavItem, type NavSection } from '@frederikhd/quiet';
 import { computed, ref } from 'vue';
 
 const page = ref('home');

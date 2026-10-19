@@ -1,6 +1,6 @@
 <!-- One mapping from status to tone, used for orders, payments, fulfilment and stock everywhere. -->
 <script setup lang="ts">
-import { QBadge, type BadgeTone } from 'quiet';
+import { QBadge, type BadgeTone } from '@frederikhd/quiet';
 
 const rows: [BadgeTone, string[]][] = [
   ['success', ['Paid', 'Fulfilled', 'In stock']],

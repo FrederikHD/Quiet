@@ -1,6 +1,6 @@
 <!-- In a cards group each Radio is a tile; the media slot adds a decorative icon before the label. -->
 <script setup lang="ts">
-import { QIcon, QRadio, QRadioGroup } from 'quiet';
+import { QIcon, QRadio, QRadioGroup } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const pay = ref('card');

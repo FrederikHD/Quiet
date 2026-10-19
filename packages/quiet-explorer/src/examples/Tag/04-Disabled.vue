@@ -1,6 +1,6 @@
 <!-- disabled: a tag that can't be taken back here, such as a member discount applied automatically. -->
 <script setup lang="ts">
-import { QTag } from 'quiet';
+import { QTag } from '@frederikhd/quiet';
 </script>
 
 <template>

@@ -1,6 +1,6 @@
 <!-- The full order list: search, a filter, sorting and paging done by the server, "Select all 128", bulk actions and invoices. Cards on phones. -->
 <script setup lang="ts">
-import { QBadge, QButton, QIcon, QInput, QPagination, QSelect, QTable, money, type BadgeTone, type RowKey, type TableSort } from 'quiet';
+import { QBadge, QButton, QIcon, QInput, QPagination, QSelect, QTable, money, type BadgeTone, type RowKey, type TableSort } from '@frederikhd/quiet';
 import { computed, ref } from 'vue';
 
 // 128 orders, filtered, sorted and paged by the app (as a server would); the table shows one page.

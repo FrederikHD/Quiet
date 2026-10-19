@@ -1,6 +1,6 @@
 <!-- An icon before the label names the object, an icon after it shows direction; an icon-only button needs an aria-label. -->
 <script setup lang="ts">
-import { QButton } from 'quiet';
+import { QButton } from '@frederikhd/quiet';
 </script>
 
 <template>

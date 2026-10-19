@@ -1,4 +1,4 @@
-import { Quiet } from 'quiet';
+import { Quiet } from '@frederikhd/quiet';
 import { createApp } from 'vue';
 import App from './App.vue';
 import { router } from './router';

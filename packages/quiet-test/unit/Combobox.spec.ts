@@ -1,5 +1,5 @@
 import { flushPromises, mount, type VueWrapper } from '@vue/test-utils';
-import { QCombobox, QField, type ComboboxOption } from 'quiet';
+import { QCombobox, QField, type ComboboxOption } from '@frederikhd/quiet';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { h, nextTick } from 'vue';
 

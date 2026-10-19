@@ -1,6 +1,6 @@
 <!-- sticky keeps Cancel and Save at the bottom of a long edit screen; scroll the form. On phones it stays one row. -->
 <script setup lang="ts">
-import { QButton, QField, QForm, QFormActions, QInput, QTextarea } from 'quiet';
+import { QButton, QField, QForm, QFormActions, QInput, QTextarea } from '@frederikhd/quiet';
 </script>
 
 <template>

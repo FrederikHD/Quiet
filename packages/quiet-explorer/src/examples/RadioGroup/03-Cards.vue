@@ -1,6 +1,6 @@
 <!-- Bordered tiles with a description and a price, for delivery in checkout. Left empty: the choice is the customer's. -->
 <script setup lang="ts">
-import { QRadio, QRadioGroup } from 'quiet';
+import { QRadio, QRadioGroup } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const ship = ref<string | null>(null);

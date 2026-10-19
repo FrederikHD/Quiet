@@ -1,6 +1,6 @@
 <!-- tone="sale" is the storefront's Sale tag, next to the reduced price. -->
 <script setup lang="ts">
-import { QBadge, QPrice } from 'quiet';
+import { QBadge, QPrice } from '@frederikhd/quiet';
 </script>
 
 <template>

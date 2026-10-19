@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { QFilterChips, type FilterChip } from 'quiet';
+import { QFilterChips, type FilterChip } from '@frederikhd/quiet';
 import { describe, expect, it } from 'vitest';
 import { nextTick } from 'vue';
 

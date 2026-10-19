@@ -1,6 +1,6 @@
 <!-- A required group: send it with nothing ticked to see the error on the group and on every box. -->
 <script setup lang="ts">
-import { QButton, QCheckbox, QCheckboxGroup, QForm, QFormActions } from 'quiet';
+import { QButton, QCheckbox, QCheckboxGroup, QForm, QFormActions } from '@frederikhd/quiet';
 import { computed, ref } from 'vue';
 
 const reasons = ref<string[]>([]);

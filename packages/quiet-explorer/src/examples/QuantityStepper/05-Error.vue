@@ -1,6 +1,6 @@
 <!-- The Field's error marks the stepper invalid and says what to change. -->
 <script setup lang="ts">
-import { QField, QQuantityStepper } from 'quiet';
+import { QField, QQuantityStepper } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const quantity = ref(5);

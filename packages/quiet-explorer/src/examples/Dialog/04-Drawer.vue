@@ -1,6 +1,6 @@
 <!-- placement="end" turns the dialog into a full-height drawer from the side, for filters beside a product list. -->
 <script setup lang="ts">
-import { QButton, QCheckbox, QCheckboxGroup, QDialog, QRadio, QRadioGroup } from 'quiet';
+import { QButton, QCheckbox, QCheckboxGroup, QDialog, QRadio, QRadioGroup } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const open = ref(false);

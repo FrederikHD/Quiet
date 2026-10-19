@@ -1,6 +1,6 @@
 <!-- width="narrow" (720px) for settings and single-column forms; one form on a narrow page needs no card. -->
 <script setup lang="ts">
-import { QButton, QField, QForm, QFormActions, QInput, QPage } from 'quiet';
+import { QButton, QField, QForm, QFormActions, QInput, QPage } from '@frederikhd/quiet';
 import { reactive } from 'vue';
 
 const store = reactive({ name: 'Leinen & Co', email: 'hallo@leinen.example' });

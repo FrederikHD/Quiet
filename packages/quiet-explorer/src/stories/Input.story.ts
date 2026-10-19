@@ -1,4 +1,4 @@
-import { QInput } from 'quiet';
+import { QInput } from '@frederikhd/quiet';
 import { defineStory } from './story';
 
 export default defineStory({

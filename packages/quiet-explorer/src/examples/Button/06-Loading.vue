@@ -1,6 +1,6 @@
 <!-- While the action runs, the button shows a spinner, keeps its width and can't be clicked twice. -->
 <script setup lang="ts">
-import { QButton } from 'quiet';
+import { QButton } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const saving = ref(false);

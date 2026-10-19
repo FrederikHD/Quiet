@@ -1,4 +1,4 @@
-import { QNotice } from 'quiet';
+import { QNotice } from '@frederikhd/quiet';
 import { defineStory } from './story';
 
 export default defineStory({

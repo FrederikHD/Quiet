@@ -1,6 +1,6 @@
 <!-- Drag the handles or type the amounts; the filter applies on commit, when a handle is let go or a field is left. -->
 <script setup lang="ts">
-import { QPriceRange } from 'quiet';
+import { QPriceRange } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const range = ref<[number, number]>([30, 90]);

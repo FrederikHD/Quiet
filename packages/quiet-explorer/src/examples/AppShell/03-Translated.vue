@@ -1,6 +1,6 @@
 <!-- strings translates the menu button, the skip link and the drawer's close button; the Nav's landmark name comes from the same place. -->
 <script setup lang="ts">
-import { QAppShell, QNav, QPage } from 'quiet';
+import { QAppShell, QNav, QPage } from '@frederikhd/quiet';
 </script>
 
 <template>

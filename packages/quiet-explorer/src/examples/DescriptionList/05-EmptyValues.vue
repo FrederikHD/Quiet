@@ -1,6 +1,6 @@
 <!-- An empty value shows "—" (or empty-text), never a blank gap. -->
 <script setup lang="ts">
-import { QDescriptionList } from 'quiet';
+import { QDescriptionList } from '@frederikhd/quiet';
 </script>
 
 <template>

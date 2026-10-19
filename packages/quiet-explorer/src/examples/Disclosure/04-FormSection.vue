@@ -1,6 +1,6 @@
 <!-- A rarely used part of a back-office form folds away, under an h2 and without the divider. -->
 <script setup lang="ts">
-import { QDisclosure, QField, QForm, QInput, QTextarea } from 'quiet';
+import { QDisclosure, QField, QForm, QInput, QTextarea } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const title = ref('Linen shirt, blue – Leinen & Co');

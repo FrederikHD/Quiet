@@ -1,6 +1,6 @@
 <!-- Under the product title it leads to the reviews: href for another page, @click to open them on this one. -->
 <script setup lang="ts">
-import { QRating } from 'quiet';
+import { QRating } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const log = ref('');

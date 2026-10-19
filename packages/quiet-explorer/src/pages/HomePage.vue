@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import brandBook from '@quiet/docs/brand-book.md?raw';
-import { QCard, QPage } from 'quiet';
+import { QCard, QPage } from '@frederikhd/quiet';
 import { groups } from '../catalog';
 import MarkdownView from './MarkdownView.vue';
 </script>
@@ -11,8 +11,8 @@ import MarkdownView from './MarkdownView.vue';
       <ol class="ex-steps">
         <li>Add the <code>quiet</code> package — it isn't on npm yet; in this repo it is the <code>packages/quiet</code> workspace.</li>
         <li>
-          <code>import 'quiet/style.css'</code> and <code>app.use(Quiet, { locale: 'de-DE' })</code> — or import components
-          one by one: <code>import { QButton } from 'quiet'</code>.
+          <code>import '@frederikhd/quiet/style.css'</code> and <code>app.use(Quiet, { locale: 'de-DE' })</code> — or import components
+          one by one: <code>import { QButton } from '@frederikhd/quiet'</code>.
         </li>
         <li>Load Inter from Google Fonts, set <code>data-theme</code> and <code>data-density</code> on <code>&lt;html&gt;</code>.</li>
       </ol>

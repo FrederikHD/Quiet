@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { QDisclosure } from 'quiet';
+import { QDisclosure } from '@frederikhd/quiet';
 import { describe, expect, it } from 'vitest';
 
 describe('QDisclosure', () => {

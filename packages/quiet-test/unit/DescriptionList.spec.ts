@@ -1,9 +1,9 @@
 import { mount } from '@vue/test-utils';
-import { QDescriptionList } from 'quiet';
+import { QDescriptionList, type DescriptionListItem } from '@frederikhd/quiet';
 import { describe, expect, it } from 'vitest';
 import { h } from 'vue';
 
-const items = [
+const items: (DescriptionListItem | null | false)[] = [
   { term: 'SKU', description: 'LC-2040' },
   null,
   { term: 'Barcode', description: '' },

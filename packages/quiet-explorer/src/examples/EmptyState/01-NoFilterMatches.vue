@@ -1,6 +1,6 @@
 <!-- Says what's empty, what to do, and offers the action that does it. -->
 <script setup lang="ts">
-import { QButton, QEmptyState } from 'quiet';
+import { QButton, QEmptyState } from '@frederikhd/quiet';
 </script>
 
 <template>

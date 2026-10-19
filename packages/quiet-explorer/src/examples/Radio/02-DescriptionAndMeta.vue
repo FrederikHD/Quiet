@@ -1,6 +1,6 @@
 <!-- A description adds one muted line under the label; meta puts the price at the end of the row. -->
 <script setup lang="ts">
-import { QRadio, QRadioGroup } from 'quiet';
+import { QRadio, QRadioGroup } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const ship = ref('std');

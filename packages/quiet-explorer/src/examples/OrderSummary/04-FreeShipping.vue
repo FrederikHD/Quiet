@@ -1,6 +1,6 @@
 <!-- A shipping amount of 0 reads "Free". -->
 <script setup lang="ts">
-import { QOrderSummary } from 'quiet';
+import { QOrderSummary } from '@frederikhd/quiet';
 import { photo } from '../../fixtures/pictures';
 </script>
 

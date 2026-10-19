@@ -11,10 +11,11 @@
     "test:e2e": "playwright test --project=e2e",
     "test:visual": "playwright test --project=visual",
     "test:visual:update": "playwright test --project=visual --update-snapshots",
-    "report": "playwright show-report"
+    "report": "playwright show-report",
+    "typecheck": "vue-tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "quiet": "0.1.0"
+    "@frederikhd/quiet": "0.1.0"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.14.0",

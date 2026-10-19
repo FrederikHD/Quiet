@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { QButton } from 'quiet';
+import { QButton } from '@frederikhd/quiet';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('QButton', () => {

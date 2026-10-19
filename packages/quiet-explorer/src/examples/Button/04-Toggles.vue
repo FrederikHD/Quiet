@@ -1,6 +1,6 @@
 <!-- pressed makes a secondary or ghost button a toggle: a view switch in a labelled group, or a filter that stays on. -->
 <script setup lang="ts">
-import { QButton } from 'quiet';
+import { QButton } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const view = ref<'grid' | 'list'>('grid');

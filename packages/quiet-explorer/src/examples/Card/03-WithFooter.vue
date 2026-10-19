@@ -1,6 +1,6 @@
 <!-- A description under the title, and the card's own button in a footer under a rule. -->
 <script setup lang="ts">
-import { QButton, QCard, QField, QFormActions, QInput } from 'quiet';
+import { QButton, QCard, QField, QFormActions, QInput } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const note = ref('');

@@ -1,6 +1,6 @@
 <!-- Items without href are buttons: a settings page switching its section in place, named by aria-label. -->
 <script setup lang="ts">
-import { QNav, type NavItem } from 'quiet';
+import { QNav, type NavItem } from '@frederikhd/quiet';
 import { computed, ref } from 'vue';
 
 const section = ref('Payments');

@@ -1,6 +1,6 @@
 <!-- In the cart :min="0" lets people go to zero; removing the line is up to the app. -->
 <script setup lang="ts">
-import { QQuantityStepper } from 'quiet';
+import { QQuantityStepper } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const quantity = ref(2);

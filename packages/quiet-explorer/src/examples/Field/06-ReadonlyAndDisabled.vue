@@ -1,6 +1,6 @@
 <!-- Read-only values can still be selected and copied. Disabled ones can't, so the hint says why. -->
 <script setup lang="ts">
-import { QField, QInput } from 'quiet';
+import { QField, QInput } from '@frederikhd/quiet';
 import { reactive } from 'vue';
 
 const values = reactive({ order: 'ORD-2026-01049', vat: '' });

@@ -1,6 +1,6 @@
 <!-- A label, the control and a hint that stays visible. Required fields get an asterisk and aria-required. -->
 <script setup lang="ts">
-import { QField, QInput } from 'quiet';
+import { QField, QInput } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const email = ref('');

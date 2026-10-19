@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { mount } from '@vue/test-utils';
-import { QSteps } from 'quiet';
+import { QSteps } from '@frederikhd/quiet';
 import { describe, expect, it } from 'vitest';
 
 const steps = [{ label: 'Address' }, { label: 'Shipping' }, { label: 'Payment' }];

@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { QRadio, QRadioGroup } from 'quiet';
+import { QRadio, QRadioGroup } from '@frederikhd/quiet';
 import { describe, expect, it, vi } from 'vitest';
 import { h } from 'vue';
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { QButton, toast } from 'quiet';
+import { QButton, toast } from '@frederikhd/quiet';
 
 const props = defineProps<{ code: string; lang?: string }>();
 

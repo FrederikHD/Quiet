@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { QIcon, iconNames } from 'quiet';
+import { QIcon, iconNames } from '@frederikhd/quiet';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('QIcon', () => {

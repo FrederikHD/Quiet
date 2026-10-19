@@ -1,6 +1,6 @@
 <!-- A code already in use from the cart: the field stays open for a second one, and the tag removes it. -->
 <script setup lang="ts">
-import { QDiscountCode } from 'quiet';
+import { QDiscountCode } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const codes = ref([{ code: 'LINEN10', label: '−10 %' }]);

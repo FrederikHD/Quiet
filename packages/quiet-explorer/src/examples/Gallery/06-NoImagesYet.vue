@@ -1,6 +1,6 @@
 <!-- A product without photos shows a placeholder in the same shape. -->
 <script setup lang="ts">
-import { QGallery } from 'quiet';
+import { QGallery } from '@frederikhd/quiet';
 </script>
 
 <template>

@@ -1,6 +1,6 @@
 <!-- With an error, read-only and disabled. -->
 <script setup lang="ts">
-import { QCombobox, QField, QForm, type ComboboxOption } from 'quiet';
+import { QCombobox, QField, QForm, type ComboboxOption } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const collections: ComboboxOption[] = [

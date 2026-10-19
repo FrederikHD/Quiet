@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { QButton, QCheckbox, QField, QInput, QSelect, QTabs, QTextarea } from 'quiet';
+import { QButton, QCheckbox, QField, QInput, QSelect, QTabs, QTextarea } from '@frederikhd/quiet';
 import { computed, reactive, ref, watch } from 'vue';
 import type { PropMeta } from '../../plugins/quiet-meta';
 import type { Entry } from '../catalog';

@@ -1,6 +1,6 @@
 <!-- size="large" (48px) in the storefront header and on phones. Without suggestions, Enter simply searches. -->
 <script setup lang="ts">
-import { QSearchBox } from 'quiet';
+import { QSearchBox } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const q = ref('');

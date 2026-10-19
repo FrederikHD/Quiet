@@ -1,6 +1,6 @@
 <!-- selectable adds checkboxes; while rows are ticked, a bar shows the count, your bulk actions and Clear selection. -->
 <script setup lang="ts">
-import { QButton, QTable, money, type RowKey } from 'quiet';
+import { QButton, QTable, money, type RowKey } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const orders = [

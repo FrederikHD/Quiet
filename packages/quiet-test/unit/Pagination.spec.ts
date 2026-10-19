@@ -1,5 +1,5 @@
 import { enableAutoUnmount, mount } from '@vue/test-utils';
-import { QPagination, configure } from 'quiet';
+import { QPagination, configure } from '@frederikhd/quiet';
 import { afterEach, beforeAll, describe, expect, it } from 'vitest';
 import { nextTick } from 'vue';
 

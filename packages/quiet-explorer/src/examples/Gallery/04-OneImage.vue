@@ -1,6 +1,6 @@
 <!-- With a single image there are no arrows, counter or thumbnails; it still enlarges. -->
 <script setup lang="ts">
-import { QGallery } from 'quiet';
+import { QGallery } from '@frederikhd/quiet';
 import { photo } from '../../fixtures/pictures';
 </script>
 

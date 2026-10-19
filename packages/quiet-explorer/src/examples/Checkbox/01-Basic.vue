@@ -1,6 +1,6 @@
 <!-- One checkbox with its label and a line of description. The whole row is the click target. -->
 <script setup lang="ts">
-import { QCheckbox } from 'quiet';
+import { QCheckbox } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const newsletter = ref(true);

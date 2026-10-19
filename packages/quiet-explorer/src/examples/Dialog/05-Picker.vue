@@ -1,6 +1,6 @@
 <!-- mobile="inset" keeps a small picker as a floating card on phones instead of a bottom sheet. -->
 <script setup lang="ts">
-import { QButton, QDialog, QRadio, QRadioGroup } from 'quiet';
+import { QButton, QDialog, QRadio, QRadioGroup } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const open = ref(false);

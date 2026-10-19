@@ -1,4 +1,4 @@
-import { QPrice } from 'quiet';
+import { QPrice } from '@frederikhd/quiet';
 import { defineStory } from './story';
 
 export default defineStory({

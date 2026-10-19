@@ -1,5 +1,5 @@
 import { enableAutoUnmount, flushPromises, mount } from '@vue/test-utils';
-import { QGallery } from 'quiet';
+import { QGallery } from '@frederikhd/quiet';
 import { afterEach, describe, expect, it } from 'vitest';
 
 enableAutoUnmount(afterEach);

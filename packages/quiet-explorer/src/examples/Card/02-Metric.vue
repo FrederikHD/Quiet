@@ -1,6 +1,6 @@
 <!-- Without a title the card is just a surface: here, one figure on a dashboard. -->
 <script setup lang="ts">
-import { QCard, QMetric } from 'quiet';
+import { QCard, QMetric } from '@frederikhd/quiet';
 </script>
 
 <template>

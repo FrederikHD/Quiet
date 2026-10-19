@@ -1,6 +1,6 @@
 <!-- placement="top" prefers the space above, for a trigger near the bottom of the screen such as a checkout bar. -->
 <script setup lang="ts">
-import { QButton, QPopover } from 'quiet';
+import { QButton, QPopover } from '@frederikhd/quiet';
 </script>
 
 <template>

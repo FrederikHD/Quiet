@@ -1,6 +1,6 @@
 <!-- Numbered pages with gaps, first and last; align="between" puts the range on the left. Under 560px it shows "4 / 25". -->
 <script setup lang="ts">
-import { QPagination } from 'quiet';
+import { QPagination } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const page = ref(4);

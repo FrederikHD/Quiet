@@ -1,6 +1,6 @@
 <!-- label-placement="side" lines the labels up in a column beside the controls, for dense back-office screens. Below 400px they move above. -->
 <script setup lang="ts">
-import { QField, QForm, QInput } from 'quiet';
+import { QField, QForm, QInput } from '@frederikhd/quiet';
 import { reactive } from 'vue';
 
 const values = reactive({ title: 'Linen shirt, blue', sku: 'LS-2041-BL-M', price: '59,00' });

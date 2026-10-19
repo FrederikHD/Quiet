@@ -1,4 +1,4 @@
-import { QCheckbox, QCheckboxGroup } from 'quiet';
+import { QCheckbox, QCheckboxGroup } from '@frederikhd/quiet';
 import { h } from 'vue';
 import { defineStory } from './story';
 

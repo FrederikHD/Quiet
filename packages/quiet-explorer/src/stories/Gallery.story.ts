@@ -1,4 +1,4 @@
-import { QGallery } from 'quiet';
+import { QGallery } from '@frederikhd/quiet';
 import { h } from 'vue';
 import { photo } from '../fixtures/pictures';
 import { defineStory } from './story';

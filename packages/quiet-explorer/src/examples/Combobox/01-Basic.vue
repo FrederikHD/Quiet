@@ -1,6 +1,6 @@
 <!-- A static list people can search: typing filters it, ignoring case and accents. Each option can carry a meta value. -->
 <script setup lang="ts">
-import { QCombobox, QField, type ComboboxOption } from 'quiet';
+import { QCombobox, QField, type ComboboxOption } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const rate = ref<ComboboxOption | null>(null);

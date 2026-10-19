@@ -1,6 +1,6 @@
 <!-- A round + button on the image, named "Add Linen napkins (4) to cart". Offer it only for products without choices. -->
 <script setup lang="ts">
-import { QProductCard } from 'quiet';
+import { QProductCard } from '@frederikhd/quiet';
 import { ref } from 'vue';
 import { photo } from '../../fixtures/pictures';
 

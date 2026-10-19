@@ -1,6 +1,6 @@
 <!-- A warning allows saving but asks for a second look. The control keeps its normal border. -->
 <script setup lang="ts">
-import { QField, QInput } from 'quiet';
+import { QField, QInput } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const stock = ref('4');

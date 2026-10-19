@@ -1,6 +1,6 @@
 <!-- Slim selects filter and sort a back-office list; prefix-icon marks the sort order. -->
 <script setup lang="ts">
-import { QSelect } from 'quiet';
+import { QSelect } from '@frederikhd/quiet';
 import { reactive } from 'vue';
 
 const view = reactive({ status: 'All statuses', sort: 'new' });

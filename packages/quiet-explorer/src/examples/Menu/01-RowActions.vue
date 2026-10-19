@@ -1,6 +1,6 @@
 <!-- The ⋯ button on a list row, named after the row. Destructive actions go last, after a divider. -->
 <script setup lang="ts">
-import { QMenu, type MenuItem } from 'quiet';
+import { QMenu, type MenuItem } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const chose = ref('');

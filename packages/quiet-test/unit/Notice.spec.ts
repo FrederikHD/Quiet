@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { configure, QButton, QNotice } from 'quiet';
+import { configure, QButton, QNotice } from '@frederikhd/quiet';
 import { afterEach, describe, expect, it } from 'vitest';
 import { h } from 'vue';
 

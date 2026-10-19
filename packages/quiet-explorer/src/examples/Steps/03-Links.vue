@@ -1,6 +1,6 @@
 <!-- With href the finished steps are links back to their own pages. -->
 <script setup lang="ts">
-import { QSteps } from 'quiet';
+import { QSteps } from '@frederikhd/quiet';
 </script>
 
 <template>

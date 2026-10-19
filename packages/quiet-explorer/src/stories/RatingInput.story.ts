@@ -1,4 +1,4 @@
-import { QRatingInput } from 'quiet';
+import { QRatingInput } from '@frederikhd/quiet';
 import { defineStory } from './story';
 
 export default defineStory({

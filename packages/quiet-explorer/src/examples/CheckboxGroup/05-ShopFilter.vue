@@ -1,6 +1,6 @@
 <!-- Colour dots and size tiles in the shop's filter panel; options with no products behind them are disabled. -->
 <script setup lang="ts">
-import { QCheckbox, QCheckboxGroup, QForm } from 'quiet';
+import { QCheckbox, QCheckboxGroup, QForm } from '@frederikhd/quiet';
 import { ref } from 'vue';
 import { swatchOf } from '../../fixtures/pictures';
 

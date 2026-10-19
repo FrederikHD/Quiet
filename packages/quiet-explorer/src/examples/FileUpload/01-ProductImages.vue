@@ -1,6 +1,6 @@
 <!-- Product images as thumbnails; the first one is the main image shown in lists and on cards. -->
 <script setup lang="ts">
-import { QField, QFileUpload, type FileUploadItem } from 'quiet';
+import { QField, QFileUpload, type FileUploadItem } from '@frederikhd/quiet';
 import { ref } from 'vue';
 import { photo } from '../../fixtures/pictures';
 

@@ -1,6 +1,6 @@
 <!-- meta puts a price or count at the end of the row, right-aligned with tabular figures. -->
 <script setup lang="ts">
-import { QCheckbox } from 'quiet';
+import { QCheckbox } from '@frederikhd/quiet';
 import { reactive } from 'vue';
 
 const extras = reactive({ wrap: false, card: true });

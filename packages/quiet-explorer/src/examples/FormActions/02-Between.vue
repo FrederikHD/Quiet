@@ -1,6 +1,6 @@
 <!-- A destructive action on the left, away from Save; the right-hand pair goes in its own div. -->
 <script setup lang="ts">
-import { QButton, QFormActions } from 'quiet';
+import { QButton, QFormActions } from '@frederikhd/quiet';
 </script>
 
 <template>

@@ -1,6 +1,6 @@
 <!-- duration: 0 keeps a toast until it is dismissed; toast.dismiss(id) closes it when the work is done. -->
 <script setup lang="ts">
-import { QButton, toast } from 'quiet';
+import { QButton, toast } from '@frederikhd/quiet';
 
 function importProducts() {
   const id = toast('Importing 240 products…', { duration: 0 });

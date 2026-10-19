@@ -1,6 +1,6 @@
 <!-- On phones the search opens in a dialog; inline keeps the list in the flow, where the keyboard can't cover it. -->
 <script setup lang="ts">
-import { QButton, QDialog, QSearchBox, type SearchSuggestion } from 'quiet';
+import { QButton, QDialog, QSearchBox, type SearchSuggestion } from '@frederikhd/quiet';
 import { computed, ref } from 'vue';
 
 const open = ref(false);

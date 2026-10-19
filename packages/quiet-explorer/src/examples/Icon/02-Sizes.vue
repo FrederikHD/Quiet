@@ -1,6 +1,6 @@
 <!-- sm (16px) for dense rows and badges, md (20px) for controls and navigation, lg (24px) for the storefront header. -->
 <script setup lang="ts">
-import { QIcon } from 'quiet';
+import { QIcon } from '@frederikhd/quiet';
 </script>
 
 <template>

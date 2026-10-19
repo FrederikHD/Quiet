@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { URL as NodeURL } from 'node:url';
 import { mount } from '@vue/test-utils';
-import { QDiscountCode } from 'quiet';
+import { QDiscountCode } from '@frederikhd/quiet';
 import { describe, expect, it, vi } from 'vitest';
 import { nextTick } from 'vue';
 

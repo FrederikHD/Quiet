@@ -1,6 +1,6 @@
 <!-- A required checkbox in a CheckboxGroup, which shows the error. Press Place order without ticking it. -->
 <script setup lang="ts">
-import { QButton, QCheckbox, QCheckboxGroup, QForm, QFormActions } from 'quiet';
+import { QButton, QCheckbox, QCheckboxGroup, QForm, QFormActions } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const terms = ref(false);

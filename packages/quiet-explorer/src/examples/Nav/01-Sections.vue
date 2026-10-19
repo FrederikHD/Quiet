@@ -1,6 +1,6 @@
 <!-- The back-office navigation: icons, the current page, a count of work waiting, and a titled second section. -->
 <script setup lang="ts">
-import { QNav, type NavItem, type NavSection } from 'quiet';
+import { QNav, type NavItem, type NavSection } from '@frederikhd/quiet';
 import { computed, ref } from 'vue';
 
 const page = ref('orders');

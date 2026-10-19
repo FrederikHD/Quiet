@@ -1,6 +1,6 @@
 <!-- Unchecked, checked, indeterminate, invalid, and disabled with and without a tick. -->
 <script setup lang="ts">
-import { QCheckbox } from 'quiet';
+import { QCheckbox } from '@frederikhd/quiet';
 import { reactive } from 'vue';
 
 const ticks = reactive({ unchecked: false, checked: true, some: false, invalid: false });

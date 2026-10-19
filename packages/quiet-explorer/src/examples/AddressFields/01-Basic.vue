@@ -1,6 +1,6 @@
 <!-- A delivery address laid out the way Germany writes it, with autocomplete tokens for one-tap browser filling. -->
 <script setup lang="ts">
-import { QAddressFields, QForm, type Address } from 'quiet';
+import { QAddressFields, QForm, type Address } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const address = ref<Address>({ country: 'DE' });

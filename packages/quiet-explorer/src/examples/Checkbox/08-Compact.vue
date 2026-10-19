@@ -1,6 +1,6 @@
 <!-- In compact density the box is 16px and the row 32px high, for back-office filters. -->
 <script setup lang="ts">
-import { QCheckbox } from 'quiet';
+import { QCheckbox } from '@frederikhd/quiet';
 import { reactive } from 'vue';
 
 const filters = reactive({ lowStock: true, archived: false });

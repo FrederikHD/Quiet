@@ -1,6 +1,6 @@
 <!-- success for a good, lasting state; warning for something to look at soon; danger for something that blocks. -->
 <script setup lang="ts">
-import { QNotice } from 'quiet';
+import { QNotice } from '@frederikhd/quiet';
 </script>
 
 <template>

@@ -1,6 +1,6 @@
 <!-- Pick another colour and the gallery shows its images, starting again at the first. -->
 <script setup lang="ts">
-import { QGallery, QRadio, QRadioGroup } from 'quiet';
+import { QGallery, QRadio, QRadioGroup } from '@frederikhd/quiet';
 import { computed, ref } from 'vue';
 import { photo, swatchOf } from '../../fixtures/pictures';
 

@@ -1,6 +1,6 @@
 <!-- slim (28px) for table cells and filter bars, default follows the density, large (48px) for storefront actions. -->
 <script setup lang="ts">
-import { QButton } from 'quiet';
+import { QButton } from '@frederikhd/quiet';
 </script>
 
 <template>

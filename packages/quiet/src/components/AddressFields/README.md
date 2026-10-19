@@ -5,7 +5,7 @@ One address, laid out the way its country writes it, with the autocomplete token
 ```vue
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { validateAddress, type Address } from 'quiet';
+import { validateAddress, type Address } from '@frederikhd/quiet';
 
 const ship = ref<Address>({ country: 'DE' });
 const tried = ref(false);

@@ -1,6 +1,6 @@
 <!-- One checkbox in a group without a label: it keeps the hint and lines up with the fields around it. -->
 <script setup lang="ts">
-import { QCheckbox, QCheckboxGroup, QField, QForm, QInput } from 'quiet';
+import { QCheckbox, QCheckboxGroup, QField, QForm, QInput } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const stock = ref('24');

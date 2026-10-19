@@ -1,6 +1,6 @@
 <!-- With an error, read-only (still posted with the form) and disabled (the hint says why). -->
 <script setup lang="ts">
-import { QField, QForm, QSelect } from 'quiet';
+import { QField, QForm, QSelect } from '@frederikhd/quiet';
 import { reactive } from 'vue';
 
 const values = reactive({ currency: 'EUR', warehouse: 'Berlin', reason: '' });

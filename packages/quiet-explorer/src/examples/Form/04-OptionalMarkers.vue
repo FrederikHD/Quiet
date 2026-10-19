@@ -1,6 +1,6 @@
 <!-- In checkout most fields are required, so markers="optional" marks the few that aren't instead. -->
 <script setup lang="ts">
-import { QField, QForm, QInput } from 'quiet';
+import { QField, QForm, QInput } from '@frederikhd/quiet';
 import { reactive } from 'vue';
 
 const values = reactive({ email: '', phone: '', company: '' });

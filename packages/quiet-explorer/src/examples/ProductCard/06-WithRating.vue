@@ -1,6 +1,6 @@
 <!-- Small stars and the count under the price; hidden while there are no reviews. -->
 <script setup lang="ts">
-import { QProductCard } from 'quiet';
+import { QProductCard } from '@frederikhd/quiet';
 import { photo } from '../../fixtures/pictures';
 </script>
 

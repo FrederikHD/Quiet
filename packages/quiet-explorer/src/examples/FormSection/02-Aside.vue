@@ -1,6 +1,6 @@
 <!-- layout="aside" puts the heading and description beside the fields once the section is 760px wide — for settings pages. -->
 <script setup lang="ts">
-import { QField, QFieldGroup, QForm, QFormSection, QInput } from 'quiet';
+import { QField, QFieldGroup, QForm, QFormSection, QInput } from '@frederikhd/quiet';
 import { reactive } from 'vue';
 
 const values = reactive({ name: 'Leinen & Co.', email: 'hallo@leinen.example', prefix: 'ORD-', next: '01050' });

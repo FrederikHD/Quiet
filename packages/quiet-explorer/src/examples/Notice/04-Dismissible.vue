@@ -1,6 +1,6 @@
 <!-- dismissible adds a × that emits dismiss; remove the notice when it's pressed. -->
 <script setup lang="ts">
-import { QButton, QNotice } from 'quiet';
+import { QButton, QNotice } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const show = ref(true);

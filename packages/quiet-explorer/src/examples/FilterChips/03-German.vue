@@ -1,6 +1,6 @@
 <!-- strings translates the group name, the chip buttons ("Filter entfernen: Leinen") and Clear all. -->
 <script setup lang="ts">
-import { QFilterChips } from 'quiet';
+import { QFilterChips } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const strings = { label: 'Aktive Filter', remove: (label: string) => `Filter entfernen: ${label}`, clear: 'Alle löschen' };

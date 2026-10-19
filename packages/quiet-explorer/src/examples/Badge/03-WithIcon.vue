@@ -1,6 +1,6 @@
 <!-- An optional icon before the word. The word still carries the meaning. -->
 <script setup lang="ts">
-import { QBadge } from 'quiet';
+import { QBadge } from '@frederikhd/quiet';
 </script>
 
 <template>

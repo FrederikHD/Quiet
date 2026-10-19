@@ -1,6 +1,6 @@
 <!-- Units go in the suffix. Numbers are right-aligned with tabular figures so they line up. -->
 <script setup lang="ts">
-import { QField, QFieldGroup, QForm, QInput } from 'quiet';
+import { QField, QFieldGroup, QForm, QInput } from '@frederikhd/quiet';
 import { reactive } from 'vue';
 
 const values = reactive({ price: '59,00', weight: '0,4', stock: '24' });

@@ -1,5 +1,5 @@
 import { enableAutoUnmount, flushPromises, mount } from '@vue/test-utils';
-import { configure, QButton, QDialog, QPopover } from 'quiet';
+import { configure, QButton, QDialog, QPopover } from '@frederikhd/quiet';
 import { afterEach, describe, expect, it } from 'vitest';
 import { defineComponent, h, ref } from 'vue';
 

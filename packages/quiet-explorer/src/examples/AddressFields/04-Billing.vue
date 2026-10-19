@@ -1,6 +1,6 @@
 <!-- A billing address: billing autocomplete tokens, and the phone field left out with fields. -->
 <script setup lang="ts">
-import { QAddressFields, QForm, type Address } from 'quiet';
+import { QAddressFields, QForm, type Address } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const billing = ref<Address>({ country: 'AT', company: 'Leinenhaus GmbH' });

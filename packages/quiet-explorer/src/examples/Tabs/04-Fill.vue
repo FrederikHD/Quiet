@@ -1,6 +1,6 @@
 <!-- fill shares the width equally: a segmented choice in a narrow column or on a phone. -->
 <script setup lang="ts">
-import { QTabs } from 'quiet';
+import { QTabs } from '@frederikhd/quiet';
 </script>
 
 <template>

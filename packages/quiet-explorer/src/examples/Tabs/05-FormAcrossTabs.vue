@@ -1,6 +1,6 @@
 <!-- One Form around the tabs and one Save below them. Save with the email empty: the tab gets a marker and the summary link opens it. -->
 <script setup lang="ts">
-import { QButton, QField, QForm, QFormActions, QInput, QTabs, type FormError } from 'quiet';
+import { QButton, QField, QForm, QFormActions, QInput, QTabs, type FormError } from '@frederikhd/quiet';
 import { reactive, ref } from 'vue';
 
 const v = reactive({ name: 'Leinen & Co', email: '' });

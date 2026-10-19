@@ -1,6 +1,6 @@
 <!-- A Select in a Field for one choice from a short, known list. Options can be strings or { value, label }. -->
 <script setup lang="ts">
-import { QField, QSelect } from 'quiet';
+import { QField, QSelect } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const shipping = ref('standard');

@@ -1,6 +1,6 @@
 <!-- With filterable each bar is a toggle that shows only those reviews; press it again to show all. Levels without reviews are disabled. -->
 <script setup lang="ts">
-import { QRating, QReviewSummary } from 'quiet';
+import { QRating, QReviewSummary } from '@frederikhd/quiet';
 import { computed, ref } from 'vue';
 
 const reviews = [

@@ -1,4 +1,4 @@
-import { QProductCard } from 'quiet';
+import { QProductCard } from '@frederikhd/quiet';
 import { h } from 'vue';
 import { photo, swatchOf } from '../fixtures/pictures';
 import { defineStory } from './story';

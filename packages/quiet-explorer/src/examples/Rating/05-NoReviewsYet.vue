@@ -1,6 +1,6 @@
 <!-- Without reviews it says so; as a link it invites the first one. -->
 <script setup lang="ts">
-import { QRating } from 'quiet';
+import { QRating } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const log = ref('');

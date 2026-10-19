@@ -1,4 +1,4 @@
-import { QButton, QPopover } from 'quiet';
+import { QButton, QPopover } from '@frederikhd/quiet';
 import { h } from 'vue';
 import { defineStory } from './story';
 

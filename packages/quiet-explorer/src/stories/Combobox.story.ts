@@ -1,4 +1,4 @@
-import { QCombobox } from 'quiet';
+import { QCombobox } from '@frederikhd/quiet';
 import { defineStory } from './story';
 
 export default defineStory({

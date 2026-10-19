@@ -1,6 +1,6 @@
 <!-- aspect="square" for catalogues photographed square; match the ProductCards. -->
 <script setup lang="ts">
-import { QGallery } from 'quiet';
+import { QGallery } from '@frederikhd/quiet';
 import { photo } from '../../fixtures/pictures';
 
 const images = [

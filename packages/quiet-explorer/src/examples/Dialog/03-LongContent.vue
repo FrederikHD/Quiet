@@ -1,6 +1,6 @@
 <!-- size="lg" for reading. Long content scrolls inside the body while the title and the footer stay put. -->
 <script setup lang="ts">
-import { QButton, QDialog } from 'quiet';
+import { QButton, QDialog } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const open = ref(false);

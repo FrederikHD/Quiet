@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { configure, QTag } from 'quiet';
+import { configure, QTag } from '@frederikhd/quiet';
 import { afterEach, describe, expect, it } from 'vitest';
 import { h } from 'vue';
 

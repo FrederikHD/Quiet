@@ -1,6 +1,6 @@
 <!-- stack="late" keeps rows of short values, like length × width × height, in one row down to phone width. -->
 <script setup lang="ts">
-import { QField, QFieldGroup, QForm, QInput } from 'quiet';
+import { QField, QFieldGroup, QForm, QInput } from '@frederikhd/quiet';
 import { reactive } from 'vue';
 
 const values = reactive({ length: '30', width: '22', height: '4' });

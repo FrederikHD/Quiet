@@ -1,4 +1,4 @@
-import { QIcon } from 'quiet';
+import { QIcon } from '@frederikhd/quiet';
 import { defineStory } from './story';
 
 export default defineStory({

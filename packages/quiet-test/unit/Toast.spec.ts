@@ -1,5 +1,5 @@
 import { flushPromises, mount } from '@vue/test-utils';
-import { configure, dismissToast, QToaster, toast } from 'quiet';
+import { configure, dismissToast, QToaster, toast } from '@frederikhd/quiet';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 const toaster = () => document.querySelector('.q-toaster') as HTMLElement;

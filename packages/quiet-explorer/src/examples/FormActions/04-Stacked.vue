@@ -1,6 +1,6 @@
 <!-- Below 480px the buttons stack full width with the primary on top; checkout uses large buttons. -->
 <script setup lang="ts">
-import { QButton, QFormActions } from 'quiet';
+import { QButton, QFormActions } from '@frederikhd/quiet';
 </script>
 
 <template>

@@ -1,6 +1,6 @@
 <!-- connected joins parts that make one value into a single control. Each part keeps its own label. -->
 <script setup lang="ts">
-import { QField, QFieldGroup, QForm, QInput } from 'quiet';
+import { QField, QFieldGroup, QForm, QInput } from '@frederikhd/quiet';
 import { reactive } from 'vue';
 
 const values = reactive({ prefix: 'ORD-', next: '01050' });

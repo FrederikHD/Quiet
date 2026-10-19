@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { QIcon, QInput, QPage, iconNames, toast } from 'quiet';
+import { QIcon, QInput, QPage, iconNames, toast } from '@frederikhd/quiet';
 import { computed, ref } from 'vue';
 
 const query = ref('');

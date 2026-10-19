@@ -1,6 +1,6 @@
 <!-- In the back office's order view: inside a Card that has the heading, so :title="null"; the names link to the products. -->
 <script setup lang="ts">
-import { QCard, QOrderSummary } from 'quiet';
+import { QCard, QOrderSummary } from '@frederikhd/quiet';
 import { photo } from '../../fixtures/pictures';
 </script>
 

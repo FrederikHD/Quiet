@@ -1,6 +1,6 @@
 <!-- Every icon in the set, at md and sm. iconNames lists them in code. -->
 <script setup lang="ts">
-import { QIcon, iconNames } from 'quiet';
+import { QIcon, iconNames } from '@frederikhd/quiet';
 </script>
 
 <template>

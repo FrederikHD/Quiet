@@ -1,6 +1,6 @@
 <!-- Colour dots for a product's colours; the chosen name shows beside the label. Rust is sold out but still choosable. -->
 <script setup lang="ts">
-import { QRadio, QRadioGroup } from 'quiet';
+import { QRadio, QRadioGroup } from '@frederikhd/quiet';
 import { ref } from 'vue';
 import { swatchOf } from '../../fixtures/pictures';
 

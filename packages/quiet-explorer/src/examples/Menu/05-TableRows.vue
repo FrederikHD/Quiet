@@ -1,6 +1,6 @@
 <!-- In a dense list each row gets its own slim ⋯ menu, named after its row. -->
 <script setup lang="ts">
-import { QMenu } from 'quiet';
+import { QMenu } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const orders = ['#10530', '#10529', '#10528'];

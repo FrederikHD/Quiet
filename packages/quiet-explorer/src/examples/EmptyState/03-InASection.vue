@@ -1,6 +1,6 @@
 <!-- size="small" inside a section of a page, with the heading one level below the section's. -->
 <script setup lang="ts">
-import { QButton, QCard, QEmptyState } from 'quiet';
+import { QButton, QCard, QEmptyState } from '@frederikhd/quiet';
 </script>
 
 <template>

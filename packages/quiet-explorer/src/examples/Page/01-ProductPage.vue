@@ -1,6 +1,6 @@
 <!-- A product edit page: back link, status badge, record actions, and a side column for what people check rather than edit. -->
 <script setup lang="ts">
-import { QBadge, QButton, QCard, QField, QFieldGroup, QForm, QInput, QPage, QSelect } from 'quiet';
+import { QBadge, QButton, QCard, QField, QFieldGroup, QForm, QInput, QPage, QSelect } from '@frederikhd/quiet';
 import { reactive } from 'vue';
 
 const v = reactive({ title: 'Linen shirt, blue', price: '59,00', compare: '', status: 'Active', vendor: 'Leinenweberei Rhön' });

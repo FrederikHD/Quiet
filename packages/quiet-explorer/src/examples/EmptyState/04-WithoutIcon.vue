@@ -1,6 +1,6 @@
 <!-- :icon="null" for a quiet, expected empty state, such as a dashboard card early in the day. -->
 <script setup lang="ts">
-import { QCard, QEmptyState } from 'quiet';
+import { QCard, QEmptyState } from '@frederikhd/quiet';
 </script>
 
 <template>

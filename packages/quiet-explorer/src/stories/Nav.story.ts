@@ -1,4 +1,4 @@
-import { QNav } from 'quiet';
+import { QNav } from '@frederikhd/quiet';
 import { defineStory } from './story';
 
 export default defineStory({

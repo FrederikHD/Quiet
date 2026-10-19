@@ -1,4 +1,4 @@
-import { QQuantityStepper } from 'quiet';
+import { QQuantityStepper } from '@frederikhd/quiet';
 import { defineStory } from './story';
 
 export default defineStory({

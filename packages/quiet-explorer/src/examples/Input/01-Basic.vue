@@ -1,6 +1,6 @@
 <!-- An Input inside a Field, which gives it its label and hint. -->
 <script setup lang="ts">
-import { QField, QInput } from 'quiet';
+import { QField, QInput } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const title = ref('');

@@ -1,6 +1,6 @@
 <!-- The action slot sits under the bars, usually for "Write a review". -->
 <script setup lang="ts">
-import { QButton, QReviewSummary } from 'quiet';
+import { QButton, QReviewSummary } from '@frederikhd/quiet';
 </script>
 
 <template>

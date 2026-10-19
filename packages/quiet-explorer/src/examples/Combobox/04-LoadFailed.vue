@@ -1,6 +1,6 @@
 <!-- When search fails, the status line says so and offers Try again. Here the first request fails and the retry succeeds. -->
 <script setup lang="ts">
-import { QCombobox, QField, type ComboboxOption } from 'quiet';
+import { QCombobox, QField, type ComboboxOption } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const suppliers: ComboboxOption[] = [

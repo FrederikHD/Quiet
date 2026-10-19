@@ -1,6 +1,6 @@
 <!-- The default: the range, rows per page, previous and next. It sits in a Table's footer. -->
 <script setup lang="ts">
-import { QPagination } from 'quiet';
+import { QPagination } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const page = ref(1);

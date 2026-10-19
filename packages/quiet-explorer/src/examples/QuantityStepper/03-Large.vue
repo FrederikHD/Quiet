@@ -1,6 +1,6 @@
 <!-- size="large" (48px) sits next to the Add to cart button on the product page. -->
 <script setup lang="ts">
-import { QButton, QQuantityStepper } from 'quiet';
+import { QButton, QQuantityStepper } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const quantity = ref(1);

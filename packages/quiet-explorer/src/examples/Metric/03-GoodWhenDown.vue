@@ -1,6 +1,6 @@
 <!-- For returns, refunds and cancellations fewer is better: good-when="down" shows the fall in green. -->
 <script setup lang="ts">
-import { QCard, QMetric } from 'quiet';
+import { QCard, QMetric } from '@frederikhd/quiet';
 </script>
 
 <template>

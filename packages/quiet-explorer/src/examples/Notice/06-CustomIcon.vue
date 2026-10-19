@@ -1,6 +1,6 @@
 <!-- icon replaces the tone's own icon when another one says it better. -->
 <script setup lang="ts">
-import { QNotice } from 'quiet';
+import { QNotice } from '@frederikhd/quiet';
 </script>
 
 <template>

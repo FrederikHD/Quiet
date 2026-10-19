@@ -1,6 +1,6 @@
 <!-- mobile="cards": under 640px of table width each row becomes a card, with Select all and a Sort by menu above. -->
 <script setup lang="ts">
-import { QBadge, QTable, money, type BadgeTone } from 'quiet';
+import { QBadge, QTable, money, type BadgeTone } from '@frederikhd/quiet';
 
 const orders = [
   { id: 10500, customer: 'Anna Schmidt', status: 'Unfulfilled', items: 2, total: 118 },

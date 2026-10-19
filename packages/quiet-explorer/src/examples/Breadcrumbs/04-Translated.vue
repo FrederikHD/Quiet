@@ -1,6 +1,6 @@
 <!-- A German shop: strings names the landmark, navigate hands the clicks to your router. -->
 <script setup lang="ts">
-import { QBreadcrumbs } from 'quiet';
+import { QBreadcrumbs } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const went = ref('');

@@ -1,6 +1,6 @@
 <!-- Secondary is the default; primary is the one action the view exists for; ghost, danger and danger-outline for the rest. -->
 <script setup lang="ts">
-import { QButton } from 'quiet';
+import { QButton } from '@frederikhd/quiet';
 </script>
 
 <template>

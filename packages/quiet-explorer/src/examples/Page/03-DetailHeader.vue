@@ -1,6 +1,6 @@
 <!-- A detail page's header: the back link as a button for a client-side router, badges after the title, a rich subtitle. -->
 <script setup lang="ts">
-import { QBadge, QButton, QPage } from 'quiet';
+import { QBadge, QButton, QPage } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const went = ref('');

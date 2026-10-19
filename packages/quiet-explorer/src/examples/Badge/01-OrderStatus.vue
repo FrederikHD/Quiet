@@ -1,6 +1,6 @@
 <!-- One badge per fact: an order shows its payment status and its fulfilment status side by side. -->
 <script setup lang="ts">
-import { QBadge } from 'quiet';
+import { QBadge } from '@frederikhd/quiet';
 </script>
 
 <template>

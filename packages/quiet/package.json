@@ -1,7 +1,27 @@
 {
-  "name": "quiet",
+  "name": "@frederikhd/quiet",
   "version": "0.1.0",
-  "description": "Quiet design system \u2014 Vue 3 components, tokens and styles for commerce storefronts and back offices.",
+  "description": "Quiet design system — Vue 3 components, tokens and styles for commerce storefronts and back offices.",
+  "license": "MIT",
+  "author": "FrederikHD (https://github.com/FrederikHD)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FrederikHD/Quiet.git",
+    "directory": "packages/quiet"
+  },
+  "homepage": "https://frederikhd.github.io/Quiet/",
+  "bugs": {
+    "url": "https://github.com/FrederikHD/Quiet/issues"
+  },
+  "keywords": [
+    "vue",
+    "vue3",
+    "design-system",
+    "components",
+    "ui",
+    "commerce",
+    "accessibility"
+  ],
   "type": "module",
   "sideEffects": [
     "*.css",
@@ -19,18 +39,17 @@
     "./tokens.json": "./src/tokens/tokens.json",
     "./tokens.css": "./src/styles/tokens.css",
     "./global": {
-      "types": "./src/global-components.d.ts"
+      "types": "./dist/types/global.d.ts"
     }
   },
   "files": [
     "dist",
     "src/tokens/tokens.json",
-    "src/styles/tokens.css",
-    "src/global-components.d.ts"
+    "src/styles/tokens.css"
   ],
   "scripts": {
     "tokens": "node scripts/build-tokens.mjs",
-    "build": "npm run tokens && vite build && vue-tsc -p tsconfig.build.json",
+    "build": "npm run tokens && vite build && vue-tsc -p tsconfig.build.json && node scripts/copy-global-types.mjs",
     "typecheck": "vue-tsc -p tsconfig.json --noEmit"
   },
   "peerDependencies": {
@@ -43,5 +62,9 @@
     "vite": "^8.3.4",
     "vue": "^3.5.44",
     "vue-tsc": "^3.3.13"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   }
 }

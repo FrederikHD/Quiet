@@ -1,6 +1,6 @@
 <!-- Limit the countries to where you deliver; with none chosen yet, the select asks for one. -->
 <script setup lang="ts">
-import { QAddressFields, QForm, type Address } from 'quiet';
+import { QAddressFields, QForm, type Address } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const countries = [

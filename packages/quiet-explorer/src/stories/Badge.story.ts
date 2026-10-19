@@ -1,4 +1,4 @@
-import { QBadge } from 'quiet';
+import { QBadge } from '@frederikhd/quiet';
 import { defineStory } from './story';
 
 export default defineStory({

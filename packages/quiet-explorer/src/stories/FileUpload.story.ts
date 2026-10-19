@@ -1,4 +1,4 @@
-import { QFileUpload } from 'quiet';
+import { QFileUpload } from '@frederikhd/quiet';
 import { defineStory } from './story';
 
 export default defineStory({

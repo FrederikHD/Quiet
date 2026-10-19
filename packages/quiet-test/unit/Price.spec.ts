@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { QPrice, configure } from 'quiet';
+import { QPrice, configure } from '@frederikhd/quiet';
 import { beforeAll, describe, expect, it } from 'vitest';
 import { h } from 'vue';
 

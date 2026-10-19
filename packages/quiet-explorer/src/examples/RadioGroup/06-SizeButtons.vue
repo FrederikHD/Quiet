@@ -1,6 +1,6 @@
 <!-- Size tiles on the product page. A sold-out size can still be chosen, and the button offers "Notify me" instead. -->
 <script setup lang="ts">
-import { QButton, QForm, QFormActions, QRadio, QRadioGroup } from 'quiet';
+import { QButton, QForm, QFormActions, QRadio, QRadioGroup } from '@frederikhd/quiet';
 import { computed, ref } from 'vue';
 
 const soldOut = ['XS', 'XL'];

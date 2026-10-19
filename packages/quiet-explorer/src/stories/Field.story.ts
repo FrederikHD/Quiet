@@ -1,4 +1,4 @@
-import { QField, QInput } from 'quiet';
+import { QField, QInput } from '@frederikhd/quiet';
 import { h } from 'vue';
 import { defineStory } from './story';
 

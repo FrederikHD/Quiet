@@ -1,6 +1,6 @@
 <!-- In compact density the circle is 16px and the rows 32px tall, for dense back-office screens. -->
 <script setup lang="ts">
-import { QForm, QRadio, QRadioGroup } from 'quiet';
+import { QForm, QRadio, QRadioGroup } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const format = ref('csv');

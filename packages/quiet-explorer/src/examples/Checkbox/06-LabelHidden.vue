@@ -1,6 +1,6 @@
 <!-- label-hidden keeps the label for screen readers only, where the row makes it obvious. Table's selectable sets this up for you. -->
 <script setup lang="ts">
-import { QCheckbox } from 'quiet';
+import { QCheckbox } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const orders = [

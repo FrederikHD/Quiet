@@ -1,6 +1,6 @@
 <!-- One file only: the button says "Choose a file", and a new file replaces the old one. -->
 <script setup lang="ts">
-import { QField, QFileUpload, type FileUploadItem } from 'quiet';
+import { QField, QFileUpload, type FileUploadItem } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const file = ref<FileUploadItem[]>([]);

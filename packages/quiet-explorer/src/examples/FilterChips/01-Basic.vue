@@ -1,6 +1,6 @@
 <!-- The filters in use above the results; one tap removes one, and Clear all appears from two chips up. -->
 <script setup lang="ts">
-import { QFilterChips, type FilterChip } from 'quiet';
+import { QFilterChips, type FilterChip } from '@frederikhd/quiet';
 import { ref } from 'vue';
 import { swatchOf } from '../../fixtures/pictures';
 

@@ -1,6 +1,6 @@
 <!-- A problem with the combination goes on the group: its error marks every field in it and is read with each one. -->
 <script setup lang="ts">
-import { QField, QFieldGroup, QForm, QInput } from 'quiet';
+import { QField, QFieldGroup, QForm, QInput } from '@frederikhd/quiet';
 import { reactive } from 'vue';
 
 const values = reactive({ starts: '20.10.2026', ends: '12.10.2026' });

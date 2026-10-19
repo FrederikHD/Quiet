@@ -1,6 +1,6 @@
 <!-- aspect="square" for goods photographed square. Keep one shape per catalogue. -->
 <script setup lang="ts">
-import { QProductCard } from 'quiet';
+import { QProductCard } from '@frederikhd/quiet';
 import { photo } from '../../fixtures/pictures';
 </script>
 

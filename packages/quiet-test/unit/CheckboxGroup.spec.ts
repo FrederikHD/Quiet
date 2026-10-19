@@ -1,5 +1,5 @@
-import { mount } from '@vue/test-utils';
-import { QCheckbox, QCheckboxGroup, QForm } from 'quiet';
+import { mount, type VueWrapper } from '@vue/test-utils';
+import { QCheckbox, QCheckboxGroup, QForm } from '@frederikhd/quiet';
 import { describe, expect, it } from 'vitest';
 import { h, nextTick } from 'vue';
 
@@ -38,8 +38,8 @@ describe('QCheckboxGroup', () => {
   });
 
   it('ticks from v-model and emits the new array', async () => {
-    const w = mount(QCheckboxGroup, {
-      props: { label: 'Sell on', modelValue: ['pos'], 'onUpdate:modelValue': (v: string[]) => w.setProps({ modelValue: v }) },
+    const w: VueWrapper = mount(QCheckboxGroup, {
+      props: { label: 'Sell on', modelValue: ['pos'], 'onUpdate:modelValue': (v?: string[]) => w.setProps({ modelValue: v }) },
       slots: { default: options },
     });
     const [web, pos] = w.findAll('input');

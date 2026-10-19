@@ -1,6 +1,6 @@
 <!-- width fits the control to the expected answer: xs for a house number, s for a postcode, m for a name, l for an email. -->
 <script setup lang="ts">
-import { QField, QInput } from 'quiet';
+import { QField, QInput } from '@frederikhd/quiet';
 import { reactive } from 'vue';
 
 const values = reactive({ number: '12', postcode: '10115', name: 'Anna Schmidt', email: 'anna.schmidt@example.com' });

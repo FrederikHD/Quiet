@@ -1,6 +1,6 @@
 <!-- With maxFiles reached, the add button is disabled until an image is removed. -->
 <script setup lang="ts">
-import { QField, QFileUpload, type FileUploadItem } from 'quiet';
+import { QField, QFileUpload, type FileUploadItem } from '@frederikhd/quiet';
 import { ref } from 'vue';
 import { photo } from '../../fixtures/pictures';
 

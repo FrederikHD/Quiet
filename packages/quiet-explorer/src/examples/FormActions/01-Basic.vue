@@ -1,6 +1,6 @@
 <!-- The row that ends a form: Cancel, then the primary Save last, on the right. -->
 <script setup lang="ts">
-import { QButton, QFormActions } from 'quiet';
+import { QButton, QFormActions } from '@frederikhd/quiet';
 </script>
 
 <template>

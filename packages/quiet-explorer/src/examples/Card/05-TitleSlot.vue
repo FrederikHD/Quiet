@@ -1,6 +1,6 @@
 <!-- The #title slot, when the heading needs more than text: a status badge beside it. -->
 <script setup lang="ts">
-import { QBadge, QCard } from 'quiet';
+import { QBadge, QCard } from '@frederikhd/quiet';
 </script>
 
 <template>

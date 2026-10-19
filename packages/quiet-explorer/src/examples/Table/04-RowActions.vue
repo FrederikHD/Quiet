@@ -1,6 +1,6 @@
 <!-- One or two slim ghost icon buttons in the last column, each named after its row. -->
 <script setup lang="ts">
-import { QButton, QTable } from 'quiet';
+import { QButton, QTable } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const discounts = [

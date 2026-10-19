@@ -2,7 +2,7 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "types": ["node", "vite/client"],
-    "paths": { "quiet": ["../quiet/src/index.ts"] }
+    "paths": { "@frederikhd/quiet": ["../quiet/src/index.ts"] }
   },
   "include": ["unit/**/*.ts", "e2e/**/*.ts", "*.ts"]
 }

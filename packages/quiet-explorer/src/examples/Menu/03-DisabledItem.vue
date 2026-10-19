@@ -1,6 +1,6 @@
 <!-- An item that can't be used right now stays in place, dimmed, and says why. -->
 <script setup lang="ts">
-import { QMenu } from 'quiet';
+import { QMenu } from '@frederikhd/quiet';
 </script>
 
 <template>

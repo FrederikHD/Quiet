@@ -1,4 +1,4 @@
-import { QSelect } from 'quiet';
+import { QSelect } from '@frederikhd/quiet';
 import { defineStory } from './story';
 
 export default defineStory({

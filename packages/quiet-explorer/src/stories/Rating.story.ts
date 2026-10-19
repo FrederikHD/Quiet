@@ -1,4 +1,4 @@
-import { QRating } from 'quiet';
+import { QRating } from '@frederikhd/quiet';
 import { defineStory } from './story';
 
 export default defineStory({

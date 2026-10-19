@@ -1,6 +1,6 @@
 <!-- The figure, how it moved and what it's compared with. Up is good, so it shows in green with an arrow. -->
 <script setup lang="ts">
-import { QCard, QMetric, money } from 'quiet';
+import { QCard, QMetric, money } from '@frederikhd/quiet';
 </script>
 
 <template>

@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { QBadge } from 'quiet';
+import { QBadge } from '@frederikhd/quiet';
 import { describe, expect, it } from 'vitest';
 
 describe('QBadge', () => {

@@ -1,4 +1,4 @@
-import { QCheckbox } from 'quiet';
+import { QCheckbox } from '@frederikhd/quiet';
 import { defineStory } from './story';
 
 export default defineStory({

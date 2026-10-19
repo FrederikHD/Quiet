@@ -1,6 +1,6 @@
 <!-- A long page name ends in "…" instead of pushing the trail onto a second line. -->
 <script setup lang="ts">
-import { QBreadcrumbs } from 'quiet';
+import { QBreadcrumbs } from '@frederikhd/quiet';
 </script>
 
 <template>

@@ -1,6 +1,6 @@
 <!-- A Textarea for longer text, four lines high by default. People can drag the corner to make it taller. -->
 <script setup lang="ts">
-import { QField, QTextarea } from 'quiet';
+import { QField, QTextarea } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const note = ref('');

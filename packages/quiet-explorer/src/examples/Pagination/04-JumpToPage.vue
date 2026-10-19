@@ -1,6 +1,6 @@
 <!-- The page number becomes a field: type a number and press Enter. Out-of-range numbers snap to the first or last page. -->
 <script setup lang="ts">
-import { QPagination } from 'quiet';
+import { QPagination } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const page = ref(12);

@@ -1,6 +1,6 @@
 <!-- Exactly one answer out of a few, all visible; preselect the most common one. -->
 <script setup lang="ts">
-import { QRadio, QRadioGroup } from 'quiet';
+import { QRadio, QRadioGroup } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const status = ref('active');

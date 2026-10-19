@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { QField, QFieldGroup, QForm, QInput } from 'quiet';
+import { QField, QFieldGroup, QForm, QInput } from '@frederikhd/quiet';
 import { describe, expect, it, vi } from 'vitest';
 import { h, nextTick } from 'vue';
 

@@ -1,6 +1,6 @@
 <!-- Compact rows with thumbnails. On a phone it scrolls sideways with the product pinned; max-height keeps the header in view. -->
 <script setup lang="ts">
-import { QBadge, QTable, money } from 'quiet';
+import { QBadge, QTable, money } from '@frederikhd/quiet';
 import { tile } from '../../fixtures/pictures';
 
 const products = ['Linen shirt, blue', 'Linen trousers, sand', 'Linen dress, olive', 'Linen apron, rust', 'Linen napkins (4)', 'Linen bed sheet, sage', 'Linen tea towel', 'Linen tote, natural'].map(

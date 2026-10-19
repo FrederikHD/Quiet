@@ -1,6 +1,6 @@
 <!-- For a control that isn't Quiet's, bind the slot's controlAttrs to get the id, aria-describedby and aria-required. -->
 <script setup lang="ts">
-import { QField } from 'quiet';
+import { QField } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const date = ref('2026-10-24');

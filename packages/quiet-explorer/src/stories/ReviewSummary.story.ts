@@ -1,4 +1,4 @@
-import { QReviewSummary } from 'quiet';
+import { QReviewSummary } from '@frederikhd/quiet';
 import { h } from 'vue';
 import { defineStory } from './story';
 

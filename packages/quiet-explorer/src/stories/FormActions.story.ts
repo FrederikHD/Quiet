@@ -1,4 +1,4 @@
-import { QButton, QFormActions } from 'quiet';
+import { QButton, QFormActions } from '@frederikhd/quiet';
 import { h } from 'vue';
 import { defineStory } from './story';
 

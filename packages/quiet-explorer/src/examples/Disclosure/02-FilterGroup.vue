@@ -1,6 +1,6 @@
 <!-- A filter group in the shop: meta says what's chosen, so the group still tells it when closed. -->
 <script setup lang="ts">
-import { QCheckbox, QCheckboxGroup, QDisclosure } from 'quiet';
+import { QCheckbox, QCheckboxGroup, QDisclosure } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const sizes = ref<string[]>(['M']);

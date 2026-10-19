@@ -1,6 +1,6 @@
 <!-- On the product page: large, with the unit price German law asks for and the VAT note. -->
 <script setup lang="ts">
-import { QPrice } from 'quiet';
+import { QPrice } from '@frederikhd/quiet';
 </script>
 
 <template>

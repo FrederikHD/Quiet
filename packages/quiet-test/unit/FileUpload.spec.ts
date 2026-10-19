@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { URL as NodeURL } from 'node:url';
 import { mount } from '@vue/test-utils';
-import { QField, QFileUpload, formatSize, type FileUploadItem } from 'quiet';
+import { QField, QFileUpload, formatSize, type FileUploadItem } from '@frederikhd/quiet';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { h, nextTick } from 'vue';
 

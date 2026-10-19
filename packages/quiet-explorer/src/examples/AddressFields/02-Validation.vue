@@ -1,6 +1,6 @@
 <!-- validateAddress checks missing parts, the postcode's shape and the house number. Press Continue empty. -->
 <script setup lang="ts">
-import { QAddressFields, QButton, QForm, QFormActions, QFormSection, validateAddress, type Address } from 'quiet';
+import { QAddressFields, QButton, QForm, QFormActions, QFormSection, validateAddress, type Address } from '@frederikhd/quiet';
 import { computed, ref } from 'vue';
 
 const address = ref<Address>({ country: 'DE', line1: 'Torstraße', postalCode: '1011' });

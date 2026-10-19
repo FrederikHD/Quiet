@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // Every token, read from quiet/src/tokens/tokens.json — the same file tokens.css is generated from.
 import tokens from '@quiet/src/tokens/tokens.json';
-import { QCard, QPage, QTable } from 'quiet';
+import { QCard, QPage, QTable } from '@frederikhd/quiet';
 
 interface Tok {
   name: string;

@@ -1,6 +1,6 @@
 <!-- Several cards per row with columns; each stays at least 180px wide, so phones get fewer per row. -->
 <script setup lang="ts">
-import { QCheckbox, QCheckboxGroup } from 'quiet';
+import { QCheckbox, QCheckboxGroup } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const channels = ref<string[]>(['web', 'pos']);

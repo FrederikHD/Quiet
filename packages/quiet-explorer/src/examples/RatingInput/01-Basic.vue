@@ -1,6 +1,6 @@
 <!-- Five stars to pick from: hover previews the level, and ← → choose like any radio group. -->
 <script setup lang="ts">
-import { QRatingInput } from 'quiet';
+import { QRatingInput } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const stars = ref(4);

@@ -1,6 +1,6 @@
 <!-- size="small" for side columns and dense dashboards. -->
 <script setup lang="ts">
-import { QCard, QMetric, money } from 'quiet';
+import { QCard, QMetric, money } from '@frederikhd/quiet';
 </script>
 
 <template>

@@ -1,6 +1,6 @@
 <!-- A colour filter with swatches; the meta lists the chosen colours. -->
 <script setup lang="ts">
-import { QCheckbox, QCheckboxGroup, QDisclosure } from 'quiet';
+import { QCheckbox, QCheckboxGroup, QDisclosure } from '@frederikhd/quiet';
 import { ref } from 'vue';
 import { COLOURS, swatchOf } from '../../fixtures/pictures';
 

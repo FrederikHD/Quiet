@@ -1,6 +1,6 @@
 <!-- The shop's search: collections and products as you type, and "Search for “…”" always last. Try "linen" or "navy". -->
 <script setup lang="ts">
-import { QSearchBox, money, type SearchSuggestionGroup } from 'quiet';
+import { QSearchBox, money, type SearchSuggestionGroup } from '@frederikhd/quiet';
 import { computed, ref } from 'vue';
 import { photo } from '../../fixtures/pictures';
 

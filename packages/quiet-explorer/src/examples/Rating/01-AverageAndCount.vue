@@ -1,6 +1,6 @@
 <!-- The average as stars and a number, with the number of reviews behind it. -->
 <script setup lang="ts">
-import { QRating } from 'quiet';
+import { QRating } from '@frederikhd/quiet';
 </script>
 
 <template>

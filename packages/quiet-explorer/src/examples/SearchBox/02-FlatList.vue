@@ -1,6 +1,6 @@
 <!-- A flat list without group headings: finding an order in the back office by number or customer. -->
 <script setup lang="ts">
-import { QSearchBox, type SearchSuggestion } from 'quiet';
+import { QSearchBox, type SearchSuggestion } from '@frederikhd/quiet';
 import { computed, ref } from 'vue';
 
 const ORDERS = [

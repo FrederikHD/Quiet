@@ -1,6 +1,6 @@
 <!-- In the shop: real links that can be bookmarked and crawled, a larger size, centred, without the range. -->
 <script setup lang="ts">
-import { QPagination } from 'quiet';
+import { QPagination } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const page = ref(3);

@@ -1,6 +1,6 @@
 <!-- Disabled until the customer can review, with the reason in the hint. -->
 <script setup lang="ts">
-import { QRatingInput } from 'quiet';
+import { QRatingInput } from '@frederikhd/quiet';
 </script>
 
 <template>

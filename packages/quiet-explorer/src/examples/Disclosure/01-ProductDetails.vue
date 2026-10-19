@@ -1,6 +1,6 @@
 <!-- Stacked disclosures form an accordion for product details; each opens on its own. -->
 <script setup lang="ts">
-import { QDisclosure } from 'quiet';
+import { QDisclosure } from '@frederikhd/quiet';
 </script>
 
 <template>

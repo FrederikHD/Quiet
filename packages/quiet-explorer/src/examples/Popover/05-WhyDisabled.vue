@@ -1,6 +1,6 @@
 <!-- A disabled button can't explain itself, so a tip next to it says what is missing. -->
 <script setup lang="ts">
-import { QButton, QPopover } from 'quiet';
+import { QButton, QPopover } from '@frederikhd/quiet';
 </script>
 
 <template>

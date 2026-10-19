@@ -1,4 +1,4 @@
-import { QAppShell, QNav } from 'quiet';
+import { QAppShell, QNav } from '@frederikhd/quiet';
 import { h } from 'vue';
 import { defineStory } from './story';
 

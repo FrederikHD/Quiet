@@ -1,4 +1,4 @@
-import { QTabs } from 'quiet';
+import { QTabs } from '@frederikhd/quiet';
 import { defineStory } from './story';
 
 export default defineStory({

@@ -1,6 +1,6 @@
 <!-- The average, the stars, the count and one bar per star level. -->
 <script setup lang="ts">
-import { QReviewSummary } from 'quiet';
+import { QReviewSummary } from '@frederikhd/quiet';
 </script>
 
 <template>

@@ -1,4 +1,4 @@
-import { QAddressFields } from 'quiet';
+import { QAddressFields } from '@frederikhd/quiet';
 import { defineStory } from './story';
 
 export default defineStory({

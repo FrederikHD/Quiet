@@ -1,5 +1,5 @@
-import { mount } from '@vue/test-utils';
-import { QForm, QRatingInput } from 'quiet';
+import { mount, type VueWrapper } from '@vue/test-utils';
+import { QForm, QRatingInput } from '@frederikhd/quiet';
 import { describe, expect, it } from 'vitest';
 import { h, nextTick } from 'vue';
 
@@ -21,7 +21,7 @@ describe('QRatingInput', () => {
   });
 
   it('follows v-model and emits the chosen star', async () => {
-    const w = mount(QRatingInput, { props: { modelValue: 2, 'onUpdate:modelValue': (v: number) => w.setProps({ modelValue: v }) } });
+    const w: VueWrapper = mount(QRatingInput, { props: { modelValue: 2, 'onUpdate:modelValue': (v?: number) => w.setProps({ modelValue: v }) } });
     expect(checked(w)).toBe(2);
     expect(w.findAll('.q-rinput__star.is-on')).toHaveLength(2);
     expect(w.get('.q-rinput__word').text()).toBe('Fair');
@@ -55,7 +55,7 @@ describe('QRatingInput', () => {
     const ids = `${w.get('.q-field__msg').attributes('id')} ${w.get('.q-field__hint').attributes('id')}`;
     for (const i of inputs) expect(i.attributes('aria-describedby')).toBe(ids);
     expect(w.findAll('.q-rinput__star.is-invalid')).toHaveLength(5);
-    expect(w.get('.q-field__req').exists()).toBe(true);
+    expect(w.find('.q-field__req').exists()).toBe(true);
   });
 
   it('puts its id on the chosen star, or the first', async () => {

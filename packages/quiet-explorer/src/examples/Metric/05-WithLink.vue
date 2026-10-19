@@ -1,6 +1,6 @@
 <!-- The default slot leads to the list behind the number. -->
 <script setup lang="ts">
-import { QCard, QMetric } from 'quiet';
+import { QCard, QMetric } from '@frederikhd/quiet';
 </script>
 
 <template>

@@ -1,6 +1,6 @@
 <!-- Save the empty form: the summary at the top lists each error and links to its field, and focus moves to it. -->
 <script setup lang="ts">
-import { QButton, QField, QForm, QFormActions, QInput, type FormError } from 'quiet';
+import { QButton, QField, QForm, QFormActions, QInput, type FormError } from '@frederikhd/quiet';
 import { reactive, ref } from 'vue';
 
 const values = reactive({ title: '', price: '' });

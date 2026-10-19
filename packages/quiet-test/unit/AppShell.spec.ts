@@ -1,5 +1,5 @@
 import { enableAutoUnmount, flushPromises, mount } from '@vue/test-utils';
-import { QAppShell, QNav } from 'quiet';
+import { QAppShell, QNav } from '@frederikhd/quiet';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { h, nextTick } from 'vue';
 

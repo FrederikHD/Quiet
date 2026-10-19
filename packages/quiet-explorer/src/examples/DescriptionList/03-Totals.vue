@@ -1,6 +1,6 @@
 <!-- The inline layout pushes the value to the right, for totals; the emphasis item gets a rule above and semibold type. -->
 <script setup lang="ts">
-import { QCard, QDescriptionList } from 'quiet';
+import { QCard, QDescriptionList } from '@frederikhd/quiet';
 </script>
 
 <template>

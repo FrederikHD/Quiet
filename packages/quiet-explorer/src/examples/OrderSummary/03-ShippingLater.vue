@@ -1,6 +1,6 @@
 <!-- Before the shipping method is chosen, a row without an amount shows a note; 0 would read "Free". -->
 <script setup lang="ts">
-import { QOrderSummary } from 'quiet';
+import { QOrderSummary } from '@frederikhd/quiet';
 import { photo } from '../../fixtures/pictures';
 </script>
 

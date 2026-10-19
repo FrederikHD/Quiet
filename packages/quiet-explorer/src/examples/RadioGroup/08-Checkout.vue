@@ -1,6 +1,6 @@
 <!-- Delivery and payment in checkout. Place the order without choosing to see the error summary link to each group. -->
 <script setup lang="ts">
-import { QButton, QForm, QFormActions, QIcon, QRadio, QRadioGroup, type FormError } from 'quiet';
+import { QButton, QForm, QFormActions, QIcon, QRadio, QRadioGroup, type FormError } from '@frederikhd/quiet';
 import { computed, ref } from 'vue';
 
 const ship = ref<string | null>(null);

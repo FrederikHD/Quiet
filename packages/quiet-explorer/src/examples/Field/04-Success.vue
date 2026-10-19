@@ -1,6 +1,6 @@
 <!-- Success confirms a check that ran and passed, such as an address lookup. -->
 <script setup lang="ts">
-import { QField, QInput } from 'quiet';
+import { QField, QInput } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const postcode = ref('10115');

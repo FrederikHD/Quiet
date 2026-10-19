@@ -1,5 +1,5 @@
 // Types for globally registered components (app.use(Quiet)), so templates type-check <QButton> without imports.
-// Add to your tsconfig: "types": ["quiet/global"].
+// Add to your tsconfig: "types": ["@frederikhd/quiet/global"].
 import type * as Q from './components';
 
 declare module 'vue' {

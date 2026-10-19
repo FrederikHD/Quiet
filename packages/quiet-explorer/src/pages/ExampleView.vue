@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { QButton, QCard } from 'quiet';
+import { QButton, QCard } from '@frederikhd/quiet';
 import { ref } from 'vue';
 import type { Example } from '../catalog';
 import CodeBlock from './CodeBlock.vue';

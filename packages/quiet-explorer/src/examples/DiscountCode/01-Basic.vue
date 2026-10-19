@@ -1,6 +1,6 @@
 <!-- Apply a code (try LINEN10 or FREESHIP, or a wrong one); applied codes show as tags you can remove. -->
 <script setup lang="ts">
-import { QDiscountCode } from 'quiet';
+import { QDiscountCode } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const OFFERS: Record<string, string> = { LINEN10: '−10 %', FREESHIP: 'Free shipping' };

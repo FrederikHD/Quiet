@@ -1,6 +1,6 @@
 <!-- A colour dot for a colour filter; an icon and a detail for an applied discount code. -->
 <script setup lang="ts">
-import { QTag } from 'quiet';
+import { QTag } from '@frederikhd/quiet';
 import { swatchOf } from '../../fixtures/pictures';
 </script>
 

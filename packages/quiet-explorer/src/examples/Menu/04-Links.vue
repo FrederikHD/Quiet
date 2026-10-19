@@ -1,6 +1,6 @@
 <!-- Items with href are links: they go somewhere instead of doing something. -->
 <script setup lang="ts">
-import { QButton, QMenu } from 'quiet';
+import { QButton, QMenu } from '@frederikhd/quiet';
 </script>
 
 <template>

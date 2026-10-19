@@ -1,6 +1,6 @@
 <!-- The #empty slot says why there are no rows and what to do about it. -->
 <script setup lang="ts">
-import { QTable } from 'quiet';
+import { QTable } from '@frederikhd/quiet';
 </script>
 
 <template>

@@ -1,6 +1,6 @@
 <!-- Bordered tiles with a description and a price: extras the customer adds to an order. -->
 <script setup lang="ts">
-import { QCheckbox, QCheckboxGroup } from 'quiet';
+import { QCheckbox, QCheckboxGroup } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const extras = ref<string[]>(['wrap']);

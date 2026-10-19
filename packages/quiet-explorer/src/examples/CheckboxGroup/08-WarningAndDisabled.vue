@@ -1,6 +1,6 @@
 <!-- A warning only informs and leaves the boxes as they are; a disabled group says why in its hint. -->
 <script setup lang="ts">
-import { QCheckbox, QCheckboxGroup, QForm } from 'quiet';
+import { QCheckbox, QCheckboxGroup, QForm } from '@frederikhd/quiet';
 </script>
 
 <template>

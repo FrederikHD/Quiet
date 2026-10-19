@@ -1,6 +1,6 @@
 <!-- maxlength adds a counter; near the limit it changes to "8 characters left". -->
 <script setup lang="ts">
-import { QField, QTextarea } from 'quiet';
+import { QField, QTextarea } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const message = ref('Alles Gute zum Geburtstag, Lea! Viel Freude mit dem');

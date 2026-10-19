@@ -1,5 +1,5 @@
-import { mount } from '@vue/test-utils';
-import { QForm, QRadio, QRadioGroup } from 'quiet';
+import { mount, type VueWrapper } from '@vue/test-utils';
+import { QForm, QRadio, QRadioGroup } from '@frederikhd/quiet';
 import { describe, expect, it, vi } from 'vitest';
 import { h, nextTick } from 'vue';
 
@@ -33,8 +33,8 @@ describe('QRadioGroup', () => {
   });
 
   it('follows v-model and emits the chosen value', async () => {
-    const w = mount(QRadioGroup, {
-      props: { label: 'Delivery', modelValue: 'std', 'onUpdate:modelValue': (v: string | null) => w.setProps({ modelValue: v }) },
+    const w: VueWrapper = mount(QRadioGroup, {
+      props: { label: 'Delivery', modelValue: 'std', 'onUpdate:modelValue': (v?: string | null) => w.setProps({ modelValue: v }) },
       slots: { default: options },
     });
     expect(checked(w)).toEqual([true, false, false]);

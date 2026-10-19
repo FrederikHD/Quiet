@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { QCheckbox, QCheckboxGroup, QField } from 'quiet';
+import { QCheckbox, QCheckboxGroup, QField } from '@frederikhd/quiet';
 import { describe, expect, it } from 'vitest';
 import { h, nextTick } from 'vue';
 

@@ -1,6 +1,6 @@
 <!-- Required in the review form: send it without stars to see the error and the summary link to the stars. -->
 <script setup lang="ts">
-import { QButton, QField, QForm, QFormActions, QRatingInput, QTextarea } from 'quiet';
+import { QButton, QField, QForm, QFormActions, QRatingInput, QTextarea } from '@frederikhd/quiet';
 import { computed, ref } from 'vue';
 
 const stars = ref(0);

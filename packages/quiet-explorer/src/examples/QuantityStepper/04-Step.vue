@@ -1,6 +1,6 @@
 <!-- step snaps values to packs: napkins are sold in sixes, so 8 becomes 6. -->
 <script setup lang="ts">
-import { QField, QQuantityStepper } from 'quiet';
+import { QField, QQuantityStepper } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const napkins = ref(6);

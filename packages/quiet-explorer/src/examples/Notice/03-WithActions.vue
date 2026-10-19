@@ -1,6 +1,6 @@
 <!-- Up to two slim actions under the text, for the obvious next step. -->
 <script setup lang="ts">
-import { QButton, QNotice } from 'quiet';
+import { QButton, QNotice } from '@frederikhd/quiet';
 </script>
 
 <template>

@@ -1,6 +1,6 @@
 <!-- The least an AppShell needs: a brand, a Nav and the page. Below 1024px the nav moves into a drawer behind the menu button. -->
 <script setup lang="ts">
-import { QAppShell, QEmptyState, QNav, QPage } from 'quiet';
+import { QAppShell, QEmptyState, QNav, QPage } from '@frederikhd/quiet';
 </script>
 
 <template>

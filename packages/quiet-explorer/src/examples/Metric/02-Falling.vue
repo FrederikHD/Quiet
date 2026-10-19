@@ -1,6 +1,6 @@
 <!-- A fall in something that should grow shows in red; the arrow and the words carry it too, never colour alone. -->
 <script setup lang="ts">
-import { QCard, QMetric } from 'quiet';
+import { QCard, QMetric } from '@frederikhd/quiet';
 </script>
 
 <template>

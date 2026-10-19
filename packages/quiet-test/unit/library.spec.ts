@@ -4,7 +4,7 @@
 import { execFileSync } from 'node:child_process';
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import * as quiet from 'quiet';
+import * as quiet from '@frederikhd/quiet';
 import { createApp } from 'vue';
 import { describe, expect, it } from 'vitest';
 

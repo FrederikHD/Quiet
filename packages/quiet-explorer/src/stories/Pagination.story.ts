@@ -1,4 +1,4 @@
-import { QPagination } from 'quiet';
+import { QPagination } from '@frederikhd/quiet';
 import { defineStory } from './story';
 
 export default defineStory({

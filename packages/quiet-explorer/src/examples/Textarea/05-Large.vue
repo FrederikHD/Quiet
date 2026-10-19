@@ -1,6 +1,6 @@
 <!-- size="large" has 16px text and 24px lines, to match large inputs in storefront forms. -->
 <script setup lang="ts">
-import { QField, QTextarea } from 'quiet';
+import { QField, QTextarea } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const question = ref('');

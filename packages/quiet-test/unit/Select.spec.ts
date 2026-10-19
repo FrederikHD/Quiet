@@ -1,5 +1,5 @@
 import { flushPromises, mount } from '@vue/test-utils';
-import { QField, QSelect } from 'quiet';
+import { QField, QSelect } from '@frederikhd/quiet';
 import { describe, expect, it } from 'vitest';
 import { h, nextTick } from 'vue';
 

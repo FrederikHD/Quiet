@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { QPriceRange } from 'quiet';
+import { QPriceRange } from '@frederikhd/quiet';
 import { describe, expect, it } from 'vitest';
 
 type Range = [number, number];

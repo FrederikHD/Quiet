@@ -1,6 +1,6 @@
 <!-- Slim inputs in a compact back-office toolbar above a product list. -->
 <script setup lang="ts">
-import { QIcon, QInput } from 'quiet';
+import { QIcon, QInput } from '@frederikhd/quiet';
 import { reactive } from 'vue';
 
 const filters = reactive({ query: '', minStock: '10' });

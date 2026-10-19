@@ -1,6 +1,6 @@
 <!-- A Radio is one option inside a RadioGroup: the circle and its label; the whole row is the click target. -->
 <script setup lang="ts">
-import { QRadio, QRadioGroup } from 'quiet';
+import { QRadio, QRadioGroup } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const sort = ref('newest');

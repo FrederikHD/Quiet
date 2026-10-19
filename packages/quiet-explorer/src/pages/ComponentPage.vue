@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { QBadge, QPage, QTable, QTabs, type TabItem } from 'quiet';
+import { QBadge, QPage, QTable, QTabs, type TabItem } from '@frederikhd/quiet';
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { entries } from '../catalog';
@@ -34,7 +34,7 @@ function go(tab: TabItem, e: MouseEvent) {
   void router.push(path);
 }
 const usage = computed(
-  () => `import { ${entry.value.apis.map((a) => a.name).join(', ')} } from 'quiet';`,
+  () => `import { ${entry.value.apis.map((a) => a.name).join(', ')} } from '@frederikhd/quiet';`,
 );
 </script>
 

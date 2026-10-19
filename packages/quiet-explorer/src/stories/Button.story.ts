@@ -1,4 +1,4 @@
-import { QButton } from 'quiet';
+import { QButton } from '@frederikhd/quiet';
 import { defineStory } from './story';
 
 export default defineStory({

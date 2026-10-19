@@ -1,6 +1,6 @@
 <!-- dividers draws a rule between items, for longer lists in a Card. -->
 <script setup lang="ts">
-import { QCard, QDescriptionList } from 'quiet';
+import { QCard, QDescriptionList } from '@frederikhd/quiet';
 </script>
 
 <template>

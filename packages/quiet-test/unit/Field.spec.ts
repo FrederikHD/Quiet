@@ -11,7 +11,7 @@ import {
   QRadioGroup,
   QSelect,
   QTextarea,
-} from 'quiet';
+} from '@frederikhd/quiet';
 import { describe, expect, it } from 'vitest';
 import { defineComponent, h, nextTick, ref } from 'vue';
 
@@ -128,7 +128,7 @@ describe('QCheckboxGroup', () => {
             id: 'notify',
             label: 'Notify the customer by',
             modelValue: value.value,
-            'onUpdate:modelValue': (v: string[]) => (value.value = v),
+            'onUpdate:modelValue': (v?: string[]) => (value.value = v ?? []),
           },
           () => [
             h(QCheckbox, { value: 'email', label: 'Email' }),
@@ -158,7 +158,7 @@ describe('QRadioGroup', () => {
         ],
       },
     });
-    expect(w.get('[role="radiogroup"]').exists()).toBe(true);
+    expect(w.find('[role="radiogroup"]').exists()).toBe(true);
     const radios = w.findAll('input[type="radio"]');
     expect(new Set(radios.map((r) => r.attributes('name'))).size).toBe(1);
     expect((radios[0].element as HTMLInputElement).checked).toBe(true);

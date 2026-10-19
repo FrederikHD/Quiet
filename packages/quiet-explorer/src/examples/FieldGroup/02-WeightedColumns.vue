@@ -1,6 +1,6 @@
 <!-- columns sets relative widths: [3, 1] for Street | House number, [1, 2] for Postcode | City. A row stacks once its narrowest field gets too small. -->
 <script setup lang="ts">
-import { QField, QFieldGroup, QForm, QInput } from 'quiet';
+import { QField, QFieldGroup, QForm, QInput } from '@frederikhd/quiet';
 import { reactive } from 'vue';
 
 const values = reactive({ street: 'Torstraße', number: '12', postcode: '10115', city: 'Berlin' });

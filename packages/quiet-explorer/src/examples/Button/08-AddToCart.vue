@@ -1,6 +1,6 @@
 <!-- On the product page, Add to cart is large and as wide as its column; a long label wraps instead of truncating. -->
 <script setup lang="ts">
-import { QButton } from 'quiet';
+import { QButton } from '@frederikhd/quiet';
 </script>
 
 <template>

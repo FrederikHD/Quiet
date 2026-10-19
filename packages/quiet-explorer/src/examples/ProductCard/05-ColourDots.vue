@@ -1,6 +1,6 @@
 <!-- Up to five colour dots, then "+1"; screen readers hear "6 colours: Navy, Sand, …". -->
 <script setup lang="ts">
-import { QProductCard } from 'quiet';
+import { QProductCard } from '@frederikhd/quiet';
 import { photo, swatchOf } from '../../fixtures/pictures';
 
 const swatches = ['Navy', 'Sand', 'Olive', 'Rust', 'Natural', 'Sage'].map((n) => ({ label: n, color: swatchOf(n) }));

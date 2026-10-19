@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { QBreadcrumbs, type BreadcrumbItem } from 'quiet';
+import { QBreadcrumbs, type BreadcrumbItem } from '@frederikhd/quiet';
 import { describe, expect, it } from 'vitest';
 
 const trail: (BreadcrumbItem | null | false)[] = [{ label: 'Home', href: '/' }, null, { label: 'Shirts', href: '/shirts' }, false, { label: 'Linen shirt' }];

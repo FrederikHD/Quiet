@@ -1,6 +1,6 @@
 <!-- A search icon in the prefix slot and a clear button while there is a value. The purpose is obvious, so an aria-label replaces the visible label. -->
 <script setup lang="ts">
-import { QIcon, QInput } from 'quiet';
+import { QIcon, QInput } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const query = ref('#1049');

@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { QPage, QPageColumns } from 'quiet';
+import { QPage, QPageColumns } from '@frederikhd/quiet';
 import { describe, expect, it } from 'vitest';
 
 describe('QPage', () => {

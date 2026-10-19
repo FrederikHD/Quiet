@@ -1,6 +1,6 @@
 <!-- Line tabs over the sections of an order, each with its own panel; a count names what it counts, a disabled tab is skipped. -->
 <script setup lang="ts">
-import { QTabs } from 'quiet';
+import { QTabs } from '@frederikhd/quiet';
 </script>
 
 <template>

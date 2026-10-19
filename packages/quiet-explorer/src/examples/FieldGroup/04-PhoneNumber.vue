@@ -1,6 +1,6 @@
 <!-- A Select and an Input connected under one group label. The part labels are hidden but still read out. -->
 <script setup lang="ts">
-import { QField, QFieldGroup, QForm, QInput, QSelect } from 'quiet';
+import { QField, QFieldGroup, QForm, QInput, QSelect } from '@frederikhd/quiet';
 import { reactive } from 'vue';
 
 const values = reactive({ dial: '+49', phone: '30 901820' });

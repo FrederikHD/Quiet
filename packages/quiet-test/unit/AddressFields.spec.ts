@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { QAddressFields, validateAddress, type Address } from 'quiet';
+import { QAddressFields, validateAddress, type Address } from '@frederikhd/quiet';
 import { describe, expect, it } from 'vitest';
 
 const labels = (w: ReturnType<typeof mount>) => w.findAll('.q-field__label').map((l) => l.text().replace(/\s*\*$/, '').replace(/\s*\(optional\)$/, ''));

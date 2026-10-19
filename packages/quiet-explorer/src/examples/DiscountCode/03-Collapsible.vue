@@ -1,6 +1,6 @@
 <!-- In an order summary it starts as a quiet button, so customers without a code aren't sent looking for one. -->
 <script setup lang="ts">
-import { QDiscountCode } from 'quiet';
+import { QDiscountCode } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const codes = ref<string[]>([]);

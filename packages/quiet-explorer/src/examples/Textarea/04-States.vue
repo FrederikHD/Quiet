@@ -1,6 +1,6 @@
 <!-- With an error, read-only and disabled. -->
 <script setup lang="ts">
-import { QField, QForm, QTextarea } from 'quiet';
+import { QField, QForm, QTextarea } from '@frederikhd/quiet';
 import { reactive } from 'vue';
 
 const values = reactive({ reason: '', note: 'Gift — please leave out the invoice.', internal: 'Pack in tissue paper.' });

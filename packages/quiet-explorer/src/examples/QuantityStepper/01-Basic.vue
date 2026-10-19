@@ -1,6 +1,6 @@
 <!-- Type a number, use ↑ ↓, or tap − and +. Values stay within min and max. -->
 <script setup lang="ts">
-import { QField, QQuantityStepper } from 'quiet';
+import { QField, QQuantityStepper } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const quantity = ref(1);

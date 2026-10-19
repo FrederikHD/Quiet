@@ -1,6 +1,6 @@
 <!-- A disabled button is dimmed and can't be clicked; say nearby why it can't be used yet. -->
 <script setup lang="ts">
-import { QButton } from 'quiet';
+import { QButton } from '@frederikhd/quiet';
 </script>
 
 <template>

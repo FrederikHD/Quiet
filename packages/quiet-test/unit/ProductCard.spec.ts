@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { QProductCard, configure } from 'quiet';
+import { QProductCard, configure } from '@frederikhd/quiet';
 import { beforeAll, describe, expect, it } from 'vitest';
 
 beforeAll(() => configure({ locale: 'en-US', currency: 'EUR' }));

@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { QCard } from 'quiet';
+import { QCard } from '@frederikhd/quiet';
 import { describe, expect, it } from 'vitest';
 
 describe('QCard', () => {

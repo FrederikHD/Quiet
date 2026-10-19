@@ -1,5 +1,5 @@
 import { flushPromises, mount } from '@vue/test-utils';
-import { QField, QQuantityStepper } from 'quiet';
+import { QField, QQuantityStepper } from '@frederikhd/quiet';
 import { describe, expect, it } from 'vitest';
 import { h } from 'vue';
 

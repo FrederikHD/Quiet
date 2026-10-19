@@ -1,4 +1,4 @@
-import { QDiscountCode } from 'quiet';
+import { QDiscountCode } from '@frederikhd/quiet';
 import { defineStory } from './story';
 
 export default defineStory({

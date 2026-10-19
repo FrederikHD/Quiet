@@ -1,6 +1,6 @@
 <!-- A list page: a plain title, the main action last, and compact density for the table. -->
 <script setup lang="ts">
-import { QButton, QPage, QTable } from 'quiet';
+import { QButton, QPage, QTable } from '@frederikhd/quiet';
 
 const products = [
   { sku: 'LS-2040', title: 'Linen shirt, blue', stock: 30, price: '59,00 €' },

@@ -1,5 +1,5 @@
 import { enableAutoUnmount, mount } from '@vue/test-utils';
-import { QTable, configure, type TableColumn } from 'quiet';
+import { QTable, configure, type TableColumn } from '@frederikhd/quiet';
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 import { h } from 'vue';
 

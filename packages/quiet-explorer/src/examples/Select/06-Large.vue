@@ -1,6 +1,6 @@
 <!-- size="large" matches the 48px storefront controls on a product page. -->
 <script setup lang="ts">
-import { QField, QSelect } from 'quiet';
+import { QField, QSelect } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
 const size = ref('');

@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { QButton, QFormActions } from 'quiet';
+import { QButton, QFormActions } from '@frederikhd/quiet';
 import { describe, expect, it } from 'vitest';
 import { h } from 'vue';
 

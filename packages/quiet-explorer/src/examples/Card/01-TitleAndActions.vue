@@ -1,6 +1,6 @@
 <!-- A titled card groups one topic; slim ghost actions sit on the title line. -->
 <script setup lang="ts">
-import { QButton, QCard } from 'quiet';
+import { QButton, QCard } from '@frederikhd/quiet';
 </script>
 
 <template>

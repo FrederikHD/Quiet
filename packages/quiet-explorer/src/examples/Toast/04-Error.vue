@@ -1,6 +1,6 @@
 <!-- tone="error" is announced immediately and says how to fix it. Errors about what someone typed belong in the form instead. -->
 <script setup lang="ts">
-import { QButton, toast } from 'quiet';
+import { QButton, toast } from '@frederikhd/quiet';
 </script>
 
 <template>
