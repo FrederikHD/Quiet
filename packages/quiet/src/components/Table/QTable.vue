@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="Row extends Record<string, any>">
-import { computed, ref, useSlots } from 'vue';
+import { computed, getCurrentInstance, ref, useSlots } from 'vue';
 import { fmt, useStrings } from '../../config';
 import { useQuietId } from '../../composables/useQuietId';
 import { useResizeObserver } from '../../composables/useResizeObserver';
@@ -34,7 +34,7 @@ export interface TableProps<R> {
   defaultSelected?: RowKey[];
   /** Rows it returns false for can't be selected; their checkbox is disabled. */
   isRowSelectable?: (row: R) => boolean;
-  /** All rows matching the current query (across pages). With v-model:all-matching it enables "Select all 1,240". */
+  /** All rows matching the current query (across pages). With v-model:all-matching (or @update:all-matching) bound, it enables "Select all 1,240". */
   totalCount?: number;
   /** The primary column becomes a link; a click anywhere on the row follows it. */
   rowHref?: (row: R) => string;
@@ -205,9 +205,17 @@ const selectionText = computed(() =>
       ? strings.value.allMatchingSelected(props.totalCount)
       : strings.value.selected(count.value),
 );
+// "Select all 1,240" only when the app listens for it: otherwise nothing acts on the query, only on this page's keys.
+const instance = getCurrentInstance();
+const listensForAllMatching = () =>
+  !!(instance?.vnode.props?.['onUpdate:allMatching'] || instance?.vnode.props?.['onUpdate:all-matching']);
 const canSelectAllMatching = computed(
   () =>
-    allOnPage.value && !allMatching.value && props.totalCount != null && props.totalCount > selectableKeys.value.length,
+    allOnPage.value &&
+    !allMatching.value &&
+    props.totalCount != null &&
+    props.totalCount > selectableKeys.value.length &&
+    listensForAllMatching(),
 );
 
 // Horizontal scroll: is there any? Then the region takes keyboard focus (to scroll) and the pinned column gets an edge.

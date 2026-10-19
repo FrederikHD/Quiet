@@ -15,8 +15,6 @@ export type Markers = 'required' | 'optional' | 'none';
 export interface FormStrings {
   /** Shown after optional labels when markers="optional". Default "optional". */
   optional?: string;
-  /** Not shown by Quiet's own markers: the asterisk is hidden from screen readers, which hear aria-required instead. Default "required". */
-  required?: string;
   /** Prefix of the help button's name: "Help: SKU". Default "Help". */
   help?: string;
   /** Read before an error message by screen readers. Default "Error:". */
@@ -31,7 +29,6 @@ export interface FormStrings {
 
 export const FORM_DEFAULT_STRINGS: Required<FormStrings> = {
   optional: 'optional',
-  required: 'required',
   help: 'Help',
   errorPrefix: 'Error:',
   warningPrefix: 'Warning:',

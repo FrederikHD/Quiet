@@ -9,6 +9,23 @@ breaking changes, a patch version (0.x.y) never does.
 ### Added
 
 - `@frederikhd/quiet/package.json` can be imported, for tools that read the installed version.
+- Nav has its own translations namespace: `configure({ strings: { nav: { label } } })`, and `NavStrings` is exported.
+
+### Changed
+
+- **Breaking:** ProductCard's `href` is required. The name is the card's only link; without it, keyboard users couldn't
+  reach the product. An empty `href` warns in development.
+- **Breaking:** Nav's landmark name is `strings.label` (was `strings.nav`), set globally under `strings.nav` (was
+  `strings.shell.nav`).
+- Table offers "Select all 1,240" only when `v-model:all-matching` is bound, since otherwise nothing acts on all
+  matching rows.
+- Icons in secondary and ghost buttons are `brand`, as the brand book says for buttons that act or open a menu. Links
+  styled as buttons, solid buttons and disabled buttons keep the label's colour.
+
+### Removed
+
+- **Breaking:** strings that were never shown: SearchBox `strings.submit`, AppShell `strings.nav` (see Nav above) and
+  the form strings' `required`.
 
 ## [0.1.0] - 2026-10-19
 

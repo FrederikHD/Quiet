@@ -2,6 +2,7 @@
 import { computed } from 'vue';
 import { useStrings } from '../../config';
 import { useQuietId } from '../../composables/useQuietId';
+import { warnOnce } from '../../utils/dom';
 import QBadge, { type BadgeTone } from '../Badge/QBadge.vue';
 import QButton from '../Button/QButton.vue';
 import QIcon from '../Icon/QIcon.vue';
@@ -11,8 +12,8 @@ import QRating from '../Rating/QRating.vue';
 export interface ProductCardProps {
   /** The product name; the card's heading and its one link. */
   name: string;
-  /** The product page. The name links there and the whole card is clickable; without it the name isn't a link. */
-  href?: string;
+  /** The product page. The name links there and the whole card is clickable. */
+  href: string;
   /** The product image. Leave alt empty when it only shows the product named below; a placeholder shows without one. */
   image?: { src: string; alt?: string };
   /** Shown on hover (pointer devices): the back, or the product worn. */
@@ -48,7 +49,6 @@ export interface ProductCardProps {
 }
 
 const props = withDefaults(defineProps<ProductCardProps>(), {
-  href: undefined,
   image: undefined,
   hoverImage: undefined,
   price: undefined,
@@ -80,6 +80,9 @@ const strings = useStrings(
   () => props.strings,
 );
 const nameId = useQuietId('q-pcard-');
+// Without a destination the card's one link goes nowhere, and keyboard users can't reach the product at all.
+if (!props.href)
+  warnOnce('product-card-href', "ProductCard: pass href, the product page — the name is the card's only link.");
 const badges = computed(() => (props.badges ?? []).filter((b): b is { label: string; tone?: BadgeTone } => !!b));
 </script>
 

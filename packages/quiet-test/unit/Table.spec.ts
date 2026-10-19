@@ -109,13 +109,22 @@ describe('QTable', () => {
 
   it('offers "Select all" across pages and passes allMatching to the bulk actions', async () => {
     const bulk = vi.fn(() => 'Export');
-    const w = table({ selectable: true, selected: [3, 1, 2], totalCount: 1240 }, { 'bulk-actions': bulk });
+    const w = table(
+      { selectable: true, selected: [3, 1, 2], totalCount: 1240, 'onUpdate:allMatching': () => {} },
+      { 'bulk-actions': bulk },
+    );
     const more = w.get('.q-table__bulk-all');
     expect(more.text()).toBe('Select all 1,240');
     await more.trigger('click');
     expect(w.emitted('update:allMatching')![0]).toEqual([true]);
     expect(w.get('.q-table__bulk-count').text()).toBe('All 1,240 selected');
     expect(bulk).toHaveBeenLastCalledWith(expect.objectContaining({ allMatching: true, selected: [3, 1, 2] }));
+  });
+
+  it('does not offer "Select all" across pages when nothing listens for it', () => {
+    const w = table({ selectable: true, selected: [3, 1, 2], totalCount: 1240 });
+    expect(w.find('.q-table__bulk').exists()).toBe(true);
+    expect(w.find('.q-table__bulk-all').exists()).toBe(false);
   });
 
   it('makes the primary column a link and follows a click anywhere on the row', async () => {
