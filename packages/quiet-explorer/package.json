@@ -21,7 +21,7 @@
     "@types/markdown-it": "^14.1.2",
     "@types/node": "^22.0.0",
     "@vitejs/plugin-vue": "^6.0.10",
-    "typescript": "~5.9.3",
+    "typescript": "~7.0.2",
     "vite": "^8.3.4",
     "vue-component-meta": "^3.3.13",
     "vue-tsc": "^3.3.13"
