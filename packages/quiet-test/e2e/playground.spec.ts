@@ -69,11 +69,10 @@ test('the preview width shows the phone layout', async ({ page }) => {
 for (const folder of components) {
   test(`${folder}: every prop has a control or a stated reason`, async ({ page }) => {
     await page.goto(`/components/${slugOf(folder)}/api`);
-    const props = await page
-      .getByRole('table', { name: /props$/ })
-      .first()
-      .locator('tbody tr td:first-child code')
-      .allTextContents();
+    // Wait for the table: an empty list read before it renders would pass without checking anything.
+    const table = page.getByRole('table', { name: /props$/ }).first();
+    await expect(table).toBeVisible();
+    const props = await table.locator('tbody tr td:first-child code').allTextContents();
     await page.goto(`/components/${slugOf(folder)}/playground`);
     const controls = page.getByTestId('playground-controls');
     await expect(controls).toBeVisible();
