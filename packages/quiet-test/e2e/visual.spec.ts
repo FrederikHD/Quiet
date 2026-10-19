@@ -1,5 +1,6 @@
 // Screenshots of every example, light and dark. Update the baselines with `npm run test:visual:update`
-// after a deliberate visual change, and review the new images in the diff.
+// after a deliberate visual change, and review the new images in the diff. That script, like CI, runs them in the
+// Playwright Docker image, so the baselines don't depend on the machine's fonts or browser build.
 import { components, slugOf } from './catalog';
 import { expect, test } from './fixtures';
 
