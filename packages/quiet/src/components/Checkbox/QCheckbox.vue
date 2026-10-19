@@ -19,7 +19,7 @@ export interface CheckboxProps {
   swatch?: string;
   /** swatches layout: a fabric picture instead of a colour. */
   image?: string;
-  /** swatches / buttons layouts: crossed out. */
+  /** swatches / buttons layouts: crossed out but still choosable; screen readers hear "sold out". */
   soldOut?: boolean;
   /** Keeps the label for screen readers only — table rows ("Select order #10421"). */
   labelHidden?: boolean;
@@ -29,9 +29,11 @@ export interface CheckboxProps {
   invalid?: boolean;
   /** Bordered tile. Inside a CheckboxGroup with layout="cards" this is set for you. */
   card?: boolean;
+  /** Greyed out and skipped by Tab. Inside a CheckboxGroup the group's disabled sets it. */
   disabled?: boolean;
   /** Posted with the form; inside a CheckboxGroup the group's name is used. */
   name?: string;
+  /** Id of the native checkbox. Inside a Field the Field's id wins. */
   id?: string;
 }
 

@@ -21,9 +21,11 @@ export interface InputProps {
   clearable?: boolean;
   /** Accessible name of the clear button. Default "Clear" — translate it ("Leeren"). */
   clearLabel?: string;
+  /** Greyed out and skipped by Tab. Prefer readonly when people still need to read or copy the value. */
   disabled?: boolean;
   /** Shown and copyable, never editable: order numbers, generated SKUs, API keys. */
   readonly?: boolean;
+  /** Sets the native required attribute. Inside a Field, set required on the Field for the marker. */
   required?: boolean;
   /** Inside a Field the Field's id wins; outside, pair it with your own <label for>. */
   id?: string;

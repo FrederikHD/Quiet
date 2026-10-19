@@ -35,13 +35,13 @@ export interface PaginationProps {
   variant?: 'simple' | 'pages' | 'compact';
   /** pages variant: page numbers either side of the current one. Default 1. */
   siblings?: number;
-  /** « and » for the first and last page (hidden under 400px). */
+  /** « and » for the first and last page (hidden under 400px). Needs total. */
   showFirstLast?: boolean;
   /** The page number becomes a field: Enter or leaving it goes there. Needs total. */
   jumpToPage?: boolean;
-  /** Default true. */
+  /** Show the range, "1–50 of 1,240". Default true. */
   showRange?: boolean;
-  /** e.g. [25, 50, 100]: shows a rows-per-page select (v-model:page-size). */
+  /** The rows-per-page choices, e.g. [25, 50, 100]: shows a select bound to v-model:page-size. */
   pageSizeOptions?: number[];
   /** Show the rows-per-page select. Default true when pageSizeOptions are set. */
   showPageSize?: boolean;
@@ -49,7 +49,7 @@ export interface PaginationProps {
   align?: 'end' | 'start' | 'center' | 'between';
   /** Button size: slim (default), default, large (storefront). */
   size?: 'slim' | 'default' | 'large';
-  /** Disables the controls while a page loads (aria-busy). */
+  /** Disables the controls while a page loads and sets aria-busy; the current page stays enabled. */
   disabled?: boolean;
   /** Render the controls as links (pages that load from the server). Clicks still emit update:page; prevent them for client-side routing. */
   hrefFor?: (page: number) => string;

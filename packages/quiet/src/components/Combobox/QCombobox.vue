@@ -36,6 +36,7 @@ export interface ComboboxProps {
   size?: 'slim' | 'default' | 'large';
   /** Error border and aria-invalid; the message comes from Field. */
   invalid?: boolean;
+  /** Greyed out, skipped by Tab and can't be opened. */
   disabled?: boolean;
   /** Shown like a read-only Input (ink on a sunken box, no chevron); can't be opened. */
   readonly?: boolean;

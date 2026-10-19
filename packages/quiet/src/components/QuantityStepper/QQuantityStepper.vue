@@ -17,7 +17,9 @@ export interface QuantityStepperProps {
   size?: 'default' | 'large';
   /** Error border and aria-invalid; the message comes from Field. */
   invalid?: boolean;
+  /** Greyed out and skipped by Tab. */
   disabled?: boolean;
+  /** Shown and focusable, but the keys and the − and + buttons do nothing. */
   readonly?: boolean;
   /** Inside a Field the Field's id wins. */
   id?: string;

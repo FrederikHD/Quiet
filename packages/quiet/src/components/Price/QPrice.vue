@@ -17,9 +17,9 @@ export interface PriceProps {
   amount: number;
   /** The original price; above `amount` it shows as a sale (`sale` colour, the original struck through). */
   compareAt?: number;
-  /** Adds a sale badge with the saving ("−25%"). */
+  /** Adds a sale badge with the saving ("−25%"), when compareAt is above amount. */
   showSaving?: boolean;
-  /** small (15) in cards and the cart, default (17), large (28) on the product page. */
+  /** small (15/22) in cards and the cart, default (17/24), large (28/32) on the product page. */
   size?: 'small' | 'default' | 'large';
   /** "from 29,00 €" when variants differ in price. */
   from?: boolean;

@@ -8,11 +8,11 @@ The product images on a product page: one large image with thumbnails, swipeable
 
 ## Behaviour
 
-- **Phones (touch):** swipe between images (native scroll snap, one image per swipe); a "2 / 5" counter sits in the corner.
-- **Computers:** ‹ › buttons on the image and a row of thumbnails below (the current one has a `brand` ring). With the image focused, ← → (and Home / End) move between images.
-- **Enlarge:** clicking or pressing Enter on the image opens it in a Dialog (full screen on phones) with ‹ › to move on.
-- **A new set of images** (another colour chosen) starts again at the first.
-- **Screen readers:** the image area is a carousel region; each image is "slide 2 of 5", and moving announces "Image 2 of 5". Only the visible image is reachable.
+- **Phones and touch screens** (under 640px, or no hover): swipe between images (native scroll snap, one image per swipe); a "2 / 5" counter sits in the corner. No arrows, no thumbnails.
+- **Computers** (640px and up, with a pointer): ‹ › buttons on the image and a row of 64px thumbnails below (the current one has a `brand` ring). Arrows and thumbnails show only with two or more images; `:thumbnails="false"` hides the thumbnails.
+- **Enlarge:** clicking the image opens it in a Dialog (`lg`, full screen on phones) titled by the image's `alt`, with ‹ › and a "2 / 5" count to move on.
+- **Which image:** `v-model:index` (0-based), or `defaultIndex` when it isn't bound. A new set of images (another colour chosen) starts again at the first.
+- **No images:** a placeholder icon on `surface-sunken`.
 
 ## Images
 
@@ -21,7 +21,11 @@ The product images on a product page: one large image with thumbnails, swipeable
 
 ## Keyboard and screen readers
 
-The stage is a carousel region: Tab to it, ← → change the image (announced "Image 2 of 5"), Home/End jump. Each slide is "2 of 5"; the thumbnails are buttons ("Show image 3 of 5") with the current one marked. Enter on the image opens the large view, Esc closes it.
+- The stage is a region with the role description "carousel", named by `label` (default "Product images"). Tab reaches it, then the visible image, which is a button named "Enlarge image: Linen shirt in navy, front".
+- With the stage or the image focused, ← → move between images and Home / End jump to the first or last. Each move, and each press of ‹ ›, is announced "Image 2 of 5".
+- Each image is a slide named "2 of 5". Only the visible one is reachable; the others are hidden from screen readers and from Tab.
+- ‹ › are buttons named "Previous image" and "Next image", disabled at either end. The thumbnails are buttons ("Show image 3 of 5"); the current one has `aria-current`.
+- Enter or Space on the image opens the large view, where the image reads its `alt`, ← → still move (with the large image focused) and Esc closes it.
 
 ## Built from
 
@@ -29,4 +33,8 @@ Button (arrows), Dialog (large view), Icon.
 
 ## What you provide
 
-`images`: `{ src, alt, thumb?, zoom? }`. Optional: `label` (names the carousel, e.g. the product), `aspect`, `:thumbnails="false"`, `v-model:index` (or `default-index`), `strings` (shop-wide under `strings.gallery`).
+- **Required:** `images` (`[{ src, alt, thumb?, zoom? }]`, main image first).
+- **Optional:** `label` (names the carousel, e.g. "Linen shirt images"; default "Product images"), `aspect` (`portrait` | `square`; default `portrait`), `thumbnails` (default true), `defaultIndex`.
+- **v-model:** `v-model:index` (the image shown, 0-based).
+- **Events:** `@update:index(index)`.
+- **Translations:** `strings`, or once for the shop with `configure({ strings: { gallery: … } })`: `label` ("Product images"), `slide(i, n)` ("2 of 5"), `previous` ("Previous image"), `next` ("Next image"), `show(i, n)` ("Show image 3 of 5"), `zoom` ("Enlarge image"), `counter(i, n)` ("2 / 5"), `showing(i, n)` ("Image 2 of 5").

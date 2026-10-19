@@ -2,7 +2,7 @@
 import { computed, useSlots } from 'vue';
 import { fmt, oneDecimal, useStrings } from '../../config';
 import QStars from '../Rating/QStars.vue';
-import { STAR_PATH, ratingDefaults } from '../Rating/stars';
+import { STAR_PATH, ratingDefaults, type RatingStrings } from '../Rating/stars';
 
 export interface ReviewSummaryProps {
   /** The average rating, 0–5: shown large with one decimal and as stars. */
@@ -34,7 +34,8 @@ const strings = useStrings(
   },
   () => props.strings,
 );
-const stars = ratingDefaults().stars;
+// "5 stars" for the plain rows comes from the shared rating namespace, so configure({ strings: { rating: { stars } } }) translates it.
+const ratingStrings = useStrings<Required<RatingStrings>>('rating', ratingDefaults());
 const LEVELS = [5, 4, 3, 2, 1] as const;
 const of = (k: 1 | 2 | 3 | 4 | 5) => props.distribution[k] ?? 0;
 const total = computed(() => props.count ?? LEVELS.reduce((a, k) => a + of(k), 0));
@@ -70,7 +71,7 @@ const most = computed(() => Math.max(1, ...LEVELS.map(of)));
           <span class="q-rsum__lvl" aria-hidden="true">{{ k }}<svg viewBox="0 0 20 20"><path :d="STAR_PATH" /></svg></span>
           <span class="q-rsum__bar" aria-hidden="true"><span :style="{ width: `${(of(k) / most) * 100}%` }" /></span>
           <span class="q-rsum__n" aria-hidden="true">{{ fmt(of(k)) }}</span>
-          <span class="q-visually-hidden">{{ strings.reviews(of(k)) }} — {{ stars(k) }}</span>
+          <span class="q-visually-hidden">{{ strings.reviews(of(k)) }} — {{ ratingStrings.stars(k) }}</span>
         </span>
       </li>
     </ul>

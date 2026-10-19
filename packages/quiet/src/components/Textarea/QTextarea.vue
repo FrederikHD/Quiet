@@ -7,7 +7,9 @@ import { joinIds, warnOnce } from '../../utils/dom';
 import { useControlId, useFieldControl } from '../Field/context';
 
 export interface TextareaStrings {
+  /** The counter while there is room. Default "114 / 500". */
   count?: (n: number, max: number) => string;
+  /** The counter near the limit. Default "8 characters left". */
   left?: (n: number) => string;
 }
 export interface TextareaProps {
@@ -17,7 +19,7 @@ export interface TextareaProps {
   autoGrow?: boolean;
   /** With autoGrow: the most lines it grows to before it scrolls. Default: no limit. */
   maxRows?: number;
-  /** A hard limit on the length, with a counter: "114 / 500", then "8 characters left" near the limit. */
+  /** A hard limit on the length, with a counter: "114 / 500", then "8 characters left" from 10 characters (or 10%) before it. */
   maxlength?: number;
   /** Shows the counter while maxlength is set. Default true. */
   showCount?: boolean;
@@ -25,8 +27,11 @@ export interface TextareaProps {
   size?: 'default' | 'large';
   /** Error border and aria-invalid; the message comes from Field. */
   invalid?: boolean;
+  /** Greyed out and skipped by Tab. */
   disabled?: boolean;
+  /** Shown and copyable, never editable; can't be resized. */
   readonly?: boolean;
+  /** Sets the native required attribute. Inside a Field, set required on the Field for the marker. */
   required?: boolean;
   /** Inside a Field the Field's id wins. */
   id?: string;

@@ -41,22 +41,29 @@ Always visible under the list, and read out by screen readers as it changes:
 - Waiting — "Searching…" with a spinner; the previous results stay, dimmed.
 - Failed — "Couldn't load the results." in `danger` with a Try again button.
 
-Translate every phrase with `strings` (German: "Zeige 50 von 1.240. Für mehr Ergebnisse suchen.", "Keine Treffer für „xyz“", "Suche läuft …", "Erneut versuchen", "Fertig", "Entfernen: …"). Or set it once for the whole shop with `configure` (see Conventions in the brand book).
+Translate every phrase with `strings` (German: "Zeige 50 von 1.240. Für mehr Ergebnisse suchen.", "Keine Treffer für „xyz“", "Suche läuft …", "Erneut versuchen", "Fertig", "Entfernen: …"). Or set it once for the whole shop with `configure({ strings: { combobox: { … } } })`.
 
 ## Keyboard and screen readers
 
 - The closed box is a button named by its label and current value ("Product, Linen shirt, blue, M"); with `multiple`, "3 selected: …".
 - The closed box opens with Enter, Space, ↓ or ↑ — or by typing, which opens it and starts the search with that letter.
-- Opening moves focus to the search field. ↑ ↓ move through the options (disabled ones are skipped), Enter chooses, Escape closes and returns focus to the box, Tab moves on to the next field.
-- Single: choosing closes the panel. Multiple: the panel stays open so people can pick several; Escape, Done, a click outside or Tab closes it.
+- Opening moves focus to the search field. ↑ ↓ move through the options (disabled ones are skipped; they wrap at the ends), Enter chooses, Escape closes and returns focus to the box, Tab moves on to the next field.
+- Single: choosing closes the panel. Multiple: the panel stays open so people can pick several; Escape, Done (in the phone Dialog), a click outside or Tab closes it.
 - Inside a Dialog, the first Escape closes the list and the second the dialog.
-- The field is a combobox with a listbox (`aria-activedescendant`), the standard pattern screen readers know.
+- The search field is a combobox with a listbox (`aria-activedescendant`), the standard pattern screen readers know; with `multiple` the listbox is multi-selectable. Chosen options are marked selected, disabled ones unavailable.
+- The status line is a `role="status"` region and also describes the search field.
+- With `multiple`, each Tag's × is a button named "Remove Linen shirt"; removing a tag returns focus to the box. "+3 more" is hidden from screen readers, which hear the full list on the box.
+- `clearable` adds a × button named "Clear" after the box; it returns focus to the box.
+- `required` is read out on the search field (`aria-required`). Read-only and disabled boxes are skipped by Tab and can't be opened.
 
 ## Other options
 
 - `clearable` (single) — a × in the box to remove the choice, for optional fields.
 - `name` — adds hidden inputs with the chosen values, for plain form posts.
-- `size`, `invalid`, `disabled`, `readonly`, `prefix-icon` — as on Select. Use it inside Field for its label, hint and errors.
+- `size`, `invalid`, `disabled`, `readonly`, `prefixIcon` — as on Select. Use it inside Field for its label, hint and errors.
+- `required` — read out on the search field. Use `required` on the Field for the marker.
+- `id` — the id of the box's button; inside a Field the Field's id wins.
+- The component ref exposes `focus()`, `open()` and `close()`.
 
 ## Built from
 
@@ -64,4 +71,7 @@ Input box and Select styles, Popover (Dialog on phones), Tag (variant field) for
 
 ## What you provide
 
-The label (via Field), `options` or `search`, `v-model`, a `placeholder` ("Choose a product", "Add products"), `searchPlaceholder` ("Search products"), and translated `strings` for non-English shops.
+- **Required:** a label (via Field, or `aria-label`), and `options` or `search`.
+- **Optional:** `placeholder` ("Choose a product", "Add products"), `searchPlaceholder` (default "Search"), `multiple`, `maxChips` (default 5), `clearable`, `debounce` (default 250), `limit` (default 50), `dialog` (`auto` | `always` | `never`; default `auto`), `size` (`slim` | `default` | `large`; default `default`), `invalid`, `disabled`, `readonly`, `required`, `prefixIcon`, `name`, `id`.
+- **v-model:** `v-model` (the chosen option object, or an array of them with `multiple`).
+- **Translations:** `strings` — `searchPlaceholder` ("Search"), `noResults(query)` ("No matches for “xyz”", or "Nothing to choose from" with no query), `showing(shown, total)` ("Showing 50 of 1,240. Type to search for more."), `results(count)` ("16 results"), `loading` ("Searching…"), `error` ("Couldn’t load the results."), `retry` ("Try again"), `done` ("Done"), `clear` ("Clear"), `remove(label)` ("Remove Linen shirt"), `more(count)` ("+3 more"), `selected(count)` ("3 selected"); or `configure({ strings: { combobox: { … } } })`.

@@ -58,4 +58,14 @@ describe('QReviewSummary', () => {
     expect(w.get('.q-rsum__action button').text()).toBe('Write a review');
     expect(w.get('.q-rsum__count').text()).toBe('31 Bewertungen');
   });
+
+  it('translates the star level of plain rows through the shared rating strings', () => {
+    configure({ strings: { rating: { stars: (n: number) => `${n} Sterne` } } });
+    try {
+      const w = mount(QReviewSummary, { props: { average: 4.3, distribution } });
+      expect(w.findAll('li')[0].get('.q-visually-hidden').text()).toBe('20 reviews — 5 Sterne');
+    } finally {
+      configure({ strings: { rating: { stars: (n: number) => `${n} ${n === 1 ? 'star' : 'stars'}` } } });
+    }
+  });
 });

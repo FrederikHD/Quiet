@@ -6,7 +6,7 @@ Multi-line text in the Input's box: product descriptions, order notes, gift mess
 
 - **Box:** the Input box (`surface-raised`, 1px `line-strong` border, `radius-md`).
 - **Text:** 22px lines (24px at `large`), with the control's padding. `rows` (default 4) sets the starting height.
-- **Counter** (with `maxlength`): "114 / 500" in the bottom-right corner, 12/16 `ink-muted` with tabular figures. In the last 10% of the limit (at least 10 characters) it changes to "8 characters left" in `warning` and is announced. `maxLength` is a hard stop. `showCount={false}` hides the counter.
+- **Counter** (with `maxlength`): "114 / 500" in the bottom-right corner, 12/16 `ink-muted` with tabular figures. From 10 characters before the limit (or 10% of it, if that is more) it changes to "8 characters left" in `warning` and is announced. `maxlength` is a hard stop. `:show-count="false"` hides the counter.
 
 ## Height
 
@@ -22,11 +22,18 @@ The same as Input. Focus thickens the border to 2px `brand` (or `danger` while i
 - The label names the content: "Description", "Note". The hint says where it shows up or who sees it: "Only your team sees notes."
 - A placeholder is an example, never the instruction.
 
+## Keyboard and screen readers
+
+- A native `<textarea>`: Enter adds a line, Tab moves on. Read-only textareas stay in the tab order; disabled ones are skipped.
+- Named by its Field's label and described by the Field's message and hint, then the counter. `invalid` (or a Field error) sets `aria-invalid`; `required` sets the native `required`, and a required Field adds `aria-required`.
+- The counter is silent while there is room. Near the limit it becomes a polite live region, so "8 characters left" is read out as people type.
+- A form reset empties `v-model` along with the textarea.
+
 ## What you provide
 
-- A label, through Field.
-- `v-model`.
-- **Optional:** `rows`, `auto-grow`, `max-rows`, `maxlength`, `show-count`, `size` (`large`), `invalid`, `disabled`, `readonly`, `name`, `placeholder`.
-- **`strings`** for the counter ("noch 8 Zeichen"), or once for the shop with `configure({ strings: { textarea } })`.
+- **Required:** a label, through Field (or `id` with your own `<label for>`, or `aria-label`).
+- **Optional:** `rows` (default 4), `autoGrow`, `maxRows` (default no limit), `maxlength`, `showCount` (default true), `size` (`default` | `large`; default `default`), `invalid`, `disabled`, `readonly`, `required`, `id`. `name`, `placeholder` and other attributes go to the native textarea.
+- **v-model:** `v-model` (the text).
+- **Translations:** `strings` — `count(n, max)` ("114 / 500") and `left(n)` ("8 characters left", "1 character left"); or once for the shop with `configure({ strings: { textarea: { … } } })`.
 
 The component ref exposes `focus()` and `textarea`; `class` and `style` go on the box.

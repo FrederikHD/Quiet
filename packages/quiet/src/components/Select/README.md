@@ -11,7 +11,7 @@ Picks one value from a short, known list — a native `<select>` in the Input's 
 
 ## Anatomy
 
-The Input box (`surface-raised`, `line-strong` border, `radius-md`) with an optional `prefix` icon, the value, and a `chevron-down` in `ink-muted` at the right. The whole box opens the list.
+The Input box (`surface-raised`, `line-strong` border, `radius-md`) with an optional `prefixIcon` (or your own content in the `#prefix` slot), the value, and a `chevron-down` in `ink-muted` at the right. The whole box opens the list.
 
 ## Options
 
@@ -28,10 +28,21 @@ The Input box (`surface-raised`, `line-strong` border, `radius-md`) with an opti
 
 ## Size, density and states
 
-Exactly as Input: `size="default"` follows `data-density` (40px comfortable, 32px compact), `slim` 28px for filter bars and table toolbars (back office, desktop), `large` 48px for the storefront (size and variant pickers on the product page). 16px text on phones. Focus thickens the border to 2px `brand` (`danger` while invalid). `invalid` gives the `danger` border; the message comes from Field. Disabled matches Input. `readOnly` (or Field's `readOnly`) shows the value like a read-only Input — `ink` on a `surface-sunken` box, no chevron — and keeps it in form posts; unlike a read-only Input it can't take focus, because a native select has no read-only mode. In a connected FieldGroup it joins like any Input: Amount | Currency.
+Exactly as Input: `size="default"` follows `data-density` (40px comfortable, 32px compact), `slim` 28px for filter bars and table toolbars (back office, desktop), `large` 48px for the storefront (size and variant pickers on the product page). 16px text on phones. Focus thickens the border to 2px `brand` (`danger` while invalid). `invalid` gives the `danger` border; the message comes from Field. Disabled matches Input. `readonly` (or the Field's `readonly`) shows the value like a read-only Input — `ink` on a `surface-sunken` box, no chevron — and keeps it in form posts; unlike a read-only Input it can't take focus, because a native select has no read-only mode. In a connected FieldGroup it joins like any Input: Amount | Currency.
+
+## Keyboard and screen readers
+
+- A native `<select>`, so keys are the browser's and the platform's: arrow keys and typing a letter change or find an option, Alt+↓ or Space opens the list on desktop, and phones open their own picker.
+- Named by its Field's label and described by the Field's message and hint. `invalid` (or a Field error) sets `aria-invalid`; `required` sets the native `required`, and a required Field adds `aria-required`.
+- The prefix icon and chevron are hidden from screen readers.
+- A read-only select is a disabled native select underneath, so it is skipped by Tab and announced as unavailable; its value is posted through a hidden input. Use a read-only Input instead if people must be able to focus it.
+- A form reset brings back the value it started with.
 
 ## What you provide
 
-- A label: wrap it in Field (preferred), or pass `id` + your own `<label for>`, or `aria-label` in a toolbar where the context names it. The component warns without one.
-- `v-model`; `name`, `required`, `autocomplete` (`country`, `address-level1`…) as on a native select.
-- The component ref exposes `focus()` and `select` (the `<select>`); `class` and `style` go on the outer box.
+- **Required:** a label: wrap it in Field (preferred), or pass `id` + your own `<label for>`, or `aria-label` in a toolbar where the context names it. The component warns without one. And the choices: `options` or `<option>` elements in the default slot.
+- **Optional:** `options`, `placeholder`, `size` (`slim` | `default` | `large`; default `default`), `prefixIcon` ("sliders"), `invalid`, `disabled`, `readonly`, `required`, `id`, `name`. `autocomplete` (`country`, `address-level1`…) and other attributes go to the native select.
+- **v-model:** `v-model` (the chosen value, a string; `null` until something is chosen).
+- **Slots:** the default slot (`<option>` and `<optgroup>` elements, instead of `options`), `#prefix` (your own content before the value).
+
+The component ref exposes `focus()` and `select` (the `<select>`); `class` and `style` go on the outer box.

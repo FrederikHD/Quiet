@@ -46,9 +46,9 @@ export interface TableProps<R> {
   skeletonRows?: number;
   /** Under 640px (the table's own width): scroll (default) sideways with the first column pinned, or cards. */
   mobile?: 'scroll' | 'cards';
-  /** Scroll mode: pin the first column (default true). */
+  /** Scroll mode: pin the first column (with its checkbox) while the rest scrolls, when it is the primary column. Default true. */
   pinFirst?: boolean;
-  /** Scrolls the body inside this height; the header stays. */
+  /** Scrolls the body inside this height (a number in px, or a CSS length); the header row stays. */
   maxHeight?: number | string;
   /** Row height: comfortable (56px) or compact (40px). Default: the nearest data-density. */
   density?: 'comfortable' | 'compact';

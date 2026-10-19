@@ -7,10 +7,13 @@ export interface TableColumn<Row = Record<string, unknown>> {
   format?: (row: Row, index: number) => string;
   /** Right-aligned, tabular figures; sorts high to low first. */
   numeric?: boolean;
+  /** Cell and header alignment. Default start (numeric columns: end). */
   align?: 'start' | 'end' | 'center';
+  /** The header becomes a sort button. */
   sortable?: boolean;
   /** The value to sort by; default row[key]. */
   sortValue?: (row: Row) => string | number | Date | null | undefined;
+  /** The direction of the first click; default desc for numeric columns, asc for the rest. */
   sortFirst?: 'asc' | 'desc';
   /** Phone sort menu wording: [ascending, descending], e.g. ['Oldest first', 'Newest first']. */
   sortLabels?: [string, string];
@@ -20,7 +23,9 @@ export interface TableColumn<Row = Record<string, unknown>> {
   truncate?: boolean | string;
   /** Let long text wrap (min 12rem). */
   wrap?: boolean;
+  /** Column width, as a CSS length. */
   width?: string;
+  /** Minimum column width, as a CSS length: 'min(11rem, 40cqi)' for long names in a pinned column. */
   minWidth?: string;
   /** false: hide this column in phone cards. */
   mobile?: boolean;

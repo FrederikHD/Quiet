@@ -26,6 +26,7 @@ export interface SelectProps {
   prefixIcon?: IconName;
   /** Shown like a read-only Input and kept in form posts; can't be changed (or focused — a native select has no read-only mode). */
   readonly?: boolean;
+  /** Greyed out and skipped by Tab. */
   disabled?: boolean;
   /** Required: the placeholder can't be picked again once something is chosen. Sets aria-required. */
   required?: boolean;

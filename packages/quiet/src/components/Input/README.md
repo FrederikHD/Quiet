@@ -4,7 +4,7 @@ A single-line text box — only the control itself; its label, help text and err
 
 ## Anatomy
 
-An outer box (`surface-raised`, 1px `line-strong` border, `radius-md`) holding an optional `prefix`, the text field, an optional clear button and an optional `suffix`. The box fills its container's width — size it with the layout, not the input.
+An outer box (`surface-raised`, 1px `line-strong` border, `radius-md`) holding an optional prefix, the text field, an optional clear button and an optional suffix. The box fills its container's width — size it with the layout, not the input.
 
 ## Size and density
 
@@ -16,19 +16,21 @@ An outer box (`surface-raised`, 1px `line-strong` border, `radius-md`) holding a
 
 ## Prefix and suffix
 
-- **Icons:** a search icon as `prefix` for search fields. Icons are sized to `--ctl-icon` and shown in `ink-muted`.
-- **Units:** the currency where the shop's locale writes it — `suffix` "€" for German ("49,90 €"), `prefix` for English ("€49.90"), as `money()` formats it; "kg", "cm", "%" or "pcs" as `suffix`. A unit is decoration — the label must still say it ("Price in EUR", "Weight in kg"), because screen readers don't read affixes.
+- `prefix` and `suffix` take text; the `#prefix` and `#suffix` slots take anything else.
+- **Icons:** a search icon in the `#prefix` slot for search fields. Icons are sized to `--ctl-icon` and shown in `ink-muted`.
+- **Units:** the currency where the shop's locale writes it — `suffix` "€" for German ("49,90 €"), `prefix` for English ("€49.90"), as `money()` formats it; "kg", "cm", "%" or "pcs" as `suffix`. A unit is decoration — the label must still say it ("Price in EUR", "Weight in kg"), because affixes aren't part of the field's name or description and screen readers don't read them with the field.
 - Clicking an affix focuses the field.
 - Keep affixes short; no buttons inside them. A visible action (Apply, Copy) goes next to the input as a Button.
 
 ## Numbers and prices
 
 - Set `numeric` and `align="end"` for prices, quantities and stock counts so digits line up with the table columns they edit.
-- Use `type="text"` with `inputMode="decimal"` (prices, weights) or `inputMode="numeric"` (quantities, postcodes) rather than `type="number"`: number fields drop leading zeros, change values on scroll and don't accept a German decimal comma. Native number spinners are hidden; a quantity stepper (− 1 +) is not in the system yet.
+- Use `type="text"` with `inputmode="decimal"` (prices, weights) or `inputmode="numeric"` (quantities, postcodes) rather than `type="number"`: number fields drop leading zeros, change values on scroll and don't accept a German decimal comma. Native number spinners are hidden; for − 1 + buttons use QuantityStepper.
+- `v-model.number` gives a number for any numeric text, and `v-model.trim` trims the value.
 
 ## Clear button
 
-Pass `clearable` to show a × while the field has a value: search boxes, table filters, discount-code fields. It returns focus to the field. Translate `clear-label` ("Leeren"), or once for the shop with `configure({ strings: { input: { clear: 'Leeren' } } })`.
+Pass `clearable` to show a × while the field has a value: search boxes, table filters, discount-code fields. Pressing it empties the value, emits `@clear` and returns focus to the field. It doesn't show while the input is disabled or read-only. Translate `clearLabel` ("Leeren"), or once for the shop with `configure({ strings: { input: { clear: 'Leeren' } } })`.
 
 ## States
 
@@ -44,8 +46,20 @@ Pass `clearable` to show a × while the field has a value: search boxes, table f
 
 A placeholder is an example, never the label: "z. B. 1049" for an order number, "name@example.com" for email. It disappears when typing starts, so nothing essential goes in it.
 
+## Keyboard and screen readers
+
+- A native `<input>`: typing, selection and Tab work as usual. Clicking the padding or an affix focuses it.
+- The input is named by its Field's label and described by the Field's message and hint (`aria-describedby`, added to any you pass). `invalid`, or an error on the Field, sets `aria-invalid`; `required` sets the native `required`, and a required Field adds `aria-required`.
+- The clear button is a separate tab stop after the input, named "Clear" (`clearLabel`). Enter or Space clears and puts focus back in the input.
+- Read-only inputs stay in the tab order and their text can be selected; disabled ones are skipped.
+
 ## What you provide
 
 - A label: the Field component (preferred), or `id` with your own `<label for>`, or `aria-label` for fields that are labelled by their context (a table search above its table). The component warns in the console when there is none.
-- `v-model`; `name`, `type`, `autocomplete`, `inputmode` as on a native input — `autocomplete` matters in checkout (`email`, `given-name`, `postal-code`, `cc-number`…).
-- The component ref exposes `focus()` and `input` (the `<input>`); `class` and `style` go on the outer box.
+- **Optional:** `size` (`slim` | `default` | `large`; default `default`), `prefix`, `suffix`, `align` (`start` | `end`; default `start`), `numeric`, `clearable`, `clearLabel` (default "Clear"), `invalid`, `disabled`, `readonly`, `required`, `id`, `type` (default "text"). `name`, `autocomplete`, `inputmode`, `placeholder` and other attributes go to the native input — `autocomplete` matters in checkout (`email`, `given-name`, `postal-code`, `cc-number`…).
+- **v-model:** `v-model` (the text; `.trim` and `.number` work).
+- **Events:** `@clear` (the clear button was pressed; the value is already empty).
+- **Slots:** `#prefix`, `#suffix`.
+- **Translations:** `clearLabel`, or `configure({ strings: { input: { clear: 'Leeren' } } })`.
+
+The component ref exposes `focus()` and `input` (the `<input>`); `class` and `style` go on the outer box.

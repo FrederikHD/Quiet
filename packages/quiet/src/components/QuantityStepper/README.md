@@ -26,8 +26,17 @@ Inside a Field it gets the field's label, hint and error (`invalid` shows the `d
 
 ## Keyboard and screen readers
 
-One Tab stop: a spinbutton with its value, minimum and maximum. ↑ ↓ change it, Page Up/Down by 10, Home/End to the limits; typed numbers count on Enter or when leaving. − and + are for pointer and touch and are skipped by Tab.
+- One Tab stop: a text field with `role="spinbutton"`, so screen readers announce its value, minimum and maximum. On phones it brings up the number keypad.
+- ↑ ↓ change it by `step`, Page Up / Page Down by ten steps, Home / End jump to `min` / `max`. Typed numbers count on Enter or when leaving the field.
+- − and + are for pointer and touch and are skipped by Tab; they are named "Decrease quantity" and "Increase quantity" and are disabled at the limits.
+- Named by its Field's label (or `aria-label`) and described by the Field's message and hint. `invalid` (or a Field error) sets `aria-invalid`; a required Field adds `aria-required`.
+- `readonly` keeps it in the tab order but ignores the keys, and disables − and +; `disabled` takes it out of the tab order.
 
 ## What you provide
 
-A label (Field, or `aria-label` naming the product in a cart line), `v-model` (a number). Optional: `min` (default 1), `max` (default 99), `step`, `size`, `disabled`, `readOnly`, `name`, `strings` (`decrease`, `increase`; shop-wide under `strings.stepper`).
+- **Required:** a label (Field, or `aria-label` naming the product in a cart line).
+- **Optional:** `min` (default 1), `max` (default 99), `step` (default 1), `size` (`default` | `large`; default `default`), `invalid`, `disabled`, `readonly`, `id` (inside a Field the Field's id wins). `name` and other attributes go to the native input.
+- **v-model:** `v-model` (the number; starts at `min` when empty).
+- **Translations:** `strings` — `decrease` ("Decrease quantity"), `increase` ("Increase quantity"); or `configure({ strings: { stepper: { … } } })`.
+
+The component ref exposes `focus()` and `input` (the `<input>`); `class` and `style` go on the outer box.

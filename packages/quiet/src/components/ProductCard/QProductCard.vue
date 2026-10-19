@@ -11,7 +11,7 @@ import QRating from '../Rating/QRating.vue';
 export interface ProductCardProps {
   /** The product name; the card's heading and its one link. */
   name: string;
-  /** The product page. The name links there and the whole card is clickable. */
+  /** The product page. The name links there and the whole card is clickable; without it the name isn't a link. */
   href?: string;
   /** The product image. Leave alt empty when it only shows the product named below; a placeholder shows without one. */
   image?: { src: string; alt?: string };

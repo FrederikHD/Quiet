@@ -9,6 +9,7 @@ import QIcon from '../Icon/QIcon.vue';
 export interface FormError {
   /** The control (or group) to jump to. */
   id?: string;
+  /** What's wrong and how to fix it — the same text as the Field's error. */
   message: string;
 }
 
@@ -19,13 +20,13 @@ export interface FormProps {
   labelWidth?: string;
   /** required (default): an asterisk on required fields. optional: "(optional)" on optional fields — best for checkout. none: no markers. */
   markers?: Markers;
-  /** Sets data-density on the form. */
+  /** comfortable or compact: sets data-density on the form, sizing the fields and controls inside. Default: inherited. */
   density?: 'comfortable' | 'compact';
-  /** Translations for the built-in words. */
+  /** Translations for the built-in words of every field inside and of the error summary. */
   strings?: FormStrings;
   /** Errors to list in a summary at the top after a failed submit. Each links to its control by id. Focus moves to the summary after each submit that leaves errors, and when errors first appear — not while people are fixing them. */
   errors?: FormError[] | null;
-  /** Default true. Set false to keep focus where it is when errors change (e.g. live validation). */
+  /** Default true. Set false to keep focus where it is (e.g. live validation); the summary is then announced as an alert. */
   focusErrorSummary?: boolean;
   /** Default true: the browser's own validation bubbles are off; show errors through Field instead. */
   noValidate?: boolean;

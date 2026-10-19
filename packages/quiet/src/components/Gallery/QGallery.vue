@@ -27,11 +27,11 @@ export interface GalleryStrings {
 export interface GalleryProps {
   /** The product's images, main image first. */
   images: GalleryImage[];
-  /** Names the carousel: "Linen shirt images". */
+  /** Names the carousel: "Linen shirt images". Default "Product images". */
   label?: string;
   /** portrait (4:5, default) or square; match the ProductCards. */
   aspect?: 'portrait' | 'square';
-  /** The row of thumbnails under the stage (with two or more images). Default true. */
+  /** The row of thumbnails under the stage (with two or more images, 640px and up with a pointer). Default true. */
   thumbnails?: boolean;
   /** The image shown first when v-model:index isn't bound (0-based). */
   defaultIndex?: number;
@@ -171,7 +171,7 @@ const current = computed(() => images.value[at.value]);
         />
         <span class="q-gallery__counter" aria-hidden="true">{{ strings.counter(at + 1, n) }}</span>
       </template>
-      <span class="q-visually-hidden" aria-live="polite">{{ live }}</span>
+      <span class="q-visually-hidden" aria-live="polite">{{ zoom ? '' : live }}</span>
     </div>
     <div v-if="n > 1 && thumbnails" ref="thumbs" class="q-gallery__thumbs">
       <button
@@ -194,6 +194,8 @@ const current = computed(() => images.value[at.value]);
           <span class="q-gallery__bigcount">{{ strings.counter(at + 1, n) }}</span>
           <QButton icon-start="chevron-right" :aria-label="strings.next" :disabled="at === n - 1" @click="go(at + 1, true)" />
         </div>
+        <!-- While the dialog is open the rest of the page is inert, so the announcement has to come from in here. -->
+        <span class="q-visually-hidden" aria-live="polite">{{ live }}</span>
       </div>
     </QDialog>
   </div>

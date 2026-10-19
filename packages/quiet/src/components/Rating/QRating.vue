@@ -11,11 +11,11 @@ export interface RatingProps {
   count?: number;
   /** Makes it a link (to the reviews). */
   href?: string;
-  /** Makes it a link too (href "#", not followed, unless given), e.g. to open the reviews tab: @click. */
+  /** @click makes it a link too (href "#", not followed unless href is given), e.g. to open the reviews tab. */
   onClick?: (event: MouseEvent) => void;
-  /** Show the number ("4.6") after the stars. Default true. */
+  /** Show the number ("4.6", one decimal) after the stars. Default true. */
   showValue?: boolean;
-  /** small in product cards and review lists, large on the product page. */
+  /** small (13px stars) in product cards and review lists, default (16px), large (20px) on the product page. */
   size?: 'small' | 'default' | 'large';
   /** Translations; or once for the shop with configure() under strings.rating. */
   strings?: RatingStrings;

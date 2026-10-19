@@ -12,7 +12,7 @@ Puts several Fields side by side — First name | Last name, Postcode | City, Le
 
 `columns` sets relative widths: `[1, 1]` equal (default), `[1, 2]` Postcode | City, `[3, 1]` Street | House number.
 
-The group measures itself and stacks into one column, in source order, as soon as its **narrowest** field would drop under about 100px — so on a phone First | Last name and Postcode | City stay side by side, while Street | House number stacks. Order the children so they read well stacked. Set `stack="late"` for rows of short values — Length × Width × Height in cm, Hours : Minutes: they stay a row down to about 88px per field, with tighter padding.
+The group measures itself and stacks into one column, in source order, as soon as its **narrowest** field would drop under about 100px — so on a phone First | Last name and Postcode | City stay side by side, while Street | House number stacks. Order the children so they read well stacked. Set `stack="late"` for rows of short values — Length × Width × Height in cm, Hours : Minutes: they stay a row down to about 88px per field, with tighter padding once the row is under 460px wide.
 
 ## Connected
 
@@ -21,7 +21,7 @@ The group measures itself and stacks into one column, in source order, as soon a
 - Each part keeps its own Field and label, so screen readers name every input. With a group `label` that says it all ("Phone"), hide the part labels with `labelHidden`.
 - Put the required marker on the group, not on each part; avoid "(optional)" on narrow parts.
 - The hovered, focused or invalid part is drawn on top, so its border and focus ring are never covered by a neighbour. A part with an error shows its message under that part; a problem with the combination goes on the group.
-- Connected rows keep the split while there is room; when there isn't, each part keeps a floor (72px for an input; for a select, the width of its longest option plus the chevron, measured) and the larger parts give way, so the control stays joined on any phone. Only below about 80px per part in total do the parts come apart and stack.
+- Connected rows keep the split while there is room; when there isn't, each part keeps a floor (72px for an input; for a select, the width of its longest option plus the chevron, measured) and the larger parts give way, so the control stays joined on any phone. Only when the floors plus 8px per part no longer fit (about 80px per input) do the parts come apart and stack.
 - Only for parts that belong together. Two unrelated values side by side stay separate.
 
 ## Group label
@@ -29,6 +29,8 @@ The group measures itself and stacks into one column, in source order, as soon a
 - With `label` the group gets a heading and is announced as a group ("Dimensions, group"). The label follows the same placement rules as a Field — beside the row when there's room, above it on phones — and lines up with the fields' own labels.
 - Without `label` it's purely a layout row; in side placement it still lines up with the other fields' controls.
 - The fields inside always put their labels on top. Keep them short: "Length", "Width", "Height".
+- `labelPlacement` and `labelWidth` override the Form's for the group label, as on a Field. `labelHidden` keeps the group label for screen readers only.
+- `markers` overrides the Form's markers for the group label. For rich content use the `#label`, `#help` and `#hint` slots.
 
 ## Group messages
 
@@ -38,6 +40,18 @@ The group measures itself and stacks into one column, in source order, as soon a
 
 `disabled` disables every field in the group, as if each Field had it.
 
+## Keyboard and screen readers
+
+- No keys of its own: Tab moves through the fields in source order, which is also the order they stack in.
+- With a label the group has `role="group"` named by that label, so screen readers say "Dimensions, group" on entering it. Without a label it adds nothing.
+- A group message and hint are added to every field's `aria-describedby`, after the field's own, so they are read wherever focus is in the group. A group `error` marks every field invalid.
+- The message area is a polite live region, like a Field's, and is quiet while the Form's error summary shows.
+- `required` on the group only puts the marker on the group label; a control is announced as required only when its own Field has `required`.
+- The help icon works as on a Field.
+
 ## What you provide
 
-Two or more Fields in the default slot; optionally `label`, `columns`, `required`, `hint`, `help` and a message.
+- **Required:** two or more Fields in the default slot.
+- **Optional:** `label` ("Dimensions"), `columns` (default equal), `connected`, `stack` (`auto` | `late`; default `auto`), `required`, `disabled`, `hint`, `help`, `error`, `warning`, `success`, `id` (to link the group from the Form's error summary), `labelHidden`, `labelPlacement` (`auto` | `top` | `side`; default the Form's), `labelWidth` (default the Form's, else 200px), `markers` (`required` | `optional` | `none`; default the Form's).
+- **Slots:** the default slot (the Fields), `#label`, `#help`, `#hint`.
+- **Translations:** `strings` — the same keys as on Field; overrides the Form's.
