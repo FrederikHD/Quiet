@@ -12,7 +12,8 @@
     "test:visual": "playwright test --project=visual",
     "test:visual:update": "playwright test --project=visual --update-snapshots",
     "report": "playwright show-report",
-    "typecheck": "vue-tsc -p tsconfig.json --noEmit"
+    "typecheck": "vue-tsc -p tsconfig.json --noEmit",
+    "test:package": "node package-check/run.mjs"
   },
   "dependencies": {
     "@frederikhd/quiet": "0.1.0"

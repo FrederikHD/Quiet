@@ -18,7 +18,8 @@
     "test:e2e": "npm run test:e2e -w quiet-test",
     "test:visual": "npm run test:visual -w quiet-test",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "test:package": "npm run test:package -w quiet-test"
   },
   "devDependencies": {
     "prettier": "^3.9.10"

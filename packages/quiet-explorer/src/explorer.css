@@ -62,7 +62,10 @@ code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospac
 .ex-controls { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr)); gap: var(--space-4) var(--space-6); align-items: start; }
 .ex-json__fold summary { cursor: pointer; padding: var(--space-2) 0; color: var(--ink); font: var(--text-small); }
 .ex-json__fold summary:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: var(--radius-sm); }
-.ex-controls__rest { grid-column: 1 / -1; }
+.ex-controls__rest, .ex-controls__more { grid-column: 1 / -1; }
+.ex-controls__more > summary { cursor: pointer; padding: var(--space-2) 0; color: var(--ink); font: var(--text-label); }
+.ex-controls__more > summary:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: var(--radius-sm); }
+.ex-controls__more > .ex-controls { margin-top: var(--space-3); }
 .ex-json .q-textarea__field { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; line-height: 18px; }
 .ex-log { margin: 0; padding-left: var(--space-6); display: grid; gap: var(--space-1); }
 

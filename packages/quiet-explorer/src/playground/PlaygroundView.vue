@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { QButton, QCheckbox, QField, QInput, QSelect, QTabs, QTextarea } from '@frederikhd/quiet';
+import { QButton, QField, QInput, QSelect, QTabs } from '@frederikhd/quiet';
 import { computed, reactive, ref, watch } from 'vue';
 import type { PropMeta } from '../../plugins/quiet-meta';
 import type { Entry } from '../catalog';
 import CodeBlock from '../pages/CodeBlock.vue';
 import { templateFor } from './code';
 import PreviewTarget from './PreviewTarget';
+import PropControl from './PropControl.vue';
 
 const props = defineProps<{ entry: Entry }>();
 
@@ -50,17 +51,43 @@ function structuredCloneSafe<T>(v: T): T {
 }
 watch(() => props.entry.folder, reset, { immediate: true });
 
-// Every prop gets a control except the ones the story manages itself (hide) and the ones only code can pass
-// (functions, elements) — both are listed under the controls, so nothing is silently missing.
+// Every prop gets a control, except:
+// - what the story manages itself (hide) and what only code can pass (functions, elements);
+// - the default… twin of the v-model the playground binds: with v-model bound, defaultValue / defaultOpen do nothing.
+// Those are listed under the controls with the reason, so nothing is silently missing.
 const hidden = computed(() => new Set(story.value.hide ?? []));
+const boundDefault = computed(() => {
+  const m = modelProp.value;
+  return m ? `default${m === 'modelValue' ? 'Value' : m.charAt(0).toUpperCase() + m.slice(1)}` : null;
+});
 const controls = computed<PropMeta[]>(() =>
-  (api.value?.props ?? []).filter((p) => !hidden.value.has(p.name) && p.control.kind !== 'code' && !(p.control.kind === 'json' && hasFunction(values[p.name]))),
+  (api.value?.props ?? []).filter(
+    (p) => !hidden.value.has(p.name) && p.name !== boundDefault.value && p.control.kind !== 'code' && !(p.control.kind === 'json' && hasFunction(values[p.name])),
+  ),
 );
 const notEditable = computed(() =>
   (api.value?.props ?? [])
     .filter((p) => !controls.value.includes(p))
-    .map((p) => ({ name: p.name, why: p.control.kind === 'code' ? p.control.reason : hidden.value.has(p.name) ? 'set by this playground' : 'set by the story in code' })),
+    .map((p) => ({
+      name: p.name,
+      why:
+        p.control.kind === 'code'
+          ? p.control.reason
+          : hidden.value.has(p.name)
+            ? 'set by this playground'
+            : p.name === boundDefault.value
+              ? `only without v-model; here v-model is bound`
+              : 'set by the story in code',
+    })),
 );
+// Plumbing rather than look and behaviour: folded under "More options" so the main controls stay about the component.
+const isPlumbing = (p: PropMeta) => ['id', 'name', 'mainId', 'panelClass', 'teleport'].includes(p.name) || /strings$/i.test(p.name);
+// The v-model first: it's the value people try first.
+const mainControls = computed(() =>
+  controls.value.filter((p) => !isPlumbing(p)).sort((a, b) => Number(b.name === modelProp.value) - Number(a.name === modelProp.value)),
+);
+const moreControls = computed(() => controls.value.filter(isPlumbing));
+const labelOf = (p: PropMeta) => (p.name !== modelProp.value ? p.name : p.name === 'modelValue' ? 'v-model' : `v-model:${p.name}`);
 // Props named default… are read once, on mount: changing one starts the preview again.
 const previewKey = computed(() => JSON.stringify(Object.entries(values).filter(([k]) => k.startsWith('default'))));
 const defaults = computed(() => Object.fromEntries((api.value?.props ?? []).map((p) => [p.name, parseDefault(p.default)])));
@@ -72,16 +99,6 @@ function parseDefault(d?: string): unknown {
     return d;
   }
 }
-function enumValue(p: PropMeta): string {
-  const v = p.name in values ? values[p.name] : defaults.value[p.name];
-  return v === undefined ? '' : JSON.stringify(v);
-}
-// Enum values are JSON texts ('"md"', '2', 'null'), so numbers, booleans and null come back as themselves.
-function setEnum(p: PropMeta, v: string | null | undefined) {
-  if (v === '' || v == null) delete values[p.name];
-  else values[p.name] = JSON.parse(v);
-}
-const enumLabel = (v: string) => (v.startsWith('"') ? JSON.parse(v) : v);
 function setJson(name: string, text: string) {
   json[name].text = text;
   try {
@@ -164,57 +181,33 @@ const panel = ref('controls');
               <QInput v-model="slotText[name]" />
             </QField>
           </template>
-          <template v-for="p in controls" :key="p.name">
-            <QCheckbox
-              v-if="p.control.kind === 'boolean'"
-              :label="p.name"
-              :description="p.description"
-              :model-value="!!(values[p.name] ?? defaults[p.name])"
-              @update:model-value="values[p.name] = $event ? true : defaults[p.name] === true ? false : undefined"
-            />
-            <QField v-else-if="p.control.kind === 'enum'" :label="p.name" :hint="p.description">
-              <QSelect
-                :model-value="enumValue(p)"
-                :placeholder="p.required ? undefined : '—'"
-                :options="p.control.values.map((v) => ({ value: v, label: enumLabel(v) }))"
-                @update:model-value="setEnum(p, $event)"
+          <PropControl
+            v-for="p in mainControls"
+            :key="p.name"
+            :prop="p"
+            :label="labelOf(p)"
+            :value="values[p.name]"
+            :fallback="defaults[p.name]"
+            :json="json[p.name]"
+            @set="values[p.name] = $event"
+            @set-json="setJson(p.name, $event)"
+          />
+          <details v-if="moreControls.length" class="ex-controls__more" data-testid="playground-more">
+            <summary>More options: {{ moreControls.map((p) => p.name).join(', ') }}</summary>
+            <div class="ex-controls">
+              <PropControl
+                v-for="p in moreControls"
+                :key="p.name"
+                :prop="p"
+                :label="labelOf(p)"
+                :value="values[p.name]"
+                :fallback="defaults[p.name]"
+                :json="json[p.name]"
+                @set="values[p.name] = $event"
+                @set-json="setJson(p.name, $event)"
               />
-            </QField>
-            <QField v-else-if="p.control.kind === 'number'" :label="p.name" :hint="p.description">
-              <QInput
-                type="number"
-                :model-value="(values[p.name] as number | undefined) ?? (defaults[p.name] as number | undefined) ?? null"
-                numeric
-                @update:model-value="values[p.name] = $event === '' || $event == null ? undefined : Number($event)"
-              />
-            </QField>
-            <QField v-else-if="p.control.kind === 'string'" :label="p.name" :hint="p.description">
-              <QInput
-                :model-value="(values[p.name] as string | undefined) ?? ''"
-                @update:model-value="values[p.name] = $event === '' ? undefined : $event"
-              />
-            </QField>
-            <QField v-else :label="`${p.name} (JSON)`" :hint="p.description" :error="json[p.name]?.error" class="ex-json">
-              <!-- Long values (image data URIs, big lists) start folded so the other controls stay in view. -->
-              <details v-if="(json[p.name]?.text.length ?? 0) > 300" class="ex-json__fold">
-                <summary>Show {{ p.name }} ({{ json[p.name]!.text.length.toLocaleString('de-DE') }} characters)</summary>
-                <QTextarea :model-value="json[p.name]?.text" :rows="6" :max-rows="14" auto-grow spellcheck="false" @update:model-value="setJson(p.name, $event ?? '')" />
-              </details>
-              <QTextarea
-                v-else
-                :model-value="json[p.name]?.text"
-                :rows="json[p.name]?.text ? 4 : 2"
-                auto-grow
-                :max-rows="10"
-                spellcheck="false"
-                :placeholder="p.type"
-                @update:model-value="setJson(p.name, $event ?? '')"
-              />
-            </QField>
-          </template>
-          <p v-if="modelProp" class="ex-muted">
-            <code>v-model{{ modelProp === 'modelValue' ? '' : `:${modelProp}` }}</code> = <code>{{ safeJson(values[modelProp]) }}</code>
-          </p>
+            </div>
+          </details>
           <p v-if="notEditable.length" class="ex-muted ex-controls__rest" data-testid="playground-not-editable">
             Not editable here:
             <template v-for="(n, i) in notEditable" :key="n.name"><code>{{ n.name }}</code> ({{ n.why }}){{ i < notEditable.length - 1 ? ', ' : '.' }} </template>

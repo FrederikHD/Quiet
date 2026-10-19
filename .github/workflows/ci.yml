@@ -1,9 +1,12 @@
-# Type-checks, unit tests and the Playwright suite (e2e, keyboard, accessibility, responsive) on every push and PR.
+# Type-checks, unit tests, the package check (the packed tarball installed into a fresh app) and the Playwright suite
+# (e2e, keyboard, accessibility, responsive) on every push and PR. The release workflow runs it too, before publishing.
 name: CI
 
 on:
   push:
+    branches: ['**'] # tags run it through the release workflow
   pull_request:
+  workflow_call:
 
 jobs:
   test:
@@ -17,6 +20,7 @@ jobs:
       - run: npm ci
       - run: npm run typecheck
       - run: npm run test:unit
+      - run: npm run test:package
       - run: npx playwright install --with-deps chromium
         working-directory: packages/quiet-test
       - run: npm run test:e2e

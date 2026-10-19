@@ -41,7 +41,7 @@ test('v-model round-trips through the playground', async ({ page }) => {
   const box = page.getByTestId('playground-preview').getByRole('checkbox');
   await expect(box).toBeChecked();
   await box.uncheck();
-  await expect(page.getByTestId('playground-controls')).toContainText('v-model = false');
+  await expect(page.getByTestId('playground-controls').getByRole('checkbox', { name: /^v-model/ })).not.toBeChecked();
   await page.getByRole('tab', { name: /Events/ }).click();
   await expect(page.getByTestId('playground-events')).toContainText('update:modelValue(false)');
 });
@@ -53,7 +53,7 @@ test('an overlay opens from the playground and closes with Escape', async ({ pag
   await expect(dialog).toBeVisible();
   await page.keyboard.press('Escape');
   await expect(dialog).toBeHidden();
-  await expect(page.getByTestId('playground-controls')).toContainText('v-model:open = false');
+  await expect(page.getByTestId('playground-controls').getByRole('checkbox', { name: /^v-model:open/ })).not.toBeChecked();
 });
 
 test('the preview width shows the phone layout', async ({ page }) => {
@@ -76,8 +76,12 @@ for (const folder of components) {
     const note = page.getByTestId('playground-not-editable');
     const rest = (await note.count()) ? ((await note.textContent()) ?? '') : '';
     for (const name of props) {
-      const controlled = labels.some((l) => l.trim().replace(/\s*\*$/, '') === name || l.trim().startsWith(`${name} (JSON)`));
-      const listed = new RegExp(`\\b${name} \\((a function|an element|set by this playground)\\)`).test(rest);
+      const shown = name === 'modelValue' ? 'v-model' : name;
+      const controlled = labels.some((l) => {
+        const t = l.trim().replace(/\s*\*$/, '');
+        return t === shown || t === `v-model:${name}` || t.startsWith(`${shown} (JSON)`) || t.startsWith(`v-model:${name} (JSON)`);
+      });
+      const listed = new RegExp(`\\b${name} \\((a function|an element|set by this playground|only without v-model; here v-model is bound)\\)`).test(rest);
       expect(controlled || listed, `${folder}: ${name}`).toBe(true);
     }
   });

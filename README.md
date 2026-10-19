@@ -2,13 +2,13 @@
 
 A calm, neutral-first design system for commerce — storefront and back office — built with Vue 3.
 
-**Explorer:** https://frederikhd.github.io/Quiet/
+**Explorer:** https://frederikhd.github.io/Quiet/ · **npm:** [`@frederikhd/quiet`](https://www.npmjs.com/package/@frederikhd/quiet) · MIT
 
 ## Packages
 
 | Package | What it is |
 | --- | --- |
-| [`packages/quiet`](packages/quiet) | The library: 49 components, design tokens, styles, the `Quiet` plugin and formatting helpers. |
+| [`packages/quiet`](packages/quiet) | The library, published as `@frederikhd/quiet`: 49 components, design tokens, styles, the `Quiet` plugin and formatting helpers. |
 | [`packages/quiet-explorer`](packages/quiet-explorer) | The documentation app: brand book, tokens, icons, and for every component its guidelines, API tables, examples and a live playground. |
 | [`packages/quiet-test`](packages/quiet-test) | Unit tests (Vitest + Vue Test Utils) and browser tests (Playwright): end-to-end, keyboard, accessibility (axe), responsive and visual. |
 
@@ -32,11 +32,16 @@ Edit a component in `packages/quiet/src/components/<Name>/` and the explorer upd
 | `npm run test:unit` | Component and library tests in jsdom (fast; run them while you work). |
 | `npm run test:e2e` | Builds the explorer and runs every Playwright spec against it. |
 | `npm run test:visual` | Screenshot comparison of every example, light and dark, against the baselines in `packages/quiet-test/e2e/__screenshots__/<platform>/`. After a deliberate change, `npm run test:visual:update -w quiet-test` accepts the new look; review the changed images in the diff. |
+| `npm run test:package` | Packs the library as it will be published, installs it into a fresh app and type-checks, builds and server-renders that app. |
 | `npm test` | Unit, then end-to-end tests. |
 
 Playwright needs a Chromium: run `npx playwright install chromium` once, or point `PW_CHROMIUM_PATH` at one you have.
 
 ## Using the library
+
+```sh
+npm install @frederikhd/quiet
+```
 
 ```ts
 import { createApp } from 'vue';
@@ -50,6 +55,7 @@ createApp(App).use(Quiet, { locale: 'de-DE', currency: 'EUR' }).mount('#app');
 Pass `{ components: false }` to import them one by one instead: `import { QButton } from '@frederikhd/quiet'`.
 
 Load Inter from Google Fonts and set `data-theme="light|dark"` and `data-density="comfortable|compact"` on `<html>`.
+Toasts need a `<QToaster />` (AppShell includes one). More in the [package README](packages/quiet/README.md).
 
 ## How the code is organised
 
@@ -80,3 +86,22 @@ props, slots instead of render props, and class names shared with the original d
 `.github/workflows/pages.yml` builds the explorer and publishes it to GitHub Pages on every push to `main` and
 `develop`, or by hand from the Actions tab.
 In the repository settings, Pages → Source must be "GitHub Actions".
+
+## Releasing
+
+Releases of `@frederikhd/quiet` are published to npm by `.github/workflows/release.yml` when a version tag is pushed.
+
+1. On `develop`, set the new version in `packages/quiet/package.json` (semver; before 1.0, breaking changes bump
+   the minor version) and move the entries under `## [Unreleased]` in `packages/quiet/CHANGELOG.md` into a
+   `## [x.y.z] - YYYY-MM-DD` section. Commit both.
+2. Run `npm run typecheck && npm test && npm run test:package` locally (CI runs them too).
+3. Tag the commit and push the tag: `git tag vx.y.z && git push origin vx.y.z`.
+
+The workflow checks that the tag, the package version and the changelog agree, runs the whole CI suite, publishes to
+npm with provenance (a version with a suffix such as `0.2.0-beta.1` goes out under the `next` tag) and creates a
+GitHub Release from the changelog section. It needs the repository secret `NPM_TOKEN` (Settings → Secrets and
+variables → Actions): an npm *granular access token* with read and write access to packages. For the very first
+release the package doesn't exist yet, so give the token the whole `@frederikhd` scope; once it's published you can
+narrow a new token to `@frederikhd/quiet`. The scope `@frederikhd` must be your npm username, or an npm organisation
+you own. The publish job runs in the `npm` environment, so you can require an approval there before anything goes
+out.

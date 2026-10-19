@@ -1,0 +1,71 @@
+# Publishes @frederikhd/quiet to npm when a version tag is pushed:
+#   1. the tag must match packages/quiet/package.json and have a section in CHANGELOG.md;
+#   2. the full CI suite runs (types, unit, package check, browser tests);
+#   3. the package is published with provenance, and a GitHub Release is created from the changelog section.
+# How to release: see "Releasing" in the root README. Needs the repository secret NPM_TOKEN (an npm automation token).
+name: Release
+
+on:
+  push:
+    tags: ['v*.*.*']
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      prerelease: ${{ steps.version.outputs.prerelease }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: version
+        name: Tag, package version and changelog agree
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          pkg="$(node -p "require('./packages/quiet/package.json').version")"
+          if [ "$tag" != "$pkg" ]; then
+            echo "::error::Tag v$tag does not match packages/quiet/package.json version $pkg"; exit 1
+          fi
+          if ! grep -q "^## \[$pkg\]" packages/quiet/CHANGELOG.md; then
+            echo "::error::packages/quiet/CHANGELOG.md has no '## [$pkg]' section"; exit 1
+          fi
+          echo "version=$pkg" >> "$GITHUB_OUTPUT"
+          case "$pkg" in *-*) echo "prerelease=true" >> "$GITHUB_OUTPUT" ;; *) echo "prerelease=false" >> "$GITHUB_OUTPUT" ;; esac
+
+  test:
+    needs: verify
+    uses: ./.github/workflows/ci.yml
+
+  publish:
+    needs: [verify, test]
+    runs-on: ubuntu-latest
+    environment: npm
+    permissions:
+      contents: write # the GitHub Release
+      id-token: write # npm provenance
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          registry-url: https://registry.npmjs.org
+      - run: npm ci
+      - run: npm run build -w @frederikhd/quiet
+      - name: Publish to npm
+        # A version like 0.2.0-beta.1 goes out under the "next" tag, so `npm install` keeps getting the last stable one.
+        run: npm publish -w @frederikhd/quiet --provenance --access public ${{ needs.verify.outputs.prerelease == 'true' && '--tag next' || '' }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: GitHub Release from the changelog
+        run: |
+          v="${{ needs.verify.outputs.version }}"
+          awk -v v="$v" '$0 ~ "^## \\[" v "\\]" {on=1; next} /^## \[|^\[[^]]+\]: / {if (on) exit} on' packages/quiet/CHANGELOG.md > notes.md
+          printf '\n---\nnpm: https://www.npmjs.com/package/@frederikhd/quiet/v/%s\n' "$v" >> notes.md
+          gh release create "$GITHUB_REF_NAME" --title "@frederikhd/quiet $v" --notes-file notes.md \
+            ${{ needs.verify.outputs.prerelease == 'true' && '--prerelease' || '' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
