@@ -30,6 +30,9 @@ jobs:
         name: Tag, package version and changelog agree
         run: |
           pkg="$(node -p "require('./packages/quiet/package.json').version")"
+          if [ "$GITHUB_REF_TYPE" = "branch" ] && [ "$GITHUB_REF_NAME" != "develop" ] && [ "$GITHUB_REF_NAME" != "main" ]; then
+            echo "::error::Releases run from develop or main, not $GITHUB_REF_NAME"; exit 1
+          fi
           if [ "$GITHUB_REF_TYPE" = "tag" ]; then
             if [ "${GITHUB_REF_NAME#v}" != "$pkg" ]; then
               echo "::error::Tag $GITHUB_REF_NAME does not match packages/quiet/package.json version $pkg"; exit 1
