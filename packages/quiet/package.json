@@ -40,7 +40,8 @@
     "./tokens.css": "./src/styles/tokens.css",
     "./global": {
       "types": "./dist/types/global.d.ts"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "files": [
     "dist",

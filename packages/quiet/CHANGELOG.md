@@ -6,6 +6,10 @@ breaking changes, a patch version (0.x.y) never does.
 
 ## [Unreleased]
 
+### Added
+
+- `@frederikhd/quiet/package.json` can be imported, for tools that read the installed version.
+
 ## [0.1.0] - 2026-10-19
 
 First release.
