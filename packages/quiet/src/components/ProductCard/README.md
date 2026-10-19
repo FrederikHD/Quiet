@@ -29,7 +29,7 @@ A product in a grid — collection pages, search results, "You may also like": i
 
 ## Behaviour
 
-- **One link per card:** the name is the link to `href`, and it covers the whole card, so a click anywhere opens the product. The dots sit above it (their colour names show on hover). Without `href` the name isn't a link, so always pass one.
+- **One link per card:** the name is the link to `href`, and it covers the whole card, so a click anywhere opens the product. The dots sit above it (their colour names show on hover). `href` is required, and Quiet warns in development when it is empty.
 - **Client-side routing:** clicking the link emits `@navigate(event)`; call `event.preventDefault()` and route yourself.
 - **Quick add** (the `quickAdd` prop, emits `@quick-add`): a round + button on the image, named "Add Linen shirt to cart". Only offer it for products without choices to make (or add the default variant and say so in a Toast).
 - The name is a heading (`h3` by default, `headingLevel` to change), so screen-reader users can jump from product to product.

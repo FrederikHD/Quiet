@@ -5,13 +5,17 @@ import { useQuietId } from '../../composables/useQuietId';
 import QNavItem from './QNavItem.vue';
 import type { NavItem, NavSection } from './types';
 
+export interface NavStrings {
+  /** The nav landmark's name. Default "Main". */
+  label?: string;
+}
 export interface NavProps {
   /** Sections of links, each with an optional title. Use this or `items`. */
   sections?: NavSection[];
   /** The links of a single, untitled section (when there is no `sections`). */
   items?: NavItem[];
-  /** Translations: { nav: "Main" }, the nav landmark's name; or once with configure({ strings: { shell } }). An aria-label on QNav wins. */
-  strings?: { nav?: string };
+  /** Translations: { label: "Main" }, the nav landmark's name; or once with configure({ strings: { nav } }). An aria-label on QNav wins. */
+  strings?: NavStrings;
 }
 
 const props = withDefaults(defineProps<NavProps>(), { sections: undefined, items: undefined, strings: undefined });
@@ -22,13 +26,13 @@ const emit = defineEmits<{
   ];
 }>();
 
-const strings = useStrings('shell', { nav: 'Main' }, () => props.strings);
+const strings = useStrings<Required<NavStrings>>('nav', { label: 'Main' }, () => props.strings);
 const baseId = useQuietId('q-nav-');
 const sections = computed<NavSection[]>(() => props.sections ?? [{ items: props.items ?? [] }]);
 </script>
 
 <template>
-  <nav class="q-nav" :aria-label="strings.nav">
+  <nav class="q-nav" :aria-label="strings.label">
     <div
       v-for="(s, si) in sections"
       :key="si"

@@ -77,7 +77,7 @@ Back-office lists: orders, products, customers, refunds. It's a real `<table>` a
 - **Header checkbox:** selects the rows on this page and turns indeterminate when only some are ticked.
 - **Selected rows** take `brand-tint`.
 - **Bulk bar:** while something is selected, a bar shows "3 selected", your `#bulk-actions` slot (slim Buttons) and Clear selection. Screen readers hear the count change.
-- **All matching rows:** when the whole page is ticked and `totalCount` is larger, the bar offers "Select all 1,240". Its state is `v-model:all-matching`. The `#bulk-actions` slot gets `{ selected, allMatching }`; when `allMatching` is true, act on the query, not on the keys.
+- **All matching rows:** when the whole page is ticked, `totalCount` is larger and `v-model:all-matching` is bound, the bar offers "Select all 1,240" (without the binding nothing would act on all of them, so it isn't offered). The `#bulk-actions` slot gets `{ selected, allMatching }`; when `allMatching` is true, act on the query, not on the keys.
 - **State:** `v-model:selected` (row keys from `rowKey`, default `row.id`), or `defaultSelected` when it isn't bound. Clear the selection when the page, search or filter changes.
 - **`isRowSelectable(row)`:** rows it returns false for get a disabled checkbox.
 

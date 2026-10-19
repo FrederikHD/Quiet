@@ -1,4 +1,4 @@
-<!-- strings translates the menu button, the skip link and the drawer's close button; the Nav's landmark name comes from the same place. -->
+<!-- strings translates the menu button, the skip link and the drawer's close button; the Nav names its own landmark. -->
 <script setup lang="ts">
 import { QAppShell, QNav, QPage } from '@frederikhd/quiet';
 </script>
@@ -9,7 +9,7 @@ import { QAppShell, QNav, QPage } from '@frederikhd/quiet';
       brand="Leinen & Co"
       contained
       :toaster="false"
-      :strings="{ menu: 'Menü', skip: 'Zum Inhalt springen', closeMenu: 'Menü schließen', nav: 'Hauptmenü' }"
+      :strings="{ menu: 'Menü', skip: 'Zum Inhalt springen', closeMenu: 'Menü schließen' }"
     >
       <template #nav>
         <QNav
@@ -18,7 +18,7 @@ import { QAppShell, QNav, QPage } from '@frederikhd/quiet';
             { label: 'Produkte', href: '#produkte', icon: 'package' },
             { label: 'Kunden', href: '#kunden', icon: 'user' },
           ]"
-          :strings="{ nav: 'Hauptmenü' }"
+          :strings="{ label: 'Hauptmenü' }"
         />
       </template>
       <QPage title="Bestellungen" subtitle="38 heute" />

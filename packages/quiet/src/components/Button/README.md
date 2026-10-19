@@ -20,7 +20,7 @@ Triggers an action in place; use `secondary` by default and `primary` for the si
 
 ## Icons
 
-- Name an icon with `iconStart` / `iconEnd` (`icon-start="plus"` in a template), or put your own SVG in the `#icon-start` / `#icon-end` slots. Icons are sized to the density (`--ctl-icon`: 20px comfortable, 16px compact; 16px in slim, 20px in large) and inherit the text colour. Use a 1.5px stroke outline icon.
+- Name an icon with `iconStart` / `iconEnd` (`icon-start="plus"` in a template), or put your own SVG in the `#icon-start` / `#icon-end` slots. Icons are sized to the density (`--ctl-icon`: 20px comfortable, 16px compact; 16px in slim, 20px in large). Use a 1.5px stroke outline icon. In secondary and ghost buttons the icon is `brand`, marking an action or a menu; on primary and danger buttons, on links styled as buttons (`href`) and when disabled, it takes the label's colour.
 - `iconStart` for an object or action (+ Add product); `iconEnd` only for direction (View order →, a menu chevron).
 - A button with an icon and no label is icon-only automatically (or set `iconOnly`). It renders square and **must** have an `aria-label`. Use it only for universally understood actions (⋯ more, ✕ close, trash in a table row); where the icon might not be recognised, use a text button instead. Quiet has no hover tooltips (help opens on click, see Iconography).
 

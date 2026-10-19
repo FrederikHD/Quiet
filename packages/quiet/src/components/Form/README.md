@@ -63,4 +63,4 @@ Pass `strings` to translate the built-in words: `optional`, `help`, `errorPrefix
 - **Optional:** `errors` (`{ id?, message }[]`, after a failed submit), `labelPlacement` (`auto` | `top` | `side`; default `auto`), `labelWidth` (default 200px), `markers` (`required` | `optional` | `none`; default `required`), `density` (`comfortable` | `compact`; default inherited), `focusErrorSummary` (default true), `noValidate` (default true). Other `<form>` attributes pass through.
 - **Events:** `@submit(event)` — use `@submit.prevent` unless you want a native post.
 - **Slots:** the default slot (the form's content).
-- **Translations:** `strings` — `optional` ("optional"), `required` ("required"), `help` ("Help"), `errorPrefix` ("Error:"), `warningPrefix` ("Warning:"), `successPrefix` (""), `errorSummaryTitle` ("Please fix the following"); or `configure({ strings: { form: { … } } })`.
+- **Translations:** `strings` — `optional` ("optional"), `help` ("Help"), `errorPrefix` ("Error:"), `warningPrefix` ("Warning:"), `successPrefix` (""), `errorSummaryTitle` ("Please fix the following"); or `configure({ strings: { form: { … } } })`.

@@ -194,7 +194,7 @@ The Badge component: pill (`radius-full`), `label` type, tint background with th
 
 ## Iconography
 
-Use only the Quiet icon set (the Icon component): 53 outline icons on a 20px grid with a 1.5px round stroke, never filled (rating stars are the one exception — see Rating). Size them with the icon tokens — `--ctl-icon` inside controls (`icon-md` 20 or `icon-sm` 16) and `icon-lg` 24 in the storefront header — and colour them `ink` or `ink-muted` through `currentColor`. The exception: icons in buttons that trigger an action or open a menu use `brand`. A status icon always sits next to its word. Help and explanations open from a `help` icon as a Popover tip, on click, never on hover.
+Use only the Quiet icon set (the Icon component): 53 outline icons on a 20px grid with a 1.5px round stroke, never filled (rating stars are the one exception — see Rating). Size them with the icon tokens — `--ctl-icon` inside controls (`icon-md` 20 or `icon-sm` 16) and `icon-lg` 24 in the storefront header — and colour them `ink` or `ink-muted` through `currentColor`. The exception: icons in buttons that trigger an action or open a menu use `brand` (secondary and ghost Buttons; on solid buttons they take the label's colour). A status icon always sits next to its word. Help and explanations open from a `help` icon as a Popover tip, on click, never on hover.
 
 ## Logo
 

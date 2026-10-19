@@ -1,5 +1,5 @@
 /* Button
-   Order matters: variant -> hover -> pressed -> selected -> menu open -> disabled -> loading. */
+   Order matters: variant -> action icons -> hover -> pressed -> selected -> menu open -> disabled -> loading. */
 .q-btn {
   position: relative;
   display: inline-flex;
@@ -81,6 +81,13 @@
   color: var(--danger);
 }
 
+/* Action icons — in secondary and ghost buttons that act or open a menu, the icon takes the brand colour (brand book,
+   Iconography). Links styled as buttons navigate, so theirs keep the label's colour, as on solid buttons. */
+button.q-btn--secondary .q-btn__icon,
+button.q-btn--ghost .q-btn__icon {
+  color: var(--brand);
+}
+
 /* Hover — only where a pointer can hover, so a tapped button doesn't stay highlighted */
 @media (hover: hover) {
   .q-btn--primary:hover {
@@ -130,6 +137,10 @@
   border-color: transparent;
 }
 @media (hover: hover) {
+  button.q-btn--secondary:not(:disabled):hover .q-btn__icon,
+  button.q-btn--ghost:not(:disabled):hover .q-btn__icon {
+    color: var(--brand-hover);
+  }
   .q-btn--secondary[aria-pressed='true']:hover,
   .q-btn--ghost[aria-pressed='true']:hover {
     background: var(--brand-tint-hover);
@@ -228,6 +239,10 @@
   border-color: var(--line);
   color: var(--ink-muted);
   cursor: not-allowed;
+}
+.q-btn:disabled .q-btn__icon,
+.q-btn[aria-disabled='true'] .q-btn__icon {
+  color: inherit;
 }
 .q-btn--ghost:disabled,
 .q-btn--ghost[aria-disabled='true'] {

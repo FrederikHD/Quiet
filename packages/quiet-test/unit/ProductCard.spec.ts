@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { QProductCard, configure } from '@frederikhd/quiet';
-import { beforeAll, describe, expect, it } from 'vitest';
+import { beforeAll, describe, expect, it, vi } from 'vitest';
 
 beforeAll(() => configure({ locale: 'en-US', currency: 'EUR' }));
 const card = (props: Record<string, unknown> = {}) =>
@@ -9,6 +9,13 @@ const card = (props: Record<string, unknown> = {}) =>
   });
 
 describe('QProductCard', () => {
+  it('warns in development when href is empty: the name is the only way to the product', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    card({ href: '' });
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining('ProductCard: pass href'));
+    warn.mockRestore();
+  });
+
   it('is an article named by its heading, with one link', () => {
     const w = card();
     expect(w.element.tagName).toBe('ARTICLE');
@@ -75,7 +82,10 @@ describe('QProductCard', () => {
   });
 
   it('passes class and attributes to the article (a single root)', () => {
-    const w = mount(QProductCard, { props: { name: 'Linen shirt' }, attrs: { class: 'extra', 'data-x': '1' } });
+    const w = mount(QProductCard, {
+      props: { name: 'Linen shirt', href: '#shirt' },
+      attrs: { class: 'extra', 'data-x': '1' },
+    });
     expect(w.element.tagName).toBe('ARTICLE');
     expect(w.classes()).toContain('extra');
     expect(w.attributes('data-x')).toBe('1');

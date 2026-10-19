@@ -12,8 +12,6 @@ export interface ShellStrings {
   menu?: string;
   /** The skip link. Default "Skip to content". */
   skip?: string;
-  /** Name of the Nav landmark. Nav reads it from `configure({ strings: { shell } })` or its own `strings`; set here on AppShell it has no effect. Default "Main". */
-  nav?: string;
   /** Name of the drawer's close button. Default "Close menu". */
   closeMenu?: string;
 }
@@ -57,7 +55,7 @@ defineSlots<{
 const slots = useSlots();
 const strings = useStrings<Required<ShellStrings>>(
   'shell',
-  { menu: 'Menu', skip: 'Skip to content', nav: 'Main', closeMenu: 'Close menu' },
+  { menu: 'Menu', skip: 'Skip to content', closeMenu: 'Close menu' },
   () => props.strings,
 );
 const autoMainId = useQuietId('q-main-');

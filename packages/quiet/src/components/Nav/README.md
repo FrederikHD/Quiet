@@ -47,7 +47,7 @@ Pass `sections: [{ title?, items }]`, or `items` for a single section without a 
 
 ## Keyboard and screen readers
 
-- The Nav is a `nav` landmark named "Main" (`strings.nav`). With more than one Nav on a page, give each its own name with `aria-label` (it wins over `strings`).
+- The Nav is a `nav` landmark named "Main" (`strings.label`). With more than one Nav on a page, give each its own name with `aria-label` (it wins over `strings`).
 - A titled section is a `role="group"` named by its title.
 - Items are ordinary links (or buttons without `href`): Tab moves through them, Enter follows them. Sub-pages are only in the Tab order while they're shown; there is no expand/collapse control.
 - The current page has `aria-current="page"`. Icons are hidden from screen readers. With `badgeLabel`, the badge number is hidden and ", 12 to fulfil" is read after the label instead.
@@ -56,4 +56,4 @@ Pass `sections: [{ title?, items }]`, or `items` for a single section without a 
 
 - **Optional:** `sections` (`[{ title?, items }]`) or `items` (a single section), and which item is `current`.
 - **Events:** `@navigate(item, event)` when an item is clicked.
-- **Translations:** `strings` — `nav` ("Main", the landmark's name). Or set it once with `configure({ strings: { shell: { nav: 'Hauptmenü' } } })`, the namespace AppShell uses.
+- **Translations:** `strings` — `label` ("Main", the landmark's name). Or set it once with `configure({ strings: { nav: { label: 'Hauptmenü' } } })`.

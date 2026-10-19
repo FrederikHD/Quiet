@@ -112,16 +112,16 @@ describe('QNav', () => {
         .attributes('aria-label'),
     ).toBe('Settings');
     expect(
-      mount(QNav, { props: { items: [], strings: { nav: 'Haupt' } } })
+      mount(QNav, { props: { items: [], strings: { label: 'Haupt' } } })
         .get('nav')
         .attributes('aria-label'),
     ).toBe('Haupt');
-    configure({ strings: { shell: { nav: 'Hauptmenü' } } });
+    configure({ strings: { nav: { label: 'Hauptmenü' } } });
     expect(
       mount(QNav, { props: { items: [] } })
         .get('nav')
         .attributes('aria-label'),
     ).toBe('Hauptmenü');
-    configure({ strings: { shell: { nav: 'Main' } } });
+    configure({ strings: { nav: { label: 'Main' } } });
   });
 });

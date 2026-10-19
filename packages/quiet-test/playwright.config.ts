@@ -13,7 +13,9 @@ export default defineConfig({
   retries: process.env.CI ? 1 : 0,
   reporter: process.env.CI ? [['list'], ['html', { open: 'never' }]] : 'list',
   snapshotPathTemplate: '{testDir}/__screenshots__/{platform}/{arg}{ext}',
-  expect: { toHaveScreenshot: { maxDiffPixelRatio: 0.002, animations: 'disabled' } },
+  // Rendering is pinned (the Playwright image), so no pixel may change; a per-pixel colour threshold of 0.02 still
+  // absorbs off-by-one anti-aliasing, while any real recolouring (an icon from ink to brand) fails.
+  expect: { toHaveScreenshot: { maxDiffPixels: 0, threshold: 0.02, animations: 'disabled' } },
   use: {
     baseURL: `http://localhost:${PORT}`,
     trace: 'retain-on-failure',

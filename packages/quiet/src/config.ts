@@ -9,6 +9,7 @@ import type {
   FormStrings,
   GalleryStrings,
   MetricProps,
+  NavStrings,
   NoticeStrings,
   OrderSummaryStrings,
   PaginationStrings,
@@ -50,6 +51,7 @@ export interface QuietStrings {
   input?: { clear?: string };
   dialog?: { close?: string };
   shell?: ShellStrings;
+  nav?: NavStrings;
   textarea?: TextareaStrings;
   toast?: ToasterStrings;
   upload?: FileUploadStrings;

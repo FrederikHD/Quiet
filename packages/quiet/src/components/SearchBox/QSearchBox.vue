@@ -35,8 +35,6 @@ export interface SearchBoxStrings {
   label?: string;
   /** The placeholder. Default "Search". */
   placeholder?: string;
-  /** Not used at present: SearchBox has no submit button (Enter searches). Default "Search". */
-  submit?: string;
   /** Name of the clear (×) button. Default "Clear search". */
   clear?: string;
   /** The last option: "Search for “linen”". */
@@ -59,7 +57,7 @@ export interface SearchBoxProps {
   placeholder?: string;
   /** Focus the field when it mounts (a search dialog that just opened). */
   autofocus?: boolean;
-  /** Translations: label, placeholder, clear, searchFor, count (and the unused submit); or once with configure({ strings: { search } }). */
+  /** Translations: label, placeholder, clear, searchFor, count; or once with configure({ strings: { search } }). */
   strings?: SearchBoxStrings;
 }
 
@@ -86,7 +84,6 @@ const strings = useStrings<Required<SearchBoxStrings>>(
   {
     label: 'Search',
     placeholder: 'Search',
-    submit: 'Search',
     clear: 'Clear search',
     searchFor: (q) => `Search for “${q}”`,
     count: (n) => (n === 0 ? 'No suggestions' : n === 1 ? '1 suggestion' : `${n} suggestions`),
