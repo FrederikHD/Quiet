@@ -18,6 +18,12 @@ const done = ref(false);
 </template>
 
 <style scoped>
-.signup { max-width: 400px; }
-.done { margin: 0; font: var(--text-small); color: var(--success); }
+.signup {
+  max-width: 400px;
+}
+.done {
+  margin: 0;
+  font: var(--text-small);
+  color: var(--success);
+}
 </style>

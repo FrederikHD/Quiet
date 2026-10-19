@@ -5,7 +5,12 @@ import { ref } from 'vue';
 
 // 1,240 fake products, as a server would hold them.
 const kinds = ['Linen shirt', 'Linen trousers', 'Linen dress', 'Linen napkins', 'Linen tea towel'];
-const colours: Record<string, string> = { blue: 'hsl(210 40% 55%)', sand: 'hsl(40 40% 55%)', olive: 'hsl(80 40% 45%)', rust: 'hsl(15 45% 50%)' };
+const colours: Record<string, string> = {
+  blue: 'hsl(210 40% 55%)',
+  sand: 'hsl(40 40% 55%)',
+  olive: 'hsl(80 40% 45%)',
+  rust: 'hsl(15 45% 50%)',
+};
 const products: ComboboxOption[] = Array.from({ length: 1240 }, (_, i) => {
   const colour = Object.keys(colours)[i % 4];
   const stock = (i * 13) % 60;
@@ -39,6 +44,12 @@ const product = ref<ComboboxOption | null>(null);
 
 <template>
   <QField label="Product" label-placement="top" required width="l" hint="Search by name or SKU.">
-    <QCombobox v-model="product" placeholder="Choose a product" search-placeholder="Search products" :search="searchProducts" clearable />
+    <QCombobox
+      v-model="product"
+      placeholder="Choose a product"
+      search-placeholder="Search products"
+      :search="searchProducts"
+      clearable
+    />
   </QField>
 </template>

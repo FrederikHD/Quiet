@@ -5,7 +5,9 @@ import { defineComponent, h, ref } from 'vue';
 
 const dialog = () => document.querySelector<HTMLElement>('.q-dialog__panel');
 const key = (k: string, opts: KeyboardEventInit = {}) =>
-  (document.activeElement ?? document).dispatchEvent(new KeyboardEvent('keydown', { key: k, bubbles: true, cancelable: true, ...opts }));
+  (document.activeElement ?? document).dispatchEvent(
+    new KeyboardEvent('keydown', { key: k, bubbles: true, cancelable: true, ...opts }),
+  );
 
 function mountDialog(props: Record<string, unknown> = {}, slots: Record<string, () => unknown> = {}) {
   return mount(QDialog, {
@@ -60,7 +62,13 @@ describe('QDialog', () => {
   });
 
   it('focuses the first footer button when the body has no controls (Cancel)', async () => {
-    mountDialog({}, { default: () => h('p', 'Sure?'), footer: () => [h(QButton, { class: 'cancel' }, () => 'Cancel'), h(QButton, null, () => 'Delete')] });
+    mountDialog(
+      {},
+      {
+        default: () => h('p', 'Sure?'),
+        footer: () => [h(QButton, { class: 'cancel' }, () => 'Cancel'), h(QButton, null, () => 'Delete')],
+      },
+    );
     await flushPromises();
     expect(document.activeElement?.classList.contains('cancel')).toBe(true);
   });
@@ -69,7 +77,10 @@ describe('QDialog', () => {
     const App = defineComponent(() => {
       const target = ref<HTMLElement | null>(null);
       return () =>
-        h(QDialog, { open: true, title: 'T', initialFocus: target.value }, () => [h('input'), h('button', { ref: target, class: 'mine' }, 'Go')]);
+        h(QDialog, { open: true, title: 'T', initialFocus: target.value }, () => [
+          h('input'),
+          h('button', { ref: target, class: 'mine' }, 'Go'),
+        ]);
     });
     mount(App, { attachTo: document.body });
     await flushPromises();
@@ -81,7 +92,10 @@ describe('QDialog', () => {
     const App = defineComponent(() => {
       const target = ref<HTMLElement | null>(null);
       return () =>
-        h(QDialog, { open: open.value, title: 'T', initialFocus: target.value }, () => [h('input'), h('button', { ref: target, class: 'mine' }, 'Go')]);
+        h(QDialog, { open: open.value, title: 'T', initialFocus: target.value }, () => [
+          h('input'),
+          h('button', { ref: target, class: 'mine' }, 'Go'),
+        ]);
     });
     mount(App, { attachTo: document.body });
     open.value = true;
@@ -137,7 +151,10 @@ describe('QDialog', () => {
   });
 
   it('keeps Tab inside the dialog', async () => {
-    mountDialog({}, { default: () => h('input', { class: 'first' }), footer: () => h('button', { class: 'last' }, 'Save') });
+    mountDialog(
+      {},
+      { default: () => h('input', { class: 'first' }), footer: () => h('button', { class: 'last' }, 'Save') },
+    );
     await flushPromises();
     const last = dialog()!.querySelector<HTMLElement>('.last')!;
     const close = dialog()!.querySelector<HTMLElement>('.q-dialog__header button')!;
@@ -154,8 +171,11 @@ describe('QDialog', () => {
     document.body.append(opener, other);
     opener.focus();
     const open = ref(false);
-    const App = defineComponent(() => () =>
-      h(QDialog, { open: open.value, 'onUpdate:open': (v: boolean) => (open.value = v), title: 'T' }, () => h('input')),
+    const App = defineComponent(
+      () => () =>
+        h(QDialog, { open: open.value, 'onUpdate:open': (v: boolean) => (open.value = v), title: 'T' }, () =>
+          h('input'),
+        ),
     );
     mount(App, { attachTo: other });
     open.value = true;
@@ -184,7 +204,10 @@ describe('QDialog', () => {
   it('lets a popover inside close first on Escape', async () => {
     const w = mount(QDialog, {
       props: { open: true, title: 'T' },
-      slots: { default: () => h(QPopover, { label: 'Help', content: 'Text', kind: 'tip' }, () => h('button', { class: 'help' }, '?')) },
+      slots: {
+        default: () =>
+          h(QPopover, { label: 'Help', content: 'Text', kind: 'tip' }, () => h('button', { class: 'help' }, '?')),
+      },
       attachTo: document.body,
     });
     await flushPromises();
@@ -208,14 +231,20 @@ describe('QDialog', () => {
     await flushPromises();
     const p = dialog()!;
     expect(p.querySelector('.q-dialog__title em')?.textContent).toBe('Rich');
-    expect(document.getElementById(p.getAttribute('aria-describedby')!)?.querySelector('strong')?.textContent).toBe('Desc');
+    expect(document.getElementById(p.getAttribute('aria-describedby')!)?.querySelector('strong')?.textContent).toBe(
+      'Desc',
+    );
     expect(p.querySelector('.q-dialog__footer button')?.textContent).toBe('OK');
     expect(p.querySelector('.q-dialog__body--flush')).not.toBeNull();
     expect(document.querySelector('.q-dialog')!.getAttribute('data-density')).toBe('compact');
   });
 
   it('puts class and attributes on the panel', async () => {
-    mount(QDialog, { props: { open: true, title: 'T' }, attrs: { class: 'mine', 'data-x': '1' }, attachTo: document.body });
+    mount(QDialog, {
+      props: { open: true, title: 'T' },
+      attrs: { class: 'mine', 'data-x': '1' },
+      attachTo: document.body,
+    });
     await flushPromises();
     expect(dialog()!.classList.contains('mine')).toBe(true);
     expect(dialog()!.getAttribute('data-x')).toBe('1');

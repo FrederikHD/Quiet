@@ -13,7 +13,12 @@ export interface FormSectionProps {
   headingLevel?: 2 | 3 | 4 | 5 | 6;
 }
 
-withDefaults(defineProps<FormSectionProps>(), { title: undefined, description: undefined, layout: 'stack', headingLevel: 2 });
+withDefaults(defineProps<FormSectionProps>(), {
+  title: undefined,
+  description: undefined,
+  layout: 'stack',
+  headingLevel: 2,
+});
 defineSlots<{
   /** The section's fields. */
   default(): unknown;
@@ -28,13 +33,18 @@ const id = useQuietId('q-fsection-');
 </script>
 
 <template>
-  <section :class="['q-fsection', layout === 'aside' && 'q-fsection--aside']" :aria-labelledby="title || slots.title ? id : undefined">
+  <section
+    :class="['q-fsection', layout === 'aside' && 'q-fsection--aside']"
+    :aria-labelledby="title || slots.title ? id : undefined"
+  >
     <div class="q-fsection__inner">
       <div v-if="title || slots.title || description || slots.description" class="q-fsection__head">
         <component :is="`h${headingLevel}`" v-if="title || slots.title" :id="id" class="q-fsection__title">
           <slot name="title">{{ title }}</slot>
         </component>
-        <p v-if="description || slots.description" class="q-fsection__desc"><slot name="description">{{ description }}</slot></p>
+        <p v-if="description || slots.description" class="q-fsection__desc">
+          <slot name="description">{{ description }}</slot>
+        </p>
       </div>
       <div class="q-fsection__body"><slot /></div>
     </div>

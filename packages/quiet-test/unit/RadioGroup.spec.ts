@@ -23,7 +23,10 @@ describe('QRadioGroup', () => {
   });
 
   it('marks the radiogroup required and invalid', () => {
-    const w = mount(QRadioGroup, { props: { label: 'Delivery', required: true, error: 'Choose a delivery method' }, slots: { default: options } });
+    const w = mount(QRadioGroup, {
+      props: { label: 'Delivery', required: true, error: 'Choose a delivery method' },
+      slots: { default: options },
+    });
     const root = w.get('.q-choicegroup');
     expect(root.attributes('aria-required')).toBe('true');
     expect(root.attributes('aria-invalid')).toBe('true');
@@ -34,7 +37,11 @@ describe('QRadioGroup', () => {
 
   it('follows v-model and emits the chosen value', async () => {
     const w: VueWrapper = mount(QRadioGroup, {
-      props: { label: 'Delivery', modelValue: 'std', 'onUpdate:modelValue': (v?: string | null) => w.setProps({ modelValue: v }) },
+      props: {
+        label: 'Delivery',
+        modelValue: 'std',
+        'onUpdate:modelValue': (v?: string | null) => w.setProps({ modelValue: v }),
+      },
       slots: { default: options },
     });
     expect(checked(w)).toEqual([true, false, false]);
@@ -44,8 +51,14 @@ describe('QRadioGroup', () => {
   });
 
   it('starts from defaultValue, or none', () => {
-    expect(checked(mount(QRadioGroup, { props: { label: 'D', defaultValue: 'exp' }, slots: { default: options } }))).toEqual([false, true, false]);
-    expect(checked(mount(QRadioGroup, { props: { label: 'D' }, slots: { default: options } }))).toEqual([false, false, false]);
+    expect(
+      checked(mount(QRadioGroup, { props: { label: 'D', defaultValue: 'exp' }, slots: { default: options } })),
+    ).toEqual([false, true, false]);
+    expect(checked(mount(QRadioGroup, { props: { label: 'D' }, slots: { default: options } }))).toEqual([
+      false,
+      false,
+      false,
+    ]);
   });
 
   it('puts its id on the chosen radio, or on the first enabled one', async () => {
@@ -79,7 +92,12 @@ describe('QRadioGroup', () => {
   it('shows swatches with a title and the colour', () => {
     const w = mount(QRadioGroup, {
       props: { label: 'Colour', layout: 'swatches' },
-      slots: { default: () => [h(QRadio, { value: 'navy', label: 'Navy', swatch: 'navy' }), h(QRadio, { value: 'rust', label: 'Rust', swatch: 'brown', soldOut: true })] },
+      slots: {
+        default: () => [
+          h(QRadio, { value: 'navy', label: 'Navy', swatch: 'navy' }),
+          h(QRadio, { value: 'rust', label: 'Rust', swatch: 'brown', soldOut: true }),
+        ],
+      },
     });
     const [navy, rust] = w.findAll('.q-tile--swatch');
     expect(navy.attributes('title')).toBe('Navy');

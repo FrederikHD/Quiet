@@ -9,14 +9,24 @@ const saved = ref(false);
 <template>
   <div class="stack">
     <div role="status">
-      <QNotice v-if="saved" tone="success" title="Shipping settings saved">They apply to orders placed from now on.</QNotice>
+      <QNotice v-if="saved" tone="success" title="Shipping settings saved"
+        >They apply to orders placed from now on.</QNotice
+      >
     </div>
     <QButton variant="primary" @click="saved = true">Save settings</QButton>
   </div>
 </template>
 
 <style scoped>
-.stack { display: grid; justify-items: start; gap: var(--space-3); }
-.stack > [role='status'] { justify-self: stretch; }
-.stack > [role='status']:empty { display: none; }
+.stack {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-3);
+}
+.stack > [role='status'] {
+  justify-self: stretch;
+}
+.stack > [role='status']:empty {
+  display: none;
+}
 </style>

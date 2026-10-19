@@ -3,7 +3,11 @@
 import { QFilterChips } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
-const strings = { label: 'Aktive Filter', remove: (label: string) => `Filter entfernen: ${label}`, clear: 'Alle löschen' };
+const strings = {
+  label: 'Aktive Filter',
+  remove: (label: string) => `Filter entfernen: ${label}`,
+  clear: 'Alle löschen',
+};
 const filters = ref([
   { key: 'material', label: 'Leinen' },
   { key: 'size', label: 'Größe M' },
@@ -12,5 +16,10 @@ const filters = ref([
 </script>
 
 <template>
-  <QFilterChips :items="filters" :strings="strings" @remove="(key) => (filters = filters.filter((f) => f.key !== key))" @clear="filters = []" />
+  <QFilterChips
+    :items="filters"
+    :strings="strings"
+    @remove="(key) => (filters = filters.filter((f) => f.key !== key))"
+    @clear="filters = []"
+  />
 </template>

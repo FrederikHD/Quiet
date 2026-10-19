@@ -30,7 +30,10 @@ Pass `sections: [{ title?, items }]`, or `items` for a single section without a 
 <QNav
   :sections="[
     { items: [{ label: 'Home', href: '/', icon: 'home', current: true }] },
-    { title: 'Shop', items: [{ label: 'Orders', href: '/orders', icon: 'package', badge: 12, badgeLabel: '12 to fulfil' }] },
+    {
+      title: 'Shop',
+      items: [{ label: 'Orders', href: '/orders', icon: 'package', badge: 12, badgeLabel: '12 to fulfil' }],
+    },
   ]"
   @navigate="onNavigate"
 />

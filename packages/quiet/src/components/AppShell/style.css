@@ -2,52 +2,155 @@
 /* Desktop (1024px and up): the nav is a fixed left column, the page scrolls beside it.
    Smaller: a top bar with a menu button opens the same nav as a drawer. */
 .q-shell {
-  display: grid; grid-template-columns: 248px minmax(0, 1fr);
-  min-height: 100vh; min-height: 100dvh;
-  background: var(--surface); color: var(--ink); font-family: var(--font-sans);
+  display: grid;
+  grid-template-columns: 248px minmax(0, 1fr);
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-sans);
 }
 .q-shell__skip {
-  position: fixed; left: var(--space-2); top: var(--space-2); z-index: 1100; transform: translateY(-200%);
-  padding: var(--space-2) var(--space-3); border-radius: var(--radius-md);
-  background: var(--surface-raised); border: 1px solid var(--line-strong); color: var(--ink);
-  font-size: var(--control-text-sm); font-weight: 500; text-decoration: none;
+  position: fixed;
+  left: var(--space-2);
+  top: var(--space-2);
+  z-index: 1100;
+  transform: translateY(-200%);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--surface-raised);
+  border: 1px solid var(--line-strong);
+  color: var(--ink);
+  font-size: var(--control-text-sm);
+  font-weight: 500;
+  text-decoration: none;
 }
-.q-shell__skip:focus { transform: none; outline: 2px solid var(--brand); outline-offset: 2px; }
-.q-shell__topbar { display: none; }
+.q-shell__skip:focus {
+  transform: none;
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+.q-shell__topbar {
+  display: none;
+}
 .q-shell__side {
-  grid-column: 1; position: sticky; top: env(safe-area-inset-top, 0px);
-  height: calc(100vh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)); height: calc(100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
-  display: flex; flex-direction: column; min-height: 0;
-  background: var(--surface-raised); border-right: 1px solid var(--line);
+  grid-column: 1;
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  height: calc(100vh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+  height: calc(100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--surface-raised);
+  border-right: 1px solid var(--line);
 }
-.q-shell__brand { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 17px; line-height: 24px; font-weight: 600; color: var(--ink); }
-.q-shell__brand--side { flex: none; padding: var(--space-4) var(--space-6) var(--space-2); }
-.q-shell__nav { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: var(--space-2) var(--space-3) var(--space-4); }
-.q-shell__navfoot { flex: none; padding: var(--space-3); border-top: 1px solid var(--line); }
-.q-shell__main { grid-column: 2; min-width: 0; outline: none; }
-.q-shell__drawer { display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0; overflow-y: auto; }
+.q-shell__brand {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 17px;
+  line-height: 24px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.q-shell__brand--side {
+  flex: none;
+  padding: var(--space-4) var(--space-6) var(--space-2);
+}
+.q-shell__nav {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--space-2) var(--space-3) var(--space-4);
+}
+.q-shell__navfoot {
+  flex: none;
+  padding: var(--space-3);
+  border-top: 1px solid var(--line);
+}
+.q-shell__main {
+  grid-column: 2;
+  min-width: 0;
+  outline: none;
+}
+.q-shell__drawer {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+}
 /* In the drawer the list keeps its full height and the whole drawer scrolls (short landscape phones), so the footer
    comes after the last item instead of sitting on top of it. */
-.q-shell__drawer .q-shell__nav { flex: 1 0 auto; overflow: visible; padding-top: 0; }
+.q-shell__drawer .q-shell__nav {
+  flex: 1 0 auto;
+  overflow: visible;
+  padding-top: 0;
+}
 @media (max-width: 1023px) {
-  .q-shell { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr; }
-  .q-shell__side { display: none; }
-  .q-shell__topbar {
-    display: flex; align-items: center; gap: var(--space-1);
-    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; height: 56px; box-sizing: border-box; padding: 0 var(--space-2) 0 var(--space-1);
-    background: var(--surface-raised); border-bottom: 1px solid var(--line);
+  .q-shell {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
   }
-  .q-shell__topbar > .q-shell__brand { flex: 1 1 auto; }
-  .q-shell__topend { display: flex; align-items: center; gap: var(--space-1); flex: none; }
-  .q-shell__main { grid-column: 1; grid-row: 2; }
+  .q-shell__side {
+    display: none;
+  }
+  .q-shell__topbar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 20;
+    height: 56px;
+    box-sizing: border-box;
+    padding: 0 var(--space-2) 0 var(--space-1);
+    background: var(--surface-raised);
+    border-bottom: 1px solid var(--line);
+  }
+  .q-shell__topbar > .q-shell__brand {
+    flex: 1 1 auto;
+  }
+  .q-shell__topend {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    flex: none;
+  }
+  .q-shell__main {
+    grid-column: 1;
+    grid-row: 2;
+  }
 }
 /* contained: the shell fills its parent and scrolls inside it. `contain: layout` makes it the box that fixed
    elements (the drawer, the skip link) are placed in, so they stay inside the shell. */
-.q-shell--contained { height: 100%; min-height: 0; overflow: hidden; contain: layout; grid-template-rows: minmax(0, 1fr); }
-.q-shell--contained .q-shell__side { position: static; height: auto; }
-.q-shell--contained .q-shell__main { overflow-y: auto; }
-@media (max-width: 1023px) {
-  .q-shell--contained { grid-template-rows: auto minmax(0, 1fr); }
-  .q-shell--contained .q-shell__topbar { position: static; }
+.q-shell--contained {
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  contain: layout;
+  grid-template-rows: minmax(0, 1fr);
 }
-@media (forced-colors: active) { .q-shell__side, .q-shell__topbar { border-color: CanvasText; } }
+.q-shell--contained .q-shell__side {
+  position: static;
+  height: auto;
+}
+.q-shell--contained .q-shell__main {
+  overflow-y: auto;
+}
+@media (max-width: 1023px) {
+  .q-shell--contained {
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+  .q-shell--contained .q-shell__topbar {
+    position: static;
+  }
+}
+@media (forced-colors: active) {
+  .q-shell__side,
+  .q-shell__topbar {
+    border-color: CanvasText;
+  }
+}

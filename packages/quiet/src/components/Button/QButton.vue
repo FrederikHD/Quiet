@@ -62,7 +62,9 @@ const hasStart = () => !!props.iconStart || !!slots['icon-start'];
 const hasEnd = () => !!props.iconEnd || !!slots['icon-end'];
 const isIconOnly = () => props.iconOnly ?? (!hasLabel() && (hasStart() || hasEnd()));
 const isDisabled = computed(() => props.disabled || props.loading);
-const isToggle = computed(() => props.pressed !== undefined && (props.variant === 'secondary' || props.variant === 'ghost'));
+const isToggle = computed(
+  () => props.pressed !== undefined && (props.variant === 'secondary' || props.variant === 'ghost'),
+);
 
 function classes() {
   return [
@@ -81,9 +83,15 @@ function stateAttrs() {
     if (isIconOnly() && !attrs['aria-label'] && !attrs['aria-labelledby'])
       warnOnce('icon-label', 'Button: an icon-only button needs an aria-label (or aria-labelledby).');
     if (props.pressed !== undefined && !isToggle.value)
-      warnOnce('pressed-variant', `Button: \`pressed\` only works on the secondary and ghost variants; ignored on "${props.variant}".`);
+      warnOnce(
+        'pressed-variant',
+        `Button: \`pressed\` only works on the secondary and ghost variants; ignored on "${props.variant}".`,
+      );
     if (props.size === 'large' && props.variant === 'ghost')
-      warnOnce('large-ghost', 'Button: size="large" is for storefront primary actions; a large ghost button is probably not what you want.');
+      warnOnce(
+        'large-ghost',
+        'Button: size="large" is for storefront primary actions; a large ghost button is probably not what you want.',
+      );
   }
   return {
     'aria-pressed': isToggle.value ? String(!!props.pressed) : undefined,

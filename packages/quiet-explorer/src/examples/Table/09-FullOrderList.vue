@@ -1,12 +1,46 @@
 <!-- The full order list: search, a filter, sorting and paging done by the server, "Select all 128", bulk actions and invoices. Cards on phones. -->
 <script setup lang="ts">
-import { QBadge, QButton, QIcon, QInput, QPagination, QSelect, QTable, money, type BadgeTone, type RowKey, type TableSort } from '@frederikhd/quiet';
+import {
+  QBadge,
+  QButton,
+  QIcon,
+  QInput,
+  QPagination,
+  QSelect,
+  QTable,
+  money,
+  type BadgeTone,
+  type RowKey,
+  type TableSort,
+} from '@frederikhd/quiet';
 import { computed, ref } from 'vue';
 
 // 128 orders, filtered, sorted and paged by the app (as a server would); the table shows one page.
-const names = ['Anna Schmidt', 'Jonas Weber', 'Lea Fischer', 'Paul Wagner', 'Mia Becker', 'Felix Hoffmann', 'Emma Schulz', 'Noah Koch', 'Lina Richter', 'Ben Klein', 'Clara Wolf', 'Elias Neumann'];
-const pay: [string, BadgeTone][] = [['Paid', 'success'], ['Pending', 'warning'], ['Refunded', 'neutral'], ['Failed', 'danger']];
-const ful: [string, BadgeTone][] = [['Fulfilled', 'success'], ['Unfulfilled', 'warning'], ['Shipped', 'info']];
+const names = [
+  'Anna Schmidt',
+  'Jonas Weber',
+  'Lea Fischer',
+  'Paul Wagner',
+  'Mia Becker',
+  'Felix Hoffmann',
+  'Emma Schulz',
+  'Noah Koch',
+  'Lina Richter',
+  'Ben Klein',
+  'Clara Wolf',
+  'Elias Neumann',
+];
+const pay: [string, BadgeTone][] = [
+  ['Paid', 'success'],
+  ['Pending', 'warning'],
+  ['Refunded', 'neutral'],
+  ['Failed', 'danger'],
+];
+const ful: [string, BadgeTone][] = [
+  ['Fulfilled', 'success'],
+  ['Unfulfilled', 'warning'],
+  ['Shipped', 'info'],
+];
 interface Order {
   id: number;
   customer: string;
@@ -29,7 +63,8 @@ const orders: Order[] = Array.from({ length: 128 }, (_, i) => {
     fulfilment: ful[i < 9 ? 1 : i % 4 === 2 ? 2 : 0],
   };
 });
-const when = (d: Date) => `${d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}, ${d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}`;
+const when = (d: Date) =>
+  `${d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}, ${d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}`;
 
 const q = ref('');
 const status = ref('');
@@ -42,11 +77,16 @@ const log = ref('');
 
 const hits = computed(() => {
   const list = orders.filter(
-    (o) => (!q.value || `#${o.id} ${o.customer}`.toLowerCase().includes(q.value.toLowerCase())) && (!status.value || o.fulfilment[0] === status.value),
+    (o) =>
+      (!q.value || `#${o.id} ${o.customer}`.toLowerCase().includes(q.value.toLowerCase())) &&
+      (!status.value || o.fulfilment[0] === status.value),
   );
-  const key = { date: (o: Order) => o.date.getTime(), total: (o: Order) => o.total, customer: (o: Order) => o.customer, id: (o: Order) => o.id }[
-    (sort.value?.key ?? 'date') as 'date'
-  ];
+  const key = {
+    date: (o: Order) => o.date.getTime(),
+    total: (o: Order) => o.total,
+    customer: (o: Order) => o.customer,
+    id: (o: Order) => o.id,
+  }[(sort.value?.key ?? 'date') as 'date'];
   const dir = sort.value?.direction === 'asc' ? 1 : -1;
   return [...list].sort((x, y) => (key(x) < key(y) ? -1 : key(x) > key(y) ? 1 : 0) * dir);
 });
@@ -81,18 +121,40 @@ function fulfil() {
       :rows="pageRows"
       :columns="[
         { key: 'id', header: 'Order', sortable: true, format: (o) => `#${o.id}` },
-        { key: 'date', header: 'Date', sortable: true, sortLabels: ['Oldest first', 'Newest first'], sortFirst: 'desc', format: (o) => when(o.date) },
+        {
+          key: 'date',
+          header: 'Date',
+          sortable: true,
+          sortLabels: ['Oldest first', 'Newest first'],
+          sortFirst: 'desc',
+          format: (o) => when(o.date),
+        },
         { key: 'customer', header: 'Customer', sortable: true, truncate: true },
         { key: 'payment', header: 'Payment' },
         { key: 'fulfilment', header: 'Fulfilment' },
         { key: 'items', header: 'Items', numeric: true, mobile: false },
-        { key: 'total', header: 'Total', numeric: true, sortable: true, sortLabels: ['Lowest total first', 'Highest total first'], format: (o) => money(o.total) },
+        {
+          key: 'total',
+          header: 'Total',
+          numeric: true,
+          sortable: true,
+          sortLabels: ['Lowest total first', 'Highest total first'],
+          format: (o) => money(o.total),
+        },
       ]"
       @update:sort="page = 1"
       @row-click="(o) => (log = `Open order #${o.id}`)"
     >
       <template #toolbar>
-        <QInput v-model="q" size="slim" class="search" aria-label="Search orders" placeholder="Search orders or customers" clearable @update:model-value="reset">
+        <QInput
+          v-model="q"
+          size="slim"
+          class="search"
+          aria-label="Search orders"
+          placeholder="Search orders or customers"
+          clearable
+          @update:model-value="reset"
+        >
           <template #prefix><QIcon name="search" /></template>
         </QInput>
         <QSelect
@@ -104,14 +166,24 @@ function fulfil() {
           @update:model-value="reset"
         />
       </template>
-      <template #cell-payment="{ row }"><QBadge :tone="row.payment[1]">{{ row.payment[0] }}</QBadge></template>
-      <template #cell-fulfilment="{ row }"><QBadge :tone="row.fulfilment[1]">{{ row.fulfilment[0] }}</QBadge></template>
+      <template #cell-payment="{ row }"
+        ><QBadge :tone="row.payment[1]">{{ row.payment[0] }}</QBadge></template
+      >
+      <template #cell-fulfilment="{ row }"
+        ><QBadge :tone="row.fulfilment[1]">{{ row.fulfilment[0] }}</QBadge></template
+      >
       <template #bulk-actions>
         <QButton size="slim" @click="fulfil">Mark as fulfilled</QButton>
         <QButton size="slim" icon-start="download" @click="log = `Exported ${count()} orders.`">Export</QButton>
       </template>
       <template #row-actions="{ row }">
-        <QButton size="slim" variant="ghost" icon-start="download" :aria-label="`Download invoice for #${row.id}`" @click="log = `Invoice for #${row.id}`" />
+        <QButton
+          size="slim"
+          variant="ghost"
+          icon-start="download"
+          :aria-label="`Download invoice for #${row.id}`"
+          @click="log = `Invoice for #${row.id}`"
+        />
       </template>
       <template #empty>
         <div class="empty-title">No orders match</div>
@@ -133,8 +205,22 @@ function fulfil() {
 </template>
 
 <style scoped>
-.search { flex: 1 1 200px; max-width: 320px; }
-.filter { width: 160px; }
-.empty-title { margin-bottom: 4px; color: var(--ink); font-weight: 500; }
-.log { margin: var(--space-2) 0 0; min-height: 18px; font: var(--text-small); color: var(--ink-muted); }
+.search {
+  flex: 1 1 200px;
+  max-width: 320px;
+}
+.filter {
+  width: 160px;
+}
+.empty-title {
+  margin-bottom: 4px;
+  color: var(--ink);
+  font-weight: 500;
+}
+.log {
+  margin: var(--space-2) 0 0;
+  min-height: 18px;
+  font: var(--text-small);
+  color: var(--ink-muted);
+}
 </style>

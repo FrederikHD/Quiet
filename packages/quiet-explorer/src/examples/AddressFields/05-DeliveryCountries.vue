@@ -18,5 +18,7 @@ const address = ref<Address>({});
 </template>
 
 <style scoped>
-.address { max-width: 560px; }
+.address {
+  max-width: 560px;
+}
 </style>

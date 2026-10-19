@@ -9,7 +9,16 @@
 
 import './styles/index.css';
 
-export { configure, useConfig, money, fmt, currencySymbol, type ConfigureOptions, type QuietConfig, type QuietStrings } from './config';
+export {
+  configure,
+  useConfig,
+  money,
+  fmt,
+  currencySymbol,
+  type ConfigureOptions,
+  type QuietConfig,
+  type QuietStrings,
+} from './config';
 export { useStickyPad } from './composables/useStickyPad';
 export { Quiet, type QuietPluginOptions } from './plugin';
 

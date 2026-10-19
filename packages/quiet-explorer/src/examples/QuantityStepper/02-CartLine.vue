@@ -15,7 +15,18 @@ const quantity = ref(2);
 </template>
 
 <style scoped>
-.line { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
-.name { flex: 1 1 140px; }
-.status { flex-basis: 100%; font: var(--text-small); color: var(--ink-muted); }
+.line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+.name {
+  flex: 1 1 140px;
+}
+.status {
+  flex-basis: 100%;
+  font: var(--text-small);
+  color: var(--ink-muted);
+}
 </style>

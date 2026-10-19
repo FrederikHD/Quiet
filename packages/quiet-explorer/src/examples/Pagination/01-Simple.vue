@@ -8,5 +8,11 @@ const size = ref(50);
 </script>
 
 <template>
-  <QPagination v-model:page="page" v-model:page-size="size" :total="1240" :page-size-options="[25, 50, 100]" @update:page-size="page = 1" />
+  <QPagination
+    v-model:page="page"
+    v-model:page-size="size"
+    :total="1240"
+    :page-size-options="[25, 50, 100]"
+    @update:page-size="page = 1"
+  />
 </template>

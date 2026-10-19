@@ -62,7 +62,9 @@ function onKeyDown(e: KeyboardEvent) {
     t.click();
     return;
   }
-  const nodes = Array.from(list.value?.querySelectorAll<HTMLElement>('[role="menuitem"]:not([aria-disabled="true"])') ?? []);
+  const nodes = Array.from(
+    list.value?.querySelectorAll<HTMLElement>('[role="menuitem"]:not([aria-disabled="true"])') ?? [],
+  );
   const i = nodes.indexOf(document.activeElement as HTMLElement);
   let next: HTMLElement | undefined;
   if (e.key === 'ArrowDown') next = nodes[(i + 1) % nodes.length];
@@ -100,9 +102,17 @@ function choose(it: MenuItem, e: MouseEvent) {
 <template>
   <QPopover v-model:open="open" kind="menu" :label="label" :align="align" flush panel-class="q-menu__popover">
     <slot name="trigger">
-      <QButton v-bind="attrs" :variant="variant" :size="size" class="q-menu__more" icon-start="more" :aria-label="label" />
+      <QButton
+        v-bind="attrs"
+        :variant="variant"
+        :size="size"
+        class="q-menu__more"
+        icon-start="more"
+        :aria-label="label"
+      />
     </slot>
     <template #content>
+      <!-- eslint-disable-next-line vuejs-accessibility/interactive-supports-focus -- focus moves between the menuitems (roving focus), not onto the menu itself -->
       <ul ref="list" role="menu" :aria-label="label" class="q-menu" @keydown="onKeyDown">
         <template v-for="(it, i) in items" :key="it.key ?? i">
           <li v-if="it.divider" role="separator" class="q-menu__divider" />
@@ -119,7 +129,9 @@ function choose(it: MenuItem, e: MouseEvent) {
             >
               <span v-if="it.icon" class="q-menu__icon" aria-hidden="true"><QIcon :name="it.icon" /></span>
               <span class="q-menu__text">
-                <span class="q-menu__label"><slot name="item" :item="it">{{ it.label }}</slot></span>
+                <span class="q-menu__label"
+                  ><slot name="item" :item="it">{{ it.label }}</slot></span
+                >
                 <span v-if="it.description" class="q-menu__desc">{{ it.description }}</span>
               </span>
             </component>

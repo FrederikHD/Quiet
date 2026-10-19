@@ -7,7 +7,10 @@ describe('QEmptyState', () => {
   it('renders a search icon, an h2 title, the text and actions', () => {
     const w = mount(QEmptyState, {
       props: { title: 'No products match these filters' },
-      slots: { default: () => h('p', 'Try removing a filter or two.'), actions: () => h(QButton, null, () => 'Clear filters') },
+      slots: {
+        default: () => h('p', 'Try removing a filter or two.'),
+        actions: () => h(QButton, null, () => 'Clear filters'),
+      },
     });
     expect(w.classes()).toEqual(['q-empty']);
     const icon = w.get('.q-empty__icon');

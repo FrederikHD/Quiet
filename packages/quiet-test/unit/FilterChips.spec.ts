@@ -13,7 +13,8 @@ const mountChips = (props: Record<string, unknown> = {}) => {
     attachTo: document.body,
     props: {
       items: ALL,
-      onRemove: (k: string) => w.setProps({ items: (w.props('items') as FilterChip[]).filter((x) => x && x.key !== k) }),
+      onRemove: (k: string) =>
+        w.setProps({ items: (w.props('items') as FilterChip[]).filter((x) => x && x.key !== k) }),
       onClear: () => w.setProps({ items: [] }),
       ...props,
     },
@@ -28,7 +29,11 @@ describe('QFilterChips', () => {
     expect(root.attributes('role')).toBe('group');
     expect(root.attributes('aria-label')).toBe('Active filters');
     const chips = w.findAll('.q-fchips__item button.q-tag');
-    expect(chips.map((c) => c.attributes('aria-label'))).toEqual(['Remove filter: Navy', 'Remove filter: Size M', 'Remove filter: In stock']);
+    expect(chips.map((c) => c.attributes('aria-label'))).toEqual([
+      'Remove filter: Navy',
+      'Remove filter: Size M',
+      'Remove filter: In stock',
+    ]);
     // Label in name: the visible text is part of each chip's name.
     for (const c of chips) expect(c.attributes('aria-label')).toContain(c.text().trim());
     expect(w.get('.q-tag__dot').attributes('style')).toContain('--q-swatch: navy');
@@ -77,7 +82,9 @@ describe('QFilterChips', () => {
   });
 
   it('takes its own strings', () => {
-    const w = mountChips({ strings: { label: 'Filter', remove: (l: string) => `${l} entfernen`, clear: 'Alle löschen' } });
+    const w = mountChips({
+      strings: { label: 'Filter', remove: (l: string) => `${l} entfernen`, clear: 'Alle löschen' },
+    });
     expect(w.get('.q-fchips').attributes('aria-label')).toBe('Filter');
     expect(w.get('.q-tag').attributes('aria-label')).toBe('Navy entfernen');
     expect(w.get('.q-fchips__clear').text()).toBe('Alle löschen');

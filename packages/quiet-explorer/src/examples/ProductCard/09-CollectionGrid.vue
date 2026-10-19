@@ -59,6 +59,15 @@ function open(e: MouseEvent, name: string) {
 </template>
 
 <style scoped>
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(200px, calc(50% - 8px)), 1fr)); gap: var(--space-6) var(--space-4); }
-.log { margin: 0; min-height: 18px; font: var(--text-small); color: var(--ink-muted); }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(200px, calc(50% - 8px)), 1fr));
+  gap: var(--space-6) var(--space-4);
+}
+.log {
+  margin: 0;
+  min-height: 18px;
+  font: var(--text-small);
+  color: var(--ink-muted);
+}
 </style>

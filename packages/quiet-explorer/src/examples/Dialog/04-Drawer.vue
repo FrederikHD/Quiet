@@ -36,5 +36,8 @@ function clear() {
 </template>
 
 <style scoped>
-.groups { display: grid; gap: var(--space-6); }
+.groups {
+  display: grid;
+  gap: var(--space-6);
+}
 </style>

@@ -5,7 +5,14 @@ import { describe, expect, it } from 'vitest';
 type Range = [number, number];
 const mountRange = (props: Record<string, unknown> = {}) => {
   const w = mount(QPriceRange, {
-    props: { min: 15, max: 115, step: 5, modelValue: [30, 90] as Range, 'onUpdate:modelValue': (v: Range) => w.setProps({ modelValue: v }), ...props },
+    props: {
+      min: 15,
+      max: 115,
+      step: 5,
+      modelValue: [30, 90] as Range,
+      'onUpdate:modelValue': (v: Range) => w.setProps({ modelValue: v }),
+      ...props,
+    },
   });
   return w;
 };

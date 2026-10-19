@@ -18,6 +18,10 @@ import { QDisclosure } from '@frederikhd/quiet';
 </template>
 
 <style scoped>
-.details { max-width: 420px; }
-p { margin: 0; }
+.details {
+  max-width: 420px;
+}
+p {
+  margin: 0;
+}
 </style>

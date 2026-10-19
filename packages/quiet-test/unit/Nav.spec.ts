@@ -3,13 +3,22 @@ import { QNav, configure, type NavItem } from '@frederikhd/quiet';
 import { describe, expect, it } from 'vitest';
 
 const sections = (current: string) => {
-  const it = (key: string, label: string, extra: Partial<NavItem> = {}): NavItem => ({ key, label, href: `#${key}`, current: current === key, ...extra });
+  const it = (key: string, label: string, extra: Partial<NavItem> = {}): NavItem => ({
+    key,
+    label,
+    href: `#${key}`,
+    current: current === key,
+    ...extra,
+  });
   return [
     {
       items: [
         it('home', 'Home', { icon: 'home' }),
         it('orders', 'Orders', { icon: 'bag', badge: 12, badgeLabel: '12 to fulfil' }),
-        it('products', 'Products', { icon: 'package', items: [it('collections', 'Collections', { icon: 'grid' }), it('inventory', 'Inventory')] }),
+        it('products', 'Products', {
+          icon: 'package',
+          items: [it('collections', 'Collections', { icon: 'grid' }), it('inventory', 'Inventory')],
+        }),
       ],
     },
     { title: 'Shop', items: [it('settings', 'Settings', { icon: 'sliders' })] },
@@ -51,9 +60,24 @@ describe('QNav', () => {
   });
 
   it('expanded forces sub-pages open or closed', () => {
-    const open = mount(QNav, { props: { items: [{ label: 'Products', href: '#p', expanded: true, items: [{ label: 'Inventory', href: '#i' }] }] } });
+    const open = mount(QNav, {
+      props: {
+        items: [{ label: 'Products', href: '#p', expanded: true, items: [{ label: 'Inventory', href: '#i' }] }],
+      },
+    });
     expect(open.find('a[href="#i"]').exists()).toBe(true);
-    const closed = mount(QNav, { props: { items: [{ label: 'Products', href: '#p', expanded: false, items: [{ label: 'Inventory', href: '#i', current: true }] }] } });
+    const closed = mount(QNav, {
+      props: {
+        items: [
+          {
+            label: 'Products',
+            href: '#p',
+            expanded: false,
+            items: [{ label: 'Inventory', href: '#i', current: true }],
+          },
+        ],
+      },
+    });
     expect(closed.find('a[href="#i"]').exists()).toBe(false);
   });
 
@@ -82,10 +106,22 @@ describe('QNav', () => {
   });
 
   it('takes its name from aria-label, strings or configure()', () => {
-    expect(mount(QNav, { props: { items: [] }, attrs: { 'aria-label': 'Settings' } }).get('nav').attributes('aria-label')).toBe('Settings');
-    expect(mount(QNav, { props: { items: [], strings: { nav: 'Haupt' } } }).get('nav').attributes('aria-label')).toBe('Haupt');
+    expect(
+      mount(QNav, { props: { items: [] }, attrs: { 'aria-label': 'Settings' } })
+        .get('nav')
+        .attributes('aria-label'),
+    ).toBe('Settings');
+    expect(
+      mount(QNav, { props: { items: [], strings: { nav: 'Haupt' } } })
+        .get('nav')
+        .attributes('aria-label'),
+    ).toBe('Haupt');
     configure({ strings: { shell: { nav: 'Hauptmenü' } } });
-    expect(mount(QNav, { props: { items: [] } }).get('nav').attributes('aria-label')).toBe('Hauptmenü');
+    expect(
+      mount(QNav, { props: { items: [] } })
+        .get('nav')
+        .attributes('aria-label'),
+    ).toBe('Hauptmenü');
     configure({ strings: { shell: { nav: 'Main' } } });
   });
 });

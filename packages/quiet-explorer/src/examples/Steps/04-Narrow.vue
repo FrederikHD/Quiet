@@ -5,10 +5,15 @@ import { QSteps } from '@frederikhd/quiet';
 
 <template>
   <div class="narrow">
-    <QSteps :current="1" :steps="[{ label: 'Address' }, { label: 'Shipping' }, { label: 'Payment' }, { label: 'Review' }]" />
+    <QSteps
+      :current="1"
+      :steps="[{ label: 'Address' }, { label: 'Shipping' }, { label: 'Payment' }, { label: 'Review' }]"
+    />
   </div>
 </template>
 
 <style scoped>
-.narrow { max-width: 340px; }
+.narrow {
+  max-width: 340px;
+}
 </style>

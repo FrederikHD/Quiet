@@ -129,7 +129,8 @@ const strings = useStrings<Required<TableStrings>>(
   () => props.strings,
 );
 const captionId = `${useQuietId('q-table-')}-caption`;
-if (import.meta.env.DEV && !props.caption) warnOnce('table-caption', 'Table: pass a caption — it names the table for screen readers ("Orders").');
+if (import.meta.env.DEV && !props.caption)
+  warnOnce('table-caption', 'Table: pass a caption — it names the table for screen readers ("Orders").');
 
 const columns = computed(() => props.columns.filter((c): c is TableColumn<Row> => !!c));
 const primary = computed(() => columns.value.find((c) => c.primary) ?? columns.value[0]);
@@ -141,7 +142,8 @@ const keyOf = (row: Row, i: number): RowKey => {
   return (k ?? i) as RowKey;
 };
 const cellText = (c: TableColumn<Row>, row: Row, i: number) => (c.format ? c.format(row, i) : row[c.key]);
-const rowLabel = (row: Row) => (props.rowLabel ? props.rowLabel(row) : primary.value ? String(cellText(primary.value, row, 0) ?? '') : '');
+const rowLabel = (row: Row) =>
+  props.rowLabel ? props.rowLabel(row) : primary.value ? String(cellText(primary.value, row, 0) ?? '') : '';
 
 // Sorting: the table sorts the rows itself unless manualSort. Empty values stay last either way.
 function toggleSort(c: TableColumn<Row>) {
@@ -168,7 +170,9 @@ const shown = computed(() => {
 
 // Selection: row keys. Select all works on this page; "Select all 1,240" goes beyond it.
 const pageKeys = computed(() => shown.value.map(keyOf));
-const selectableKeys = computed(() => pageKeys.value.filter((_k, i) => !props.isRowSelectable || props.isRowSelectable(shown.value[i])));
+const selectableKeys = computed(() =>
+  pageKeys.value.filter((_k, i) => !props.isRowSelectable || props.isRowSelectable(shown.value[i])),
+);
 const selOnPage = computed(() => selectableKeys.value.filter((k) => selected.value.includes(k)).length);
 const allOnPage = computed(() => selectableKeys.value.length > 0 && selOnPage.value === selectableKeys.value.length);
 const someOnPage = computed(() => selOnPage.value > 0 && !allOnPage.value);
@@ -191,12 +195,19 @@ function clearSelection() {
   selected.value = [];
   allMatching.value = false;
 }
-const count = computed(() => (allMatching.value && props.totalCount != null ? props.totalCount : selected.value.length));
+const count = computed(() =>
+  allMatching.value && props.totalCount != null ? props.totalCount : selected.value.length,
+);
 const selectionText = computed(() =>
-  !count.value ? '' : allMatching.value && props.totalCount != null ? strings.value.allMatchingSelected(props.totalCount) : strings.value.selected(count.value),
+  !count.value
+    ? ''
+    : allMatching.value && props.totalCount != null
+      ? strings.value.allMatchingSelected(props.totalCount)
+      : strings.value.selected(count.value),
 );
 const canSelectAllMatching = computed(
-  () => allOnPage.value && !allMatching.value && props.totalCount != null && props.totalCount > selectableKeys.value.length,
+  () =>
+    allOnPage.value && !allMatching.value && props.totalCount != null && props.totalCount > selectableKeys.value.length,
 );
 
 // Horizontal scroll: is there any? Then the region takes keyboard focus (to scroll) and the pinned column gets an edge.
@@ -215,33 +226,47 @@ useResizeObserver(
     el.querySelectorAll('thead .is-pinned').forEach((p) => (w += p.getBoundingClientRect().width));
     el.style.scrollPaddingInlineStart = w ? `${Math.ceil(w)}px` : '';
     const head = el.querySelector('thead');
-    el.style.scrollPaddingTop = head && el.scrollHeight > el.clientHeight + 1 ? `${Math.ceil(head.getBoundingClientRect().height)}px` : '';
+    el.style.scrollPaddingTop =
+      head && el.scrollHeight > el.clientHeight + 1 ? `${Math.ceil(head.getBoundingClientRect().height)}px` : '';
   },
   () => [scroller.value?.firstElementChild],
 );
 
 // Clickable rows: the primary column holds the real link or button; a click anywhere else on the row follows it.
-const INTERACTIVE = 'a, button, input, select, textarea, label, summary, [role="button"], [role="checkbox"], [data-row-click="ignore"]';
+const INTERACTIVE =
+  'a, button, input, select, textarea, label, summary, [role="button"], [role="checkbox"], [data-row-click="ignore"]';
 function onRowAreaClick(e: MouseEvent) {
   if (!clickable.value || e.defaultPrevented) return;
   if ((e.target as Element).closest?.(INTERACTIVE)) return;
   if (String(window.getSelection?.() ?? '').length) return; // selecting text, not opening the row
   const link = (e.currentTarget as Element).querySelector('.q-table__link');
   link?.dispatchEvent(
-    new MouseEvent('click', { bubbles: true, cancelable: true, view: e.view, ctrlKey: e.ctrlKey, metaKey: e.metaKey, shiftKey: e.shiftKey, altKey: e.altKey }),
+    new MouseEvent('click', {
+      bubbles: true,
+      cancelable: true,
+      view: e.view,
+      ctrlKey: e.ctrlKey,
+      metaKey: e.metaKey,
+      shiftKey: e.shiftKey,
+      altKey: e.altKey,
+    }),
   );
 }
 
 const pin = computed(() => props.mobile === 'scroll' && props.pinFirst && primary.value === columns.value[0]);
 const colCount = computed(() => columns.value.length + (props.selectable ? 1 : 0) + (hasActions.value ? 1 : 0));
-const alignClass = (c: TableColumn<Row>) => (c.numeric || c.align === 'end' ? 'is-end' : c.align === 'center' ? 'is-center' : null);
+const alignClass = (c: TableColumn<Row>) =>
+  c.numeric || c.align === 'end' ? 'is-end' : c.align === 'center' ? 'is-center' : null;
 const skelWidth = (r: number, ci: number) => `${ci === 0 ? 60 + ((r * 37) % 30) : 30 + ((r * 13 + ci * 29) % 40)}%`;
 
 // Phones in cards mode: no header row, so select-all and sorting move into a small bar above the cards.
 const sortable = computed(() => columns.value.filter((c) => c.sortable));
 const sortOptions = computed(() =>
   sortable.value.flatMap((c) => {
-    const labels = c.sortLabels ?? [strings.value.sortOption(c.header, 'asc'), strings.value.sortOption(c.header, 'desc')];
+    const labels = c.sortLabels ?? [
+      strings.value.sortOption(c.header, 'asc'),
+      strings.value.sortOption(c.header, 'desc'),
+    ];
     return [
       { value: `${c.key}:asc`, label: labels[0] },
       { value: `${c.key}:desc`, label: labels[1] },
@@ -252,14 +277,24 @@ function onMobileSort(v: string | null | undefined) {
   const [key, direction] = String(v ?? '').split(':');
   if (key) sort.value = { key, direction: direction === 'desc' ? 'desc' : 'asc' };
 }
-const maxHeightCss = computed(() => (props.maxHeight == null ? undefined : typeof props.maxHeight === 'number' ? `${props.maxHeight}px` : props.maxHeight));
+const maxHeightCss = computed(() =>
+  props.maxHeight == null ? undefined : typeof props.maxHeight === 'number' ? `${props.maxHeight}px` : props.maxHeight,
+);
 </script>
 
 <template>
   <div
-    :class="['q-table', `q-table--${mobile}`, selectable && 'q-table--selectable', hasActions && 'q-table--actions', loading && 'is-loading']"
+    :class="[
+      'q-table',
+      `q-table--${mobile}`,
+      selectable && 'q-table--selectable',
+      hasActions && 'q-table--actions',
+      loading && 'is-loading',
+    ]"
     :data-density="density"
   >
+    <!-- eslint-disable vuejs-accessibility/no-redundant-roles -- explicit table roles keep the semantics when the phone
+         card layout changes display: browsers drop a table's roles once its elements stop displaying as table parts. -->
     <div class="q-table__frame">
       <div v-if="slots.toolbar" class="q-table__toolbar"><slot name="toolbar" /></div>
       <div v-if="mobile === 'cards' && (selectable || sortable.length)" class="q-table__mobilebar">
@@ -285,7 +320,13 @@ const maxHeightCss = computed(() => (props.maxHeight == null ? undefined : typeo
       </div>
       <div v-if="selectable && count" class="q-table__bulk">
         <span class="q-table__bulk-count">{{ selectionText }}</span>
-        <QButton v-if="canSelectAllMatching" size="slim" variant="ghost" class="q-table__bulk-all" @click="allMatching = true">
+        <QButton
+          v-if="canSelectAllMatching"
+          size="slim"
+          variant="ghost"
+          class="q-table__bulk-all"
+          @click="allMatching = true"
+        >
           {{ strings.selectAllMatching(totalCount!) }}
         </QButton>
         <div class="q-table__bulk-actions">
@@ -306,8 +347,15 @@ const maxHeightCss = computed(() => (props.maxHeight == null ? undefined : typeo
         @scroll="scrolled = ($event.currentTarget as HTMLElement).scrollLeft > 0"
       >
         <!-- A real <table>, with explicit roles so it stays a table to screen readers when phones show cards. -->
-        <table class="q-table__table" role="table" :aria-busy="loading ? 'true' : undefined" :aria-labelledby="captionId">
-          <caption :id="captionId" :class="['q-table__caption', captionHidden && 'q-visually-hidden']"><slot name="caption">{{ caption }}</slot></caption>
+        <table
+          class="q-table__table"
+          role="table"
+          :aria-busy="loading ? 'true' : undefined"
+          :aria-labelledby="captionId"
+        >
+          <caption :id="captionId" :class="['q-table__caption', captionHidden && 'q-visually-hidden']">
+            <slot name="caption">{{ caption }}</slot>
+          </caption>
           <thead role="rowgroup" class="q-table__head">
             <tr role="row">
               <th v-if="selectable" role="columnheader" scope="col" :class="['q-table__select', pin && 'is-pinned']">
@@ -336,7 +384,9 @@ const maxHeightCss = computed(() => (props.maxHeight == null ? undefined : typeo
                 :style="c.width || c.minWidth ? { width: c.width, minWidth: c.minWidth } : undefined"
               >
                 <button v-if="c.sortable" type="button" class="q-table__sort" @click="toggleSort(c)">
-                  <span class="q-table__sort-label"><slot :name="`header-${c.key}`">{{ c.header }}</slot></span>
+                  <span class="q-table__sort-label"
+                    ><slot :name="`header-${c.key}`">{{ c.header }}</slot></span
+                  >
                   <span class="q-table__sort-icon" aria-hidden="true">
                     <QIcon :name="sort?.key === c.key && sort.direction === 'asc' ? 'chevron-up' : 'chevron-down'" />
                   </span>
@@ -350,7 +400,13 @@ const maxHeightCss = computed(() => (props.maxHeight == null ? undefined : typeo
           </thead>
           <tbody role="rowgroup" class="q-table__body">
             <template v-if="loading && !shown.length">
-              <tr v-for="r in skeletonRows" :key="`sk${r}`" role="row" class="q-table__row q-table__row--skeleton" aria-hidden="true">
+              <tr
+                v-for="r in skeletonRows"
+                :key="`sk${r}`"
+                role="row"
+                class="q-table__row q-table__row--skeleton"
+                aria-hidden="true"
+              >
                 <td v-if="selectable" role="cell" class="q-table__select" />
                 <td v-for="(c, ci) in columns" :key="c.key" role="cell" :class="alignClass(c)">
                   <span class="q-table__skel" :style="{ width: skelWidth(r - 1, ci) }" />
@@ -359,14 +415,20 @@ const maxHeightCss = computed(() => (props.maxHeight == null ? undefined : typeo
               </tr>
             </template>
             <tr v-else-if="!shown.length" role="row" class="q-table__row q-table__row--empty">
-              <td role="cell" :colspan="colCount" class="q-table__empty"><slot name="empty">{{ strings.empty }}</slot></td>
+              <td role="cell" :colspan="colCount" class="q-table__empty">
+                <slot name="empty">{{ strings.empty }}</slot>
+              </td>
             </tr>
             <tr
               v-for="(row, i) in shown"
               v-else
               :key="String(pageKeys[i])"
               role="row"
-              :class="['q-table__row', (allMatching || selected.includes(pageKeys[i])) && 'is-selected', clickable && 'is-clickable']"
+              :class="[
+                'q-table__row',
+                (allMatching || selected.includes(pageKeys[i])) && 'is-selected',
+                clickable && 'is-clickable',
+              ]"
               @click="onRowAreaClick"
             >
               <td v-if="selectable" role="cell" :class="['q-table__select', pin && 'is-pinned']">
@@ -405,16 +467,32 @@ const maxHeightCss = computed(() => (props.maxHeight == null ? undefined : typeo
                   :type="rowHref ? undefined : 'button'"
                   @click="props.onRowClick?.(row, $event)"
                 >
-                  <span v-if="c.truncate" class="q-table__trunc" :style="typeof c.truncate === 'string' ? { maxWidth: c.truncate } : undefined">
-                    <slot :name="`cell-${c.key}`" :row="row" :index="i" :value="row[c.key]">{{ cellText(c, row, i) }}</slot>
+                  <span
+                    v-if="c.truncate"
+                    class="q-table__trunc"
+                    :style="typeof c.truncate === 'string' ? { maxWidth: c.truncate } : undefined"
+                  >
+                    <slot :name="`cell-${c.key}`" :row="row" :index="i" :value="row[c.key]">{{
+                      cellText(c, row, i)
+                    }}</slot>
                   </span>
-                  <slot v-else :name="`cell-${c.key}`" :row="row" :index="i" :value="row[c.key]">{{ cellText(c, row, i) }}</slot>
+                  <slot v-else :name="`cell-${c.key}`" :row="row" :index="i" :value="row[c.key]">{{
+                    cellText(c, row, i)
+                  }}</slot>
                 </component>
                 <template v-else>
-                  <span v-if="c.truncate" class="q-table__trunc" :style="typeof c.truncate === 'string' ? { maxWidth: c.truncate } : undefined">
-                    <slot :name="`cell-${c.key}`" :row="row" :index="i" :value="row[c.key]">{{ cellText(c, row, i) }}</slot>
+                  <span
+                    v-if="c.truncate"
+                    class="q-table__trunc"
+                    :style="typeof c.truncate === 'string' ? { maxWidth: c.truncate } : undefined"
+                  >
+                    <slot :name="`cell-${c.key}`" :row="row" :index="i" :value="row[c.key]">{{
+                      cellText(c, row, i)
+                    }}</slot>
                   </span>
-                  <slot v-else :name="`cell-${c.key}`" :row="row" :index="i" :value="row[c.key]">{{ cellText(c, row, i) }}</slot>
+                  <slot v-else :name="`cell-${c.key}`" :row="row" :index="i" :value="row[c.key]">{{
+                    cellText(c, row, i)
+                  }}</slot>
                 </template>
               </component>
               <td v-if="hasActions" role="cell" class="q-table__actions">

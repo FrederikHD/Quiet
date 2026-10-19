@@ -23,13 +23,30 @@ const log = ref('');
     ]"
   >
     <template #row-actions="{ row }">
-      <QButton size="slim" variant="ghost" icon-start="copy" :aria-label="`Copy ${row.code}`" @click="log = `Copied ${row.code}`" />
-      <QButton size="slim" variant="ghost" icon-start="trash" :aria-label="`Delete ${row.code}`" @click="log = `Deleted ${row.code}`" />
+      <QButton
+        size="slim"
+        variant="ghost"
+        icon-start="copy"
+        :aria-label="`Copy ${row.code}`"
+        @click="log = `Copied ${row.code}`"
+      />
+      <QButton
+        size="slim"
+        variant="ghost"
+        icon-start="trash"
+        :aria-label="`Delete ${row.code}`"
+        @click="log = `Deleted ${row.code}`"
+      />
     </template>
   </QTable>
   <p class="log" role="status">{{ log }}</p>
 </template>
 
 <style scoped>
-.log { margin: 0; min-height: 18px; font: var(--text-small); color: var(--ink-muted); }
+.log {
+  margin: 0;
+  min-height: 18px;
+  font: var(--text-small);
+  color: var(--ink-muted);
+}
 </style>

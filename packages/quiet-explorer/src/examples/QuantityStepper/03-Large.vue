@@ -14,5 +14,9 @@ const quantity = ref(1);
 </template>
 
 <style scoped>
-.buy { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+.buy {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
 </style>

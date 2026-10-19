@@ -21,7 +21,18 @@ const went = ref('');
 </template>
 
 <style scoped>
-.frame { border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--surface); }
-.log { margin: 0; min-height: 18px; font: var(--text-small); color: var(--ink-muted); }
-a { color: inherit; }
+.frame {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+.log {
+  margin: 0;
+  min-height: 18px;
+  font: var(--text-small);
+  color: var(--ink-muted);
+}
+a {
+  color: inherit;
+}
 </style>

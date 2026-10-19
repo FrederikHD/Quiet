@@ -8,5 +8,7 @@ import { QReviewSummary } from '@frederikhd/quiet';
 </template>
 
 <style scoped>
-.summary { max-width: 320px; }
+.summary {
+  max-width: 320px;
+}
 </style>

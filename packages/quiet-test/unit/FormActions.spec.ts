@@ -5,7 +5,9 @@ import { h } from 'vue';
 
 describe('QFormActions', () => {
   it('puts its buttons in a row aligned to the end', () => {
-    const w = mount(QFormActions, { slots: { default: () => [h(QButton, null, () => 'Cancel'), h(QButton, { variant: 'primary' }, () => 'Save')] } });
+    const w = mount(QFormActions, {
+      slots: { default: () => [h(QButton, null, () => 'Cancel'), h(QButton, { variant: 'primary' }, () => 'Save')] },
+    });
     expect(w.classes()).toEqual(['q-factions']);
     const row = w.get('.q-factions__row');
     expect(row.classes()).toContain('q-factions__row--end');

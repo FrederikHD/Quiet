@@ -40,7 +40,9 @@ const dlItems = computed<DescriptionListItem[]>(() => [
         <span class="q-summary__media">
           <img v-if="it.image?.src" :src="it.image.src" :alt="it.image.alt ?? ''" loading="lazy" decoding="async" />
           <QIcon v-else name="image" />
-          <span v-if="(it.quantity ?? 1) > 1 || showQuantity === 'always'" class="q-summary__qty" aria-hidden="true">{{ it.quantity ?? 1 }}</span>
+          <span v-if="(it.quantity ?? 1) > 1 || showQuantity === 'always'" class="q-summary__qty" aria-hidden="true">{{
+            it.quantity ?? 1
+          }}</span>
         </span>
         <span class="q-summary__info">
           <a v-if="it.href" class="q-summary__name" :href="it.href">{{ it.name }}</a>
@@ -48,13 +50,21 @@ const dlItems = computed<DescriptionListItem[]>(() => [
           <span v-if="it.variant" class="q-summary__variant">{{ it.variant }}</span>
           <span class="q-visually-hidden">{{ strings.quantity(it.quantity ?? 1) }}</span>
         </span>
-        <QPrice :amount="it.price" :compare-at="it.compareAt" :currency="currency" size="small" class="q-summary__price" />
+        <QPrice
+          :amount="it.price"
+          :compare-at="it.compareAt"
+          :currency="currency"
+          size="small"
+          class="q-summary__price"
+        />
       </li>
     </ul>
     <div v-if="hasExtra" class="q-summary__extra"><slot /></div>
     <QDescriptionList layout="inline" :items="dlItems" class="q-summary__totals">
       <template v-for="(r, i) in rows" :key="i" #[`term-r${i}`]>
-        <span class="q-summary__term">{{ r.label }}<span v-if="r.detail" class="q-summary__detail">{{ r.detail }}</span></span>
+        <span class="q-summary__term"
+          >{{ r.label }}<span v-if="r.detail" class="q-summary__detail">{{ r.detail }}</span></span
+        >
       </template>
       <template v-for="(r, i) in rows" :key="i" #[`description-r${i}`]>
         <span :class="[r.amount != null && r.amount < 0 && 'q-summary__minus']">
@@ -62,7 +72,9 @@ const dlItems = computed<DescriptionListItem[]>(() => [
           <template v-else>{{ amountText(r) }}</template>
         </span>
       </template>
-      <template #description-total><span class="q-summary__total">{{ money(total, currency) }}</span></template>
+      <template #description-total
+        ><span class="q-summary__total">{{ money(total, currency) }}</span></template
+      >
     </QDescriptionList>
     <p v-if="hasNote" class="q-summary__note"><slot name="tax-note" /></p>
   </div>

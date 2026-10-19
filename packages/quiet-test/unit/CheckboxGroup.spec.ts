@@ -39,7 +39,11 @@ describe('QCheckboxGroup', () => {
 
   it('ticks from v-model and emits the new array', async () => {
     const w: VueWrapper = mount(QCheckboxGroup, {
-      props: { label: 'Sell on', modelValue: ['pos'], 'onUpdate:modelValue': (v?: string[]) => w.setProps({ modelValue: v }) },
+      props: {
+        label: 'Sell on',
+        modelValue: ['pos'],
+        'onUpdate:modelValue': (v?: string[]) => w.setProps({ modelValue: v }),
+      },
       slots: { default: options },
     });
     const [web, pos] = w.findAll('input');
@@ -52,14 +56,22 @@ describe('QCheckboxGroup', () => {
   });
 
   it('starts from defaultValue', () => {
-    const w = mount(QCheckboxGroup, { props: { label: 'Sell on', defaultValue: ['web'] }, slots: { default: options } });
+    const w = mount(QCheckboxGroup, {
+      props: { label: 'Sell on', defaultValue: ['web'] },
+      slots: { default: options },
+    });
     expect((w.find('input[value="web"]').element as HTMLInputElement).checked).toBe(true);
   });
 
   it('puts the group id on the first enabled option, for the error summary', () => {
     const w = mount(QCheckboxGroup, {
       props: { label: 'Sell on', id: 'channels' },
-      slots: { default: () => [h(QCheckbox, { value: 'a', label: 'A', disabled: true }), h(QCheckbox, { value: 'b', label: 'B' })] },
+      slots: {
+        default: () => [
+          h(QCheckbox, { value: 'a', label: 'A', disabled: true }),
+          h(QCheckbox, { value: 'b', label: 'B' }),
+        ],
+      },
     });
     expect(w.get('#channels').attributes('value')).toBe('b');
   });
@@ -96,7 +108,10 @@ describe('QCheckboxGroup', () => {
   });
 
   it('lays out cards in columns', () => {
-    const w = mount(QCheckboxGroup, { props: { label: 'Sell on', layout: 'cards', columns: 2 }, slots: { default: options } });
+    const w = mount(QCheckboxGroup, {
+      props: { label: 'Sell on', layout: 'cards', columns: 2 },
+      slots: { default: options },
+    });
     const opts = w.get('.q-choicegroup__options');
     expect(opts.classes()).toContain('q-choicegroup__options--cards');
     expect(opts.attributes('style')).toContain('--q-cols: 2');

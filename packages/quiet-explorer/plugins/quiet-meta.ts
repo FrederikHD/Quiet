@@ -40,11 +40,15 @@ const RESOLVED = '\0' + VIRTUAL;
 
 function control(schema: PropertyMetaSchema, type: string): PropControl {
   // vue-component-meta marks function types (even behind an alias such as ComboboxSearch) as kind "event".
-  const text = (sc: PropertyMetaSchema) => (typeof sc === 'string' ? sc : sc.kind === 'event' ? '(…) => unknown' : sc.type);
-  const parts = (typeof schema === 'object' && schema.kind === 'enum' ? (schema.schema ?? []).map(text) : [text(schema) || type])
+  const text = (sc: PropertyMetaSchema) =>
+    typeof sc === 'string' ? sc : sc.kind === 'event' ? '(…) => unknown' : sc.type;
+  const parts = (
+    typeof schema === 'object' && schema.kind === 'enum' ? (schema.schema ?? []).map(text) : [text(schema) || type]
+  )
     .flatMap((p) => (p === 'boolean' ? ['true', 'false'] : [p.trim()]))
     .filter((p) => p !== 'undefined');
-  const literal = (p: string) => /^".*"$/.test(p) || /^-?\d+(\.\d+)?$/.test(p) || p === 'true' || p === 'false' || p === 'null';
+  const literal = (p: string) =>
+    /^".*"$/.test(p) || /^-?\d+(\.\d+)?$/.test(p) || p === 'true' || p === 'false' || p === 'null';
   const isFunction = (p: string) => /=>/.test(p) && !/^[{[]/.test(p);
   const values = parts.filter((p) => p !== 'null');
 

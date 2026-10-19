@@ -40,7 +40,7 @@ import { QButton, QField, QInput } from '@frederikhd/quiet';
 Load [Inter](https://fonts.google.com/specimen/Inter) (400, 500, 600) and set the theme and density on `<html>`:
 
 ```html
-<html data-theme="light" data-density="comfortable">
+<html data-theme="light" data-density="comfortable"></html>
 ```
 
 `data-theme` is `light` or `dark`; `data-density` is `comfortable` or `compact`, and can also be set on any container.

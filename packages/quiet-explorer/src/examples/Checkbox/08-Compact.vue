@@ -14,5 +14,8 @@ const filters = reactive({ lowStock: true, archived: false });
 </template>
 
 <style scoped>
-.list { display: grid; max-width: 320px; }
+.list {
+  display: grid;
+  max-width: 320px;
+}
 </style>

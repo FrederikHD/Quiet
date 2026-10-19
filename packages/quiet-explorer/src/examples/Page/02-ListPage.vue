@@ -33,5 +33,9 @@ const products = [
 </template>
 
 <style scoped>
-.frame { border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--surface); }
+.frame {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
 </style>

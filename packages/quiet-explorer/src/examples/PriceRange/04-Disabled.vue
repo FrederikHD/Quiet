@@ -11,5 +11,7 @@ const range = ref<[number, number]>([30, 90]);
 </template>
 
 <style scoped>
-.range { max-width: 300px; }
+.range {
+  max-width: 300px;
+}
 </style>

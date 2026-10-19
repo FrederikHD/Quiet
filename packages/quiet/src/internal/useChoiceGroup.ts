@@ -41,7 +41,10 @@ export function useChoiceGroup(
   const layout = computed<ChoiceLayout>(() => {
     const l = props.layout ?? 'list';
     if (['list', 'inline', 'cards', 'swatches', 'buttons'].includes(l)) return l;
-    warnOnce(`choice-layout-${kind}`, `${kind === 'radio' ? 'RadioGroup' : 'CheckboxGroup'}: layout is list, inline, cards, swatches or buttons.`);
+    warnOnce(
+      `choice-layout-${kind}`,
+      `${kind === 'radio' ? 'RadioGroup' : 'CheckboxGroup'}: layout is list, inline, cards, swatches or buttons.`,
+    );
     return 'list';
   });
   const tile = computed(() => (layout.value === 'swatches' || layout.value === 'buttons' ? layout.value : null));

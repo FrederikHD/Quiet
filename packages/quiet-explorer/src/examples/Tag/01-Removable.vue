@@ -23,6 +23,13 @@ async function remove(i: number) {
 </template>
 
 <style scoped>
-.row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
-.none { color: var(--ink-muted); }
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+.none {
+  color: var(--ink-muted);
+}
 </style>

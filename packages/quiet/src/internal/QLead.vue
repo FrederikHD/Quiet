@@ -7,5 +7,7 @@ defineProps<{ icon?: IconName; size?: 'sm' | 'md' | 'lg' | 'control' }>();
 </script>
 
 <template>
-  <span class="q-lead" aria-hidden="true"><slot><QIcon v-if="icon" :name="icon" :size="size ?? 'sm'" /></slot></span>
+  <span class="q-lead" aria-hidden="true"
+    ><slot><QIcon v-if="icon" :name="icon" :size="size ?? 'sm'" /></slot
+  ></span>
 </template>

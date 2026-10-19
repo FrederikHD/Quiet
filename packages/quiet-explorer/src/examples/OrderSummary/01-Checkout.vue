@@ -5,7 +5,15 @@ import { photo } from '../../fixtures/pictures';
 
 const items: OrderSummaryItem[] = [
   { id: 'shirt', name: 'Linen shirt', variant: 'Blue · M', quantity: 2, price: 118, image: { src: photo('Blue') } },
-  { id: 'trousers', name: 'Linen trousers', variant: 'Navy · 32', quantity: 1, price: 79, compareAt: 99, image: { src: photo('Navy', 2) } },
+  {
+    id: 'trousers',
+    name: 'Linen trousers',
+    variant: 'Navy · 32',
+    quantity: 1,
+    price: 79,
+    compareAt: 99,
+    image: { src: photo('Navy', 2) },
+  },
 ];
 </script>
 
@@ -24,5 +32,10 @@ const items: OrderSummaryItem[] = [
 </template>
 
 <style scoped>
-.panel { max-width: 420px; padding: var(--space-6); border-radius: var(--radius-md); background: var(--surface-sunken); }
+.panel {
+  max-width: 420px;
+  padding: var(--space-6);
+  border-radius: var(--radius-md);
+  background: var(--surface-sunken);
+}
 </style>

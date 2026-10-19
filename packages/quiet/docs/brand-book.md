@@ -22,19 +22,19 @@ Two themes, `light` (default) and `dark`, built from the same token names — co
 
 Every component sizes itself from the density variables in Quiet's stylesheet (`styles/density.css`), never from `control-*` tokens directly. Set `data-density` on `<html>` or on any container; the nearest one wins.
 
-| Variable | comfortable (default) | compact |
-| --- | --- | --- |
-| `--ctl-h` control height | `control-md` 40 | `control-sm` 32 |
-| `--ctl-pad` control side padding | `control-pad-md` 16 | `control-pad-sm` 12 |
-| `--ctl-text` control text | `control-text-md` 15 | `control-text-sm` 13 |
-| `--ctl-icon` icon in a control | `icon-md` 20 | `icon-sm` 16 |
-| `--ctl-gap` icon-to-label gap | `space-2` 8 | `space-1` 4 |
-| `--row-h` table row | `row-comfortable` 56 | `row-dense` 40 |
-| `--cell-pad-x` / `--cell-pad-y` | `space-4` / `space-3` | `space-3` / `space-2` |
-| `--cell-text` table text | 15 | 13 (`table-text`) |
-| `--field-gap` between form fields | `space-4` 16 | `space-3` 12 |
-| `--panel-pad` card and panel padding | `space-6` 24 | `space-4` 16 |
-| `--stack-gap` between stacked items | `space-4` 16 | `space-2` 8 |
+| Variable                             | comfortable (default) | compact               |
+| ------------------------------------ | --------------------- | --------------------- |
+| `--ctl-h` control height             | `control-md` 40       | `control-sm` 32       |
+| `--ctl-pad` control side padding     | `control-pad-md` 16   | `control-pad-sm` 12   |
+| `--ctl-text` control text            | `control-text-md` 15  | `control-text-sm` 13  |
+| `--ctl-icon` icon in a control       | `icon-md` 20          | `icon-sm` 16          |
+| `--ctl-gap` icon-to-label gap        | `space-2` 8           | `space-1` 4           |
+| `--row-h` table row                  | `row-comfortable` 56  | `row-dense` 40        |
+| `--cell-pad-x` / `--cell-pad-y`      | `space-4` / `space-3` | `space-3` / `space-2` |
+| `--cell-text` table text             | 15                    | 13 (`table-text`)     |
+| `--field-gap` between form fields    | `space-4` 16          | `space-3` 12          |
+| `--panel-pad` card and panel padding | `space-6` 24          | `space-4` 16          |
+| `--stack-gap` between stacked items  | `space-4` 16          | `space-2` 8           |
 
 - **Storefront:** always `comfortable`. Primary actions (Add to cart, Checkout) use `control-lg`, `control-pad-lg` and `control-text-lg` directly, so they stay 48px whatever the density.
 - **Back office:** `comfortable` by default for forms, settings and order detail; `compact` for lists and tables (orders, products, customers, inventory). Offer the person a Compact / Comfortable toggle that sets `data-density` on `<html>` and remember their choice.
@@ -48,6 +48,7 @@ Every component sizes itself from the density variables in Quiet's stylesheet (`
 Every component follows the same rules, so they look and behave alike next to each other.
 
 **Sizes.**
+
 - **`default`** follows the density: 40px comfortable, 32px compact.
 - **`slim`** is a fixed 28px, desktop only (it grows back to the density size under 640px). Use it for filter bars, table toolbars, rows and pagination.
 - **`large`** is a fixed 48px, for the storefront.
@@ -59,6 +60,7 @@ Every component follows the same rules, so they look and behave alike next to ea
 **Built from each other.** Bigger components are made of the smaller ones, never re-drawn: a search box is an Input, a folded order summary a Disclosure, a price filter two Fields, every removable chip a Tag. Each component's page lists what it's built from.
 
 **Shape.**
+
 - **`radius-md`:** controls and choice cards.
 - **`radius-lg`:** containers (Dialog, Table, Card).
 - **`radius-sm`:** small boxes (checkbox, the tag inside a field).
@@ -67,16 +69,17 @@ Every component follows the same rules, so they look and behave alike next to ea
 
 **States.** Each state looks the same everywhere.
 
-| State | Look |
-| --- | --- |
-| Hover | Fields and boxes: border `ink-muted`. Buttons, rows and options: `surface-sunken` fill. Only where a pointer can hover. |
-| Selected | `brand-tint` fill: pressed toggles, table rows, chosen cards (plus a `brand` border). Ticked boxes are `brand`. |
-| Focus | 2px `brand` ring, 2px outside; 1px outside for small buttons inside another control (clear ×, chip ×, sort). Fields show focus on their border instead. Menu items and tabs show it as a 2px inset ring, and a toast's buttons use a `surface`-coloured ring on the dark bar. Keyboard only, never on click. |
-| Invalid | `danger` border; the focus ring turns `danger` too. The message comes from the field or group. |
-| Disabled | `surface-sunken` fill, `line` border, `ink-muted` text, not-allowed cursor. |
-| Read-only | `surface-sunken` fill, `line` border, `ink` text, no chevron. Input and Select show it this way, and so does Combobox. |
+| State     | Look                                                                                                                                                                                                                                                                                                         |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Hover     | Fields and boxes: border `ink-muted`. Buttons, rows and options: `surface-sunken` fill. Only where a pointer can hover.                                                                                                                                                                                      |
+| Selected  | `brand-tint` fill: pressed toggles, table rows, chosen cards (plus a `brand` border). Ticked boxes are `brand`.                                                                                                                                                                                              |
+| Focus     | 2px `brand` ring, 2px outside; 1px outside for small buttons inside another control (clear ×, chip ×, sort). Fields show focus on their border instead. Menu items and tabs show it as a 2px inset ring, and a toast's buttons use a `surface`-coloured ring on the dark bar. Keyboard only, never on click. |
+| Invalid   | `danger` border; the focus ring turns `danger` too. The message comes from the field or group.                                                                                                                                                                                                               |
+| Disabled  | `surface-sunken` fill, `line` border, `ink-muted` text, not-allowed cursor.                                                                                                                                                                                                                                  |
+| Read-only | `surface-sunken` fill, `line` border, `ink` text, no chevron. Input and Select show it this way, and so does Combobox.                                                                                                                                                                                       |
 
 **Type.**
+
 - **Control text:** `--ctl-text`.
 - **Labels, table headers and badges:** 13/16 medium.
 - **Descriptions, hints and messages:** 13/18.
@@ -86,6 +89,7 @@ Every component follows the same rules, so they look and behave alike next to ea
 - **Room for accents and descenders:** text that's clipped for an ellipsis (button labels, chips, badges, combobox values) keeps a line height of at least 1.2, so Ä, Ö, g and y stay whole.
 
 **Props.**
+
 - **Values:** `v-model` everywhere — Input, Select and Textarea hold a string, Checkbox a boolean, CheckboxGroup an array, RadioGroup and Combobox the chosen value. Leave `v-model` out and the component keeps its own state (start it with `defaultValue` where offered). Other values have named models: `v-model:sort`, `v-model:selected`, `v-model:page`, `v-model:open`.
 - **Errors:** controls take `invalid`; fields and groups take `error` / `warning` / `success` and pass it on to their controls.
 - **Hidden labels:** `labelHidden` (Field, groups, Checkbox) and `captionHidden` (Table) keep the label for screen readers only.
@@ -95,11 +99,13 @@ Every component follows the same rules, so they look and behave alike next to ea
 - **Refs and classes:** `class` and `style` go on the outer box (on overlays, the panel; on a Menu without a trigger of your own, its ⋯ button). Form controls expose `focus()` and their native element on a template ref (Input `input`, Select `select`, Textarea `textarea`, Checkbox, Radio and QuantityStepper `input`); Combobox exposes `focus()`, `open()` and `close()`, Dialog `close()` and its `panel`, Popover `show()`, `hide()` and `toggle()`, FileUpload `focus()` and `add(files)`.
 
 **Translations and numbers.**
+
 - Call `configure({ locale: 'de-DE', strings: { form, combobox, table, pagination, shell, tabs, input: { clear }, dialog: { close } } })` once — or pass the same options to `app.use(Quiet, { … })`. Components follow later changes too.
 - Numbers then follow the locale: "1.240".
 - A component's own `strings` (or `clearLabel` / `closeLabel`) still wins.
 
 **Phones.**
+
 - **Control sizes and overlays** switch on the screen width (640px): slim grows, text goes to 16px, dialogs become sheets. The AppShell nav becomes a drawer under 1024px.
 - **Layouts** switch on their own width, so they work in any column:
   - Field puts labels beside at 400 / 520px.
@@ -111,11 +117,13 @@ Every component follows the same rules, so they look and behave alike next to ea
   - Page puts its side column beside the main one from 900px.
 
 **Sticky bars.**
+
 - The phone top bar and a sticky FormActions bar set the page's scroll padding, so a field reached with Tab scrolls clear of them rather than hiding underneath.
 - Toasts appear at the top, under the phone top bar, so they never cover a sticky Save bar.
 - In a scrolling table, the pinned column and sticky header do the same inside the table.
 
 **Print.**
+
 - Printing gives the content only, always in the light theme's colours: navigation, toasts, page and form actions, table toolbars and row controls are left out, all tab panels print, and cards don't split across pages.
 
 ## Voice
@@ -150,13 +158,13 @@ Plain, short, sentence case. Buttons are verbs: "Add to cart", "Save changes", "
 
 The Badge component: pill (`radius-full`), `label` type, tint background with the matching strong text, padding `space-1` × `space-2`. One mapping for orders, payments, fulfilment and stock — use it everywhere:
 
-| State | Tokens | Examples |
-| --- | --- | --- |
-| Success | `success` on `success-tint` | Paid, Fulfilled, Delivered, In stock, Active |
-| Warning | `warning` on `warning-tint` | Pending, Unfulfilled, Low stock, Partially refunded |
-| Info | `info` on `info-tint` | Processing, Shipped, In transit, Pre-order |
-| Danger | `danger` on `danger-tint` | Payment failed, Cancelled, Out of stock |
-| Neutral | `ink-muted` on `surface-sunken` | Draft, Archived, Refunded |
+| State   | Tokens                          | Examples                                            |
+| ------- | ------------------------------- | --------------------------------------------------- |
+| Success | `success` on `success-tint`     | Paid, Fulfilled, Delivered, In stock, Active        |
+| Warning | `warning` on `warning-tint`     | Pending, Unfulfilled, Low stock, Partially refunded |
+| Info    | `info` on `info-tint`           | Processing, Shipped, In transit, Pre-order          |
+| Danger  | `danger` on `danger-tint`       | Payment failed, Cancelled, Out of stock             |
+| Neutral | `ink-muted` on `surface-sunken` | Draft, Archived, Refunded                           |
 
 ## Back office
 

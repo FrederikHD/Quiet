@@ -15,5 +15,7 @@ const ship = ref<string | null>(null);
 </template>
 
 <style scoped>
-.narrow { max-width: 480px; }
+.narrow {
+  max-width: 480px;
+}
 </style>

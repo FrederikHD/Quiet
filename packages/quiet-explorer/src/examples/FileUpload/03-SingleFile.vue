@@ -8,6 +8,12 @@ const file = ref<FileUploadItem[]>([]);
 
 <template>
   <QField label="Price list" label-placement="top" hint="One CSV file, up to 2 MB.">
-    <QFileUpload v-model="file" :multiple="false" accept=".csv,text/csv" accept-label="a CSV file" :max-size="2 * 1048576" />
+    <QFileUpload
+      v-model="file"
+      :multiple="false"
+      accept=".csv,text/csv"
+      accept-label="a CSV file"
+      :max-size="2 * 1048576"
+    />
   </QField>
 </template>

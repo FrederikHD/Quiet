@@ -29,5 +29,10 @@ const terms = [
 </template>
 
 <style scoped>
-.terms { display: grid; gap: var(--space-3); margin: 0; padding-left: var(--space-5); }
+.terms {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding-left: var(--space-5);
+}
 </style>

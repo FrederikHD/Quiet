@@ -11,6 +11,15 @@ import { QBadge, QPrice } from '@frederikhd/quiet';
 </template>
 
 <style scoped>
-.product { display: grid; gap: var(--space-1); }
-.name { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); font-weight: 600; }
+.product {
+  display: grid;
+  gap: var(--space-1);
+}
+.name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  font-weight: 600;
+}
 </style>

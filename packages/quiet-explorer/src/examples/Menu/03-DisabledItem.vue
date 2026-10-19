@@ -17,5 +17,15 @@ import { QMenu } from '@frederikhd/quiet';
 </template>
 
 <style scoped>
-.row { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); max-width: 420px; padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4); background: var(--surface-raised); border: 1px solid var(--line); border-radius: var(--radius-lg); }
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  max-width: 420px;
+  padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4);
+  background: var(--surface-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+}
 </style>

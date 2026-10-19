@@ -16,7 +16,13 @@ const shown = computed(() => reviews.filter((r) => !only.value || r.stars === on
 
 <template>
   <div class="reviews">
-    <QReviewSummary :average="3.6" :distribution="{ 5: 2, 4: 1, 3: 1, 2: 0, 1: 1 }" filterable :active="only" @filter="only = $event" />
+    <QReviewSummary
+      :average="3.6"
+      :distribution="{ 5: 2, 4: 1, 3: 1, 2: 0, 1: 1 }"
+      filterable
+      :active="only"
+      @filter="only = $event"
+    />
     <ul class="list" aria-label="Reviews">
       <li v-for="r in shown" :key="r.id" class="review">
         <QRating :value="r.stars" :show-value="false" size="small" />
@@ -28,8 +34,28 @@ const shown = computed(() => reviews.filter((r) => !only.value || r.stars === on
 </template>
 
 <style scoped>
-.reviews { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: var(--space-8); align-items: start; }
-.list { display: grid; gap: var(--space-4); margin: 0; padding: 0; list-style: none; }
-.review { display: grid; justify-items: start; gap: var(--space-1); padding-bottom: var(--space-4); border-bottom: 1px solid var(--line); }
-.by { font: var(--text-small); color: var(--ink-muted); }
+.reviews {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+  gap: var(--space-8);
+  align-items: start;
+}
+.list {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.review {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-1);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--line);
+}
+.by {
+  font: var(--text-small);
+  color: var(--ink-muted);
+}
 </style>

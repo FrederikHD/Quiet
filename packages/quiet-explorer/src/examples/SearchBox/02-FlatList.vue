@@ -11,16 +11,31 @@ const ORDERS = [
 const q = ref('');
 const suggestions = computed<SearchSuggestion[]>(() => {
   const t = q.value.trim().toLowerCase();
-  return t ? ORDERS.filter((o) => `${o.id} ${o.customer}`.toLowerCase().includes(t)).map((o) => ({ label: `Order ${o.id}`, description: o.customer, icon: 'bag' as const, meta: o.total })) : [];
+  return t
+    ? ORDERS.filter((o) => `${o.id} ${o.customer}`.toLowerCase().includes(t)).map((o) => ({
+        label: `Order ${o.id}`,
+        description: o.customer,
+        icon: 'bag' as const,
+        meta: o.total,
+      }))
+    : [];
 });
 </script>
 
 <template>
   <div class="box" data-density="compact">
-    <QSearchBox v-model="q" label="Search orders" placeholder="Order number or customer" :suggestions="suggestions" :search-option="false" />
+    <QSearchBox
+      v-model="q"
+      label="Search orders"
+      placeholder="Order number or customer"
+      :suggestions="suggestions"
+      :search-option="false"
+    />
   </div>
 </template>
 
 <style scoped>
-.box { max-width: 360px; }
+.box {
+  max-width: 360px;
+}
 </style>

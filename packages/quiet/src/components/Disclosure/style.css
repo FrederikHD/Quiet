@@ -1,21 +1,96 @@
 /* ---------- Disclosure ----------
    A full-width heading button on a `line` divider; title in label weight, an optional count or summary in
    ink-muted, the chevron turns when open. */
-.q-disc { min-width: 0; border-bottom: 1px solid var(--line); font-family: var(--font-sans); color: var(--ink); }
-.q-disc--plain { border-bottom: 0; }
-.q-disc__head { margin: 0; font: inherit; }
-.q-disc__btn {
-  display: flex; align-items: center; gap: var(--space-2); box-sizing: border-box; width: 100%; min-height: var(--ctl-h); margin: 0; padding: var(--space-3) 0;
-  border: 0; background: none; color: inherit; font: inherit; font-size: var(--control-text-md); line-height: 22px; font-weight: 600; text-align: left; cursor: pointer;
+.q-disc {
+  min-width: 0;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-sans);
+  color: var(--ink);
 }
-.q-disc__title { flex: 1 1 auto; min-width: 0; overflow-wrap: anywhere; }
-.q-disc__meta { flex: none; max-width: 50%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--ink-muted); font-weight: 400; font-size: var(--control-text-sm); }
-.q-disc__chev { flex: none; color: var(--ink-muted); transition: transform 150ms ease; }
-.q-disc.is-open .q-disc__chev { transform: rotate(180deg); }
-.q-disc__btn:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: var(--radius-sm); }
-@media (hover: hover) { .q-disc__btn:hover .q-disc__title { text-decoration: underline; text-underline-offset: 3px; } }
-.q-disc__panel { display: grid; gap: var(--field-gap); padding: 0 0 var(--space-4); min-width: 0; }  /* several fields or paragraphs stack like a Card body */
-.q-disc__panel[hidden] { display: none; }
-@media (max-width: 639px) { .q-disc__btn { min-height: var(--control-lg); } }
-@media (prefers-reduced-motion: reduce) { .q-disc__chev { transition: none; } }
-@media print { .q-disc__panel[hidden] { display: block !important; } .q-disc__chev { display: none; } }
+.q-disc--plain {
+  border-bottom: 0;
+}
+.q-disc__head {
+  margin: 0;
+  font: inherit;
+}
+.q-disc__btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  box-sizing: border-box;
+  width: 100%;
+  min-height: var(--ctl-h);
+  margin: 0;
+  padding: var(--space-3) 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: var(--control-text-md);
+  line-height: 22px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+.q-disc__title {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.q-disc__meta {
+  flex: none;
+  max-width: 50%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--ink-muted);
+  font-weight: 400;
+  font-size: var(--control-text-sm);
+}
+.q-disc__chev {
+  flex: none;
+  color: var(--ink-muted);
+  transition: transform 150ms ease;
+}
+.q-disc.is-open .q-disc__chev {
+  transform: rotate(180deg);
+}
+.q-disc__btn:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+@media (hover: hover) {
+  .q-disc__btn:hover .q-disc__title {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+.q-disc__panel {
+  display: grid;
+  gap: var(--field-gap);
+  padding: 0 0 var(--space-4);
+  min-width: 0;
+} /* several fields or paragraphs stack like a Card body */
+.q-disc__panel[hidden] {
+  display: none;
+}
+@media (max-width: 639px) {
+  .q-disc__btn {
+    min-height: var(--control-lg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .q-disc__chev {
+    transition: none;
+  }
+}
+@media print {
+  .q-disc__panel[hidden] {
+    display: block !important;
+  }
+  .q-disc__chev {
+    display: none;
+  }
+}

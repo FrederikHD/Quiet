@@ -4,7 +4,8 @@ import { afterEach, describe, expect, it } from 'vitest';
 
 enableAutoUnmount(afterEach);
 const images = [0, 1, 2].map((i) => ({ src: `s${i}.jpg`, alt: `Linen shirt, view ${i + 1}`, thumb: `t${i}.jpg` }));
-const gallery = (props: Record<string, unknown> = {}) => mount(QGallery, { props: { images, ...props } as never, attachTo: document.body });
+const gallery = (props: Record<string, unknown> = {}) =>
+  mount(QGallery, { props: { images, ...props } as never, attachTo: document.body });
 
 describe('QGallery', () => {
   it('is a named carousel region with slides "1 of 3"', () => {

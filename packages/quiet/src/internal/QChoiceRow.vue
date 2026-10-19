@@ -19,6 +19,7 @@ defineProps<{
 </script>
 
 <template>
+  <!-- eslint-disable-next-line vuejs-accessibility/label-has-for -- the label wraps the input, which is passed in as a vnode the linter cannot see -->
   <label
     :class="[
       'q-choice',
@@ -37,9 +38,15 @@ defineProps<{
     </span>
     <span v-if="hasMedia" class="q-choice__media" aria-hidden="true"><slot name="media" /></span>
     <span :class="['q-choice__text', labelHidden && 'q-visually-hidden']">
-      <span class="q-choice__label"><slot name="label">{{ label }}</slot></span>
-      <span v-if="hasDescription" class="q-choice__desc"><slot name="description">{{ description }}</slot></span>
+      <span class="q-choice__label"
+        ><slot name="label">{{ label }}</slot></span
+      >
+      <span v-if="hasDescription" class="q-choice__desc"
+        ><slot name="description">{{ description }}</slot></span
+      >
     </span>
-    <span v-if="hasMeta" class="q-choice__meta"><slot name="meta">{{ meta }}</slot></span>
+    <span v-if="hasMeta" class="q-choice__meta"
+      ><slot name="meta">{{ meta }}</slot></span
+    >
   </label>
 </template>

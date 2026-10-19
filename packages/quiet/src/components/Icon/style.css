@@ -1,7 +1,24 @@
 /* Icon */
-.q-icon { display: inline-block; flex: none; vertical-align: middle; overflow: visible; }
+.q-icon {
+  display: inline-block;
+  flex: none;
+  vertical-align: middle;
+  overflow: visible;
+}
 .q-btn__icon > .q-icon,
-.q-input__affix > .q-icon { width: 100% !important; height: 100% !important; }
-.q-input__affix:has(> .q-icon) { width: var(--ctl-icon); height: var(--ctl-icon); }
-.q-input--slim .q-input__affix:has(> .q-icon) { width: var(--icon-sm); height: var(--icon-sm); }
-.q-input--large .q-input__affix:has(> .q-icon) { width: var(--icon-md); height: var(--icon-md); }
+.q-input__affix > .q-icon {
+  width: 100% !important;
+  height: 100% !important;
+}
+.q-input__affix:has(> .q-icon) {
+  width: var(--ctl-icon);
+  height: var(--ctl-icon);
+}
+.q-input--slim .q-input__affix:has(> .q-icon) {
+  width: var(--icon-sm);
+  height: var(--icon-sm);
+}
+.q-input--large .q-input__affix:has(> .q-icon) {
+  width: var(--icon-md);
+  height: var(--icon-md);
+}

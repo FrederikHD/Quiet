@@ -7,7 +7,13 @@ const email = ref('anna@example');
 </script>
 
 <template>
-  <QField label="Email" required label-placement="top" width="l" error="Enter an email address in the format name@example.com">
+  <QField
+    label="Email"
+    required
+    label-placement="top"
+    width="l"
+    error="Enter an email address in the format name@example.com"
+  >
     <QInput v-model="email" type="email" autocomplete="email" />
   </QField>
 </template>

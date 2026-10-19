@@ -107,10 +107,20 @@ watch(at, (i) => {
   const row = thumbs.value;
   const b = row?.children[i] as HTMLElement | undefined;
   if (!row || !b) return;
-  if (b.offsetLeft < row.scrollLeft || b.offsetLeft + b.offsetWidth > row.scrollLeft + row.clientWidth) row.scrollLeft = b.offsetLeft - 8;
+  if (b.offsetLeft < row.scrollLeft || b.offsetLeft + b.offsetWidth > row.scrollLeft + row.clientWidth)
+    row.scrollLeft = b.offsetLeft - 8;
 });
 function onKeyDown(e: KeyboardEvent) {
-  const to = e.key === 'ArrowRight' ? at.value + 1 : e.key === 'ArrowLeft' ? at.value - 1 : e.key === 'Home' ? 0 : e.key === 'End' ? n.value - 1 : null;
+  const to =
+    e.key === 'ArrowRight'
+      ? at.value + 1
+      : e.key === 'ArrowLeft'
+        ? at.value - 1
+        : e.key === 'Home'
+          ? 0
+          : e.key === 'End'
+            ? n.value - 1
+            : null;
   if (to == null) return;
   e.preventDefault();
   go(to, true);
@@ -124,6 +134,7 @@ const current = computed(() => images.value[at.value]);
   </div>
   <div v-else :class="['q-gallery', aspect === 'square' && 'q-gallery--square']">
     <div class="q-gallery__stage">
+      <!-- eslint-disable-next-line vuejs-accessibility/no-static-element-interactions -- a focusable carousel region (tabindex 0) whose arrow keys move between images -->
       <div
         ref="track"
         class="q-gallery__track"
@@ -186,13 +197,31 @@ const current = computed(() => images.value[at.value]);
         <img :src="im.thumb ?? im.src" alt="" loading="lazy" decoding="async" draggable="false" />
       </button>
     </div>
-    <QDialog v-model:open="zoom" :title="current.alt || label || strings.label" size="lg" mobile="full" flush class="q-gallery__dialog">
+    <QDialog
+      v-model:open="zoom"
+      :title="current.alt || label || strings.label"
+      size="lg"
+      mobile="full"
+      flush
+      class="q-gallery__dialog"
+    >
+      <!-- eslint-disable-next-line vuejs-accessibility/no-static-element-interactions -- a focusable group (tabindex 0) whose arrow keys move between images -->
       <div class="q-gallery__big" role="group" tabindex="0" :aria-label="strings.slide(at + 1, n)" @keydown="onKeyDown">
         <img :src="current.zoom ?? current.src" :alt="current.alt" />
         <div v-if="n > 1" class="q-gallery__bignav">
-          <QButton icon-start="chevron-left" :aria-label="strings.previous" :disabled="at === 0" @click="go(at - 1, true)" />
+          <QButton
+            icon-start="chevron-left"
+            :aria-label="strings.previous"
+            :disabled="at === 0"
+            @click="go(at - 1, true)"
+          />
           <span class="q-gallery__bigcount">{{ strings.counter(at + 1, n) }}</span>
-          <QButton icon-start="chevron-right" :aria-label="strings.next" :disabled="at === n - 1" @click="go(at + 1, true)" />
+          <QButton
+            icon-start="chevron-right"
+            :aria-label="strings.next"
+            :disabled="at === n - 1"
+            @click="go(at + 1, true)"
+          />
         </div>
         <!-- While the dialog is open the rest of the page is inert, so the announcement has to come from in here. -->
         <span class="q-visually-hidden" aria-live="polite">{{ live }}</span>

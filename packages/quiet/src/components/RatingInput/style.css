@@ -1,16 +1,81 @@
 /* RatingInput: five 28px stars in 40px targets (32px in 48px on phones), hover previews, the word for the level beside them. */
-.q-rinput__row { display: flex; align-items: center; gap: 0; margin-left: -6px; }
-.q-rinput__star { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; cursor: pointer; color: var(--line-strong); }
-.q-rinput__star svg { width: 28px; height: 28px; }
-.q-rinput__star path { fill: none; stroke: currentColor; stroke-width: 1.3; stroke-linejoin: round; }
-.q-rinput__star.is-on { color: var(--rating); }
-.q-rinput__star.is-on path { fill: currentColor; }
-.q-rinput__star.is-invalid:not(.is-on) { color: var(--danger); }
-.q-rinput__input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
-.q-field--disabled .q-rinput__star { cursor: not-allowed; color: var(--line); }
-.q-field--disabled .q-rinput__star.is-on { color: var(--line-strong); }
-.q-field--disabled .q-rinput__input { cursor: not-allowed; }
-.q-rinput__star:has(.q-rinput__input:focus-visible) { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: var(--radius-sm); }
-.q-rinput__word { margin-left: var(--space-2); min-width: 6em; font-size: var(--control-text-sm); color: var(--ink-muted); }
-@media (max-width: 639px) { .q-rinput__star { width: 48px; height: 48px; } .q-rinput__star svg { width: 32px; height: 32px; } }
-@media (forced-colors: active) { .q-rinput__star.is-on path { fill: CanvasText; } }
+.q-rinput__row {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-left: -6px;
+}
+.q-rinput__star {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  color: var(--line-strong);
+}
+.q-rinput__star svg {
+  width: 28px;
+  height: 28px;
+}
+.q-rinput__star path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.3;
+  stroke-linejoin: round;
+}
+.q-rinput__star.is-on {
+  color: var(--rating);
+}
+.q-rinput__star.is-on path {
+  fill: currentColor;
+}
+.q-rinput__star.is-invalid:not(.is-on) {
+  color: var(--danger);
+}
+.q-rinput__input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.q-field--disabled .q-rinput__star {
+  cursor: not-allowed;
+  color: var(--line);
+}
+.q-field--disabled .q-rinput__star.is-on {
+  color: var(--line-strong);
+}
+.q-field--disabled .q-rinput__input {
+  cursor: not-allowed;
+}
+.q-rinput__star:has(.q-rinput__input:focus-visible) {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+.q-rinput__word {
+  margin-left: var(--space-2);
+  min-width: 6em;
+  font-size: var(--control-text-sm);
+  color: var(--ink-muted);
+}
+@media (max-width: 639px) {
+  .q-rinput__star {
+    width: 48px;
+    height: 48px;
+  }
+  .q-rinput__star svg {
+    width: 32px;
+    height: 32px;
+  }
+}
+@media (forced-colors: active) {
+  .q-rinput__star.is-on path {
+    fill: CanvasText;
+  }
+}

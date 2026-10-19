@@ -138,5 +138,8 @@ export function currencySymbol(currency?: string): { symbol: string; after: bool
 
 /** A rating or average with one decimal in the configured locale: 4.6 → "4,6" in de-DE. */
 export function oneDecimal(n: number): string {
-  return (Math.round(n * 10) / 10).toLocaleString(config.locale, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  return (Math.round(n * 10) / 10).toLocaleString(config.locale, {
+    minimumFractionDigits: 1,
+    maximumFractionDigits: 1,
+  });
 }

@@ -23,7 +23,15 @@ const suggestions = computed<SearchSuggestionGroup[]>(() => {
   const prods = PRODUCTS.filter((p) => `${p.name} ${p.colour} ${p.type}`.toLowerCase().includes(t));
   return [
     { label: 'Collections', items: cols.map((c) => ({ label: c, icon: 'grid' as const })) },
-    { label: 'Products', items: prods.map((p) => ({ label: `${p.name}, ${p.colour.toLowerCase()}`, description: p.type, image: photo(p.colour), meta: money(p.price) })) },
+    {
+      label: 'Products',
+      items: prods.map((p) => ({
+        label: `${p.name}, ${p.colour.toLowerCase()}`,
+        description: p.type,
+        image: photo(p.colour),
+        meta: money(p.price),
+      })),
+    },
   ].filter((g) => g.items.length);
 });
 </script>
@@ -43,6 +51,15 @@ const suggestions = computed<SearchSuggestionGroup[]>(() => {
 </template>
 
 <style scoped>
-.stack { display: grid; gap: var(--space-3); max-width: 460px; }
-.log { margin: 0; min-height: 18px; font: var(--text-small); color: var(--ink-muted); }
+.stack {
+  display: grid;
+  gap: var(--space-3);
+  max-width: 460px;
+}
+.log {
+  margin: 0;
+  min-height: 18px;
+  font: var(--text-small);
+  color: var(--ink-muted);
+}
 </style>

@@ -3,7 +3,7 @@
    comfortable is the default (storefront, back-office forms); compact is for data-heavy back-office screens. */
 
 :root,
-[data-density="comfortable"] {
+[data-density='comfortable'] {
   --ctl-h: var(--control-md);
   --ctl-pad: var(--control-pad-md);
   --ctl-text: var(--control-text-md);
@@ -18,7 +18,7 @@
   --stack-gap: var(--space-4);
 }
 
-[data-density="compact"] {
+[data-density='compact'] {
   --ctl-h: var(--control-sm);
   --ctl-pad: var(--control-pad-sm);
   --ctl-text: var(--control-text-sm);

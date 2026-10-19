@@ -38,5 +38,10 @@ function fulfil() {
 </template>
 
 <style scoped>
-.log { margin: 0; min-height: 18px; font: var(--text-small); color: var(--ink-muted); }
+.log {
+  margin: 0;
+  min-height: 18px;
+  font: var(--text-small);
+  color: var(--ink-muted);
+}
 </style>

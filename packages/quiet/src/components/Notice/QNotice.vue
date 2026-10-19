@@ -47,7 +47,12 @@ defineSlots<{
 }>();
 
 const slots = useSlots();
-const ICONS: Record<NoticeTone, IconName> = { info: 'info', success: 'check-circle', warning: 'alert-triangle', danger: 'alert-circle' };
+const ICONS: Record<NoticeTone, IconName> = {
+  info: 'info',
+  success: 'check-circle',
+  warning: 'alert-triangle',
+  danger: 'alert-circle',
+};
 const strings = useStrings<NoticeStrings>(
   'notice',
   { dismiss: 'Dismiss', prefix: { info: '', success: '', warning: 'Warning:', danger: 'Error:' } },
@@ -63,10 +68,12 @@ const prefix = computed(() => strings.value.prefix?.[tone.value]);
     <span class="q-notice__icon" aria-hidden="true"><QIcon :name="icon ?? ICONS[tone]" /></span>
     <div class="q-notice__body">
       <p v-if="hasTitle()" class="q-notice__title">
-        <span v-if="prefix" class="q-visually-hidden">{{ `${prefix} ` }}</span><slot name="title">{{ title }}</slot>
+        <span v-if="prefix" class="q-visually-hidden">{{ `${prefix} ` }}</span
+        ><slot name="title">{{ title }}</slot>
       </p>
       <div v-if="slots.default" class="q-notice__text">
-        <span v-if="!hasTitle() && prefix" class="q-visually-hidden">{{ `${prefix} ` }}</span><slot />
+        <span v-if="!hasTitle() && prefix" class="q-visually-hidden">{{ `${prefix} ` }}</span
+        ><slot />
       </div>
       <div v-if="slots.actions" class="q-notice__actions"><slot name="actions" /></div>
     </div>

@@ -1,10 +1,27 @@
 <!-- A whole back-office screen: the navigation, the account under it, and a page. contained keeps it inside this box. -->
 <script setup lang="ts">
-import { QAppShell, QBadge, QButton, QCard, QMetric, QNav, QPage, QTable, type NavItem, type NavSection } from '@frederikhd/quiet';
+import {
+  QAppShell,
+  QBadge,
+  QButton,
+  QCard,
+  QMetric,
+  QNav,
+  QPage,
+  QTable,
+  type NavItem,
+  type NavSection,
+} from '@frederikhd/quiet';
 import { computed, ref } from 'vue';
 
 const page = ref('home');
-const link = (key: string, label: string, extra: Partial<NavItem> = {}): NavItem => ({ key, label, href: `#${key}`, current: page.value === key, ...extra });
+const link = (key: string, label: string, extra: Partial<NavItem> = {}): NavItem => ({
+  key,
+  label,
+  href: `#${key}`,
+  current: page.value === key,
+  ...extra,
+});
 const sections = computed<NavSection[]>(() => [
   {
     items: [
@@ -14,7 +31,13 @@ const sections = computed<NavSection[]>(() => [
       link('customers', 'Customers', { icon: 'user' }),
     ],
   },
-  { title: 'Shop', items: [link('online', 'Online store', { icon: 'external-link' }), link('settings', 'Settings', { icon: 'sliders' })] },
+  {
+    title: 'Shop',
+    items: [
+      link('online', 'Online store', { icon: 'external-link' }),
+      link('settings', 'Settings', { icon: 'sliders' }),
+    ],
+  },
 ]);
 const title = computed(() => sections.value.flatMap((s) => s.items).find((i) => i.current)?.label ?? 'Home');
 function navigate(item: NavItem, e: MouseEvent) {
@@ -54,7 +77,9 @@ const orders = [
             { key: 'total', header: 'Total', numeric: true },
           ]"
         >
-          <template #cell-status="{ row }"><QBadge tone="warning">{{ row.status }}</QBadge></template>
+          <template #cell-status="{ row }"
+            ><QBadge tone="warning">{{ row.status }}</QBadge></template
+          >
         </QTable>
       </QPage>
     </QAppShell>
@@ -62,8 +87,34 @@ const orders = [
 </template>
 
 <style scoped>
-.box { height: 560px; border: 1px solid var(--line); border-radius: var(--radius-md); overflow: hidden; }
-.account { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-1) var(--space-2); font: var(--text-small); }
-.account small { display: block; font: var(--text-caption); color: var(--ink-muted); }
-.avatar { display: inline-flex; align-items: center; justify-content: center; flex: none; width: 32px; height: 32px; border-radius: var(--radius-full); background: var(--brand-tint); color: var(--brand); font: var(--text-label); }
+.box {
+  height: 560px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.account {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-1) var(--space-2);
+  font: var(--text-small);
+}
+.account small {
+  display: block;
+  font: var(--text-caption);
+  color: var(--ink-muted);
+}
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  background: var(--brand-tint);
+  color: var(--brand);
+  font: var(--text-label);
+}
 </style>

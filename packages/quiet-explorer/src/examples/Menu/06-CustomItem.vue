@@ -10,11 +10,17 @@ const items: MenuItem[] = Object.keys(counts).map((label) => ({ label, icon: 'gr
   <QMenu label="Add to collection" align="start" :items="items">
     <template #trigger><QButton icon-end="chevron-down">Add to collection</QButton></template>
     <template #item="{ item }">
-      <span class="item">{{ item.label }}<QBadge>{{ counts[item.label ?? ''] }} products</QBadge></span>
+      <span class="item"
+        >{{ item.label }}<QBadge>{{ counts[item.label ?? ''] }} products</QBadge></span
+      >
     </template>
   </QMenu>
 </template>
 
 <style scoped>
-.item { display: inline-flex; align-items: center; gap: var(--space-3); }
+.item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+}
 </style>

@@ -23,7 +23,9 @@ export interface PageProps {
 }
 
 withDefaults(defineProps<PageProps>(), { back: undefined, subtitle: undefined, width: 'default', density: undefined });
-const emit = defineEmits<{ /** The back link or button was clicked (use it for client-side routing). */ back: [event: MouseEvent] }>();
+const emit = defineEmits<{
+  /** The back link or button was clicked (use it for client-side routing). */ back: [event: MouseEvent];
+}>();
 defineSlots<{
   /** The content (the main column when there is an aside). */
   default?(): unknown;
@@ -59,7 +61,9 @@ const slots = useSlots();
               <h1 class="q-page__title">{{ title }}</h1>
               <span v-if="slots['title-meta']" class="q-page__meta"><slot name="title-meta" /></span>
             </div>
-            <p v-if="subtitle || slots.subtitle" class="q-page__subtitle"><slot name="subtitle">{{ subtitle }}</slot></p>
+            <p v-if="subtitle || slots.subtitle" class="q-page__subtitle">
+              <slot name="subtitle">{{ subtitle }}</slot>
+            </p>
           </div>
           <div v-if="slots.actions" class="q-page__actions"><slot name="actions" /></div>
         </div>

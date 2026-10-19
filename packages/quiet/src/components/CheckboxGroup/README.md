@@ -60,7 +60,7 @@ It is to Checkbox what Field is to Input. You put `<QCheckbox>`es inside, and th
 
 ## Swatches and size tiles (filters)
 
-`layout="swatches"` shows colour dots (`swatch` or `image` on each Checkbox) and `layout="buttons"` size tiles — the same look as RadioGroup's, but several can be on: a shop filter for colour and size. The chosen names show beside the group label ("Colour  Navy, Sand"); give each option a `description` with its count ("4 products"), which screen readers read after the name, and disable options with nothing behind them. In a Disclosure, use `labelHidden` — the Disclosure title names the group.
+`layout="swatches"` shows colour dots (`swatch` or `image` on each Checkbox) and `layout="buttons"` size tiles — the same look as RadioGroup's, but several can be on: a shop filter for colour and size. The chosen names show beside the group label ("Colour Navy, Sand"); give each option a `description` with its count ("4 products"), which screen readers read after the name, and disable options with nothing behind them. In a Disclosure, use `labelHidden` — the Disclosure title names the group.
 
 ## Keyboard and screen readers
 

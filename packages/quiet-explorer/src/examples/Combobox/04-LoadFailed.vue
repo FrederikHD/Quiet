@@ -13,7 +13,13 @@ let attempts = 0;
 function searchSuppliers(query: string) {
   attempts++;
   return new Promise<ComboboxOption[]>((resolve, reject) =>
-    setTimeout(() => (attempts === 1 ? reject(new Error('Network error')) : resolve(suppliers.filter((s) => s.label.toLowerCase().includes(query.toLowerCase())))), 400),
+    setTimeout(
+      () =>
+        attempts === 1
+          ? reject(new Error('Network error'))
+          : resolve(suppliers.filter((s) => s.label.toLowerCase().includes(query.toLowerCase()))),
+      400,
+    ),
   );
 }
 

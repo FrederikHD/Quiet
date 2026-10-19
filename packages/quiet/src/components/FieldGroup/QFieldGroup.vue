@@ -90,7 +90,12 @@ function measureFloors(row: Element): number[] {
     for (const o of Array.from(sel.options)) if (!o.hidden) widest = Math.max(widest, canvas.measureText(o.text).width);
     const bs = getComputedStyle(sel.parentElement!);
     return Math.ceil(
-      widest + parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight) + parseFloat(bs.borderLeftWidth) + parseFloat(bs.borderRightWidth) + 2,
+      widest +
+        parseFloat(cs.paddingLeft) +
+        parseFloat(cs.paddingRight) +
+        parseFloat(bs.borderLeftWidth) +
+        parseFloat(bs.borderRightWidth) +
+        2,
     );
   });
 }
@@ -107,16 +112,24 @@ function check() {
   const avail = el.clientWidth - gap * (fr.length - 1);
   const minFrac = Math.min(...fr) / fr.reduce((a, b) => a + b, 0);
   const floorSum = floors.value.reduce((a, b) => a + b, 0);
-  stacked.value = fr.length > 1 && (props.connected ? avail < floorSum + 8 * fr.length : avail * minFrac < (props.stack === 'late' ? 88 : 100));
+  stacked.value =
+    fr.length > 1 &&
+    (props.connected ? avail < floorSum + 8 * fr.length : avail * minFrac < (props.stack === 'late' ? 88 : 100));
   if (!hasSubgrid()) levelLabels(row);
 }
 useResizeObserver(controls, check);
-watch(() => [props.columns, props.connected, props.stack], () => nextTick(check), { deep: true });
+watch(
+  () => [props.columns, props.connected, props.stack],
+  () => nextTick(check),
+  { deep: true },
+);
 
 const hasSubgrid = () => typeof CSS !== 'undefined' && !!CSS.supports?.('grid-template-rows', 'subgrid');
 // Browsers without subgrid: give every label in the row the height of the tallest, so the controls stay level.
 function levelLabels(row: Element) {
-  const cols = Array.from(row.querySelectorAll<HTMLElement>(':scope > .q-field > .q-field__layout > .q-field__labelcol'));
+  const cols = Array.from(
+    row.querySelectorAll<HTMLElement>(':scope > .q-field > .q-field__layout > .q-field__labelcol'),
+  );
   for (const c of cols) {
     c.style.minHeight = '';
     c.style.alignItems = '';
@@ -134,7 +147,9 @@ function template(): string {
   const count = flattenNodes(slots.default?.() as never).length || 1;
   const cols = props.columns ?? Array.from({ length: count }, () => 1);
   return cols
-    .map((c, i) => (typeof c !== 'number' ? c : props.connected ? `minmax(${floors.value[i] ?? 72}px, ${c}fr)` : `minmax(0, ${c}fr)`))
+    .map((c, i) =>
+      typeof c !== 'number' ? c : props.connected ? `minmax(${floors.value[i] ?? 72}px, ${c}fr)` : `minmax(0, ${c}fr)`,
+    )
     .join(' ');
 }
 </script>
@@ -159,7 +174,8 @@ function template(): string {
     <div class="q-field__layout">
       <div :class="['q-field__labelcol', labelHidden && 'q-visually-hidden']">
         <span v-if="labelled" :id="labelId" class="q-field__label">
-          <slot name="label">{{ label }}</slot><QFieldMarker :markers="markers" :required="required" :strings="fstrings" />
+          <slot name="label">{{ label }}</slot
+          ><QFieldMarker :markers="markers" :required="required" :strings="fstrings" />
         </span>
         <QFieldHelp
           v-if="labelled && (help || slots.help)"
@@ -174,8 +190,10 @@ function template(): string {
         <div ref="controls" class="q-fgroup__controls">
           <div class="q-fgroup__row" :style="{ gridTemplateColumns: template() }"><slot /></div>
         </div>
-        <QFieldMessage :status="status[0]" :message="status[1]" :id="msgId" :strings="fstrings" :quiet="summaryShown" />
-        <div v-if="hasHint" :id="hintId" class="q-field__hint"><slot name="hint">{{ hint }}</slot></div>
+        <QFieldMessage :id="msgId" :status="status[0]" :message="status[1]" :strings="fstrings" :quiet="summaryShown" />
+        <div v-if="hasHint" :id="hintId" class="q-field__hint">
+          <slot name="hint">{{ hint }}</slot>
+        </div>
       </div>
     </div>
   </div>

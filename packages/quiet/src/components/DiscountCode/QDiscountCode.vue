@@ -88,7 +88,7 @@ function done(msg: string | null | undefined | void, c: string) {
   said.value = strings.value.applied(c);
 }
 // Not a <form>: it lives inside the checkout's form, so Enter applies the code instead of submitting the page.
-function apply() {
+function submit() {
   const c = code.value.trim();
   if (!c) {
     error.value = strings.value.empty;
@@ -149,18 +149,34 @@ function onInput(v: string | number | null | undefined) {
           :disabled="disabled"
           :aria-describedby="error ? msgId : undefined"
           @update:model-value="onInput"
-          @keydown.enter.prevent="!busy && apply()"
+          @keydown.enter.prevent="!busy && submit()"
         />
-        <QButton :loading="busy" :disabled="disabled" @click="apply">{{ strings.apply }}</QButton>
+        <QButton :loading="busy" :disabled="disabled" @click="submit">{{ strings.apply }}</QButton>
       </div>
-      <QFieldMessage :status="error ? 'error' : null" :message="error" :id="msgId" :strings="fstrings" />
+      <QFieldMessage :id="msgId" :status="error ? 'error' : null" :message="error" :strings="fstrings" />
     </div>
-    <QButton v-else variant="ghost" size="slim" class="q-discount__reveal" icon-start="tag" :expanded="false" @click="reveal">
+    <QButton
+      v-else
+      variant="ghost"
+      size="slim"
+      class="q-discount__reveal"
+      icon-start="tag"
+      :expanded="false"
+      @click="reveal"
+    >
       {{ strings.reveal }}
     </QButton>
     <ul v-if="applied.length" class="q-discount__tags">
       <li v-for="a in applied" :key="a.code">
-        <QTag icon="tag" :detail="a.label" removable :remove-label="removeLabel(a)" :disabled="disabled" class="q-discount__tag" @remove="remove(a)">
+        <QTag
+          icon="tag"
+          :detail="a.label"
+          removable
+          :remove-label="removeLabel(a)"
+          :disabled="disabled"
+          class="q-discount__tag"
+          @remove="remove(a)"
+        >
           {{ a.label ? `${a.code} ` : a.code }}
         </QTag>
       </li>

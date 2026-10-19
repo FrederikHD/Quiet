@@ -4,8 +4,10 @@ Stars for a product's average rating, with the number and the count: ★★★�
 
 ```vue
 <QRating :value="4.3" :count="31" href="#reviews" />
-<QRating :value="5" :show-value="false" size="small" />   <!-- on a single review -->
-<QRating :value="4.3" :count="31" @click="tab = 'reviews'" />   <!-- opens the reviews tab -->
+<QRating :value="5" :show-value="false" size="small" />
+<!-- on a single review -->
+<QRating :value="4.3" :count="31" @click="tab = 'reviews'" />
+<!-- opens the reviews tab -->
 ```
 
 ## Behaviour

@@ -18,7 +18,11 @@ export interface ToasterProps {
 }
 const props = withDefaults(defineProps<ToasterProps>(), { strings: undefined });
 
-const strings = useStrings<Required<ToasterStrings>>('toast', { dismiss: 'Dismiss', region: 'Notifications' }, () => props.strings);
+const strings = useStrings<Required<ToasterStrings>>(
+  'toast',
+  { dismiss: 'Dismiss', region: 'Notifications' },
+  () => props.strings,
+);
 const polite = computed(() => toastState.list.filter((t) => t.tone !== 'error'));
 const urgent = computed(() => toastState.list.filter((t) => t.tone === 'error'));
 </script>

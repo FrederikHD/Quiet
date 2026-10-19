@@ -57,7 +57,8 @@ const slots = useSlots();
 const group = useRadioGroup();
 const input = ref<HTMLInputElement | null>(null);
 
-if (import.meta.env.DEV && !group) warnOnce('radio-group', 'Radio: put radios inside a RadioGroup — it names the set and wires up its messages.');
+if (import.meta.env.DEV && !group)
+  warnOnce('radio-group', 'Radio: put radios inside a RadioGroup — it names the set and wires up its messages.');
 
 const isDisabled = computed(() => props.disabled || !!group?.value.disabled);
 const isInvalid = computed(() => props.invalid || !!group?.value.invalid);

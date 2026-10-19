@@ -18,5 +18,7 @@ const ticks = reactive({ unchecked: false, checked: true, some: false, invalid: 
 </template>
 
 <style scoped>
-.list { display: grid; }
+.list {
+  display: grid;
+}
 </style>

@@ -15,7 +15,10 @@ async function copy(name: string) {
 </script>
 
 <template>
-  <QPage :title="`Icons · ${iconNames.length}`" subtitle="Outline icons on a 20px grid, 1.5px round stroke, coloured by the text around them. Click one to copy it.">
+  <QPage
+    :title="`Icons · ${iconNames.length}`"
+    subtitle="Outline icons on a 20px grid, 1.5px round stroke, coloured by the text around them. Click one to copy it."
+  >
     <QInput v-model="query" aria-label="Filter icons" placeholder="Filter icons" clearable class="ex-icon-filter">
       <template #prefix><QIcon name="search" /></template>
     </QInput>

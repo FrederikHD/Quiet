@@ -11,5 +11,9 @@ import { QButton } from '@frederikhd/quiet';
 </template>
 
 <style scoped>
-.buy { display: grid; gap: var(--space-2); max-width: 320px; }
+.buy {
+  display: grid;
+  gap: var(--space-2);
+  max-width: 320px;
+}
 </style>

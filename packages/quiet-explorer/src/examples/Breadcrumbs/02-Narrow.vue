@@ -17,5 +17,7 @@ import { QBreadcrumbs } from '@frederikhd/quiet';
 </template>
 
 <style scoped>
-.narrow { max-width: 320px; }
+.narrow {
+  max-width: 320px;
+}
 </style>

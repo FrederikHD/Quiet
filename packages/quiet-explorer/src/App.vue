@@ -14,8 +14,18 @@ const sections = computed<NavSection[]>(() => [
     title: 'Overview',
     items: [
       { label: 'Brand book', href: router.resolve('/').href, icon: 'home', current: route.path === '/' },
-      { label: 'Tokens', href: router.resolve('/foundations/tokens').href, icon: 'sliders', current: route.name === 'tokens' },
-      { label: 'Icons', href: router.resolve('/foundations/icons').href, icon: 'grid', current: route.name === 'icons' },
+      {
+        label: 'Tokens',
+        href: router.resolve('/foundations/tokens').href,
+        icon: 'sliders',
+        current: route.name === 'tokens',
+      },
+      {
+        label: 'Icons',
+        href: router.resolve('/foundations/icons').href,
+        icon: 'grid',
+        current: route.name === 'icons',
+      },
     ],
   },
   ...groups.map((g) => ({

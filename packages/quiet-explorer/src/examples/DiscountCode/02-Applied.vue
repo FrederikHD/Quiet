@@ -16,5 +16,7 @@ const codes = ref([{ code: 'LINEN10', label: '−10 %' }]);
 </template>
 
 <style scoped>
-.discount { max-width: 420px; }
+.discount {
+  max-width: 420px;
+}
 </style>

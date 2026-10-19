@@ -13,15 +13,34 @@ const top = [
   <QCard title="Top products" flush class="card">
     <template #actions><QButton size="slim" variant="ghost" href="#products">View all</QButton></template>
     <ul class="list">
-      <li v-for="[name, sold] in top" :key="name">{{ name }}<span>{{ sold }}</span></li>
+      <li v-for="[name, sold] in top" :key="name">
+        {{ name }}<span>{{ sold }}</span>
+      </li>
     </ul>
   </QCard>
 </template>
 
 <style scoped>
-.card { max-width: 400px; }
-.list { margin: 0; padding: 0; list-style: none; }
-.list li { display: flex; justify-content: space-between; gap: var(--space-3); padding: var(--space-3) var(--panel-pad); border-top: 1px solid var(--line); }
-.list li:first-child { border-top: 0; }
-.list span { color: var(--ink-muted); font-variant-numeric: tabular-nums; }
+.card {
+  max-width: 400px;
+}
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.list li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--panel-pad);
+  border-top: 1px solid var(--line);
+}
+.list li:first-child {
+  border-top: 0;
+}
+.list span {
+  color: var(--ink-muted);
+  font-variant-numeric: tabular-nums;
+}
 </style>

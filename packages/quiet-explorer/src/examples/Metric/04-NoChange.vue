@@ -5,10 +5,16 @@ import { QCard, QMetric } from '@frederikhd/quiet';
 
 <template>
   <QCard class="kpi">
-    <QMetric label="Conversion rate" value="2,4 %" :change="{ direction: 'same', value: '0 %', label: 'on yesterday' }" />
+    <QMetric
+      label="Conversion rate"
+      value="2,4 %"
+      :change="{ direction: 'same', value: '0 %', label: 'on yesterday' }"
+    />
   </QCard>
 </template>
 
 <style scoped>
-.kpi { max-width: 280px; }
+.kpi {
+  max-width: 280px;
+}
 </style>

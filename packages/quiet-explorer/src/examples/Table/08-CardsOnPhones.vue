@@ -23,15 +23,26 @@ const tone: Record<string, BadgeTone> = { Unfulfilled: 'warning', Shipped: 'info
         { key: 'customer', header: 'Customer', sortable: true },
         { key: 'status', header: 'Fulfilment' },
         { key: 'items', header: 'Items', numeric: true, mobile: false },
-        { key: 'total', header: 'Total', numeric: true, sortable: true, sortLabels: ['Lowest total first', 'Highest total first'], format: (o) => money(o.total) },
+        {
+          key: 'total',
+          header: 'Total',
+          numeric: true,
+          sortable: true,
+          sortLabels: ['Lowest total first', 'Highest total first'],
+          format: (o) => money(o.total),
+        },
       ]"
     >
-      <template #cell-status="{ row }"><QBadge :tone="tone[row.status]">{{ row.status }}</QBadge></template>
+      <template #cell-status="{ row }"
+        ><QBadge :tone="tone[row.status]">{{ row.status }}</QBadge></template
+      >
     </QTable>
   </div>
 </template>
 
 <style scoped>
 /* A phone-sized column, so the cards show at any screen width. */
-.phone { max-width: 375px; }
+.phone {
+  max-width: 375px;
+}
 </style>

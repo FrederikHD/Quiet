@@ -9,7 +9,8 @@ const err = (id: string) => errors.value?.find((x) => x.id === id)?.message ?? n
 function save() {
   const list: FormError[] = [];
   if (!v.name.trim()) list.push({ id: 'store-name', message: 'Enter the store name' });
-  if (!/.+@.+\..+/.test(v.email)) list.push({ id: 'store-email', message: 'Enter an email address like name@example.com' });
+  if (!/.+@.+\..+/.test(v.email))
+    list.push({ id: 'store-email', message: 'Enter an email address like name@example.com' });
   errors.value = list.length ? list : null;
 }
 </script>
@@ -25,10 +26,14 @@ function save() {
       ]"
     >
       <template #panel-store>
-        <QField id="store-name" label="Store name" required :error="err('store-name')"><QInput v-model="v.name" /></QField>
+        <QField id="store-name" label="Store name" required :error="err('store-name')"
+          ><QInput v-model="v.name"
+        /></QField>
       </template>
       <template #panel-contact>
-        <QField id="store-email" label="Contact email" required :error="err('store-email')"><QInput v-model="v.email" type="email" autocomplete="email" /></QField>
+        <QField id="store-email" label="Contact email" required :error="err('store-email')"
+          ><QInput v-model="v.email" type="email" autocomplete="email"
+        /></QField>
       </template>
     </QTabs>
     <QFormActions><QButton variant="primary" type="submit">Save</QButton></QFormActions>
@@ -36,5 +41,7 @@ function save() {
 </template>
 
 <style scoped>
-.form { max-width: 640px; }
+.form {
+  max-width: 640px;
+}
 </style>

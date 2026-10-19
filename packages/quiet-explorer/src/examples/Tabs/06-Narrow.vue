@@ -24,6 +24,10 @@ import { QTabs } from '@frederikhd/quiet';
 </template>
 
 <style scoped>
-.narrow { max-width: 300px; }
-p { margin: 0; }
+.narrow {
+  max-width: 300px;
+}
+p {
+  margin: 0;
+}
 </style>

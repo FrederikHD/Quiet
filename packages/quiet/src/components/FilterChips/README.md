@@ -1,6 +1,6 @@
 # FilterChips
 
-The filters in use, above the results: "● Navy ×  Size M ×  30 € – 90 € ×  Clear all". One tap removes one.
+The filters in use, above the results: "● Navy × Size M × 30 € – 90 € × Clear all". One tap removes one.
 
 ```vue
 <QFilterChips

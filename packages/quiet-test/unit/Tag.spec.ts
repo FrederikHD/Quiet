@@ -40,10 +40,16 @@ describe('QTag', () => {
       slots: { default: 'LINEN10' },
     });
     expect(own.get('button').attributes('aria-label')).toBe('Remove discount LINEN10 −10 %');
-    const auto = mount(QTag, { props: { removable: true }, slots: { default: 'LINEN10', detail: () => h('span', '−10 %') } });
+    const auto = mount(QTag, {
+      props: { removable: true },
+      slots: { default: 'LINEN10', detail: () => h('span', '−10 %') },
+    });
     expect(auto.get('button').attributes('aria-label')).toBe('Remove LINEN10 −10 %');
     expect(auto.get('.q-tag__detail span').text()).toBe('−10 %');
-    const named = mount(QTag, { props: { removable: true, removeLabel: 'Remove filter: Navy' }, slots: { default: 'Navy' } });
+    const named = mount(QTag, {
+      props: { removable: true, removeLabel: 'Remove filter: Navy' },
+      slots: { default: 'Navy' },
+    });
     expect(named.get('button').attributes('aria-label')).toBe('Remove filter: Navy');
   });
 
@@ -65,20 +71,34 @@ describe('QTag', () => {
   });
 
   it('drops the field tag × when disabled', () => {
-    const w = mount(QTag, { props: { variant: 'field', removable: true, disabled: true }, slots: { default: 'Gifts' } });
+    const w = mount(QTag, {
+      props: { variant: 'field', removable: true, disabled: true },
+      slots: { default: 'Gifts' },
+    });
     expect(w.find('button').exists()).toBe(false);
     expect(w.classes()).toContain('is-disabled');
   });
 
   it('translates the remove name through configure() and the strings prop', () => {
     configure({ strings: { tag: { remove: (l: string) => `${l} entfernen` } } });
-    expect(mount(QTag, { props: { removable: true }, slots: { default: 'Navy' } }).get('button').attributes('aria-label')).toBe('Navy entfernen');
-    const own = mount(QTag, { props: { removable: true, strings: { remove: (l: string) => `Drop ${l}` } }, slots: { default: 'Navy' } });
+    expect(
+      mount(QTag, { props: { removable: true }, slots: { default: 'Navy' } })
+        .get('button')
+        .attributes('aria-label'),
+    ).toBe('Navy entfernen');
+    const own = mount(QTag, {
+      props: { removable: true, strings: { remove: (l: string) => `Drop ${l}` } },
+      slots: { default: 'Navy' },
+    });
     expect(own.get('button').attributes('aria-label')).toBe('Drop Navy');
   });
 
   it('puts class and attributes on the tag', () => {
-    const w = mount(QTag, { props: { removable: true }, attrs: { class: 'mine', 'data-k': 'navy' }, slots: { default: 'Navy' } });
+    const w = mount(QTag, {
+      props: { removable: true },
+      attrs: { class: 'mine', 'data-k': 'navy' },
+      slots: { default: 'Navy' },
+    });
     expect(w.get('button').classes()).toContain('mine');
     expect(w.get('button').attributes('data-k')).toBe('navy');
   });

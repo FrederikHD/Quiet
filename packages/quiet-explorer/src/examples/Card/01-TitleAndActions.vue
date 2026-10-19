@@ -14,6 +14,11 @@ import { QButton, QCard } from '@frederikhd/quiet';
 </template>
 
 <style scoped>
-.card { max-width: 400px; }
-.muted { font: var(--text-small); color: var(--ink-muted); }
+.card {
+  max-width: 400px;
+}
+.muted {
+  font: var(--text-small);
+  color: var(--ink-muted);
+}
 </style>

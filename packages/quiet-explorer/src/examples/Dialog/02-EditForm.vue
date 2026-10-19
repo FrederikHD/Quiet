@@ -1,14 +1,39 @@
 <!-- A short form in a dialog. The submit button sits in the footer and points at the form with form="…". -->
 <script setup lang="ts">
-import { QButton, QCombobox, QDialog, QField, QFieldGroup, QForm, QInput, type ComboboxOption } from '@frederikhd/quiet';
+import {
+  QButton,
+  QCombobox,
+  QDialog,
+  QField,
+  QFieldGroup,
+  QForm,
+  QInput,
+  type ComboboxOption,
+} from '@frederikhd/quiet';
 import { ref } from 'vue';
 
-const countries = ['Germany', 'Austria', 'Switzerland', 'Belgium', 'Denmark', 'France', 'Italy', 'Netherlands', 'Poland', 'Spain'].map(
-  (c) => ({ value: c, label: c }),
-);
+const countries = [
+  'Germany',
+  'Austria',
+  'Switzerland',
+  'Belgium',
+  'Denmark',
+  'France',
+  'Italy',
+  'Netherlands',
+  'Poland',
+  'Spain',
+].map((c) => ({ value: c, label: c }));
 const open = ref(false);
 const log = ref('');
-const address = ref({ first: 'Anna', last: 'Schmidt', street: 'Torstraße', no: '115', postcode: '10119', city: 'Berlin' });
+const address = ref({
+  first: 'Anna',
+  last: 'Schmidt',
+  street: 'Torstraße',
+  no: '115',
+  postcode: '10119',
+  city: 'Berlin',
+});
 const country = ref<ComboboxOption | null>(countries[0]);
 
 function save() {
@@ -49,6 +74,15 @@ function save() {
 </template>
 
 <style scoped>
-.demo { display: grid; justify-items: start; gap: var(--space-3); }
-.log { margin: 0; min-height: 20px; font: var(--text-small); color: var(--ink-muted); }
+.demo {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-3);
+}
+.log {
+  margin: 0;
+  min-height: 20px;
+  font: var(--text-small);
+  color: var(--ink-muted);
+}
 </style>

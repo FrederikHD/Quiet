@@ -12,5 +12,9 @@ import { QRating } from '@frederikhd/quiet';
 </template>
 
 <style scoped>
-.stack { display: grid; justify-items: start; gap: var(--space-3); }
+.stack {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-3);
+}
 </style>

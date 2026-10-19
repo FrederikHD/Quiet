@@ -27,5 +27,10 @@ import { QAppShell, QNav, QPage } from '@frederikhd/quiet';
 </template>
 
 <style scoped>
-.box { height: 360px; border: 1px solid var(--line); border-radius: var(--radius-md); overflow: hidden; }
+.box {
+  height: 360px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
 </style>

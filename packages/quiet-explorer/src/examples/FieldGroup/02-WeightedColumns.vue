@@ -13,7 +13,9 @@ const values = reactive({ street: 'Torstraße', number: '12', postcode: '10115',
       <QField label="House number" required><QInput v-model="values.number" autocomplete="address-line2" /></QField>
     </QFieldGroup>
     <QFieldGroup :columns="[1, 2]">
-      <QField label="Postcode" required><QInput v-model="values.postcode" inputmode="numeric" autocomplete="postal-code" /></QField>
+      <QField label="Postcode" required
+        ><QInput v-model="values.postcode" inputmode="numeric" autocomplete="postal-code"
+      /></QField>
       <QField label="City" required><QInput v-model="values.city" autocomplete="address-level2" /></QField>
     </QFieldGroup>
   </QForm>

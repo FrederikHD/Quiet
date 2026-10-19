@@ -42,13 +42,29 @@ describe('QDisclosure', () => {
   });
 
   it('shows meta only when there is some', () => {
-    expect(mount(QDisclosure, { props: { title: 'Colour', meta: 'Navy, Sand' } }).get('.q-disc__meta').text()).toBe('Navy, Sand');
-    expect(mount(QDisclosure, { props: { title: 'Colour', meta: '' } }).find('.q-disc__meta').exists()).toBe(false);
-    expect(mount(QDisclosure, { props: { title: 'Colour' }, slots: { meta: '<b>2</b>' } }).find('.q-disc__meta b').exists()).toBe(true);
+    expect(
+      mount(QDisclosure, { props: { title: 'Colour', meta: 'Navy, Sand' } })
+        .get('.q-disc__meta')
+        .text(),
+    ).toBe('Navy, Sand');
+    expect(
+      mount(QDisclosure, { props: { title: 'Colour', meta: '' } })
+        .find('.q-disc__meta')
+        .exists(),
+    ).toBe(false);
+    expect(
+      mount(QDisclosure, { props: { title: 'Colour' }, slots: { meta: '<b>2</b>' } })
+        .find('.q-disc__meta b')
+        .exists(),
+    ).toBe(true);
   });
 
   it('takes a heading level, or none', () => {
-    expect(mount(QDisclosure, { props: { title: 'A', headingLevel: 2 } }).find('h2.q-disc__head').exists()).toBe(true);
+    expect(
+      mount(QDisclosure, { props: { title: 'A', headingLevel: 2 } })
+        .find('h2.q-disc__head')
+        .exists(),
+    ).toBe(true);
     const none = mount(QDisclosure, { props: { title: 'A', headingLevel: null } });
     expect(none.get('.q-disc__head').element.tagName).toBe('DIV');
   });
@@ -62,6 +78,10 @@ describe('QDisclosure', () => {
   });
 
   it('takes a title slot', () => {
-    expect(mount(QDisclosure, { slots: { title: '<em>FAQ</em>' } }).get('.q-disc__title em').text()).toBe('FAQ');
+    expect(
+      mount(QDisclosure, { slots: { title: '<em>FAQ</em>' } })
+        .get('.q-disc__title em')
+        .text(),
+    ).toBe('FAQ');
   });
 });

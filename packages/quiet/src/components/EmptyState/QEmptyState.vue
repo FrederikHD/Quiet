@@ -30,8 +30,12 @@ const slots = useSlots();
 
 <template>
   <div :class="['q-empty', size === 'small' && 'q-empty--small']" :role="role">
-    <span v-if="icon !== null" class="q-empty__icon" aria-hidden="true"><QIcon :name="icon || 'search'" size="lg" /></span>
-    <component :is="`h${headingLevel}`" class="q-empty__title"><slot name="title">{{ title }}</slot></component>
+    <span v-if="icon !== null" class="q-empty__icon" aria-hidden="true"
+      ><QIcon :name="icon || 'search'" size="lg"
+    /></span>
+    <component :is="`h${headingLevel}`" class="q-empty__title"
+      ><slot name="title">{{ title }}</slot></component
+    >
     <div v-if="slots.default" class="q-empty__text"><slot /></div>
     <div v-if="slots.actions" class="q-empty__actions"><slot name="actions" /></div>
   </div>

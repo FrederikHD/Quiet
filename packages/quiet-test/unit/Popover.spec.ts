@@ -55,12 +55,16 @@ describe('QPopover', () => {
 
   it('focuses initialFocus when given', async () => {
     const target = ref<HTMLElement | null>(null);
-    const App = defineComponent(() => () =>
-      h(
-        QPopover,
-        { label: 'Status', initialFocus: target.value },
-        { default: () => h('button', 'Open'), content: () => [h('button', 'One'), h('button', { ref: target, class: 'two' }, 'Two')] },
-      ),
+    const App = defineComponent(
+      () => () =>
+        h(
+          QPopover,
+          { label: 'Status', initialFocus: target.value },
+          {
+            default: () => h('button', 'Open'),
+            content: () => [h('button', 'One'), h('button', { ref: target, class: 'two' }, 'Two')],
+          },
+        ),
     );
     const w = mount(App, { attachTo: document.body });
     await w.get('button').trigger('click');
@@ -129,11 +133,19 @@ describe('QPopover', () => {
   });
 
   it('Tab past the last control closes it and moves on as if the panel sat after the trigger', async () => {
-    const App = defineComponent(() => () =>
-      h('div', [
-        h(QPopover, { label: 'Status' }, { default: () => h('button', { class: 'trigger' }, 'Open'), content: () => h('button', { class: 'last' }, 'Apply') }),
-        h('button', { class: 'next' }, 'Next'),
-      ]),
+    const App = defineComponent(
+      () => () =>
+        h('div', [
+          h(
+            QPopover,
+            { label: 'Status' },
+            {
+              default: () => h('button', { class: 'trigger' }, 'Open'),
+              content: () => h('button', { class: 'last' }, 'Apply'),
+            },
+          ),
+          h('button', { class: 'next' }, 'Next'),
+        ]),
     );
     // jsdom has no layout: offsetParent is null, so make the page's buttons count as visible.
     const spy = vi.spyOn(HTMLElement.prototype, 'offsetParent', 'get').mockReturnValue(document.body);
@@ -183,7 +195,9 @@ describe('QPopover', () => {
   });
 
   it('kind="menu" sets aria-haspopup="menu" and gives the panel no dialog role', async () => {
-    const w = mountPopover({ kind: 'menu' }, () => h('div', { role: 'menu' }, h('button', { role: 'menuitem' }, 'Edit')));
+    const w = mountPopover({ kind: 'menu' }, () =>
+      h('div', { role: 'menu' }, h('button', { role: 'menuitem' }, 'Edit')),
+    );
     await flushPromises();
     expect(w.get('button').attributes('aria-haspopup')).toBe('menu');
     await w.get('button').trigger('click');

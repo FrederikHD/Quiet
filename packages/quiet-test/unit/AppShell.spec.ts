@@ -5,7 +5,13 @@ import { h, nextTick } from 'vue';
 
 enableAutoUnmount(afterEach);
 
-const nav = () => h(QNav, { items: [{ label: 'Home', href: '#home', current: true }, { label: 'Orders', href: '#orders' }] });
+const nav = () =>
+  h(QNav, {
+    items: [
+      { label: 'Home', href: '#home', current: true },
+      { label: 'Orders', href: '#orders' },
+    ],
+  });
 
 function shell(props: Record<string, unknown> = {}, slots: Record<string, unknown> = {}) {
   return mount(QAppShell, {
@@ -37,7 +43,10 @@ describe('QAppShell', () => {
     expect(w.find('.q-shell__brand--side').exists()).toBe(false);
     expect(w.find('.q-shell__navfoot').exists()).toBe(false);
     expect(w.find('.q-shell__topend').exists()).toBe(false);
-    const full = shell({}, { 'nav-footer': () => 'Anna Schulz', 'top-bar-end': () => h('button', { 'aria-label': 'Search' }) });
+    const full = shell(
+      {},
+      { 'nav-footer': () => 'Anna Schulz', 'top-bar-end': () => h('button', { 'aria-label': 'Search' }) },
+    );
     expect(full.get('.q-shell__side .q-shell__navfoot').text()).toBe('Anna Schulz');
     expect(full.find('.q-shell__topend button').exists()).toBe(true);
   });
@@ -90,7 +99,11 @@ describe('QAppShell', () => {
 
   it('closes the drawer when the window grows to desktop', async () => {
     let listener: (() => void) | undefined;
-    const mq = { matches: true, addEventListener: (_: string, fn: () => void) => (listener = fn), removeEventListener: vi.fn() };
+    const mq = {
+      matches: true,
+      addEventListener: (_: string, fn: () => void) => (listener = fn),
+      removeEventListener: vi.fn(),
+    };
     vi.spyOn(window, 'matchMedia').mockReturnValue(mq as unknown as MediaQueryList);
     const w = shell();
     await w.get('button.q-shell__menu').trigger('click');

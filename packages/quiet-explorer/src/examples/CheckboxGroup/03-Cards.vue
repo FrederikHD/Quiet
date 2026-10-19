@@ -14,5 +14,7 @@ const extras = ref<string[]>(['wrap']);
 </template>
 
 <style scoped>
-.gift { max-width: 480px; }
+.gift {
+  max-width: 480px;
+}
 </style>

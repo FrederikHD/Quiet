@@ -46,7 +46,12 @@ function onLinkClick(e: MouseEvent) {
   <component
     :is="isLink ? 'a' : 'span'"
     :href="isLink ? (href ?? '#') : undefined"
-    :class="['q-rating', size === 'small' && 'q-rating--small', size === 'large' && 'q-rating--large', isLink && 'q-rating--link']"
+    :class="[
+      'q-rating',
+      size === 'small' && 'q-rating--small',
+      size === 'large' && 'q-rating--large',
+      isLink && 'q-rating--link',
+    ]"
     @click="isLink && onLinkClick($event)"
   >
     <QStars :value="value || 0" />

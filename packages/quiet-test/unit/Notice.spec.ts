@@ -4,7 +4,13 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { h } from 'vue';
 
 describe('QNotice', () => {
-  afterEach(() => configure({ strings: { notice: { dismiss: 'Dismiss', prefix: { info: '', success: '', warning: 'Warning:', danger: 'Error:' } } } }));
+  afterEach(() =>
+    configure({
+      strings: {
+        notice: { dismiss: 'Dismiss', prefix: { info: '', success: '', warning: 'Warning:', danger: 'Error:' } },
+      },
+    }),
+  );
 
   it('renders an info notice that is part of the page (no live role)', () => {
     const w = mount(QNotice, { slots: { default: 'Example shop: nothing is charged.' } });
@@ -17,7 +23,10 @@ describe('QNotice', () => {
   });
 
   it('prefixes warnings and errors for screen readers, on the title or else the text', () => {
-    const titled = mount(QNotice, { props: { tone: 'danger', title: 'Payment failed' }, slots: { default: 'The card was declined.' } });
+    const titled = mount(QNotice, {
+      props: { tone: 'danger', title: 'Payment failed' },
+      slots: { default: 'The card was declined.' },
+    });
     expect(titled.get('.q-notice__title .q-visually-hidden').text()).toBe('Error:');
     expect(titled.get('.q-notice__title').text()).toBe('Error: Payment failed');
     expect(titled.find('.q-notice__text .q-visually-hidden').exists()).toBe(false);

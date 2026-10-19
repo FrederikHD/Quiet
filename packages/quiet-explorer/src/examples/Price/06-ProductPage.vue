@@ -4,5 +4,12 @@ import { QPrice } from '@frederikhd/quiet';
 </script>
 
 <template>
-  <QPrice :amount="19.9" :compare-at="24" size="large" show-saving :unit-price="{ amount: 4.98, per: 'Stück' }" tax-note />
+  <QPrice
+    :amount="19.9"
+    :compare-at="24"
+    size="large"
+    show-saving
+    :unit-price="{ amount: 4.98, per: 'Stück' }"
+    tax-note
+  />
 </template>

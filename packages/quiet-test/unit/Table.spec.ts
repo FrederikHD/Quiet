@@ -23,7 +23,11 @@ const columns: TableColumn<Order>[] = [
 ];
 
 function table(props: Record<string, unknown> = {}, slots: Record<string, unknown> = {}) {
-  return mount(QTable, { props: { caption: 'Orders', columns, rows, ...props } as never, slots: slots as never, attachTo: document.body });
+  return mount(QTable, {
+    props: { caption: 'Orders', columns, rows, ...props } as never,
+    slots: slots as never,
+    attachTo: document.body,
+  });
 }
 const bodyText = (w: ReturnType<typeof table>) => w.findAll('tbody tr').map((r) => r.get('th').text());
 

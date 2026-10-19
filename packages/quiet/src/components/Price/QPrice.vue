@@ -67,16 +67,21 @@ const pct = computed(() => (sale.value ? Math.round((1 - props.amount / props.co
     <span class="q-price__row">
       <span v-if="from" class="q-price__from">{{ strings.from }}</span>
       <span class="q-price__now">
-        <span v-if="sale" class="q-visually-hidden">{{ `${strings.salePrice} ` }}</span>{{ money(amount, currency) }}
+        <span v-if="sale" class="q-visually-hidden">{{ `${strings.salePrice} ` }}</span
+        >{{ money(amount, currency) }}
       </span>
       <s v-if="sale" class="q-price__was">
-        <span class="q-visually-hidden">{{ `${strings.originalPrice} ` }}</span>{{ money(compareAt!, currency) }}
+        <span class="q-visually-hidden">{{ `${strings.originalPrice} ` }}</span
+        >{{ money(compareAt!, currency) }}
       </s>
       <QBadge v-if="sale && showSaving" tone="sale" class="q-price__saving">
-        <span aria-hidden="true">{{ strings.saving(pct) }}</span><span class="q-visually-hidden">{{ strings.savingLabel(pct) }}</span>
+        <span aria-hidden="true">{{ strings.saving(pct) }}</span
+        ><span class="q-visually-hidden">{{ strings.savingLabel(pct) }}</span>
       </QBadge>
     </span>
-    <span v-if="unitPrice" class="q-price__unit">{{ strings.perUnit(money(unitPrice.amount, currency), unitPrice.per) }}</span>
+    <span v-if="unitPrice" class="q-price__unit">{{
+      strings.perUnit(money(unitPrice.amount, currency), unitPrice.per)
+    }}</span>
     <span v-if="taxNote || slots['tax-note']" class="q-price__note">
       <slot name="tax-note">{{ taxNote === true ? strings.taxNote : taxNote }}</slot>
     </span>

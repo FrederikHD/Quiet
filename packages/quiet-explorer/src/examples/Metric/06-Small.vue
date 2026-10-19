@@ -13,6 +13,12 @@ import { QCard, QMetric, money } from '@frederikhd/quiet';
 </template>
 
 <style scoped>
-.kpi { max-width: 280px; }
-.pair { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+.kpi {
+  max-width: 280px;
+}
+.pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
 </style>

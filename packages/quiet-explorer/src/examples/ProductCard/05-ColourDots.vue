@@ -18,5 +18,7 @@ const swatches = ['Navy', 'Sand', 'Olive', 'Rust', 'Natural', 'Sage'].map((n) =>
 </template>
 
 <style scoped>
-.card { max-width: 240px; }
+.card {
+  max-width: 240px;
+}
 </style>

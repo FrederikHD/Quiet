@@ -32,11 +32,15 @@ describe('QPrice', () => {
   });
 
   it('ignores a compareAt that is not higher', () => {
-    expect(mount(QPrice, { props: { amount: 59, compareAt: 59, showSaving: true } }).classes()).not.toContain('is-sale');
+    expect(mount(QPrice, { props: { amount: 59, compareAt: 59, showSaving: true } }).classes()).not.toContain(
+      'is-sale',
+    );
   });
 
   it('shows "from", the unit price, the tax note and the size', () => {
-    const w = mount(QPrice, { props: { amount: 19.9, from: true, size: 'large', unitPrice: { amount: 4.98, per: '100 ml' }, taxNote: true } });
+    const w = mount(QPrice, {
+      props: { amount: 19.9, from: true, size: 'large', unitPrice: { amount: 4.98, per: '100 ml' }, taxNote: true },
+    });
     expect(w.classes()).toContain('q-price--large');
     expect(w.get('.q-price__from').text()).toBe('from');
     expect(nb(w.get('.q-price__unit').text())).toBe('4,98 € / 100 ml');
@@ -44,8 +48,15 @@ describe('QPrice', () => {
   });
 
   it('takes its own tax note as text or slot, another currency, and translations', () => {
-    expect(mount(QPrice, { props: { amount: 5, taxNote: 'zzgl. Versand' } }).get('.q-price__note').text()).toBe('zzgl. Versand');
-    const s = mount(QPrice, { props: { amount: 5, currency: 'USD', strings: { from: 'ab' }, from: true }, slots: { 'tax-note': () => h('a', 'Shipping') } });
+    expect(
+      mount(QPrice, { props: { amount: 5, taxNote: 'zzgl. Versand' } })
+        .get('.q-price__note')
+        .text(),
+    ).toBe('zzgl. Versand');
+    const s = mount(QPrice, {
+      props: { amount: 5, currency: 'USD', strings: { from: 'ab' }, from: true },
+      slots: { 'tax-note': () => h('a', 'Shipping') },
+    });
     expect(s.get('.q-price__note a').text()).toBe('Shipping');
     expect(s.get('.q-price__now').text()).toContain('$');
     expect(s.get('.q-price__from').text()).toBe('ab');

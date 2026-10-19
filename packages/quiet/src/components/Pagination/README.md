@@ -12,22 +12,30 @@ Moves through a long list a page at a time. It usually sits in a Table's `#foote
 
 ```vue
 <QPagination v-model:page="page" v-model:page-size="pageSize" :total="1240" :page-size-options="[25, 50, 100]" />
-<QPagination v-model:page="page" :total="480" :page-size="24" variant="pages" size="large" align="center" :show-range="false" />
+<QPagination
+  v-model:page="page"
+  :total="480"
+  :page-size="24"
+  variant="pages"
+  size="large"
+  align="center"
+  :show-range="false"
+/>
 ```
 
 ## Options
 
-| Prop | What it does |
-| --- | --- |
-| `showFirstLast` | Adds « and » buttons for the first and last page. Useful with long lists. Needs `total`. |
-| `jumpToPage` | Shows the page number as a small field — "Page [6] of 25". Needs `total`. Enter or leaving the field goes there. Numbers out of range snap to the first or last page, and an empty field restores the current page. |
-| `showRange` | `false` hides "1–50 of 1,240". The storefront usually hides it. |
-| `pageSizeOptions` + `v-model:page-size` | Rows-per-page select, e.g. `[25, 50, 100]`. The page size defaults to 50; bind it even without the select when your pages hold a different number. `:show-page-size="false"` hides the select again. |
-| `align` | `end` (default), `start`, `center` (storefront), or `between` (range on the left, controls on the right). |
-| `size` | `slim` (default; back office), `default`, `large` (storefront). The same sizes as Button. |
-| `disabled` | Disables the controls while a page loads, and sets `aria-busy`. The current page number stays enabled, so focus isn't lost. |
-| `hrefFor(page)` | Renders the controls as links (`?page=6`), so pages can be bookmarked, opened in a new tab and crawled. Clicks also update `v-model:page`; to route on the client, prevent the link's default and let your router take over. |
-| `hasNext` | For cursor-based APIs without a total: leave out `total` and say whether there is a next page. The range then reads "51–100". With a `total` it overrides the one worked out from it. |
+| Prop                                    | What it does                                                                                                                                                                                                                 |
+| --------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `showFirstLast`                         | Adds « and » buttons for the first and last page. Useful with long lists. Needs `total`.                                                                                                                                     |
+| `jumpToPage`                            | Shows the page number as a small field — "Page [6] of 25". Needs `total`. Enter or leaving the field goes there. Numbers out of range snap to the first or last page, and an empty field restores the current page.          |
+| `showRange`                             | `false` hides "1–50 of 1,240". The storefront usually hides it.                                                                                                                                                              |
+| `pageSizeOptions` + `v-model:page-size` | Rows-per-page select, e.g. `[25, 50, 100]`. The page size defaults to 50; bind it even without the select when your pages hold a different number. `:show-page-size="false"` hides the select again.                         |
+| `align`                                 | `end` (default), `start`, `center` (storefront), or `between` (range on the left, controls on the right).                                                                                                                    |
+| `size`                                  | `slim` (default; back office), `default`, `large` (storefront). The same sizes as Button.                                                                                                                                    |
+| `disabled`                              | Disables the controls while a page loads, and sets `aria-busy`. The current page number stays enabled, so focus isn't lost.                                                                                                  |
+| `hrefFor(page)`                         | Renders the controls as links (`?page=6`), so pages can be bookmarked, opened in a new tab and crawled. Clicks also update `v-model:page`; to route on the client, prevent the link's default and let your router take over. |
+| `hasNext`                               | For cursor-based APIs without a total: leave out `total` and say whether there is a next page. The range then reads "51–100". With a `total` it overrides the one worked out from it.                                        |
 
 ## Narrow widths
 

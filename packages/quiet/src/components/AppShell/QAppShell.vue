@@ -94,12 +94,23 @@ function onDrawerClick(e: MouseEvent) {
   <div :class="['q-shell', contained && 'q-shell--contained']">
     <a :href="`#${mainId()}`" class="q-shell__skip" @click="skip">{{ strings.skip }}</a>
     <header ref="topbar" class="q-shell__topbar">
-      <QButton variant="ghost" class="q-shell__menu" icon-start="menu" :aria-label="strings.menu" :expanded="open" @click="open = true" />
-      <div class="q-shell__brand"><slot name="brand">{{ brand }}</slot></div>
+      <QButton
+        variant="ghost"
+        class="q-shell__menu"
+        icon-start="menu"
+        :aria-label="strings.menu"
+        :expanded="open"
+        @click="open = true"
+      />
+      <div class="q-shell__brand">
+        <slot name="brand">{{ brand }}</slot>
+      </div>
       <div v-if="slots['top-bar-end']" class="q-shell__topend"><slot name="top-bar-end" /></div>
     </header>
     <div class="q-shell__side">
-      <div v-if="brand || slots.brand" class="q-shell__brand q-shell__brand--side"><slot name="brand">{{ brand }}</slot></div>
+      <div v-if="brand || slots.brand" class="q-shell__brand q-shell__brand--side">
+        <slot name="brand">{{ brand }}</slot>
+      </div>
       <div class="q-shell__nav"><slot name="nav" /></div>
       <div v-if="slots['nav-footer']" class="q-shell__navfoot"><slot name="nav-footer" /></div>
     </div>
@@ -114,6 +125,7 @@ function onDrawerClick(e: MouseEvent) {
       class="q-shell__drawerpanel"
       :teleport="contained ? false : 'body'"
     >
+      <!-- eslint-disable-next-line vuejs-accessibility/click-events-have-key-events, vuejs-accessibility/no-static-element-interactions -- click delegation: closes the drawer after a link or button inside it was chosen; those handle the keyboard themselves -->
       <div class="q-shell__drawer" @click="onDrawerClick">
         <div class="q-shell__nav"><slot name="nav" /></div>
         <div v-if="slots['nav-footer']" class="q-shell__navfoot"><slot name="nav-footer" /></div>

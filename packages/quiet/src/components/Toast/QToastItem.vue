@@ -39,7 +39,14 @@ function act() {
 </script>
 
 <template>
-  <div :class="['q-toast', `q-toast--${toast.tone}`]" @mouseenter="pause" @mouseleave="resume" @focusin="pause" @focusout="resume">
+  <!-- eslint-disable-next-line vuejs-accessibility/no-static-element-interactions -- hover pauses the timer; focusin pauses it for keyboard users too -->
+  <div
+    :class="['q-toast', `q-toast--${toast.tone}`]"
+    @mouseenter="pause"
+    @mouseleave="resume"
+    @focusin="pause"
+    @focusout="resume"
+  >
     <QLead v-if="toast.tone !== 'neutral'" :icon="toast.tone === 'error' ? 'alert-circle' : 'check-circle'" />
     <span class="q-toast__msg">{{ toast.message }}</span>
     <button v-if="toast.action" type="button" class="q-toast__action" @click="act">{{ toast.action.label }}</button>

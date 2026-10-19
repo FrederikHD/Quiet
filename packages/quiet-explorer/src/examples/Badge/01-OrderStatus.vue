@@ -12,5 +12,10 @@ import { QBadge } from '@frederikhd/quiet';
 </template>
 
 <style scoped>
-.order { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
+.order {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
 </style>

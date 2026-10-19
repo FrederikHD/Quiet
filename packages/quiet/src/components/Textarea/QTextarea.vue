@@ -78,7 +78,10 @@ const left = computed(() => (props.maxlength != null ? props.maxlength - length.
 const near = computed(() => props.maxlength != null && left.value <= Math.max(10, Math.round(props.maxlength * 0.1)));
 
 if (import.meta.env.DEV && !controlId.value && !attrs['aria-label'] && !attrs['aria-labelledby']) {
-  warnOnce('textarea-label', 'Textarea: give it a label — wrap it in Field, or pass id, aria-label or aria-labelledby.');
+  warnOnce(
+    'textarea-label',
+    'Textarea: give it a label — wrap it in Field, or pass id, aria-label or aria-labelledby.',
+  );
 }
 
 // Grow with the text: measure the content height, between `rows` and `maxRows` lines.
@@ -130,7 +133,11 @@ const fieldAttrs = computed<Record<string, unknown>>(() => {
     required: props.required || undefined,
     'aria-required': field?.value.required ? 'true' : rest['aria-required'],
     'aria-invalid': isInvalid.value ? 'true' : undefined,
-    'aria-describedby': joinIds(rest['aria-describedby'] as string | undefined, field?.value.describedBy, hasCount.value && counterId),
+    'aria-describedby': joinIds(
+      rest['aria-describedby'] as string | undefined,
+      field?.value.describedBy,
+      hasCount.value && counterId,
+    ),
   };
 });
 
@@ -152,6 +159,7 @@ defineExpose({ textarea: el, focus: () => el.value?.focus() });
     :style="attrs.style as any"
   >
     <!-- Also measured on focus: text settings people apply themselves (spacing, zoom) can change the height unnoticed. -->
+    <!-- eslint-disable-next-line vuejs-accessibility/form-control-has-label -- labelled from outside: by the Field label (for=id) or an aria-label passed through -->
     <textarea
       ref="el"
       v-bind="fieldAttrs"
@@ -160,7 +168,12 @@ defineExpose({ textarea: el, focus: () => el.value?.focus() });
       @input="model = ($event.target as HTMLTextAreaElement).value"
       @focus="grow"
     />
-    <span v-if="hasCount" :id="counterId" :class="['q-textarea__count', near && 'is-near']" :aria-live="near ? 'polite' : 'off'">
+    <span
+      v-if="hasCount"
+      :id="counterId"
+      :class="['q-textarea__count', near && 'is-near']"
+      :aria-live="near ? 'polite' : 'off'"
+    >
       {{ near ? strings.left(Math.max(0, left)) : strings.count(length, maxlength!) }}
     </span>
   </span>

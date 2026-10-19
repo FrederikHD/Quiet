@@ -18,7 +18,8 @@ const SIZES = { sm: 'var(--icon-sm)', md: 'var(--icon-md)', lg: 'var(--icon-lg)'
 
 const shapes = computed<IconShape[] | null>(() => {
   const s = (icons as Record<string, IconShape[]>)[props.name];
-  if (!s) warnOnce(`icon-${props.name}`, `Icon: there is no icon named "${props.name}". Available: ${iconNames.join(', ')}.`);
+  if (!s)
+    warnOnce(`icon-${props.name}`, `Icon: there is no icon named "${props.name}". Available: ${iconNames.join(', ')}.`);
   return s ?? null;
 });
 const length = computed(() => SIZES[props.size] ?? SIZES.md);

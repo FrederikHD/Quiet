@@ -3,8 +3,15 @@ import { QRadio, QRadioGroup } from '@frederikhd/quiet';
 import { describe, expect, it, vi } from 'vitest';
 import { h } from 'vue';
 
-const inGroup = (radio: Record<string, unknown>, group: Record<string, unknown> = {}, slots: Record<string, () => unknown> = {}) =>
-  mount(QRadioGroup, { props: { label: 'Delivery', ...group }, slots: { default: () => h(QRadio, { value: 'exp', label: 'Express', ...radio }, slots) } });
+const inGroup = (
+  radio: Record<string, unknown>,
+  group: Record<string, unknown> = {},
+  slots: Record<string, () => unknown> = {},
+) =>
+  mount(QRadioGroup, {
+    props: { label: 'Delivery', ...group },
+    slots: { default: () => h(QRadio, { value: 'exp', label: 'Express', ...radio }, slots) },
+  });
 
 describe('QRadio', () => {
   it('is a native radio inside a label row', () => {
@@ -29,12 +36,16 @@ describe('QRadio', () => {
   });
 
   it('takes slots for label, description, meta and decorative media', () => {
-    const w = inGroup({ label: undefined }, { layout: 'cards' }, {
-      label: () => h('strong', 'Card'),
-      description: () => 'Debit or credit',
-      meta: () => 'Free',
-      media: () => h('svg'),
-    });
+    const w = inGroup(
+      { label: undefined },
+      { layout: 'cards' },
+      {
+        label: () => h('strong', 'Card'),
+        description: () => 'Debit or credit',
+        meta: () => 'Free',
+        media: () => h('svg'),
+      },
+    );
     expect(w.get('.q-choice__label strong').text()).toBe('Card');
     expect(w.get('.q-choice__desc').text()).toBe('Debit or credit');
     expect(w.get('.q-choice__meta').text()).toBe('Free');
@@ -72,7 +83,11 @@ describe('QRadio', () => {
   });
 
   it('exposes focus()', () => {
-    const w = mount(QRadioGroup, { attachTo: document.body, props: { label: 'D' }, slots: { default: () => h(QRadio, { value: 'a', label: 'A' }) } });
+    const w = mount(QRadioGroup, {
+      attachTo: document.body,
+      props: { label: 'D' },
+      slots: { default: () => h(QRadio, { value: 'a', label: 'A' }) },
+    });
     (w.findComponent(QRadio).vm as unknown as { focus(): void }).focus();
     expect(document.activeElement).toBe(w.get('input').element);
     w.unmount();

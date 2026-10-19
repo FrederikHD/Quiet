@@ -5,10 +5,17 @@ import { QCard, QMetric } from '@frederikhd/quiet';
 
 <template>
   <QCard class="kpi">
-    <QMetric label="Returns" value="4" good-when="down" :change="{ direction: 'down', value: 2, label: 'on last week' }" />
+    <QMetric
+      label="Returns"
+      value="4"
+      good-when="down"
+      :change="{ direction: 'down', value: 2, label: 'on last week' }"
+    />
   </QCard>
 </template>
 
 <style scoped>
-.kpi { max-width: 280px; }
+.kpi {
+  max-width: 280px;
+}
 </style>

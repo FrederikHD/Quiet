@@ -58,7 +58,8 @@ const panelId = useQuietId('q-popover-');
 const wrap = ref<HTMLElement | null>(null);
 const trigger = ref<HTMLElement | null>(null);
 
-if (import.meta.env.DEV && !props.label) warnOnce('popover-label', 'Popover: pass a label — it names the panel for screen readers.');
+if (import.meta.env.DEV && !props.label)
+  warnOnce('popover-label', 'Popover: pass a label — it names the panel for screen readers.');
 if (props.defaultOpen && !open.value) open.value = true;
 
 // The trigger is the slot's first element; follow it if the slot swaps it for another.
@@ -97,7 +98,8 @@ watch(open, (now, was) => {
   if (!was || now) return;
   setTimeout(() => {
     const a = document.activeElement;
-    if ((!a || a === document.body) && lastFocusTrigger() === trigger.value && trigger.value?.isConnected) trigger.value.focus();
+    if ((!a || a === document.body) && lastFocusTrigger() === trigger.value && trigger.value?.isConnected)
+      trigger.value.focus();
   }, 0);
 });
 
@@ -109,7 +111,14 @@ defineExpose({
 </script>
 
 <template>
-  <span ref="wrap" class="q-popover__trigger" style="display: contents" @click="onTriggerClick" @focusout="onTriggerFocusOut">
+  <!-- eslint-disable-next-line vuejs-accessibility/click-events-have-key-events, vuejs-accessibility/no-static-element-interactions -- a display: contents wrapper that hears clicks from the trigger inside it; the trigger is a button -->
+  <span
+    ref="wrap"
+    class="q-popover__trigger"
+    style="display: contents"
+    @click="onTriggerClick"
+    @focusout="onTriggerFocusOut"
+  >
     <slot />
   </span>
   <QPopoverPanel

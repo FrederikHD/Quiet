@@ -12,7 +12,19 @@ import { QIcon } from '@frederikhd/quiet';
 </template>
 
 <style scoped>
-.list { display: grid; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
-.list li { display: flex; align-items: center; gap: var(--space-2); }
-.ok { color: var(--success); }
+.list {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.list li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.ok {
+  color: var(--success);
+}
 </style>

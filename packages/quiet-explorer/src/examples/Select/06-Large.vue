@@ -8,6 +8,12 @@ const size = ref('');
 
 <template>
   <QField label="Size" label-placement="top" width="m">
-    <QSelect v-model="size" size="large" placeholder="Select a size" required :options="['S', 'M', 'L', { value: 'XL', label: 'XL — sold out', disabled: true }]" />
+    <QSelect
+      v-model="size"
+      size="large"
+      placeholder="Select a size"
+      required
+      :options="['S', 'M', 'L', { value: 'XL', label: 'XL — sold out', disabled: true }]"
+    />
   </QField>
 </template>

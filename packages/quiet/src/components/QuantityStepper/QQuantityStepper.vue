@@ -42,7 +42,11 @@ const model = defineModel<number>();
 
 const attrs = useAttrs();
 const field = useFieldControl();
-const strings = useStrings('stepper', { decrease: 'Decrease quantity', increase: 'Increase quantity' }, () => props.strings);
+const strings = useStrings(
+  'stepper',
+  { decrease: 'Decrease quantity', increase: 'Increase quantity' },
+  () => props.strings,
+);
 const root = ref<HTMLElement | null>(null);
 const input = ref<HTMLInputElement | null>(null);
 // Typing is kept as a draft and committed (clamped to min–max, snapped to step) on blur or Enter.
@@ -87,13 +91,19 @@ function onKeyDown(e: KeyboardEvent) {
   const base = draft.value ? parseInt(draft.value, 10) : value.value;
   const { step, min, max } = props;
   const to =
-    e.key === 'ArrowUp' ? base + step
-    : e.key === 'ArrowDown' ? base - step
-    : e.key === 'PageUp' ? base + step * 10
-    : e.key === 'PageDown' ? base - step * 10
-    : e.key === 'Home' ? min
-    : e.key === 'End' ? max
-    : null;
+    e.key === 'ArrowUp'
+      ? base + step
+      : e.key === 'ArrowDown'
+        ? base - step
+        : e.key === 'PageUp'
+          ? base + step * 10
+          : e.key === 'PageDown'
+            ? base - step * 10
+            : e.key === 'Home'
+              ? min
+              : e.key === 'End'
+                ? max
+                : null;
   if (to != null) {
     e.preventDefault();
     commit(to);
@@ -150,7 +160,14 @@ defineExpose({ input, focus: () => input.value?.focus() });
     :style="attrs.style as any"
   >
     <!-- − and + are for pointer and touch; the keyboard uses the arrow keys on the field. -->
-    <button type="button" class="q-stepper__btn" tabindex="-1" :aria-label="strings.decrease" :disabled="!canDown" @click="bump(-step)">
+    <button
+      type="button"
+      class="q-stepper__btn"
+      tabindex="-1"
+      :aria-label="strings.decrease"
+      :disabled="!canDown"
+      @click="bump(-step)"
+    >
       <QIcon name="minus" />
     </button>
     <input
@@ -162,7 +179,14 @@ defineExpose({ input, focus: () => input.value?.focus() });
       @blur="onBlur"
       @keydown="onKeyDown"
     />
-    <button type="button" class="q-stepper__btn" tabindex="-1" :aria-label="strings.increase" :disabled="!canUp" @click="bump(step)">
+    <button
+      type="button"
+      class="q-stepper__btn"
+      tabindex="-1"
+      :aria-label="strings.increase"
+      :disabled="!canUp"
+      @click="bump(step)"
+    >
       <QIcon name="plus" />
     </button>
   </span>

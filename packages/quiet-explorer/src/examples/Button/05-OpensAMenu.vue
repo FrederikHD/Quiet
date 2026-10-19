@@ -13,7 +13,11 @@ const done = ref('');
       align="start"
       :items="[
         { label: 'Mark as fulfilled', icon: 'check', onSelect: () => (done = '3 orders marked as fulfilled.') },
-        { label: 'Print packing slips', icon: 'package', onSelect: () => (done = '3 packing slips sent to the printer.') },
+        {
+          label: 'Print packing slips',
+          icon: 'package',
+          onSelect: () => (done = '3 packing slips sent to the printer.'),
+        },
       ]"
     >
       <template #trigger><QButton icon-end="chevron-down">Bulk actions</QButton></template>
@@ -23,6 +27,15 @@ const done = ref('');
 </template>
 
 <style scoped>
-.stack { display: grid; justify-items: start; gap: var(--space-3); }
-.log { margin: 0; min-height: 18px; font: var(--text-small); color: var(--ink-muted); }
+.stack {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-3);
+}
+.log {
+  margin: 0;
+  min-height: 18px;
+  font: var(--text-small);
+  color: var(--ink-muted);
+}
 </style>
