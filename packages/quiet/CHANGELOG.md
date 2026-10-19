@@ -6,6 +6,8 @@ breaking changes, a patch version (0.x.y) never does.
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-10-19
+
 ### Added
 
 - `@frederikhd/quiet/package.json` can be imported, for tools that read the installed version.
@@ -47,5 +49,6 @@ First release.
 - WCAG 2.2 AA throughout: keyboard support, focus management, screen-reader announcements, both themes checked with
   axe; layouts that adapt to their own width; print styles; server rendering.
 
-[Unreleased]: https://github.com/FrederikHD/Quiet/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/FrederikHD/Quiet/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/FrederikHD/Quiet/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/FrederikHD/Quiet/releases/tag/v0.1.0
