@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Quiet design system — Vue 3 components, tokens and styles for commerce storefronts and back offices.",
   "license": "MIT",
-  "author": "FrederikHD (https://github.com/FrederikHD)",
+  "author": "Frederik Gießke (https://github.com/FrederikHD)",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/FrederikHD/Quiet.git",
