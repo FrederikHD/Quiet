@@ -17,7 +17,10 @@ function apply(code: string) {
   <div class="panel">
     <QOrderSummary
       :items="[{ name: 'Linen shirt', variant: 'Blue · M', price: 59, image: { src: photo('Blue') } }]"
-      :totals="[discount ? { label: 'Discount', detail: 'LINEN10', amount: -discount } : null, { label: 'Shipping', detail: 'Standard', amount: 4.9 }]"
+      :totals="[
+        discount ? { label: 'Discount', detail: 'LINEN10', amount: -discount } : null,
+        { label: 'Shipping', detail: 'Standard', amount: 4.9 },
+      ]"
       :total="total"
       :tax-note="`Including ${money(total - total / 1.19)} VAT (19 %)`"
     >
@@ -27,5 +30,10 @@ function apply(code: string) {
 </template>
 
 <style scoped>
-.panel { max-width: 420px; padding: var(--space-6); border-radius: var(--radius-md); background: var(--surface-sunken); }
+.panel {
+  max-width: 420px;
+  padding: var(--space-6);
+  border-radius: var(--radius-md);
+  background: var(--surface-sunken);
+}
 </style>

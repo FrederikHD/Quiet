@@ -22,7 +22,11 @@ describe('QCard', () => {
   });
 
   it('takes a heading level', () => {
-    expect(mount(QCard, { props: { title: 'Notes', headingLevel: 3 } }).find('h3.q-card__title').exists()).toBe(true);
+    expect(
+      mount(QCard, { props: { title: 'Notes', headingLevel: 3 } })
+        .find('h3.q-card__title')
+        .exists(),
+    ).toBe(true);
   });
 
   it('takes title and description slots', () => {

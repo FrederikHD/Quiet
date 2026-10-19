@@ -86,15 +86,25 @@ const classes = computed(() => [
     <span v-if="swatch" class="q-tag__dot" :style="{ '--q-swatch': swatch }" aria-hidden="true" />
     <QLead v-if="icon" :icon="icon" />
     <span class="q-tag__label"><slot /></span>
-    <span v-if="hasDetail()" class="q-tag__detail"><slot name="detail">{{ detail }}</slot></span>
+    <span v-if="hasDetail()" class="q-tag__detail"
+      ><slot name="detail">{{ detail }}</slot></span
+    >
     <QIcon name="x" size="sm" class="q-tag__x" />
   </button>
   <span v-else v-bind="attrs" :class="classes">
     <span v-if="swatch" class="q-tag__dot" :style="{ '--q-swatch': swatch }" aria-hidden="true" />
     <QLead v-if="icon" :icon="icon" />
     <span class="q-tag__label"><slot /></span>
-    <span v-if="hasDetail()" class="q-tag__detail"><slot name="detail">{{ detail }}</slot></span>
-    <button v-if="removable && !disabled" type="button" class="q-tag__remove" :aria-label="label()" @click="emit('remove')">
+    <span v-if="hasDetail()" class="q-tag__detail"
+      ><slot name="detail">{{ detail }}</slot></span
+    >
+    <button
+      v-if="removable && !disabled"
+      type="button"
+      class="q-tag__remove"
+      :aria-label="label()"
+      @click="emit('remove')"
+    >
       <QIcon name="x" />
     </button>
   </span>

@@ -12,8 +12,13 @@ describe('QButton', () => {
   });
 
   it('applies variant and size classes', () => {
-    const w = mount(QButton, { props: { variant: 'primary', size: 'large', fullWidth: true }, slots: { default: 'Add to cart' } });
-    expect(w.get('button').classes()).toEqual(expect.arrayContaining(['q-btn--primary', 'q-btn--large', 'q-btn--full']));
+    const w = mount(QButton, {
+      props: { variant: 'primary', size: 'large', fullWidth: true },
+      slots: { default: 'Add to cart' },
+    });
+    expect(w.get('button').classes()).toEqual(
+      expect.arrayContaining(['q-btn--primary', 'q-btn--large', 'q-btn--full']),
+    );
   });
 
   it('is square and icon-only when it has an icon and no label', () => {
@@ -75,7 +80,10 @@ describe('QButton states', () => {
   });
 
   it('honours type and slim size, and puts icons in aria-hidden slots', () => {
-    const w = mount(QButton, { props: { type: 'submit', size: 'slim', iconStart: 'plus', iconEnd: 'arrow-right' }, slots: { default: 'Add' } });
+    const w = mount(QButton, {
+      props: { type: 'submit', size: 'slim', iconStart: 'plus', iconEnd: 'arrow-right' },
+      slots: { default: 'Add' },
+    });
     const b = w.get('button');
     expect(b.attributes('type')).toBe('submit');
     expect(b.classes()).toContain('q-btn--slim');

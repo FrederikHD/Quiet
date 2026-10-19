@@ -1,7 +1,18 @@
 /* ---------- Forms ---------- */
 /* Form: a vertical stack of fields and sections */
-.q-form { display: flex; flex-direction: column; gap: var(--field-gap); min-width: 0; font-family: var(--font-sans); color: var(--ink); }
-.q-form > .q-fsection + .q-fsection { margin-top: var(--space-4); padding-top: var(--space-6); border-top: 1px solid var(--line); }
+.q-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--field-gap);
+  min-width: 0;
+  font-family: var(--font-sans);
+  color: var(--ink);
+}
+.q-form > .q-fsection + .q-fsection {
+  margin-top: var(--space-4);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--line);
+}
 
 /* Error summary */
 .q-form__summary {
@@ -14,13 +25,42 @@
   font-size: var(--control-text-sm);
   line-height: 18px;
 }
-.q-form__summary:focus { outline: 2px solid var(--danger); outline-offset: 2px; }
-.q-form__summary-title { display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-2); color: var(--danger); font-weight: 600; font-size: var(--control-text-md); line-height: 22px; }
-.q-form__summary-list { margin: 0; padding-left: calc(var(--icon-sm) + var(--space-2)); display: grid; gap: var(--space-1); }
-.q-form__summary-list a { color: var(--danger); text-decoration: underline; text-underline-offset: 2px; }
-.q-form__summary-list a:hover { text-decoration-thickness: 2px; }
-.q-form__summary-list a:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: 2px; }
+.q-form__summary:focus {
+  outline: 2px solid var(--danger);
+  outline-offset: 2px;
+}
+.q-form__summary-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+  color: var(--danger);
+  font-weight: 600;
+  font-size: var(--control-text-md);
+  line-height: 22px;
+}
+.q-form__summary-list {
+  margin: 0;
+  padding-left: calc(var(--icon-sm) + var(--space-2));
+  display: grid;
+  gap: var(--space-1);
+}
+.q-form__summary-list a {
+  color: var(--danger);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.q-form__summary-list a:hover {
+  text-decoration-thickness: 2px;
+}
+.q-form__summary-list a:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
 
 @media (forced-colors: active) {
-  .q-form__summary { border-color: CanvasText; }
+  .q-form__summary {
+    border-color: CanvasText;
+  }
 }

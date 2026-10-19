@@ -77,7 +77,9 @@ const inputId = (n: number) => (n === (model.value || 1) && props.id ? props.id 
         </span>
       </div>
       <div class="q-field__controlcol">
+        <!-- eslint-disable-next-line vuejs-accessibility/mouse-events-have-key-events, vuejs-accessibility/no-static-element-interactions -- hover preview of the stars; the radio inputs give the keyboard the same choice -->
         <div class="q-rinput__row" @mouseleave="hover = 0">
+          <!-- eslint-disable-next-line vuejs-accessibility/mouse-events-have-key-events, vuejs-accessibility/no-static-element-interactions -- hover preview of the stars; the radio inputs give the keyboard the same choice -->
           <label
             v-for="n in 5"
             :key="n"
@@ -101,7 +103,13 @@ const inputId = (n: number) => (n === (model.value || 1) && props.id ? props.id 
           </label>
           <span class="q-rinput__word" aria-hidden="true">{{ shown ? strings.words[shown - 1] : '' }}</span>
         </div>
-        <QFieldMessage :status="status[0]" :message="status[1]" :id="`${gid}-msg`" :strings="fstrings" :quiet="summaryShown" />
+        <QFieldMessage
+          :id="`${gid}-msg`"
+          :status="status[0]"
+          :message="status[1]"
+          :strings="fstrings"
+          :quiet="summaryShown"
+        />
         <div v-if="hint" :id="`${gid}-hint`" class="q-field__hint">{{ hint }}</div>
       </div>
     </div>

@@ -52,7 +52,9 @@ const props = withDefaults(defineProps<TabsProps>(), {
 });
 /** The chosen tab's value. With link tabs, null means this page is none of the sections. */
 const model = defineModel<string | null>();
-const emit = defineEmits<{ /** A link tab was clicked (for client-side routing). */ navigate: [tab: TabItem, event: MouseEvent] }>();
+const emit = defineEmits<{
+  /** A link tab was clicked (for client-side routing). */ navigate: [tab: TabItem, event: MouseEvent];
+}>();
 defineSlots<{
   /** One shared panel (saved filters over one table), or content under a row of link tabs. */
   default?(): unknown;
@@ -118,10 +120,14 @@ function observe() {
   ro.observe(list.value);
   for (const tab of Array.from(list.value.querySelectorAll('.q-tabs__tab'))) ro.observe(tab);
 }
-watch(items, () => {
-  observe();
-  measure();
-}, { flush: 'post' });
+watch(
+  items,
+  () => {
+    observe();
+    measure();
+  },
+  { flush: 'post' },
+);
 onMounted(() => {
   if (!shared.value && !links.value && typeof MutationObserver !== 'undefined' && root.value) {
     checkErrors();
@@ -146,10 +152,16 @@ onBeforeUnmount(() => {
 
 // Keep the chosen tab in view; when errors appear, show the first tab that has them instead
 // (its marker is the cue, and a marker scrolled out of sight helps nobody).
-const errKey = computed(() => Object.keys(errs.value).filter((k) => errs.value[k]).join('|'));
+const errKey = computed(() =>
+  Object.keys(errs.value)
+    .filter((k) => errs.value[k])
+    .join('|'),
+);
 function revealTab() {
   const el = list.value;
-  const tab = (errKey.value && el?.querySelector<HTMLElement>('.q-tabs__tab.is-invalid')) || el?.querySelector<HTMLElement>('[data-active="true"]');
+  const tab =
+    (errKey.value && el?.querySelector<HTMLElement>('.q-tabs__tab.is-invalid')) ||
+    el?.querySelector<HTMLElement>('[data-active="true"]');
   if (!el || !tab) return;
   const l = tab.offsetLeft; // the list is the offset parent (position: relative)
   const r = l + tab.offsetWidth;
@@ -166,11 +178,15 @@ function onKeyDown(e: KeyboardEvent) {
   const i = tabs.indexOf(document.activeElement as HTMLElement);
   if (i === -1) return;
   const next =
-    e.key === 'ArrowRight' ? tabs[(i + 1) % tabs.length]
-    : e.key === 'ArrowLeft' ? tabs[(i - 1 + tabs.length) % tabs.length]
-    : e.key === 'Home' ? tabs[0]
-    : e.key === 'End' ? tabs[tabs.length - 1]
-    : null;
+    e.key === 'ArrowRight'
+      ? tabs[(i + 1) % tabs.length]
+      : e.key === 'ArrowLeft'
+        ? tabs[(i - 1 + tabs.length) % tabs.length]
+        : e.key === 'Home'
+          ? tabs[0]
+          : e.key === 'End'
+            ? tabs[tabs.length - 1]
+            : null;
   if (next) {
     e.preventDefault();
     next.focus();
@@ -181,10 +197,7 @@ const countText = (c: number | string) => (typeof c === 'number' ? fmt(c) : c);
 </script>
 
 <template>
-  <div
-    ref="root"
-    :class="['q-tabs', `q-tabs--${variant}`, fill && 'q-tabs--fill', size === 'slim' && 'q-tabs--slim']"
-  >
+  <div ref="root" :class="['q-tabs', `q-tabs--${variant}`, fill && 'q-tabs--fill', size === 'slim' && 'q-tabs--slim']">
     <component :is="links ? 'nav' : 'div'" :class="`q-tabs__bar${edges}`" :aria-label="links ? label : undefined">
       <component
         :is="links ? 'ul' : 'div'"
@@ -205,7 +218,9 @@ const countText = (c: number | string) => (typeof c === 'number' ? fmt(c) : c);
             >
               <span v-if="t.icon" class="q-tabs__icon" aria-hidden="true"><QIcon :name="t.icon" /></span>
               <span class="q-tabs__label">{{ t.label }}</span>
-              <span v-if="t.count != null" class="q-tabs__count" :aria-hidden="t.countLabel ? 'true' : undefined">{{ countText(t.count) }}</span>
+              <span v-if="t.count != null" class="q-tabs__count" :aria-hidden="t.countLabel ? 'true' : undefined">{{
+                countText(t.count)
+              }}</span>
               <span v-if="t.count != null && t.countLabel" class="q-visually-hidden">, {{ t.countLabel }}</span>
             </a>
           </li>
@@ -225,7 +240,9 @@ const countText = (c: number | string) => (typeof c === 'number' ? fmt(c) : c);
           >
             <span v-if="t.icon" class="q-tabs__icon" aria-hidden="true"><QIcon :name="t.icon" /></span>
             <span class="q-tabs__label">{{ t.label }}</span>
-            <span v-if="t.count != null" class="q-tabs__count" :aria-hidden="t.countLabel ? 'true' : undefined">{{ countText(t.count) }}</span>
+            <span v-if="t.count != null" class="q-tabs__count" :aria-hidden="t.countLabel ? 'true' : undefined">{{
+              countText(t.count)
+            }}</span>
             <span v-if="t.count != null && t.countLabel" class="q-visually-hidden">, {{ t.countLabel }}</span>
             <template v-if="errs[t.value]">
               <span class="q-tabs__error" aria-hidden="true" />

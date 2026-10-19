@@ -52,7 +52,11 @@ defineSlots<{
 }>();
 
 const config = useConfig();
-const strings = computed(() => ({ ...FORM_DEFAULT_STRINGS, ...(config.strings.form as FormStrings), ...props.strings }));
+const strings = computed(() => ({
+  ...FORM_DEFAULT_STRINGS,
+  ...(config.strings.form as FormStrings),
+  ...props.strings,
+}));
 const list = computed(() => (props.errors?.length ? props.errors : null));
 
 provide(

@@ -9,9 +9,18 @@ const showSource = ref(false);
 </script>
 
 <template>
-  <QCard :id="example.id" :title="example.title" :description="example.description" :heading-level="2" class="ex-example" data-testid="example">
+  <QCard
+    :id="example.id"
+    :title="example.title"
+    :description="example.description"
+    :heading-level="2"
+    class="ex-example"
+    data-testid="example"
+  >
     <template #actions>
-      <QButton size="slim" variant="ghost" icon-start="eye" :pressed="showSource" @click="showSource = !showSource">Source</QButton>
+      <QButton size="slim" variant="ghost" icon-start="eye" :pressed="showSource" @click="showSource = !showSource"
+        >Source</QButton
+      >
     </template>
     <div class="ex-example__stage"><component :is="example.component" /></div>
     <CodeBlock v-if="showSource" :code="example.source" lang="vue" />

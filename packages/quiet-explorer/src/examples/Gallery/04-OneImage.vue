@@ -5,9 +5,15 @@ import { photo } from '../../fixtures/pictures';
 </script>
 
 <template>
-  <QGallery class="gallery" label="Linen napkin images" :images="[{ src: photo('Natural', 2), alt: 'Linen napkins, natural, folded' }]" />
+  <QGallery
+    class="gallery"
+    label="Linen napkin images"
+    :images="[{ src: photo('Natural', 2), alt: 'Linen napkins, natural, folded' }]"
+  />
 </template>
 
 <style scoped>
-.gallery { max-width: 360px; }
+.gallery {
+  max-width: 360px;
+}
 </style>

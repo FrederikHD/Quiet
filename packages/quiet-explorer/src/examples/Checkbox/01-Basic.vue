@@ -7,5 +7,9 @@ const newsletter = ref(true);
 </script>
 
 <template>
-  <QCheckbox v-model="newsletter" label="Send me the newsletter" description="About once a month. Unsubscribe any time." />
+  <QCheckbox
+    v-model="newsletter"
+    label="Send me the newsletter"
+    description="About once a month. Unsubscribe any time."
+  />
 </template>

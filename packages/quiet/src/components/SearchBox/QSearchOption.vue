@@ -8,6 +8,7 @@ const emit = defineEmits<{ choose: []; hover: [] }>();
 </script>
 
 <template>
+  <!-- eslint-disable-next-line vuejs-accessibility/click-events-have-key-events, vuejs-accessibility/interactive-supports-focus -- options follow aria-activedescendant: focus stays in the search field, which handles the keys -->
   <li
     :id="id"
     :data-i="index"

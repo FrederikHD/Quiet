@@ -18,5 +18,7 @@ import { photo } from '../../fixtures/pictures';
 </template>
 
 <style scoped>
-.card { max-width: 240px; }
+.card {
+  max-width: 240px;
+}
 </style>

@@ -3,9 +3,21 @@
 import { QCombobox, QField, type ComboboxOption } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
-const countries: ComboboxOption[] = ['Austria', 'Belgium', 'Czechia', 'Denmark', 'France', 'Germany', 'Italy', 'Luxembourg', 'Netherlands', 'Poland', 'Spain', 'Sweden', 'Switzerland'].map(
-  (c) => ({ value: c, label: c }),
-);
+const countries: ComboboxOption[] = [
+  'Austria',
+  'Belgium',
+  'Czechia',
+  'Denmark',
+  'France',
+  'Germany',
+  'Italy',
+  'Luxembourg',
+  'Netherlands',
+  'Poland',
+  'Spain',
+  'Sweden',
+  'Switzerland',
+].map((c) => ({ value: c, label: c }));
 const shipsTo = ref<ComboboxOption[]>(countries.filter((c) => ['Germany', 'Austria', 'Switzerland'].includes(c.label)));
 </script>
 

@@ -5,7 +5,10 @@ import { expect, test } from './fixtures';
 const pageWidth = (page: import('@playwright/test').Page) =>
   page.evaluate(() => ({ scroll: document.documentElement.scrollWidth, client: document.documentElement.clientWidth }));
 
-for (const [device, width] of [['phone', 375], ['tablet', 768]] as const) {
+for (const [device, width] of [
+  ['phone', 375],
+  ['tablet', 768],
+] as const) {
   test.describe(`${device} (${width}px)`, () => {
     test.use({ viewport: { width, height: 800 } });
 

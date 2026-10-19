@@ -22,6 +22,13 @@ const shown = ref(['Product', 'Price', 'Stock']);
 </template>
 
 <style scoped>
-.toolbar { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); }
-.count { color: var(--ink-muted); }
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+.count {
+  color: var(--ink-muted);
+}
 </style>

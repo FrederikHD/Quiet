@@ -5,7 +5,12 @@ The shop's search field with suggestions as you type: collections and products (
 ```vue
 <QSearchBox
   v-model="q"
-  :suggestions="[{ label: 'Products', items: hits.map((p) => ({ id: p.id, label: p.name, image: p.thumb, meta: money(p.price), description: p.type })) }]"
+  :suggestions="[
+    {
+      label: 'Products',
+      items: hits.map((p) => ({ id: p.id, label: p.name, image: p.thumb, meta: money(p.price), description: p.type })),
+    },
+  ]"
   @select="go"
   @submit="(query) => go(`/search?q=${encodeURIComponent(query)}`)"
 />

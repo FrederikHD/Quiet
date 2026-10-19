@@ -16,20 +16,33 @@
   font-size: var(--control-text-md);
   line-height: 22px;
 }
-.q-popover:focus { outline: none; }
-.q-popover:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.q-popover:focus {
+  outline: none;
+}
+.q-popover:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
 .q-popover--tip {
   max-width: min(280px, calc(100vw - 16px));
   padding: var(--space-3) var(--space-4);
   font-size: var(--control-text-sm);
   line-height: 18px;
 }
-.q-popover > :first-child { margin-top: 0; }
-.q-popover > :last-child { margin-bottom: 0; }
+.q-popover > :first-child {
+  margin-top: 0;
+}
+.q-popover > :last-child {
+  margin-bottom: 0;
+}
 
 @media (forced-colors: active) {
-  .q-popover { border-color: CanvasText; }
+  .q-popover {
+    border-color: CanvasText;
+  }
 }
 
 /* Popover variants used by Combobox */
-.q-popover--flush { padding: 0; }
+.q-popover--flush {
+  padding: 0;
+}

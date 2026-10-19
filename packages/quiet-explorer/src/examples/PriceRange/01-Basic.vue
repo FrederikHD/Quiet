@@ -15,6 +15,14 @@ const shown = ref<[number, number]>([30, 90]);
 </template>
 
 <style scoped>
-.filter { display: grid; gap: var(--space-4); max-width: 300px; }
-.result { margin: 0; font: var(--text-small); color: var(--ink-muted); }
+.filter {
+  display: grid;
+  gap: var(--space-4);
+  max-width: 300px;
+}
+.result {
+  margin: 0;
+  font: var(--text-small);
+  color: var(--ink-muted);
+}
 </style>

@@ -20,7 +20,9 @@ const emit = defineEmits<{ set: [value: unknown]; 'set-json': [text: string] }>(
 const shown = computed(() => (props.value === undefined ? props.fallback : props.value));
 // Enum values are JSON texts ('"md"', '2', 'null'), so numbers, booleans and null come back as themselves.
 const enumOptions = computed(() =>
-  props.prop.control.kind === 'enum' ? props.prop.control.values.map((v) => ({ value: v, label: v.startsWith('"') ? JSON.parse(v) : v })) : [],
+  props.prop.control.kind === 'enum'
+    ? props.prop.control.values.map((v) => ({ value: v, label: v.startsWith('"') ? JSON.parse(v) : v }))
+    : [],
 );
 const enumValue = computed(() => (shown.value === undefined ? '' : JSON.stringify(shown.value)));
 const longJson = computed(() => (props.json?.text.length ?? 0) > 300);
@@ -51,13 +53,23 @@ const longJson = computed(() => (props.json?.text.length ?? 0) > 300);
     />
   </QField>
   <QField v-else-if="prop.control.kind === 'string'" :label="label" :hint="prop.description">
-    <QInput :model-value="(value as string | undefined) ?? ''" @update:model-value="emit('set', $event === '' ? undefined : $event)" />
+    <QInput
+      :model-value="(value as string | undefined) ?? ''"
+      @update:model-value="emit('set', $event === '' ? undefined : $event)"
+    />
   </QField>
   <QField v-else :label="`${label} (JSON)`" :hint="prop.description" :error="json?.error" class="ex-json">
     <!-- Long values (image data URIs, big lists) start folded so the other controls stay in view. -->
     <details v-if="longJson" class="ex-json__fold">
       <summary>Show {{ label }} ({{ json!.text.length.toLocaleString('de-DE') }} characters)</summary>
-      <QTextarea :model-value="json?.text" :rows="6" :max-rows="14" auto-grow spellcheck="false" @update:model-value="emit('set-json', $event ?? '')" />
+      <QTextarea
+        :model-value="json?.text"
+        :rows="6"
+        :max-rows="14"
+        auto-grow
+        spellcheck="false"
+        @update:model-value="emit('set-json', $event ?? '')"
+      />
     </details>
     <QTextarea
       v-else

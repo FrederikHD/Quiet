@@ -2,7 +2,13 @@ import { mount } from '@vue/test-utils';
 import { QBreadcrumbs, type BreadcrumbItem } from '@frederikhd/quiet';
 import { describe, expect, it } from 'vitest';
 
-const trail: (BreadcrumbItem | null | false)[] = [{ label: 'Home', href: '/' }, null, { label: 'Shirts', href: '/shirts' }, false, { label: 'Linen shirt' }];
+const trail: (BreadcrumbItem | null | false)[] = [
+  { label: 'Home', href: '/' },
+  null,
+  { label: 'Shirts', href: '/shirts' },
+  false,
+  { label: 'Linen shirt' },
+];
 
 describe('QBreadcrumbs', () => {
   it('is a nav named "Breadcrumb" with an ordered list, skipping null and false', () => {
@@ -33,7 +39,14 @@ describe('QBreadcrumbs', () => {
   });
 
   it('with a link last, that link is the parent and nothing is current', () => {
-    const w = mount(QBreadcrumbs, { props: { items: [{ label: 'Home', href: '/' }, { label: 'Shirts', href: '/shirts' }] } });
+    const w = mount(QBreadcrumbs, {
+      props: {
+        items: [
+          { label: 'Home', href: '/' },
+          { label: 'Shirts', href: '/shirts' },
+        ],
+      },
+    });
     expect(w.find('[aria-current]').exists()).toBe(false);
     expect(w.findAll('li')[1].classes()).toContain('is-parent');
   });
@@ -45,7 +58,15 @@ describe('QBreadcrumbs', () => {
   });
 
   it('takes its name from aria-label or strings', () => {
-    expect(mount(QBreadcrumbs, { props: { items: [] }, attrs: { 'aria-label': 'Pfad' } }).get('nav').attributes('aria-label')).toBe('Pfad');
-    expect(mount(QBreadcrumbs, { props: { items: [], strings: { label: 'Brotkrumen' } } }).get('nav').attributes('aria-label')).toBe('Brotkrumen');
+    expect(
+      mount(QBreadcrumbs, { props: { items: [] }, attrs: { 'aria-label': 'Pfad' } })
+        .get('nav')
+        .attributes('aria-label'),
+    ).toBe('Pfad');
+    expect(
+      mount(QBreadcrumbs, { props: { items: [], strings: { label: 'Brotkrumen' } } })
+        .get('nav')
+        .attributes('aria-label'),
+    ).toBe('Brotkrumen');
   });
 });

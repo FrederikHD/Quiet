@@ -39,8 +39,25 @@ const count = (key: string) => orders.filter(filters[key]).length;
 </template>
 
 <style scoped>
-.tabs { max-width: 640px; }
-.list { margin: 0; padding: 0; list-style: none; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface-raised); }
-.list li { display: flex; justify-content: space-between; gap: var(--space-3); padding: var(--space-3) var(--space-4); border-top: 1px solid var(--line); }
-.list li:first-child { border-top: 0; }
+.tabs {
+  max-width: 640px;
+}
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface-raised);
+}
+.list li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid var(--line);
+}
+.list li:first-child {
+  border-top: 0;
+}
 </style>

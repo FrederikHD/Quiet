@@ -104,13 +104,23 @@ const bodyProps = computed(() => ({
     :class="['q-summary', 'q-summary--folds', open && 'is-open']"
     :aria-label="title ?? strings.title"
   >
-    <QDisclosure v-model:open="open" class="q-summary__disc" :heading-level="headingLevel" :divider="false" :meta="money(total, currency)">
+    <QDisclosure
+      v-model:open="open"
+      class="q-summary__disc"
+      :heading-level="headingLevel"
+      :divider="false"
+      :meta="money(total, currency)"
+    >
       <template #title>
-        <span class="q-summary__toggletext"><QLead icon="bag" /><span>{{ open ? strings.hide : strings.show }}</span></span>
+        <span class="q-summary__toggletext"
+          ><QLead icon="bag" /><span>{{ open ? strings.hide : strings.show }}</span></span
+        >
       </template>
       <QOrderSummaryBody v-bind="bodyProps">
         <slot />
-        <template #tax-note><slot name="tax-note">{{ taxNote }}</slot></template>
+        <template #tax-note
+          ><slot name="tax-note">{{ taxNote }}</slot></template
+        >
       </QOrderSummaryBody>
     </QDisclosure>
   </section>
@@ -125,7 +135,9 @@ const bodyProps = computed(() => ({
     </component>
     <QOrderSummaryBody v-bind="bodyProps">
       <slot />
-      <template #tax-note><slot name="tax-note">{{ taxNote }}</slot></template>
+      <template #tax-note
+        ><slot name="tax-note">{{ taxNote }}</slot></template
+      >
     </QOrderSummaryBody>
   </component>
 </template>

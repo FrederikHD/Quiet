@@ -1,17 +1,62 @@
 /* ---------- Textarea ---------- */
 /* The Input box, grown to several lines; the counter sits in the box's bottom-right corner. */
-.q-textarea { height: auto; flex-direction: column; align-items: stretch; gap: 0; padding: 0; cursor: text; }
+.q-textarea {
+  height: auto;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  padding: 0;
+  cursor: text;
+}
 .q-textarea__field {
-  display: block; box-sizing: border-box; width: 100%; min-height: calc(2 * 22px + 2 * (var(--ctl-h) - 22px) / 2);
-  margin: 0; padding: calc((var(--ctl-h) - 22px) / 2 - 1px) var(--ctl-pad);
-  border: 0; outline: 0; background: transparent; color: inherit; font: inherit; line-height: 22px; resize: vertical;
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: calc(2 * 22px + 2 * (var(--ctl-h) - 22px) / 2);
+  margin: 0;
+  padding: calc((var(--ctl-h) - 22px) / 2 - 1px) var(--ctl-pad);
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  line-height: 22px;
+  resize: vertical;
 }
 /* auto, not hidden: if the height is ever out of date, the text can still be scrolled to rather than cut off. */
-.q-textarea--grow .q-textarea__field { resize: none; overflow-y: auto; }
-.q-textarea__field::placeholder { color: var(--ink-muted); opacity: 1; }
-.q-input--disabled .q-textarea__field { cursor: not-allowed; resize: none; }
-.q-input--readonly .q-textarea__field { resize: none; }
-.q-textarea__count { align-self: flex-end; padding: 0 var(--ctl-pad) var(--space-1); color: var(--ink-muted); font-size: 12px; line-height: 16px; font-variant-numeric: tabular-nums; pointer-events: none; }
-.q-textarea__count.is-near { color: var(--warning); font-weight: 500; }
-.q-input--large .q-textarea__field { line-height: 24px; }
-@media (max-width: 639px) { .q-textarea__field { font-size: var(--control-text-lg); } }
+.q-textarea--grow .q-textarea__field {
+  resize: none;
+  overflow-y: auto;
+}
+.q-textarea__field::placeholder {
+  color: var(--ink-muted);
+  opacity: 1;
+}
+.q-input--disabled .q-textarea__field {
+  cursor: not-allowed;
+  resize: none;
+}
+.q-input--readonly .q-textarea__field {
+  resize: none;
+}
+.q-textarea__count {
+  align-self: flex-end;
+  padding: 0 var(--ctl-pad) var(--space-1);
+  color: var(--ink-muted);
+  font-size: 12px;
+  line-height: 16px;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+.q-textarea__count.is-near {
+  color: var(--warning);
+  font-weight: 500;
+}
+.q-input--large .q-textarea__field {
+  line-height: 24px;
+}
+@media (max-width: 639px) {
+  .q-textarea__field {
+    font-size: var(--control-text-lg);
+  }
+}

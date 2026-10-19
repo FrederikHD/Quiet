@@ -6,7 +6,10 @@ import { photo, swatchOf } from '../../fixtures/pictures';
 
 const colour = ref('Navy');
 const images = computed(() =>
-  ['front', 'back', 'folded'].map((view, i) => ({ src: photo(colour.value, i), alt: `Linen shirt in ${colour.value.toLowerCase()}, ${view}` })),
+  ['front', 'back', 'folded'].map((view, i) => ({
+    src: photo(colour.value, i),
+    alt: `Linen shirt in ${colour.value.toLowerCase()}, ${view}`,
+  })),
 );
 </script>
 
@@ -20,5 +23,9 @@ const images = computed(() =>
 </template>
 
 <style scoped>
-.product { display: grid; gap: var(--space-4); max-width: 420px; }
+.product {
+  display: grid;
+  gap: var(--space-4);
+  max-width: 420px;
+}
 </style>

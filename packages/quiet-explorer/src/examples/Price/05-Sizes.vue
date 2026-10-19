@@ -12,5 +12,10 @@ import { QPrice } from '@frederikhd/quiet';
 </template>
 
 <style scoped>
-.row { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-4) var(--space-8); }
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-4) var(--space-8);
+}
 </style>

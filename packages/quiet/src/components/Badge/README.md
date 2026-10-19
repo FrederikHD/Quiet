@@ -14,14 +14,14 @@ A status pill for orders, payments, fulfilment and stock: "Paid", "Unfulfilled",
 
 One mapping, used everywhere:
 
-| Tone | Use for |
-| --- | --- |
-| `success` | Paid, Fulfilled, Delivered, In stock, Active |
-| `warning` | Pending, Unfulfilled, Low stock, Partially refunded |
-| `info` | Processing, Shipped, In transit, Pre-order |
-| `danger` | Payment failed, Cancelled, Out of stock |
-| `neutral` (default) | Draft, Archived, Refunded |
-| `sale` | The storefront Sale tag: white on `sale` |
+| Tone                | Use for                                             |
+| ------------------- | --------------------------------------------------- |
+| `success`           | Paid, Fulfilled, Delivered, In stock, Active        |
+| `warning`           | Pending, Unfulfilled, Low stock, Partially refunded |
+| `info`              | Processing, Shipped, In transit, Pre-order          |
+| `danger`            | Payment failed, Cancelled, Out of stock             |
+| `neutral` (default) | Draft, Archived, Refunded                           |
+| `sale`              | The storefront Sale tag: white on `sale`            |
 
 An unknown tone falls back to `neutral`.
 

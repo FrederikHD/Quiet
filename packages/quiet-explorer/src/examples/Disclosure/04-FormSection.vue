@@ -17,5 +17,7 @@ const description = ref('');
 </template>
 
 <style scoped>
-.form { max-width: 420px; }
+.form {
+  max-width: 420px;
+}
 </style>

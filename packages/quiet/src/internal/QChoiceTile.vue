@@ -17,7 +17,9 @@ const props = defineProps<{
 
 const strings = useStrings('choice', { soldOut: 'sold out' });
 const isSwatch = computed(() => props.variant === 'swatches');
-const title = computed(() => (props.label ? props.label + (props.soldOut ? ` (${strings.value.soldOut})` : '') : undefined));
+const title = computed(() =>
+  props.label ? props.label + (props.soldOut ? ` (${strings.value.soldOut})` : '') : undefined,
+);
 const faceStyle = computed(() => ({
   '--q-swatch': props.swatch || 'transparent',
   backgroundImage: props.image ? `url("${String(props.image).replace(/"/g, '%22')}")` : undefined,
@@ -25,15 +27,23 @@ const faceStyle = computed(() => ({
 </script>
 
 <template>
+  <!-- eslint-disable-next-line vuejs-accessibility/label-has-for -- the label wraps the input, which is passed in as a vnode the linter cannot see -->
   <label
-    :class="['q-tile', isSwatch ? 'q-tile--swatch' : 'q-tile--button', soldOut && 'is-soldout', disabled && 'is-disabled', invalid && 'is-invalid']"
+    :class="[
+      'q-tile',
+      isSwatch ? 'q-tile--swatch' : 'q-tile--button',
+      soldOut && 'is-soldout',
+      disabled && 'is-disabled',
+      invalid && 'is-invalid',
+    ]"
     :title="isSwatch ? title : undefined"
   >
     <slot name="input" />
     <span v-if="isSwatch" class="q-tile__face" aria-hidden="true" :style="faceStyle" />
     <span v-else class="q-tile__face" aria-hidden="true">{{ label }}</span>
     <span class="q-visually-hidden">
-      {{ label }}<template v-if="soldOut">, {{ strings.soldOut }}</template><span v-if="description">, {{ description }}</span>
+      {{ label }}<template v-if="soldOut">, {{ strings.soldOut }}</template
+      ><span v-if="description">, {{ description }}</span>
     </span>
   </label>
 </template>

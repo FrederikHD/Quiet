@@ -13,7 +13,10 @@ export default defineStory({
     price: 59,
     compareAt: 79,
     badges: [{ label: 'Sale', tone: 'sale' }],
-    swatches: [{ label: 'Navy', color: swatchOf('Navy') }, { label: 'Sand', color: swatchOf('Sand') }],
+    swatches: [
+      { label: 'Navy', color: swatchOf('Navy') },
+      { label: 'Sand', color: swatchOf('Sand') },
+    ],
     quickAdd: true,
   },
   // A card fills its grid column; give it one.

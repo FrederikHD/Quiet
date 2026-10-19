@@ -26,7 +26,11 @@ export interface DescriptionListProps {
   emptyText?: string;
 }
 
-const props = withDefaults(defineProps<DescriptionListProps>(), { layout: 'columns', termWidth: undefined, emptyText: '—' });
+const props = withDefaults(defineProps<DescriptionListProps>(), {
+  layout: 'columns',
+  termWidth: undefined,
+  emptyText: '—',
+});
 defineSlots<{
   /** Rich content for any item: `#term-<key>` / `#description-<key>` (key or index). */
   [name: string]: ((props: { item: DescriptionListItem }) => unknown) | undefined;
@@ -43,7 +47,9 @@ const isEmpty = (it: DescriptionListItem) => it.description == null || it.descri
     :style="termWidth ? { '--q-dl-term': termWidth } : undefined"
   >
     <div v-for="(it, i) in items" :key="keyOf(it, i)" :class="['q-dl__item', it.emphasis && 'q-dl__item--emphasis']">
-      <dt class="q-dl__term"><slot :name="`term-${keyOf(it, i)}`" :item="it">{{ it.term }}</slot></dt>
+      <dt class="q-dl__term">
+        <slot :name="`term-${keyOf(it, i)}`" :item="it">{{ it.term }}</slot>
+      </dt>
       <dd :class="['q-dl__desc', it.numeric && 'is-numeric']">
         <slot :name="`description-${keyOf(it, i)}`" :item="it">
           <span v-if="isEmpty(it)" class="q-dl__empty">{{ emptyText }}</span>

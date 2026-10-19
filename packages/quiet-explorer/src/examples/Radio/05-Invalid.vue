@@ -7,7 +7,13 @@ const amount = ref<string | null>(null);
 </script>
 
 <template>
-  <QRadioGroup v-model="amount" label="Gift card amount" label-placement="top" required :error="amount ? null : 'Choose an amount'">
+  <QRadioGroup
+    v-model="amount"
+    label="Gift card amount"
+    label-placement="top"
+    required
+    :error="amount ? null : 'Choose an amount'"
+  >
     <QRadio value="25" label="25,00 €" />
     <QRadio value="50" label="50,00 €" />
     <QRadio value="100" label="100,00 €" />

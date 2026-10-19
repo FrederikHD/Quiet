@@ -136,8 +136,12 @@ function activate() {
   // Everything else on the page becomes unreachable (keyboard, pointer, screen readers) while the dialog is open.
   inerted = inertAllBut(root.value);
   const p = panel.value;
-  const inBody = FOCUSABLE.split(', ').map((s) => `.q-dialog__body ${s}`).join(', ');
-  const inFooter = FOCUSABLE.split(', ').map((s) => `.q-dialog__footer ${s}`).join(', ');
+  const inBody = FOCUSABLE.split(', ')
+    .map((s) => `.q-dialog__body ${s}`)
+    .join(', ');
+  const inFooter = FOCUSABLE.split(', ')
+    .map((s) => `.q-dialog__footer ${s}`)
+    .join(', ');
   const target =
     props.initialFocus ??
     p?.querySelector<HTMLElement>(inBody) ??
@@ -168,7 +172,8 @@ watch(
       deactivate();
       return;
     }
-    if (import.meta.env.DEV && !props.title && !slots.title) warnOnce('dialog-title', 'Dialog: pass a title — it names the dialog for screen readers.');
+    if (import.meta.env.DEV && !props.title && !slots.title)
+      warnOnce('dialog-title', 'Dialog: pass a title — it names the dialog for screen readers.');
     place = rememberPlace(returnTarget());
     inheritedDensity.value = place?.el.closest('[data-density]')?.getAttribute('data-density') ?? undefined;
     await nextTick();
@@ -193,6 +198,7 @@ defineExpose({ panel, close });
 
 <template>
   <Teleport :to="teleport || 'body'" :disabled="teleport === false">
+    <!-- eslint-disable-next-line vuejs-accessibility/click-events-have-key-events, vuejs-accessibility/no-static-element-interactions -- backdrop click closes as a pointer convenience; Escape and the close button are the keyboard path -->
     <div
       v-if="open"
       ref="root"
@@ -212,11 +218,21 @@ defineExpose({ panel, close });
         :class="['q-dialog__panel', `q-dialog__panel--${size}`]"
       >
         <div class="q-dialog__header">
-          <h2 :id="titleId" class="q-dialog__title"><slot name="title">{{ title }}</slot></h2>
+          <h2 :id="titleId" class="q-dialog__title">
+            <slot name="title">{{ title }}</slot>
+          </h2>
           <QButton v-if="closeText" variant="ghost" @click="close">{{ closeText }}</QButton>
-          <QButton v-else-if="dismissible" variant="ghost" icon-start="x" :aria-label="closeLabel || strings.close" @click="close" />
+          <QButton
+            v-else-if="dismissible"
+            variant="ghost"
+            icon-start="x"
+            :aria-label="closeLabel || strings.close"
+            @click="close"
+          />
         </div>
-        <p v-if="hasDesc()" :id="descId" class="q-dialog__desc"><slot name="description">{{ description }}</slot></p>
+        <p v-if="hasDesc()" :id="descId" class="q-dialog__desc">
+          <slot name="description">{{ description }}</slot>
+        </p>
         <div :class="['q-dialog__body', flush && 'q-dialog__body--flush']"><slot /></div>
         <div v-if="slots.footer" class="q-dialog__footer"><slot name="footer" /></div>
       </div>

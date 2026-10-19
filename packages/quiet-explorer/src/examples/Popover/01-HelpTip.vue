@@ -17,5 +17,9 @@ import { QButton, QPopover } from '@frederikhd/quiet';
 </template>
 
 <style scoped>
-.line { display: flex; align-items: center; gap: var(--space-1); }
+.line {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
 </style>

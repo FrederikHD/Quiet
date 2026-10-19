@@ -8,5 +8,7 @@ import { QGallery } from '@frederikhd/quiet';
 </template>
 
 <style scoped>
-.gallery { max-width: 240px; }
+.gallery {
+  max-width: 240px;
+}
 </style>

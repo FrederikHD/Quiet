@@ -58,7 +58,10 @@ const isDisabled = computed(() => props.disabled || !!group?.value.disabled);
 const isInvalid = computed(() => status.value[0] === 'error' || !!group?.value.invalid);
 
 if (import.meta.env.DEV && props.label == null && !slots.label) {
-  warnOnce('field-label', 'Field: every field needs a label. Use labelHidden to hide it visually when the context makes it obvious.');
+  warnOnce(
+    'field-label',
+    'Field: every field needs a label. Use labelHidden to hide it visually when the context makes it obvious.',
+  );
 }
 
 const control = computed<FieldControlContext>(() => ({
@@ -86,7 +89,12 @@ const controlAttrs = computed(() => ({
 
 <template>
   <div
-    :class="['q-field', `q-field--${placement}`, isDisabled && 'q-field--disabled', labelHidden && 'q-field--label-hidden']"
+    :class="[
+      'q-field',
+      `q-field--${placement}`,
+      isDisabled && 'q-field--disabled',
+      labelHidden && 'q-field--label-hidden',
+    ]"
     :style="labelWidth ? { '--q-label-w': labelWidth } : undefined"
   >
     <div class="q-field__layout">
@@ -95,22 +103,23 @@ const controlAttrs = computed(() => ({
           <slot name="label">{{ label }}</slot>
           <QFieldMarker :markers="markers" :required="required" :strings="fstrings" />
         </label>
-        <QFieldHelp v-if="help || slots.help" :help="help" :label="label ?? textOf(slots.label?.())" :prefix="fstrings.help">
+        <QFieldHelp
+          v-if="help || slots.help"
+          :help="help"
+          :label="label ?? textOf(slots.label?.())"
+          :prefix="fstrings.help"
+        >
           <slot v-if="slots.help" name="help" />
         </QFieldHelp>
       </div>
       <div class="q-field__controlcol">
         <div :class="['q-field__control', width && `q-field__control--${width}`]">
-          <slot :control-attrs="controlAttrs" :id="controlId" :invalid="isInvalid" />
+          <slot :id="controlId" :control-attrs="controlAttrs" :invalid="isInvalid" />
         </div>
-        <QFieldMessage
-          :status="status[0]"
-          :message="status[1]"
-          :id="msgId"
-          :strings="fstrings"
-          :quiet="summaryShown"
-        />
-        <div v-if="hasHint" :id="hintId" class="q-field__hint"><slot name="hint">{{ hint }}</slot></div>
+        <QFieldMessage :id="msgId" :status="status[0]" :message="status[1]" :strings="fstrings" :quiet="summaryShown" />
+        <div v-if="hasHint" :id="hintId" class="q-field__hint">
+          <slot name="hint">{{ hint }}</slot>
+        </div>
       </div>
     </div>
   </div>

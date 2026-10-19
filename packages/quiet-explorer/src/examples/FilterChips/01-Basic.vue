@@ -15,12 +15,24 @@ const filters = ref<FilterChip[]>([
 
 <template>
   <div class="results">
-    <QFilterChips :items="filters" @remove="(key) => (filters = filters.filter((f) => f.key !== key))" @clear="filters = []" />
+    <QFilterChips
+      :items="filters"
+      @remove="(key) => (filters = filters.filter((f) => f.key !== key))"
+      @clear="filters = []"
+    />
     <p class="count" role="status">{{ filters.length ? '' : 'No filters: showing all 48 linen shirts.' }}</p>
   </div>
 </template>
 
 <style scoped>
-.results { display: grid; gap: var(--space-3); }
-.count { margin: 0; min-height: 18px; font: var(--text-small); color: var(--ink-muted); }
+.results {
+  display: grid;
+  gap: var(--space-3);
+}
+.count {
+  margin: 0;
+  min-height: 18px;
+  font: var(--text-small);
+  color: var(--ink-muted);
+}
 </style>

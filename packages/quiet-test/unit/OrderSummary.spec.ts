@@ -12,7 +12,11 @@ const items = [
   { id: 'b', name: 'Linen trousers', price: 79, compareAt: 99 },
 ];
 const summary = (props: Record<string, unknown> = {}, slots: Record<string, unknown> = {}) =>
-  mount(QOrderSummary, { props: { items, total: 201.9, ...props } as never, slots: slots as never, attachTo: document.body });
+  mount(QOrderSummary, {
+    props: { items, total: 201.9, ...props } as never,
+    slots: slots as never,
+    attachTo: document.body,
+  });
 
 describe('QOrderSummary', () => {
   it('is a section titled "Order summary" with the item count', () => {
@@ -54,7 +58,14 @@ describe('QOrderSummary', () => {
     const dl = w.get('dl.q-summary__totals');
     expect(dl.classes()).toContain('q-dl--inline');
     const rows = dl.findAll('.q-dl__item');
-    expect(rows.map((r) => r.get('dt').text())).toEqual(['Subtotal', 'DiscountLINEN10', 'Shipping', 'Express', 'Tax', 'Total']);
+    expect(rows.map((r) => r.get('dt').text())).toEqual([
+      'Subtotal',
+      'DiscountLINEN10',
+      'Shipping',
+      'Express',
+      'Tax',
+      'Total',
+    ]);
     const dd = rows.map((r) => r.get('dd').text().replace(/\s/g, ' '));
     expect(dd).toEqual(['€197.00', '−€10.00', 'Free', '€0.00', 'Next step', '€201.90']);
     expect(rows[1].find('.q-summary__minus').exists()).toBe(true);
@@ -65,7 +76,10 @@ describe('QOrderSummary', () => {
   });
 
   it('puts the default slot between the lines and the totals, and takes a tax-note slot', () => {
-    const w = summary({}, { default: () => h('form', { class: 'code' }), 'tax-note': () => h('a', { href: '#vat' }, 'VAT') });
+    const w = summary(
+      {},
+      { default: () => h('form', { class: 'code' }), 'tax-note': () => h('a', { href: '#vat' }, 'VAT') },
+    );
     const extra = w.get('.q-summary__extra');
     expect(extra.find('form.code').exists()).toBe(true);
     expect(extra.element.previousElementSibling?.classList.contains('q-summary__lines')).toBe(true);

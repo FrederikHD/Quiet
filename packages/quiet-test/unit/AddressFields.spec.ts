@@ -2,15 +2,28 @@ import { mount } from '@vue/test-utils';
 import { QAddressFields, validateAddress, type Address } from '@frederikhd/quiet';
 import { describe, expect, it } from 'vitest';
 
-const labels = (w: ReturnType<typeof mount>) => w.findAll('.q-field__label').map((l) => l.text().replace(/\s*\*$/, '').replace(/\s*\(optional\)$/, ''));
+const labels = (w: ReturnType<typeof mount>) =>
+  w.findAll('.q-field__label').map((l) =>
+    l
+      .text()
+      .replace(/\s*\*$/, '')
+      .replace(/\s*\(optional\)$/, ''),
+  );
 const ids = (w: ReturnType<typeof mount>) => w.findAll('input, select').map((e) => e.attributes('id'));
 
 describe('QAddressFields', () => {
   it('lays out a German address: postcode before the city', () => {
     const w = mount(QAddressFields, { props: { modelValue: { country: 'DE' } } });
     expect(ids(w)).toEqual([
-      'address-country', 'address-firstName', 'address-lastName', 'address-company', 'address-line1', 'address-line2',
-      'address-postalCode', 'address-city', 'address-phone',
+      'address-country',
+      'address-firstName',
+      'address-lastName',
+      'address-company',
+      'address-line1',
+      'address-line2',
+      'address-postalCode',
+      'address-city',
+      'address-phone',
     ]);
     expect(labels(w)).toContain('Postcode');
     expect(w.get('#address-postalCode').attributes('inputmode')).toBe('numeric');
@@ -40,7 +53,9 @@ describe('QAddressFields', () => {
   });
 
   it('hides and requires optional parts', () => {
-    const w = mount(QAddressFields, { props: { modelValue: { country: 'DE' }, fields: { company: 'hidden', line2: 'hidden', phone: 'required' } } });
+    const w = mount(QAddressFields, {
+      props: { modelValue: { country: 'DE' }, fields: { company: 'hidden', line2: 'hidden', phone: 'required' } },
+    });
     expect(w.find('#address-company').exists()).toBe(false);
     expect(w.find('#address-line2').exists()).toBe(false);
     expect(w.get('#address-phone').attributes('aria-required')).toBe('true');
@@ -55,7 +70,10 @@ describe('QAddressFields', () => {
 
   it('updates the whole address and says which key changed', async () => {
     const w = mount(QAddressFields, {
-      props: { modelValue: { country: 'DE' } as Address, 'onUpdate:modelValue': (v: Address) => w.setProps({ modelValue: v }) },
+      props: {
+        modelValue: { country: 'DE' } as Address,
+        'onUpdate:modelValue': (v: Address) => w.setProps({ modelValue: v }),
+      },
     });
     await w.get('#address-city').setValue('Berlin');
     expect(w.emitted('update:modelValue')!.at(-1)).toEqual([{ country: 'DE', city: 'Berlin' }]);
@@ -86,7 +104,18 @@ describe('QAddressFields', () => {
 
 describe('validateAddress', () => {
   it('lists missing parts, a bad postcode, a missing house number and a bad phone', () => {
-    const r = validateAddress({ country: 'DE', firstName: 'Ada', lastName: 'L', line1: 'Torstraße', postalCode: '123', city: 'Berlin', phone: 'abc' }, { idPrefix: 'ship' });
+    const r = validateAddress(
+      {
+        country: 'DE',
+        firstName: 'Ada',
+        lastName: 'L',
+        line1: 'Torstraße',
+        postalCode: '123',
+        city: 'Berlin',
+        phone: 'abc',
+      },
+      { idPrefix: 'ship' },
+    );
     expect(r.valid).toBe(false);
     expect(r.errors).toEqual({
       line1: 'Add the house number',
@@ -101,7 +130,15 @@ describe('validateAddress', () => {
   });
 
   it('passes a complete address', () => {
-    const r = validateAddress({ country: 'US', firstName: 'A', lastName: 'B', line1: '1 Main St', city: 'NYC', state: 'NY', postalCode: '10001' });
+    const r = validateAddress({
+      country: 'US',
+      firstName: 'A',
+      lastName: 'B',
+      line1: '1 Main St',
+      city: 'NYC',
+      state: 'NY',
+      postalCode: '10001',
+    });
     expect(r).toEqual({ errors: {}, list: [], valid: true });
   });
 });

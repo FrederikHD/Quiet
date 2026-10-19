@@ -51,14 +51,21 @@ const props = withDefaults(defineProps<AddressFieldsProps>(), {
 });
 /** The address. Updated as a whole, with the key that changed in `change`. */
 const model = defineModel<Address>({ default: () => ({}) });
-const emit = defineEmits<{ /** After every edit: the whole new address and the key that changed. */ change: [next: Address, key: AddressFieldKey] }>();
+const emit = defineEmits<{
+  /** After every edit: the whole new address and the key that changed. */ change: [
+    next: Address,
+    key: AddressFieldKey,
+  ];
+}>();
 
 const strings = useStrings<Required<AddressStrings>>('address', ADDRESS_STRINGS, () => props.strings);
 const country = computed(() => model.value.country ?? '');
 const layout = computed(() => addressFormats[country.value]?.layout);
 const parts = computed(() => new Map(addressParts(country.value, props.fields).map((p) => [p.key, p])));
 const autocompletePrefix = computed(
-  () => (props.section ? `section-${props.section} ` : '') + (props.kind === 'billing' ? 'billing ' : props.kind === 'none' ? '' : 'shipping '),
+  () =>
+    (props.section ? `section-${props.section} ` : '') +
+    (props.kind === 'billing' ? 'billing ' : props.kind === 'none' ? '' : 'shipping '),
 );
 
 function set(key: AddressFieldKey, value: string) {
@@ -78,7 +85,12 @@ function part(key: AddressFieldKey, width?: 'xs' | 's' | 'm' | 'l') {
     value: model.value[key],
     country: country.value,
     error: props.errors[key],
-    hint: key === 'phone' ? (props.phoneHint === undefined ? strings.value.phoneHint : (props.phoneHint ?? undefined)) : undefined,
+    hint:
+      key === 'phone'
+        ? props.phoneHint === undefined
+          ? strings.value.phoneHint
+          : (props.phoneHint ?? undefined)
+        : undefined,
     width,
     disabled: props.disabled,
     autocompletePrefix: autocompletePrefix.value,

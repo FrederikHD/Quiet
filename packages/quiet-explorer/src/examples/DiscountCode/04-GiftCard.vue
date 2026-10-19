@@ -22,5 +22,7 @@ function apply(code: string) {
 </template>
 
 <style scoped>
-.discount { max-width: 420px; }
+.discount {
+  max-width: 420px;
+}
 </style>

@@ -17,7 +17,12 @@ function toggle(id: string, on: boolean) {
 <template>
   <ul class="orders">
     <li v-for="o in orders" :key="o.id" class="order">
-      <QCheckbox label-hidden :label="`Select order ${o.id}`" :model-value="picked.includes(o.id)" @update:model-value="toggle(o.id, $event)" />
+      <QCheckbox
+        label-hidden
+        :label="`Select order ${o.id}`"
+        :model-value="picked.includes(o.id)"
+        @update:model-value="toggle(o.id, $event)"
+      />
       <span>{{ o.id }}</span>
       <span class="customer">{{ o.customer }}</span>
       <span class="total">{{ o.total }}</span>
@@ -26,8 +31,22 @@ function toggle(id: string, on: boolean) {
 </template>
 
 <style scoped>
-.orders { margin: 0; padding: 0; list-style: none; max-width: 420px; }
-.order { display: flex; align-items: center; gap: var(--space-3); border-bottom: 1px solid var(--line); }
-.customer { flex: 1; }
-.total { font-variant-numeric: tabular-nums; }
+.orders {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-width: 420px;
+}
+.order {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  border-bottom: 1px solid var(--line);
+}
+.customer {
+  flex: 1;
+}
+.total {
+  font-variant-numeric: tabular-nums;
+}
 </style>

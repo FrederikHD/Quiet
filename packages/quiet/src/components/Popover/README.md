@@ -25,7 +25,11 @@ A small panel anchored to a trigger, opened by click or tap: short help text (`k
 Field does this for you when you pass `help`: a `help` icon button (ghost, icon-only, named "Help: <label>") right after the label, opening a tip. Outside a Field, compose it yourself:
 
 ```vue
-<QPopover kind="tip" label="Help: SKU" content="Your own article number. It appears on packing slips and invoices, not in the shop.">
+<QPopover
+  kind="tip"
+  label="Help: SKU"
+  content="Your own article number. It appears on packing slips and invoices, not in the shop."
+>
   <QButton variant="ghost" size="slim" aria-label="Help: SKU" icon-start="help" />
 </QPopover>
 ```

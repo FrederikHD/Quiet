@@ -21,5 +21,9 @@ const values = reactive({ slim: '', normal: '', large: '' });
 </template>
 
 <style scoped>
-.stack { display: grid; gap: var(--space-3); max-width: 320px; }
+.stack {
+  display: grid;
+  gap: var(--space-3);
+  max-width: 320px;
+}
 </style>

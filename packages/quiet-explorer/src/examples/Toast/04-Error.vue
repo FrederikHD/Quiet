@@ -5,6 +5,8 @@ import { QButton, toast } from '@frederikhd/quiet';
 
 <template>
   <div>
-    <QButton @click="toast('Couldn’t save — check your connection and try again.', { tone: 'error' })">Save draft</QButton>
+    <QButton @click="toast('Couldn’t save — check your connection and try again.', { tone: 'error' })"
+      >Save draft</QButton
+    >
   </div>
 </template>

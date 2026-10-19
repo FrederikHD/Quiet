@@ -16,5 +16,7 @@ const note = ref('');
 </template>
 
 <style scoped>
-.card { max-width: 400px; }
+.card {
+  max-width: 400px;
+}
 </style>

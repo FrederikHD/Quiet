@@ -20,8 +20,25 @@ const stock = [
 </template>
 
 <style scoped>
-.list { display: grid; max-width: 320px; margin: 0; padding: 0; list-style: none; }
-.list li { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); padding: var(--space-2) 0; border-bottom: 1px solid var(--line); }
-.ok { color: var(--success); }
-.muted { color: var(--ink-muted); }
+.list {
+  display: grid;
+  max-width: 320px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--line);
+}
+.ok {
+  color: var(--success);
+}
+.muted {
+  color: var(--ink-muted);
+}
 </style>

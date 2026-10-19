@@ -16,11 +16,18 @@ export interface ReviewSummaryProps {
   /** The star level being filtered on, if any. */
   active?: number | null;
   /** Translations; or once for the shop with configure() under strings.reviewSummary. filter names a filter button: "5 stars, 20 reviews". */
-  strings?: { outOf?: string; reviews?: (n: number) => string; filter?: (stars: number, n: number) => string; bars?: string };
+  strings?: {
+    outOf?: string;
+    reviews?: (n: number) => string;
+    filter?: (stars: number, n: number) => string;
+    bars?: string;
+  };
 }
 
 const props = withDefaults(defineProps<ReviewSummaryProps>(), { count: undefined, active: null, strings: undefined });
-const emit = defineEmits<{ /** A bar was pressed: the level, or null to show all again. */ filter: [stars: number | null] }>();
+const emit = defineEmits<{
+  /** A bar was pressed: the level, or null to show all again. */ filter: [stars: number | null];
+}>();
 defineSlots<{ /** Under the bars: a "Write a review" button. */ action?(): unknown }>();
 
 const slots = useSlots();
@@ -29,7 +36,8 @@ const strings = useStrings(
   {
     outOf: 'out of 5',
     reviews: (n: number) => (n === 1 ? '1 review' : `${fmt(n)} reviews`),
-    filter: (s: number, n: number) => `${s} ${s === 1 ? 'star' : 'stars'}, ${n === 1 ? '1 review' : `${fmt(n)} reviews`}`,
+    filter: (s: number, n: number) =>
+      `${s} ${s === 1 ? 'star' : 'stars'}, ${n === 1 ? '1 review' : `${fmt(n)} reviews`}`,
     bars: 'Reviews by rating',
   },
   () => props.strings,
@@ -45,7 +53,9 @@ const most = computed(() => Math.max(1, ...LEVELS.map(of)));
 <template>
   <div class="q-rsum">
     <div class="q-rsum__head">
-      <span class="q-rsum__avg">{{ oneDecimal(average || 0) }}<span class="q-visually-hidden">{{ ` ${strings.outOf}` }}</span></span>
+      <span class="q-rsum__avg"
+        >{{ oneDecimal(average || 0) }}<span class="q-visually-hidden">{{ ` ${strings.outOf}` }}</span></span
+      >
       <span class="q-rsum__side">
         <QStars :value="average || 0" class="q-stars--md" />
         <span class="q-rsum__count">{{ strings.reviews(total) }}</span>
@@ -62,13 +72,17 @@ const most = computed(() => Math.max(1, ...LEVELS.map(of)));
           @click="emit('filter', active === k ? null : k)"
         >
           <!-- Named by its content, not an aria-label, so the name starts with what's visible: "5 stars, 20 reviews" (WCAG 2.5.3). -->
-          <span class="q-rsum__lvl" aria-hidden="true">{{ k }}<svg viewBox="0 0 20 20"><path :d="STAR_PATH" /></svg></span>
+          <span class="q-rsum__lvl" aria-hidden="true"
+            >{{ k }}<svg viewBox="0 0 20 20"><path :d="STAR_PATH" /></svg
+          ></span>
           <span class="q-rsum__bar" aria-hidden="true"><span :style="{ width: `${(of(k) / most) * 100}%` }" /></span>
           <span class="q-rsum__n" aria-hidden="true">{{ fmt(of(k)) }}</span>
           <span class="q-visually-hidden">{{ strings.filter(k, of(k)) }}</span>
         </button>
         <span v-else class="q-rsum__row">
-          <span class="q-rsum__lvl" aria-hidden="true">{{ k }}<svg viewBox="0 0 20 20"><path :d="STAR_PATH" /></svg></span>
+          <span class="q-rsum__lvl" aria-hidden="true"
+            >{{ k }}<svg viewBox="0 0 20 20"><path :d="STAR_PATH" /></svg
+          ></span>
           <span class="q-rsum__bar" aria-hidden="true"><span :style="{ width: `${(of(k) / most) * 100}%` }" /></span>
           <span class="q-rsum__n" aria-hidden="true">{{ fmt(of(k)) }}</span>
           <span class="q-visually-hidden">{{ strings.reviews(of(k)) }} — {{ ratingStrings.stars(k) }}</span>

@@ -84,10 +84,20 @@ const badges = computed(() => (props.badges ?? []).filter((b): b is { label: str
 </script>
 
 <template>
-  <article :class="['q-pcard', aspect === 'square' && 'q-pcard--square', soldOut && 'is-soldout']" :aria-labelledby="nameId">
+  <article
+    :class="['q-pcard', aspect === 'square' && 'q-pcard--square', soldOut && 'is-soldout']"
+    :aria-labelledby="nameId"
+  >
     <!-- The image is the card: no border. One link (the name) covers the whole card, so a card is one Tab stop. -->
     <div class="q-pcard__media">
-      <img v-if="image?.src" class="q-pcard__img" :src="image.src" :alt="image.alt ?? ''" loading="lazy" decoding="async" />
+      <img
+        v-if="image?.src"
+        class="q-pcard__img"
+        :src="image.src"
+        :alt="image.alt ?? ''"
+        loading="lazy"
+        decoding="async"
+      />
       <span v-else class="q-pcard__placeholder" aria-hidden="true"><QIcon name="image" /></span>
       <img
         v-if="hoverImage?.src"
@@ -107,10 +117,19 @@ const badges = computed(() => (props.badges ?? []).filter((b): b is { label: str
       <component :is="`h${headingLevel}`" :id="nameId" class="q-pcard__name">
         <a class="q-pcard__link" :href="href" @click="emit('navigate', $event)">{{ name }}</a>
       </component>
-      <QPrice v-if="price != null" :amount="price" :compare-at="compareAt" :from="priceFrom" :currency="currency" size="small" />
+      <QPrice
+        v-if="price != null"
+        :amount="price"
+        :compare-at="compareAt"
+        :from="priceFrom"
+        :currency="currency"
+        size="small"
+      />
       <QRating v-if="rating?.count" :value="rating.value" :count="rating.count" size="small" />
       <div v-if="swatches.length" class="q-pcard__swatches">
-        <span class="q-visually-hidden">{{ strings.colours(swatches.length) }}: {{ swatches.map((s) => s.label).join(', ') }}</span>
+        <span class="q-visually-hidden"
+          >{{ strings.colours(swatches.length) }}: {{ swatches.map((s) => s.label).join(', ') }}</span
+        >
         <span
           v-for="(s, i) in swatches.slice(0, maxSwatches)"
           :key="i"
@@ -119,7 +138,9 @@ const badges = computed(() => (props.badges ?? []).filter((b): b is { label: str
           :title="s.label"
           :style="{ '--q-swatch': s.color }"
         />
-        <span v-if="swatches.length > maxSwatches" class="q-pcard__more" aria-hidden="true">{{ strings.more(swatches.length - maxSwatches) }}</span>
+        <span v-if="swatches.length > maxSwatches" class="q-pcard__more" aria-hidden="true">{{
+          strings.more(swatches.length - maxSwatches)
+        }}</span>
       </div>
     </div>
     <!-- After the name in the page (so Tab reaches the product first), drawn on the image by the grid. -->

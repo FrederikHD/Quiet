@@ -27,7 +27,6 @@ test.describe('Button playground', () => {
     await expect(page.getByText('<QButton variant="ghost"')).toBeVisible();
   });
 
-
   test('reset restores the story', async ({ page }) => {
     const controls = page.getByTestId('playground-controls');
     await controls.getByLabel('Content (default slot)').fill('Changed');
@@ -53,7 +52,9 @@ test('an overlay opens from the playground and closes with Escape', async ({ pag
   await expect(dialog).toBeVisible();
   await page.keyboard.press('Escape');
   await expect(dialog).toBeHidden();
-  await expect(page.getByTestId('playground-controls').getByRole('checkbox', { name: /^v-model:open/ })).not.toBeChecked();
+  await expect(
+    page.getByTestId('playground-controls').getByRole('checkbox', { name: /^v-model:open/ }),
+  ).not.toBeChecked();
 });
 
 test('the preview width shows the phone layout', async ({ page }) => {
@@ -68,7 +69,11 @@ test('the preview width shows the phone layout', async ({ page }) => {
 for (const folder of components) {
   test(`${folder}: every prop has a control or a stated reason`, async ({ page }) => {
     await page.goto(`/components/${slugOf(folder)}/api`);
-    const props = await page.getByRole('table', { name: /props$/ }).first().locator('tbody tr td:first-child code').allTextContents();
+    const props = await page
+      .getByRole('table', { name: /props$/ })
+      .first()
+      .locator('tbody tr td:first-child code')
+      .allTextContents();
     await page.goto(`/components/${slugOf(folder)}/playground`);
     const controls = page.getByTestId('playground-controls');
     await expect(controls).toBeVisible();
@@ -79,9 +84,16 @@ for (const folder of components) {
       const shown = name === 'modelValue' ? 'v-model' : name;
       const controlled = labels.some((l) => {
         const t = l.trim().replace(/\s*\*$/, '');
-        return t === shown || t === `v-model:${name}` || t.startsWith(`${shown} (JSON)`) || t.startsWith(`v-model:${name} (JSON)`);
+        return (
+          t === shown ||
+          t === `v-model:${name}` ||
+          t.startsWith(`${shown} (JSON)`) ||
+          t.startsWith(`v-model:${name} (JSON)`)
+        );
       });
-      const listed = new RegExp(`\\b${name} \\((a function|an element|set by this playground|only without v-model; here v-model is bound)\\)`).test(rest);
+      const listed = new RegExp(
+        `\\b${name} \\((a function|an element|set by this playground|only without v-model; here v-model is bound)\\)`,
+      ).test(rest);
       expect(controlled || listed, `${folder}: ${name}`).toBe(true);
     }
   });
@@ -100,7 +112,10 @@ test('EmptyState: the icon can be changed and removed', async ({ page }) => {
 });
 
 test('named slots have no controls: their props do (Input prefix, Card title)', async ({ page }) => {
-  for (const [slug, prop] of [['input', 'prefix'], ['card', 'title']] as const) {
+  for (const [slug, prop] of [
+    ['input', 'prefix'],
+    ['card', 'title'],
+  ] as const) {
     await page.goto(`/components/${slug}/playground`);
     const controls = page.getByTestId('playground-controls');
     await expect(controls.getByLabel(prop, { exact: true })).toBeVisible();

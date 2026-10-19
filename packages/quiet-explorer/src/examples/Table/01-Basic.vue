@@ -24,6 +24,8 @@ const tone: Record<string, BadgeTone> = { Unfulfilled: 'warning', Shipped: 'info
       { key: 'total', header: 'Total', numeric: true, sortable: true, format: (o) => money(o.total) },
     ]"
   >
-    <template #cell-status="{ row }"><QBadge :tone="tone[row.status]">{{ row.status }}</QBadge></template>
+    <template #cell-status="{ row }"
+      ><QBadge :tone="tone[row.status]">{{ row.status }}</QBadge></template
+    >
   </QTable>
 </template>

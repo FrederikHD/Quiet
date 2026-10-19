@@ -16,5 +16,7 @@ const items = computed<NavItem[]>(() =>
 </template>
 
 <style scoped>
-.column { max-width: 240px; }
+.column {
+  max-width: 240px;
+}
 </style>

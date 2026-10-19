@@ -18,5 +18,7 @@ const pay = ref('card');
 </template>
 
 <style scoped>
-.narrow { max-width: 420px; }
+.narrow {
+  max-width: 420px;
+}
 </style>

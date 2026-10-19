@@ -6,7 +6,8 @@ import { nextTick } from 'vue';
 enableAutoUnmount(afterEach);
 beforeAll(() => configure({ locale: 'en-US' }));
 
-const pager = (props: Record<string, unknown> = {}) => mount(QPagination, { props: { total: 1240, ...props } as never, attachTo: document.body });
+const pager = (props: Record<string, unknown> = {}) =>
+  mount(QPagination, { props: { total: 1240, ...props } as never, attachTo: document.body });
 
 describe('QPagination', () => {
   it('is a named nav with the range, previous and next (simple by default)', () => {
@@ -51,7 +52,17 @@ describe('QPagination', () => {
 
   it('honours siblings', () => {
     const w = pager({ variant: 'pages', page: 10, siblings: 2 });
-    expect(w.findAll('.q-pager__pages > *').map((e) => e.text())).toEqual(['1', '…', '8', '9', '10', '11', '12', '…', '25']);
+    expect(w.findAll('.q-pager__pages > *').map((e) => e.text())).toEqual([
+      '1',
+      '…',
+      '8',
+      '9',
+      '10',
+      '11',
+      '12',
+      '…',
+      '25',
+    ]);
   });
 
   it('adds first and last, and the compact display', async () => {
@@ -90,7 +101,11 @@ describe('QPagination', () => {
     await sel.setValue('100');
     expect(w.emitted('update:pageSize')![0]).toEqual([100]);
     expect(w.get('.q-pager__range').text()).toBe('1–100 of 1,240');
-    expect(pager({ pageSizeOptions: [25, 50], showPageSize: false }).find('.q-pager__size').exists()).toBe(false);
+    expect(
+      pager({ pageSizeOptions: [25, 50], showPageSize: false })
+        .find('.q-pager__size')
+        .exists(),
+    ).toBe(false);
   });
 
   it('announces the page when the range is hidden', () => {

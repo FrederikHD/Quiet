@@ -21,6 +21,13 @@ const log = ref('');
 </template>
 
 <style scoped>
-.card { max-width: 240px; }
-.log { margin: 0; min-height: 18px; font: var(--text-small); color: var(--ink-muted); }
+.card {
+  max-width: 240px;
+}
+.log {
+  margin: 0;
+  min-height: 18px;
+  font: var(--text-small);
+  color: var(--ink-muted);
+}
 </style>

@@ -4,41 +4,122 @@
    (a zero-width character) and the icon is raised from that line's baseline by half the cap height (the
    `cap` unit), instead of being centred on the line box, whose spacing differs from font to font.
    --q-ic is the icon size. Browsers without `cap` fall back to vertical-align: middle. */
-.q-btn { --q-ic: var(--ctl-icon); }
-.q-btn--slim { --q-ic: var(--icon-sm); }
-.q-btn--large { --q-ic: var(--icon-md); }
-@media (max-width: 639px) { .q-btn--slim { --q-ic: var(--ctl-icon); } }
-.q-field__help .q-btn, .q-field__help .q-btn.q-btn--icon.q-btn--slim { --q-ic: var(--icon-sm); }
-.q-menu__item, .q-nav__link, .q-tabs__tab { --q-ic: var(--ctl-icon); }
-.q-lead { --q-ic: var(--icon-sm); }
-.q-badge > .q-lead { --q-ic: 14px; }
-
-.q-lead, .q-btn__icon, .q-menu__icon, .q-nav__icon, .q-tabs__icon {
-  display: block; flex: none; width: var(--q-ic); height: auto; min-height: 0;
+.q-btn {
+  --q-ic: var(--ctl-icon);
 }
-.q-btn__icon { line-height: 1.35; }   /* the label's line */
-.q-lead::before, .q-btn__icon::before, .q-menu__icon::before, .q-nav__icon::before, .q-tabs__icon::before { content: "\200b"; }
-.q-lead > svg, .q-btn__icon > svg, .q-menu__icon > svg, .q-nav__icon > svg, .q-tabs__icon > svg,
-.q-lead > svg.q-icon, .q-btn__icon > svg.q-icon, .q-menu__icon > svg.q-icon, .q-nav__icon > svg.q-icon, .q-tabs__icon > svg.q-icon {
-  display: inline-block; width: var(--q-ic) !important; height: var(--q-ic) !important;
+.q-btn--slim {
+  --q-ic: var(--icon-sm);
+}
+.q-btn--large {
+  --q-ic: var(--icon-md);
+}
+@media (max-width: 639px) {
+  .q-btn--slim {
+    --q-ic: var(--ctl-icon);
+  }
+}
+.q-field__help .q-btn,
+.q-field__help .q-btn.q-btn--icon.q-btn--slim {
+  --q-ic: var(--icon-sm);
+}
+.q-menu__item,
+.q-nav__link,
+.q-tabs__tab {
+  --q-ic: var(--ctl-icon);
+}
+.q-lead {
+  --q-ic: var(--icon-sm);
+}
+.q-badge > .q-lead {
+  --q-ic: 14px;
+}
+
+.q-lead,
+.q-btn__icon,
+.q-menu__icon,
+.q-nav__icon,
+.q-tabs__icon {
+  display: block;
+  flex: none;
+  width: var(--q-ic);
+  height: auto;
+  min-height: 0;
+}
+.q-btn__icon {
+  line-height: 1.35;
+} /* the label's line */
+.q-lead::before,
+.q-btn__icon::before,
+.q-menu__icon::before,
+.q-nav__icon::before,
+.q-tabs__icon::before {
+  content: '\200b';
+}
+.q-lead > svg,
+.q-btn__icon > svg,
+.q-menu__icon > svg,
+.q-nav__icon > svg,
+.q-tabs__icon > svg,
+.q-lead > svg.q-icon,
+.q-btn__icon > svg.q-icon,
+.q-menu__icon > svg.q-icon,
+.q-nav__icon > svg.q-icon,
+.q-tabs__icon > svg.q-icon {
+  display: inline-block;
+  width: var(--q-ic) !important;
+  height: var(--q-ic) !important;
   /* Margins fold the icon's line box to its centre point, so it never makes the line taller; that point goes
      half a cap height above the baseline. */
-  margin: calc(var(--q-ic) / -2) 0; vertical-align: middle; vertical-align: 0.5cap;
+  margin: calc(var(--q-ic) / -2) 0;
+  vertical-align: middle;
+  vertical-align: 0.5cap;
 }
 /* An icon alone in a button is centred in the button, not on a line of text. */
-.q-btn--icon .q-btn__icon { line-height: 0; }
-.q-btn--icon .q-btn__icon::before { content: none; }
-.q-btn--icon .q-btn__icon > svg, .q-btn--icon .q-btn__icon > svg.q-icon { margin: 0; vertical-align: top; }
+.q-btn--icon .q-btn__icon {
+  line-height: 0;
+}
+.q-btn--icon .q-btn__icon::before {
+  content: none;
+}
+.q-btn--icon .q-btn__icon > svg,
+.q-btn--icon .q-btn__icon > svg.q-icon {
+  margin: 0;
+  vertical-align: top;
+}
 /* A menu item with a description: the icon goes with the first line. */
-.q-menu__item:has(.q-menu__desc) { align-items: flex-start; }
+.q-menu__item:has(.q-menu__desc) {
+  align-items: flex-start;
+}
 
 /* Checkbox and radio: the box and its tick sit on the label's first line the same way. */
-.q-choice__control { display: block; height: var(--q-choice-lh); line-height: var(--q-choice-lh); white-space: nowrap; }
-.q-choice__control::before { content: "\200b"; }
-.q-choice__input { display: inline-block; margin: calc(var(--q-box) / -2) 0; vertical-align: middle; vertical-align: 0.5cap; }
-.q-choice__mark {
-  position: relative; inset: auto; display: inline-block; box-sizing: border-box;
-  width: var(--q-box); height: var(--q-box); margin: calc(var(--q-box) / -2) 0 calc(var(--q-box) / -2) calc(var(--q-box) * -1); padding: 2px;
-  vertical-align: middle; vertical-align: 0.5cap;
+.q-choice__control {
+  display: block;
+  height: var(--q-choice-lh);
+  line-height: var(--q-choice-lh);
+  white-space: nowrap;
 }
-.q-choice__mark .q-icon { width: 100% !important; height: 100% !important; }
+.q-choice__control::before {
+  content: '\200b';
+}
+.q-choice__input {
+  display: inline-block;
+  margin: calc(var(--q-box) / -2) 0;
+  vertical-align: middle;
+  vertical-align: 0.5cap;
+}
+.q-choice__mark {
+  position: relative;
+  inset: auto;
+  display: inline-block;
+  box-sizing: border-box;
+  width: var(--q-box);
+  height: var(--q-box);
+  margin: calc(var(--q-box) / -2) 0 calc(var(--q-box) / -2) calc(var(--q-box) * -1);
+  padding: 2px;
+  vertical-align: middle;
+  vertical-align: 0.5cap;
+}
+.q-choice__mark .q-icon {
+  width: 100% !important;
+  height: 100% !important;
+}

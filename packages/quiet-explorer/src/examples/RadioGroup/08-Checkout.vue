@@ -22,14 +22,28 @@ const err = (id: string) => errors.value?.find((e) => e.id === id)?.message;
       <QRadio value="std" label="Standard" description="2–4 working days" meta="Free" />
       <QRadio value="exp" label="Express" description="Next working day" meta="9,90 €" />
     </QRadioGroup>
-    <QRadioGroup id="co-pay" v-model="pay" label="Payment" layout="cards" required :error="err('co-pay')" help="You are only charged once the parcel ships.">
-      <QRadio value="card" label="Card" description="Debit or credit card"><template #media><QIcon name="credit-card" /></template></QRadio>
-      <QRadio value="invoice" label="Invoice" description="Pay within 14 days"><template #media><QIcon name="mail" /></template></QRadio>
+    <QRadioGroup
+      id="co-pay"
+      v-model="pay"
+      label="Payment"
+      layout="cards"
+      required
+      :error="err('co-pay')"
+      help="You are only charged once the parcel ships."
+    >
+      <QRadio value="card" label="Card" description="Debit or credit card"
+        ><template #media><QIcon name="credit-card" /></template
+      ></QRadio>
+      <QRadio value="invoice" label="Invoice" description="Pay within 14 days"
+        ><template #media><QIcon name="mail" /></template
+      ></QRadio>
     </QRadioGroup>
     <QFormActions><QButton variant="primary" type="submit">Place order</QButton></QFormActions>
   </QForm>
 </template>
 
 <style scoped>
-.checkout { max-width: 720px; }
+.checkout {
+  max-width: 720px;
+}
 </style>

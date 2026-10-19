@@ -34,10 +34,19 @@ export interface PriceRangeProps {
   strings?: PriceRangeStrings;
 }
 
-const props = withDefaults(defineProps<PriceRangeProps>(), { step: 1, label: undefined, currency: undefined, strings: undefined });
+const props = withDefaults(defineProps<PriceRangeProps>(), {
+  step: 1,
+  label: undefined,
+  currency: undefined,
+  strings: undefined,
+});
 /** [from, to]: updated on every move of a handle and every committed field. */
 const model = defineModel<[number, number]>({ required: true });
-const emit = defineEmits<{ /** A moved handle was let go (pointer or key released), or a typed price committed — apply the filter here. */ commit: [value: [number, number]] }>();
+const emit = defineEmits<{
+  /** A moved handle was let go (pointer or key released), or a typed price committed — apply the filter here. */ commit: [
+    value: [number, number],
+  ];
+}>();
 
 const strings = useStrings<Required<PriceRangeStrings>>(
   'priceRange',
@@ -100,7 +109,7 @@ const fieldValue = (which: 0 | 1) => draft.value[which] ?? String(which === 0 ? 
     <div class="q-range__track" :style="{ '--q-lo': `${pct(lo)}%`, '--q-hi': `${pct(hi)}%` }">
       <span class="q-range__fill" aria-hidden="true" />
       <input
-        v-for="which in ([0, 1] as const)"
+        v-for="which in [0, 1] as const"
         :key="which"
         type="range"
         class="q-range__thumb"
@@ -117,7 +126,13 @@ const fieldValue = (which: 0 | 1) => draft.value[which] ?? String(which === 0 ? 
       />
     </div>
     <QFieldGroup class="q-range__fields" :columns="[1, 1]" stack="late">
-      <QField v-for="which in ([0, 1] as const)" :id="`${id}-${which}`" :key="which" :label="which === 0 ? strings.from : strings.to" :disabled="disabled">
+      <QField
+        v-for="which in [0, 1] as const"
+        :id="`${id}-${which}`"
+        :key="which"
+        :label="which === 0 ? strings.from : strings.to"
+        :disabled="disabled"
+      >
         <QInput
           :model-value="fieldValue(which)"
           inputmode="decimal"

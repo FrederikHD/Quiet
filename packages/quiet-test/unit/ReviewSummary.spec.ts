@@ -24,7 +24,11 @@ describe('QReviewSummary', () => {
   });
 
   it('uses count when given', () => {
-    expect(mount(QReviewSummary, { props: { average: 4, distribution, count: 1 } }).get('.q-rsum__count').text()).toBe('1 review');
+    expect(
+      mount(QReviewSummary, { props: { average: 4, distribution, count: 1 } })
+        .get('.q-rsum__count')
+        .text(),
+    ).toBe('1 review');
   });
 
   it('makes the bars toggle buttons named by their visible content when filterable', async () => {

@@ -3,12 +3,22 @@
 import { QBadge, QButton, QCard, QField, QFieldGroup, QForm, QInput, QPage, QSelect } from '@frederikhd/quiet';
 import { reactive } from 'vue';
 
-const v = reactive({ title: 'Linen shirt, blue', price: '59,00', compare: '', status: 'Active', vendor: 'Leinenweberei Rhön' });
+const v = reactive({
+  title: 'Linen shirt, blue',
+  price: '59,00',
+  compare: '',
+  status: 'Active',
+  vendor: 'Leinenweberei Rhön',
+});
 </script>
 
 <template>
   <div class="frame">
-    <QPage title="Linen shirt, blue" :back="{ href: '#products', label: 'Products' }" subtitle="SKU LS-2040 · last saved 2 minutes ago">
+    <QPage
+      title="Linen shirt, blue"
+      :back="{ href: '#products', label: 'Products' }"
+      subtitle="SKU LS-2040 · last saved 2 minutes ago"
+    >
       <template #title-meta><QBadge tone="success">Active</QBadge></template>
       <template #actions>
         <QButton icon-start="copy">Duplicate</QButton>
@@ -25,7 +35,9 @@ const v = reactive({ title: 'Linen shirt, blue', price: '59,00', compare: '', st
       </QCard>
       <template #aside>
         <QCard title="Status">
-          <QField label="Status" label-hidden hint="Visible in the online store."><QSelect v-model="v.status" :options="['Active', 'Draft', 'Archived']" /></QField>
+          <QField label="Status" label-hidden hint="Visible in the online store."
+            ><QSelect v-model="v.status" :options="['Active', 'Draft', 'Archived']"
+          /></QField>
         </QCard>
         <QCard title="Organisation">
           <QField label="Vendor"><QInput v-model="v.vendor" /></QField>
@@ -36,5 +48,9 @@ const v = reactive({ title: 'Linen shirt, blue', price: '59,00', compare: '', st
 </template>
 
 <style scoped>
-.frame { border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--surface); }
+.frame {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
 </style>

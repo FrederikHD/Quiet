@@ -8,10 +8,20 @@ const date = ref('2026-10-24');
 
 <template>
   <QField v-slot="{ controlAttrs }" label="Delivery date" label-placement="top" hint="We deliver Monday to Saturday.">
+    <!-- eslint-disable-next-line vuejs-accessibility/form-control-has-label -- labelled by the Field: controlAttrs carries the id its label points at -->
     <input v-model="date" v-bind="controlAttrs" type="date" class="date" />
   </QField>
 </template>
 
 <style scoped>
-.date { justify-self: start; height: var(--ctl-h); padding: 0 var(--space-3); border: 1px solid var(--line-strong); border-radius: var(--radius-md); background: var(--surface-raised); color: var(--ink); font: inherit; }
+.date {
+  justify-self: start;
+  height: var(--ctl-h);
+  padding: 0 var(--space-3);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  background: var(--surface-raised);
+  color: var(--ink);
+  font: inherit;
+}
 </style>

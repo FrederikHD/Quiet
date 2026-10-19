@@ -3,7 +3,9 @@
 import { QField, QTextarea } from '@frederikhd/quiet';
 import { ref } from 'vue';
 
-const description = ref('Breathable linen from the Rhön, washed for a soft hand. Relaxed fit with a straight hem — wear it tucked or loose.');
+const description = ref(
+  'Breathable linen from the Rhön, washed for a soft hand. Relaxed fit with a straight hem — wear it tucked or loose.',
+);
 </script>
 
 <template>

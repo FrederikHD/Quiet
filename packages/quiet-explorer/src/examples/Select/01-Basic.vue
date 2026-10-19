@@ -12,7 +12,12 @@ const methods = [
 </script>
 
 <template>
-  <QField label="Shipping method" label-placement="top" width="l" hint="Express arrives the next working day if ordered before 14:00.">
+  <QField
+    label="Shipping method"
+    label-placement="top"
+    width="l"
+    hint="Express arrives the next working day if ordered before 14:00."
+  >
     <QSelect v-model="shipping" :options="methods" />
   </QField>
 </template>

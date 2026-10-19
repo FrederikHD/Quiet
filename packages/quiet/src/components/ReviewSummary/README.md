@@ -3,7 +3,13 @@
 The head of a product's reviews: the average large, the stars, the count, and one bar per star level. Beside (or above, on phones) the list of reviews.
 
 ```vue
-<QReviewSummary :average="4.3" :distribution="{ 5: 20, 4: 7, 3: 2, 2: 1, 1: 1 }" filterable :active="only" @filter="only = $event">
+<QReviewSummary
+  :average="4.3"
+  :distribution="{ 5: 20, 4: 7, 3: 2, 2: 1, 1: 1 }"
+  filterable
+  :active="only"
+  @filter="only = $event"
+>
   <template #action><QButton @click="write">Write a review</QButton></template>
 </QReviewSummary>
 ```

@@ -12,7 +12,20 @@ import { QIcon } from '@frederikhd/quiet';
 </template>
 
 <style scoped>
-.row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-6); }
-.size { display: inline-flex; align-items: center; gap: var(--space-2); font: var(--text-small); color: var(--ink-muted); }
-.size .q-icon { color: var(--ink); }
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-6);
+}
+.size {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font: var(--text-small);
+  color: var(--ink-muted);
+}
+.size .q-icon {
+  color: var(--ink);
+}
 </style>

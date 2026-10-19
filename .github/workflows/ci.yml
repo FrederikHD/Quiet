@@ -1,5 +1,6 @@
-# Type-checks, unit tests, the package check (the packed tarball installed into a fresh app) and the Playwright suite
-# (e2e, keyboard, accessibility, responsive) on every push and PR. The release workflow runs it too, before publishing.
+# Lint, formatting, type-checks, unit tests, the package check (the packed tarball installed into a fresh app) and the
+# Playwright suite (e2e, keyboard, accessibility, responsive) on every push and PR, in Chromium, Firefox and WebKit
+# (Safari's engine). The release workflow runs it too, before publishing.
 name: CI
 
 on:
@@ -18,6 +19,8 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - run: npm run lint
+      - run: npm run format:check
       - run: npm run typecheck
       - run: npm run test:unit
       - run: npm run test:package
@@ -28,5 +31,31 @@ jobs:
         if: failure()
         with:
           name: playwright-report
+          path: packages/quiet-test/playwright-report
+          retention-days: 7
+
+  browsers:
+    # The same e2e suite in the other engines. Screenshots stay Chromium-only (in the test job's browser).
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [firefox, webkit]
+    name: e2e (${{ matrix.browser }})
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps ${{ matrix.browser }}
+        working-directory: packages/quiet-test
+      - run: npx playwright test --project=e2e-${{ matrix.browser }}
+        working-directory: packages/quiet-test
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report-${{ matrix.browser }}
           path: packages/quiet-test/playwright-report
           retention-days: 7

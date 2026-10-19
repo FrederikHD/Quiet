@@ -37,9 +37,14 @@ const EDGE = 8; // keep this far from the viewport edge
 const GAP = 8; // distance from the anchor
 
 const panel = ref<HTMLElement | null>(null);
-const place = ref<{ top: number; left: number; side: 'top' | 'bottom'; density?: string; width?: number; maxHeight?: number } | null>(
-  null,
-);
+const place = ref<{
+  top: number;
+  left: number;
+  side: 'top' | 'bottom';
+  density?: string;
+  width?: number;
+  maxHeight?: number;
+} | null>(null);
 const announce = ref(false);
 let placed = false;
 let focused = false;
@@ -82,7 +87,8 @@ function reposition() {
     if (want === 'top' && above < EDGE && below + pr.height <= vh - EDGE) side = 'bottom';
   }
   const align = props.align ?? 'start';
-  let left = align === 'end' ? tr.right - pr.width : align === 'center' ? tr.left + tr.width / 2 - pr.width / 2 : tr.left;
+  let left =
+    align === 'end' ? tr.right - pr.width : align === 'center' ? tr.left + tr.width / 2 - pr.width / 2 : tr.left;
   left = Math.max(EDGE, Math.min(left, vw - pr.width - EDGE));
   const top = Math.max(EDGE, Math.min(side === 'top' ? above : below, vh - pr.height - EDGE));
   placed = true;
@@ -143,7 +149,10 @@ function start() {
   }
   if (props.kind === 'tip') {
     if (import.meta.env.DEV && panel.value?.querySelector(FOCUSABLE)) {
-      warnOnce('tip-interactive', 'Popover: a kind="tip" panel holds a link or control, which keyboard and screen-reader users can\'t reach. Use kind="dialog".');
+      warnOnce(
+        'tip-interactive',
+        'Popover: a kind="tip" panel holds a link or control, which keyboard and screen-reader users can\'t reach. Use kind="dialog".',
+      );
     }
     // Fill the live region a moment after it exists, so screen readers announce the text.
     tipTimer = window.setTimeout(() => (announce.value = true), 60);
@@ -226,7 +235,9 @@ function onPanelFocusOut(e: FocusEvent) {
 
 const style = computed(() => {
   const p = place.value;
-  const s: Record<string, string | undefined> = p ? { top: `${p.top}px`, left: `${p.left}px` } : { top: '0px', left: '0px', visibility: 'hidden' };
+  const s: Record<string, string | undefined> = p
+    ? { top: `${p.top}px`, left: `${p.left}px` }
+    : { top: '0px', left: '0px', visibility: 'hidden' };
   if (p?.width) {
     s.width = `${p.width}px`;
     s.maxWidth = 'calc(100vw - 16px)';
@@ -243,6 +254,7 @@ defineExpose({ panel, reposition });
 
 <template>
   <Teleport to="body">
+    <!-- eslint-disable-next-line vuejs-accessibility/no-static-element-interactions -- the panel manages Escape and Tab for what is inside it; it is not a control -->
     <div
       v-if="open"
       v-bind="panelAttrs"

@@ -11,7 +11,9 @@ const store = reactive({ name: 'Leinen & Co', email: 'hallo@leinen.example' });
     <QPage title="Store details" width="narrow" :back="{ href: '#settings', label: 'Settings' }">
       <QForm label-placement="top" @submit.prevent>
         <QField label="Store name" required><QInput v-model="store.name" /></QField>
-        <QField label="Contact email" required><QInput v-model="store.email" type="email" autocomplete="email" /></QField>
+        <QField label="Contact email" required
+          ><QInput v-model="store.email" type="email" autocomplete="email"
+        /></QField>
         <QFormActions><QButton variant="primary" type="submit">Save</QButton></QFormActions>
       </QForm>
     </QPage>
@@ -19,5 +21,9 @@ const store = reactive({ name: 'Leinen & Co', email: 'hallo@leinen.example' });
 </template>
 
 <style scoped>
-.frame { border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--surface); }
+.frame {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
 </style>

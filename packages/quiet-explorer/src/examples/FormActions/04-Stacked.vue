@@ -11,5 +11,7 @@ import { QButton, QFormActions } from '@frederikhd/quiet';
 </template>
 
 <style scoped>
-.phone { max-width: 360px; }
+.phone {
+  max-width: 360px;
+}
 </style>

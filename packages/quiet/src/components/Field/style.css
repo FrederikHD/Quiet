@@ -1,42 +1,132 @@
 /* Field: label, control, message, hint. Each field measures its own width (container), so "auto" follows the space it has. */
-.q-field { container-type: inline-size; min-width: 0; width: 100%; }  /* a size container has no width of its own: fill the space, also inside a flex row */
-.q-field__layout { display: grid; grid-template-columns: minmax(0, 1fr); row-gap: var(--ctl-gap); }
-.q-field__labelcol { display: flex; align-items: center; column-gap: var(--space-1); min-width: 0; }
-.q-field__labelcol > .q-field__label { min-width: 0; }
-.q-field__label { font-size: var(--control-text-sm); line-height: 16px; font-weight: 500; color: var(--ink); overflow-wrap: break-word; hyphens: auto; }
-.q-field__req { margin-left: 2px; color: var(--danger); font-weight: 600; }
-.q-field__opt { margin-left: var(--space-1); color: var(--ink-muted); font-weight: 400; white-space: nowrap; }
-.q-field__help { display: inline-flex; align-items: center; flex: none; height: 16px; }
+.q-field {
+  container-type: inline-size;
+  min-width: 0;
+  width: 100%;
+} /* a size container has no width of its own: fill the space, also inside a flex row */
+.q-field__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  row-gap: var(--ctl-gap);
+}
+.q-field__labelcol {
+  display: flex;
+  align-items: center;
+  column-gap: var(--space-1);
+  min-width: 0;
+}
+.q-field__labelcol > .q-field__label {
+  min-width: 0;
+}
+.q-field__label {
+  font-size: var(--control-text-sm);
+  line-height: 16px;
+  font-weight: 500;
+  color: var(--ink);
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+.q-field__req {
+  margin-left: 2px;
+  color: var(--danger);
+  font-weight: 600;
+}
+.q-field__opt {
+  margin-left: var(--space-1);
+  color: var(--ink-muted);
+  font-weight: 400;
+  white-space: nowrap;
+}
+.q-field__help {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  height: 16px;
+}
 .q-field__help .q-btn,
 .q-field__help .q-btn.q-btn--icon.q-btn--slim {
   position: relative;
-  width: 24px; min-width: 24px; height: 24px; min-height: 24px;
+  width: 24px;
+  min-width: 24px;
+  height: 24px;
+  min-height: 24px;
   padding: 0;
   border-radius: var(--radius-sm);
   color: var(--brand);
 }
-.q-field__help .q-btn .q-btn__icon { width: var(--icon-sm); height: var(--icon-sm); }
-.q-field__help .q-btn::after { content: ""; position: absolute; inset: -8px; }
-@media (hover: hover) { .q-field__help .q-btn:hover { color: var(--brand-hover); } }
-.q-field__help .q-btn[aria-expanded="true"] { color: var(--brand-hover); background: var(--brand-tint); }
-.q-field__controlcol { display: flex; flex-direction: column; min-width: 0; }
+.q-field__help .q-btn .q-btn__icon {
+  width: var(--icon-sm);
+  height: var(--icon-sm);
+}
+.q-field__help .q-btn::after {
+  content: '';
+  position: absolute;
+  inset: -8px;
+}
+@media (hover: hover) {
+  .q-field__help .q-btn:hover {
+    color: var(--brand-hover);
+  }
+}
+.q-field__help .q-btn[aria-expanded='true'] {
+  color: var(--brand-hover);
+  background: var(--brand-tint);
+}
+.q-field__controlcol {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
 .q-field__controlcol > .q-field__live > .q-field__msg,
-.q-field__controlcol > .q-field__hint { margin-top: var(--space-1); }
-.q-field__control { min-width: 0; }
-.q-field__control--xs { max-width: 6rem; }
-.q-field__control--s { max-width: 10rem; }
-.q-field__control--m { max-width: 20rem; }
-.q-field__control--l { max-width: 30rem; }
+.q-field__controlcol > .q-field__hint {
+  margin-top: var(--space-1);
+}
+.q-field__control {
+  min-width: 0;
+}
+.q-field__control--xs {
+  max-width: 6rem;
+}
+.q-field__control--s {
+  max-width: 10rem;
+}
+.q-field__control--m {
+  max-width: 20rem;
+}
+.q-field__control--l {
+  max-width: 30rem;
+}
 
-.q-field__msg { display: flex; align-items: flex-start; gap: var(--space-1); font-size: var(--control-text-sm); line-height: 18px; }
+.q-field__msg {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-1);
+  font-size: var(--control-text-sm);
+  line-height: 18px;
+}
 
-.q-field__msg--error { color: var(--danger); }
-.q-field__msg--warning { color: var(--warning); }
-.q-field__msg--success { color: var(--success); }
-.q-field__hint { font-size: var(--control-text-sm); line-height: 18px; color: var(--ink-muted); }
-.q-field__msg, .q-field__hint { overflow-wrap: anywhere; }
+.q-field__msg--error {
+  color: var(--danger);
+}
+.q-field__msg--warning {
+  color: var(--warning);
+}
+.q-field__msg--success {
+  color: var(--success);
+}
+.q-field__hint {
+  font-size: var(--control-text-sm);
+  line-height: 18px;
+  color: var(--ink-muted);
+}
+.q-field__msg,
+.q-field__hint {
+  overflow-wrap: anywhere;
+}
 
-.q-field--disabled .q-field__label { color: var(--ink-muted); }
+.q-field--disabled .q-field__label {
+  color: var(--ink-muted);
+}
 
 /* Label beside the control.
    side: beside whenever the field is at least 400px wide; below that nothing can fit a label beside a usable control, so it falls back to above.
@@ -47,16 +137,32 @@
     grid-template-columns: min(var(--q-label-w, 200px), 40%) minmax(0, 1fr);
     column-gap: var(--space-4);
   }
-  .q-field--side > .q-field__layout > .q-field__labelcol { align-self: start; min-height: var(--ctl-h); }
-  .q-field--side > .q-field__layout > .q-field__controlcol { grid-column: 2; }
-  .q-fgroup.q-field--side > .q-field__layout > .q-field__labelcol { min-height: 16px; display: flex; }
+  .q-field--side > .q-field__layout > .q-field__labelcol {
+    align-self: start;
+    min-height: var(--ctl-h);
+  }
+  .q-field--side > .q-field__layout > .q-field__controlcol {
+    grid-column: 2;
+  }
+  .q-fgroup.q-field--side > .q-field__layout > .q-field__labelcol {
+    min-height: 16px;
+    display: flex;
+  }
 }
 @container (min-width: 520px) {
   .q-field--auto > .q-field__layout {
     grid-template-columns: min(var(--q-label-w, 200px), 40%) minmax(0, 1fr);
     column-gap: var(--space-4);
   }
-  .q-field--auto > .q-field__layout > .q-field__labelcol { align-self: start; min-height: var(--ctl-h); }
-  .q-field--auto > .q-field__layout > .q-field__controlcol { grid-column: 2; }
-  .q-fgroup.q-field--auto > .q-field__layout > .q-field__labelcol { min-height: 16px; display: flex; }
+  .q-field--auto > .q-field__layout > .q-field__labelcol {
+    align-self: start;
+    min-height: var(--ctl-h);
+  }
+  .q-field--auto > .q-field__layout > .q-field__controlcol {
+    grid-column: 2;
+  }
+  .q-fgroup.q-field--auto > .q-field__layout > .q-field__labelcol {
+    min-height: 16px;
+    display: flex;
+  }
 }

@@ -81,6 +81,7 @@ defineExpose({ focus: () => search.value?.focus(), input: () => search.value?.in
       :aria-label="label"
       :aria-multiselectable="multiple ? 'true' : undefined"
     >
+      <!-- eslint-disable-next-line vuejs-accessibility/click-events-have-key-events, vuejs-accessibility/interactive-supports-focus -- options follow aria-activedescendant: focus stays in the search field, which handles the keys -->
       <li
         v-for="(o, i) in result.options"
         :id="`${listId}-${i}`"
@@ -88,13 +89,25 @@ defineExpose({ focus: () => search.value?.focus(), input: () => search.value?.in
         role="option"
         :aria-selected="isSelected(o)"
         :aria-disabled="o.disabled ? 'true' : undefined"
-        :class="['q-combo__option', i === active && 'is-active', isSelected(o) && 'is-selected', o.disabled && 'is-disabled']"
+        :class="[
+          'q-combo__option',
+          i === active && 'is-active',
+          isSelected(o) && 'is-selected',
+          o.disabled && 'is-disabled',
+        ]"
         @mousedown.prevent
         @click="emit('choose', o)"
         @mousemove="i !== active && !o.disabled && emit('update:active', i)"
       >
-        <span v-if="multiple" class="q-combo__check" aria-hidden="true"><QIcon v-if="isSelected(o)" name="check" /></span>
-        <span v-if="o.image || o.swatch" class="q-combo__media" aria-hidden="true" :style="o.swatch ? { background: o.swatch } : undefined">
+        <span v-if="multiple" class="q-combo__check" aria-hidden="true"
+          ><QIcon v-if="isSelected(o)" name="check"
+        /></span>
+        <span
+          v-if="o.image || o.swatch"
+          class="q-combo__media"
+          aria-hidden="true"
+          :style="o.swatch ? { background: o.swatch } : undefined"
+        >
           <img v-if="o.image" :src="o.image" alt="" />
         </span>
         <span class="q-combo__text">
@@ -105,13 +118,19 @@ defineExpose({ focus: () => search.value?.focus(), input: () => search.value?.in
         <span v-if="!multiple && isSelected(o)" class="q-combo__tick" aria-hidden="true"><QIcon name="check" /></span>
       </li>
     </ul>
-    <div v-if="!result.options.length && result.status !== 'loading' && result.status !== 'error'" class="q-combo__empty" aria-hidden="true">
+    <div
+      v-if="!result.options.length && result.status !== 'loading' && result.status !== 'error'"
+      class="q-combo__empty"
+      aria-hidden="true"
+    >
       {{ emptyText }}
     </div>
     <div :class="['q-combo__footer', result.status === 'error' && 'is-error']">
       <span v-if="result.status === 'loading'" class="q-combo__spinner" aria-hidden="true" />
       <span :id="statusId" role="status" class="q-combo__status">{{ statusText }}</span>
-      <QButton v-if="result.status === 'error'" size="slim" variant="ghost" @click="emit('retry')">{{ retryLabel }}</QButton>
+      <QButton v-if="result.status === 'error'" size="slim" variant="ghost" @click="emit('retry')">{{
+        retryLabel
+      }}</QButton>
     </div>
   </div>
 </template>

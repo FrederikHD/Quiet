@@ -21,6 +21,17 @@ import { QButton, QPopover } from '@frederikhd/quiet';
 </template>
 
 <style scoped>
-.bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3); }
-.total { display: flex; align-items: center; gap: var(--space-1); font-weight: 600; }
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+.total {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-weight: 600;
+}
 </style>

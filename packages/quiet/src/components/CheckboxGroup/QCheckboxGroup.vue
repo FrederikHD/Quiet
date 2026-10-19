@@ -57,7 +57,19 @@ const g = useChoiceGroup(
   () => model.value ?? null,
   (next) => (model.value = next as string[]),
 );
-const { placement, markers, strings: fstrings, status, summaryShown, layout, labelId, hintId, msgId, chosen, slots } = g;
+const {
+  placement,
+  markers,
+  strings: fstrings,
+  status,
+  summaryShown,
+  layout,
+  labelId,
+  hintId,
+  msgId,
+  chosen,
+  slots,
+} = g;
 </script>
 
 <template>

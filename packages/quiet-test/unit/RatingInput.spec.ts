@@ -3,7 +3,8 @@ import { QForm, QRatingInput } from '@frederikhd/quiet';
 import { describe, expect, it } from 'vitest';
 import { h, nextTick } from 'vue';
 
-const checked = (w: ReturnType<typeof mount>) => w.findAll('input').findIndex((i) => (i.element as HTMLInputElement).checked) + 1;
+const checked = (w: ReturnType<typeof mount>) =>
+  w.findAll('input').findIndex((i) => (i.element as HTMLInputElement).checked) + 1;
 
 describe('QRatingInput', () => {
   it('is a labelled radiogroup of five stars', () => {
@@ -15,13 +16,19 @@ describe('QRatingInput', () => {
     expect(inputs).toHaveLength(5);
     for (const i of inputs) expect(i.attributes('name')).toBe('stars');
     expect(w.findAll('.q-rinput__star .q-visually-hidden').map((s) => s.text())).toEqual([
-      '1 star, Poor', '2 stars, Fair', '3 stars, Good', '4 stars, Very good', '5 stars, Excellent',
+      '1 star, Poor',
+      '2 stars, Fair',
+      '3 stars, Good',
+      '4 stars, Very good',
+      '5 stars, Excellent',
     ]);
     expect(w.findAll('svg').every((s) => s.attributes('aria-hidden') === 'true')).toBe(true);
   });
 
   it('follows v-model and emits the chosen star', async () => {
-    const w: VueWrapper = mount(QRatingInput, { props: { modelValue: 2, 'onUpdate:modelValue': (v?: number) => w.setProps({ modelValue: v }) } });
+    const w: VueWrapper = mount(QRatingInput, {
+      props: { modelValue: 2, 'onUpdate:modelValue': (v?: number) => w.setProps({ modelValue: v }) },
+    });
     expect(checked(w)).toBe(2);
     expect(w.findAll('.q-rinput__star.is-on')).toHaveLength(2);
     expect(w.get('.q-rinput__word').text()).toBe('Fair');
@@ -71,7 +78,9 @@ describe('QRatingInput', () => {
   });
 
   it('takes its label and strings', () => {
-    const w = mount(QRatingInput, { props: { label: 'Bewertung', strings: { words: ['a', 'b', 'c', 'd', 'e'], stars: (n: number) => `${n} Sterne` } } });
+    const w = mount(QRatingInput, {
+      props: { label: 'Bewertung', strings: { words: ['a', 'b', 'c', 'd', 'e'], stars: (n: number) => `${n} Sterne` } },
+    });
     expect(w.get('.q-field__label').text()).toContain('Bewertung');
     expect(w.findAll('.q-visually-hidden')[0].text()).toBe('1 Sterne, a');
   });

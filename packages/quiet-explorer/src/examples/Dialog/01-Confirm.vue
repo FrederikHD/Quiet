@@ -33,6 +33,15 @@ function remove() {
 </template>
 
 <style scoped>
-.demo { display: grid; justify-items: start; gap: var(--space-3); }
-.log { margin: 0; min-height: 20px; font: var(--text-small); color: var(--ink-muted); }
+.demo {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-3);
+}
+.log {
+  margin: 0;
+  min-height: 20px;
+  font: var(--text-small);
+  color: var(--ink-muted);
+}
 </style>

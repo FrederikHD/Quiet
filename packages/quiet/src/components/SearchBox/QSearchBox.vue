@@ -108,7 +108,9 @@ const groups = computed<SearchSuggestionGroup[]>(() => {
 const flat = computed(() => groups.value.flatMap((g) => g.items ?? []));
 const q = computed(() => model.value.trim());
 // The last option is always "Search for “…”".
-const submitOption = computed<Option | null>(() => (q.value && props.searchOption ? { __submit: true, label: strings.value.searchFor(q.value) } : null));
+const submitOption = computed<Option | null>(() =>
+  q.value && props.searchOption ? { __submit: true, label: strings.value.searchFor(q.value) } : null,
+);
 const options = computed<Option[]>(() => (submitOption.value ? [...flat.value, submitOption.value] : flat.value));
 const show = computed(() => open.value && !!q.value && options.value.length > 0);
 // Index of each suggestion across groups.
@@ -224,6 +226,7 @@ onMounted(() => {
           <li v-if="g.label && g.items?.length" role="presentation" class="q-search__group">
             <div :id="`${id}-g${gi}`" class="q-search__grouplabel" aria-hidden="true">{{ g.label }}</div>
             <ul role="group" :aria-labelledby="`${id}-g${gi}`" class="q-search__sub">
+              <!-- eslint-disable-next-line vuejs-accessibility/mouse-events-have-key-events -- hover marks the active option; arrow keys in the search field do the same -->
               <QSearchOption
                 v-for="(opt, oi) in g.items"
                 :id="`${id}-opt-${indexOf(gi, oi)}`"
@@ -237,6 +240,7 @@ onMounted(() => {
             </ul>
           </li>
           <template v-else-if="!g.label">
+            <!-- eslint-disable-next-line vuejs-accessibility/mouse-events-have-key-events -- hover marks the active option; arrow keys in the search field do the same -->
             <QSearchOption
               v-for="(opt, oi) in g.items"
               :id="`${id}-opt-${indexOf(gi, oi)}`"
@@ -249,6 +253,7 @@ onMounted(() => {
             />
           </template>
         </template>
+        <!-- eslint-disable-next-line vuejs-accessibility/click-events-have-key-events, vuejs-accessibility/interactive-supports-focus -- options follow aria-activedescendant: focus stays in the search field, which handles the keys -->
         <li
           v-if="submitOption"
           :id="`${id}-opt-${flat.length}`"
@@ -261,7 +266,9 @@ onMounted(() => {
           @mousemove="active !== flat.length && (active = flat.length)"
         >
           <QLead icon="search" />
-          <span class="q-search__text"><span class="q-search__label">{{ submitOption.label }}</span></span>
+          <span class="q-search__text"
+            ><span class="q-search__label">{{ submitOption.label }}</span></span
+          >
         </li>
       </ul>
     </div>

@@ -8,15 +8,30 @@ const values = reactive({ title: 'Linen shirt, blue', price: '' });
 
 <template>
   <div class="stack">
-    <QField label="Product title" required label-placement="side" hint="Shown on the product page and in search results.">
+    <QField
+      label="Product title"
+      required
+      label-placement="side"
+      hint="Shown on the product page and in search results."
+    >
       <QInput v-model="values.title" />
     </QField>
-    <QField label="Price" required label-placement="side" width="s" error="Enter a price, like 49,90" help="The price customers pay, including VAT.">
+    <QField
+      label="Price"
+      required
+      label-placement="side"
+      width="s"
+      error="Enter a price, like 49,90"
+      help="The price customers pay, including VAT."
+    >
       <QInput v-model="values.price" suffix="€" numeric align="end" inputmode="decimal" />
     </QField>
   </div>
 </template>
 
 <style scoped>
-.stack { display: grid; gap: var(--field-gap); }
+.stack {
+  display: grid;
+  gap: var(--field-gap);
+}
 </style>

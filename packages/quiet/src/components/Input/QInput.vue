@@ -38,6 +38,7 @@ defineOptions({ inheritAttrs: false });
 const props = withDefaults(defineProps<InputProps>(), {
   size: 'default',
   type: 'text',
+  align: 'start',
   prefix: undefined,
   suffix: undefined,
   clearLabel: undefined,
@@ -78,7 +79,10 @@ const showClear = computed(
 );
 
 if (import.meta.env.DEV && !controlId.value && !attrs['aria-label'] && !attrs['aria-labelledby']) {
-  warnOnce('input-label', 'Input: give it a visible label — wrap it in Field, or pass id, aria-label or aria-labelledby.');
+  warnOnce(
+    'input-label',
+    'Input: give it a visible label — wrap it in Field, or pass id, aria-label or aria-labelledby.',
+  );
 }
 
 const inputAttrs = computed<Record<string, unknown>>(() => {
@@ -121,6 +125,7 @@ defineExpose({
 </script>
 
 <template>
+  <!-- eslint-disable-next-line vuejs-accessibility/no-static-element-interactions -- mousedown on the frame (around affixes) focuses the input; the input itself takes keyboard focus -->
   <span
     :class="[
       'q-input',
@@ -136,13 +141,30 @@ defineExpose({
     :style="attrs.style as any"
     @mousedown="onWrapperMouseDown"
   >
-    <span v-if="slots.prefix || prefix != null" class="q-input__affix q-input__affix--start"><slot name="prefix">{{ prefix }}</slot></span>
+    <span v-if="slots.prefix || prefix != null" class="q-input__affix q-input__affix--start"
+      ><slot name="prefix">{{ prefix }}</slot></span
+    >
     <input ref="input" v-bind="inputAttrs" class="q-input__field" :value="model ?? ''" @input="onInput" />
-    <button v-if="showClear" type="button" class="q-input__clear" :aria-label="clearLabel || strings.clear" @click="clear">
-      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+    <button
+      v-if="showClear"
+      type="button"
+      class="q-input__clear"
+      :aria-label="clearLabel || strings.clear"
+      @click="clear"
+    >
+      <svg
+        viewBox="0 0 20 20"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        aria-hidden="true"
+      >
         <path d="M6 6l8 8M14 6l-8 8" />
       </svg>
     </button>
-    <span v-if="slots.suffix || suffix != null" class="q-input__affix q-input__affix--end"><slot name="suffix">{{ suffix }}</slot></span>
+    <span v-if="slots.suffix || suffix != null" class="q-input__affix q-input__affix--end"
+      ><slot name="suffix">{{ suffix }}</slot></span
+    >
   </span>
 </template>

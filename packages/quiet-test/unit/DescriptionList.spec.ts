@@ -27,7 +27,11 @@ describe('QDescriptionList', () => {
 
   it('shows empty values as a dash, or emptyText', () => {
     expect(mount(QDescriptionList, { props: { items } }).get('.q-dl__empty').text()).toBe('—');
-    expect(mount(QDescriptionList, { props: { items, emptyText: 'n/a' } }).get('.q-dl__empty').text()).toBe('n/a');
+    expect(
+      mount(QDescriptionList, { props: { items, emptyText: 'n/a' } })
+        .get('.q-dl__empty')
+        .text(),
+    ).toBe('n/a');
   });
 
   it.each(['inline', 'stacked'] as const)('applies the %s layout', (layout) => {
@@ -43,7 +47,10 @@ describe('QDescriptionList', () => {
   it('takes rich content in term-<key> / description-<key> slots (key or index)', () => {
     const w = mount(QDescriptionList, {
       props: { items },
-      slots: { 'description-total': () => h('strong', '118,00 €'), 'term-0': ({ item }: { item: { term: string } }) => h('em', item.term) },
+      slots: {
+        'description-total': () => h('strong', '118,00 €'),
+        'term-0': ({ item }: { item: { term: string } }) => h('em', item.term),
+      },
     });
     expect(w.get('dd strong').text()).toBe('118,00 €');
     expect(w.get('dt em').text()).toBe('SKU');

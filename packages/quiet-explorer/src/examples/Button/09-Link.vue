@@ -11,5 +11,9 @@ import { QButton } from '@frederikhd/quiet';
 </template>
 
 <style scoped>
-.row { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
 </style>

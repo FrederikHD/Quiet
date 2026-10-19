@@ -69,8 +69,10 @@ defineProps<{
         >
           <slot />
         </div>
-        <QFieldMessage :status="status[0]" :message="status[1]" :id="msgId" :strings="strings" :quiet="summaryShown" />
-        <div v-if="hasHint" :id="hintId" class="q-field__hint"><slot name="hint">{{ hint }}</slot></div>
+        <QFieldMessage :id="msgId" :status="status[0]" :message="status[1]" :strings="strings" :quiet="summaryShown" />
+        <div v-if="hasHint" :id="hintId" class="q-field__hint">
+          <slot name="hint">{{ hint }}</slot>
+        </div>
       </div>
     </div>
   </div>

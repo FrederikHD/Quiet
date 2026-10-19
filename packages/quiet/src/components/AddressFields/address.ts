@@ -118,7 +118,10 @@ export const AUTOCOMPLETE: Record<AddressFieldKey, string> = {
 };
 
 /** Which parts show for a country, in order, and whether they're needed. Company, line 2 and phone are optional by default. */
-export function addressParts(country: string | undefined, options?: AddressFieldOptions): { key: AddressFieldKey; required: boolean }[] {
+export function addressParts(
+  country: string | undefined,
+  options?: AddressFieldOptions,
+): { key: AddressFieldKey; required: boolean }[] {
   const fmt = addressFormats[country ?? ''] ?? {};
   const o: Required<AddressFieldOptions> = { company: 'optional', line2: 'optional', phone: 'optional', ...options };
   const list: AddressFieldKey[] = ['country', 'firstName', 'lastName'];
@@ -138,7 +141,11 @@ export function addressParts(country: string | undefined, options?: AddressField
 }
 
 /** The label of a part in a country: "ZIP code" in the US, "Town or city" in the UK. */
-export function addressLabel(key: AddressFieldKey, country: string | undefined, strings: Required<AddressStrings>): string {
+export function addressLabel(
+  key: AddressFieldKey,
+  country: string | undefined,
+  strings: Required<AddressStrings>,
+): string {
   const layout = addressFormats[country ?? '']?.layout;
   if (key === 'postalCode') return layout === 'us' ? strings.zip : strings.postalCode;
   if (key === 'city') return layout === 'gb' ? strings.town : strings.city;
@@ -162,7 +169,11 @@ export function validateAddress(
   options: { idPrefix?: string; fields?: AddressFieldOptions; strings?: AddressStrings } = {},
 ): AddressValidation {
   const config = useConfig();
-  const strings = { ...ADDRESS_STRINGS, ...(config.strings.address as AddressStrings), ...options.strings } as Required<AddressStrings>;
+  const strings = {
+    ...ADDRESS_STRINGS,
+    ...(config.strings.address as AddressStrings),
+    ...options.strings,
+  } as Required<AddressStrings>;
   const v = value ?? {};
   const fmt = addressFormats[v.country ?? ''] ?? {};
   const prefix = options.idPrefix ?? 'address';
@@ -174,7 +185,8 @@ export function validateAddress(
     let msg: string | null = null;
     if (p.key === 'country' && !val) msg = strings.chooseCountry;
     else if (p.required && !val) msg = strings.missing(label);
-    else if (val && p.key === 'postalCode' && fmt.postal && !fmt.postal.test(val)) msg = strings.badPostal(label, fmt.example);
+    else if (val && p.key === 'postalCode' && fmt.postal && !fmt.postal.test(val))
+      msg = strings.badPostal(label, fmt.example);
     else if (val && p.key === 'line1' && fmt.number && !/\d/.test(val)) msg = strings.noNumber;
     else if (val && p.key === 'phone' && !/^\+?[\d\s()/-]{6,}$/.test(val)) msg = strings.badPhone;
     if (msg) {

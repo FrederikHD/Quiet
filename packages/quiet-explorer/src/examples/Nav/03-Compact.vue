@@ -18,5 +18,11 @@ const items: NavItem[] = [
 </template>
 
 <style scoped>
-.column { max-width: 280px; padding: var(--space-3); background: var(--surface-raised); border: 1px solid var(--line); border-radius: var(--radius-lg); }
+.column {
+  max-width: 280px;
+  padding: var(--space-3);
+  background: var(--surface-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+}
 </style>

@@ -11,7 +11,13 @@ import QIcon from '../Icon/QIcon.vue';
 import type { IconName } from '../Icon/icons';
 import QTag from '../Tag/QTag.vue';
 import QComboboxPanel from './QComboboxPanel.vue';
-import { normalizeText, type ComboboxOption, type ComboboxResult, type ComboboxSearch, type ComboboxStrings } from './types';
+import {
+  normalizeText,
+  type ComboboxOption,
+  type ComboboxResult,
+  type ComboboxSearch,
+  type ComboboxStrings,
+} from './types';
 
 export interface ComboboxProps {
   /** Static options, filtered in the browser (case- and accent-insensitive). Use this or `search`. */
@@ -110,7 +116,8 @@ const isInvalid = computed(
   () => props.invalid || !!field?.value.invalid || attrs['aria-invalid'] === true || attrs['aria-invalid'] === 'true',
 );
 const isRequired = computed(
-  () => props.required || !!field?.value.required || attrs['aria-required'] === true || attrs['aria-required'] === 'true',
+  () =>
+    props.required || !!field?.value.required || attrs['aria-required'] === true || attrs['aria-required'] === 'true',
 );
 
 if (import.meta.env.DEV && !props.id && !field && !attrs['aria-label'] && !attrs['aria-labelledby']) {
@@ -118,7 +125,11 @@ if (import.meta.env.DEV && !props.id && !field && !attrs['aria-label'] && !attrs
 }
 
 const selected = computed<ComboboxOption[]>(() =>
-  props.multiple ? ((model.value as ComboboxOption[] | null | undefined) ?? []) : model.value ? [model.value as ComboboxOption] : [],
+  props.multiple
+    ? ((model.value as ComboboxOption[] | null | undefined) ?? [])
+    : model.value
+      ? [model.value as ComboboxOption]
+      : [],
 );
 const isSelected = (o: ComboboxOption) => selected.value.some((s) => s.value === o.value);
 const isEmpty = computed(() => selected.value.length === 0);
@@ -151,39 +162,36 @@ const result = computed<ComboboxResult>(() => {
 
 // Fetched options: debounced, aborted when superseded; only the latest answer counts.
 let request = 0;
-watch(
-  [open, query, retryTick],
-  (_v, _o, onCleanup) => {
-    if (!open.value || !props.search) return;
-    const id = ++request;
-    const ctl = typeof AbortController !== 'undefined' ? new AbortController() : null;
-    fetched.value = { ...fetched.value, status: 'loading' };
-    const q = query.value.trim();
-    const timer = setTimeout(
-      () => {
-        Promise.resolve()
-          .then(() => props.search!(q, { signal: ctl?.signal }))
-          .then(
-            (out) => {
-              if (id !== request) return;
-              const list = Array.isArray(out) ? out : (out?.options ?? []);
-              const total = !Array.isArray(out) && out?.total != null ? out.total : list.length;
-              fetched.value = { options: list.slice(0, props.limit), total, status: 'done' };
-            },
-            (err: unknown) => {
-              if (id !== request || (err as Error)?.name === 'AbortError') return;
-              fetched.value = { ...fetched.value, status: 'error' };
-            },
-          );
-      },
-      q ? props.debounce : 0,
-    );
-    onCleanup(() => {
-      clearTimeout(timer);
-      ctl?.abort();
-    });
-  },
-);
+watch([open, query, retryTick], (_v, _o, onCleanup) => {
+  if (!open.value || !props.search) return;
+  const id = ++request;
+  const ctl = typeof AbortController !== 'undefined' ? new AbortController() : null;
+  fetched.value = { ...fetched.value, status: 'loading' };
+  const q = query.value.trim();
+  const timer = setTimeout(
+    () => {
+      Promise.resolve()
+        .then(() => props.search!(q, { signal: ctl?.signal }))
+        .then(
+          (out) => {
+            if (id !== request) return;
+            const list = Array.isArray(out) ? out : (out?.options ?? []);
+            const total = !Array.isArray(out) && out?.total != null ? out.total : list.length;
+            fetched.value = { options: list.slice(0, props.limit), total, status: 'done' };
+          },
+          (err: unknown) => {
+            if (id !== request || (err as Error)?.name === 'AbortError') return;
+            fetched.value = { ...fetched.value, status: 'error' };
+          },
+        );
+    },
+    q ? props.debounce : 0,
+  );
+  onCleanup(() => {
+    clearTimeout(timer);
+    ctl?.abort();
+  });
+});
 
 function firstEnabled(from: number, dir: 1 | -1) {
   const items = result.value.options;
@@ -289,9 +297,13 @@ function onBoxMouseDown(e: MouseEvent) {
 }
 
 const optionText = (o: ComboboxOption) => o.label ?? o.value;
-const display = computed(() => (props.multiple || isEmpty.value ? (isEmpty.value ? props.placeholder : null) : optionText(selected.value[0])));
+const display = computed(() =>
+  props.multiple || isEmpty.value ? (isEmpty.value ? props.placeholder : null) : optionText(selected.value[0]),
+);
 const srValue = computed(() =>
-  props.multiple && !isEmpty.value ? `${strings.value.selected(selected.value.length)}: ${selected.value.map(optionText).join(', ')}` : null,
+  props.multiple && !isEmpty.value
+    ? `${strings.value.selected(selected.value.length)}: ${selected.value.map(optionText).join(', ')}`
+    : null,
 );
 
 const triggerAttrs = computed<Record<string, unknown>>(() => {
@@ -302,7 +314,11 @@ const triggerAttrs = computed<Record<string, unknown>>(() => {
     id: triggerId.value,
     disabled: isDisabled.value,
     'aria-labelledby': labelled ? rest['aria-labelledby'] : `${triggerId.value}-label ${valueId}`,
-    'aria-describedby': joinIds(rest['aria-describedby'] as string | undefined, field?.value.describedBy, rest['aria-label'] ? valueId : null),
+    'aria-describedby': joinIds(
+      rest['aria-describedby'] as string | undefined,
+      field?.value.describedBy,
+      rest['aria-label'] ? valueId : null,
+    ),
     'aria-invalid': isInvalid.value ? 'true' : undefined,
     'aria-expanded': String(open.value),
     // The dropdown panel; on phones the list opens in a modal Dialog instead, which takes focus itself.
@@ -338,6 +354,7 @@ defineExpose({ focus: () => trigger.value?.focus(), open: () => setOpen(true), c
 </script>
 
 <template>
+  <!-- eslint-disable-next-line vuejs-accessibility/no-static-element-interactions -- mousedown on the box only keeps focus on the trigger; the trigger button is the keyboard path -->
   <div
     ref="box"
     :class="[
@@ -356,7 +373,9 @@ defineExpose({ focus: () => trigger.value?.focus(), open: () => setOpen(true), c
     :style="attrs.style as any"
     @mousedown="onBoxMouseDown"
   >
-    <span v-if="prefixIcon" class="q-input__affix q-input__affix--start" aria-hidden="true"><QIcon :name="prefixIcon" /></span>
+    <span v-if="prefixIcon" class="q-input__affix q-input__affix--start" aria-hidden="true"
+      ><QIcon :name="prefixIcon"
+    /></span>
     <template v-if="multiple">
       <QTag
         v-for="o in selected.slice(0, maxChips)"
@@ -373,9 +392,19 @@ defineExpose({ focus: () => trigger.value?.focus(), open: () => setOpen(true), c
         {{ strings.more(selected.length - maxChips) }}
       </span>
     </template>
-    <button ref="trigger" v-bind="triggerAttrs" type="button" class="q-combo__trigger" @click="setOpen(!open)" @keydown="onTriggerKeyDown">
-      <span :id="valueId" :class="['q-combo__value', isEmpty && 'q-combo__value--placeholder', srValue && 'q-visually-hidden']">
-        {{ srValue || display || ' ' }}
+    <button
+      ref="trigger"
+      v-bind="triggerAttrs"
+      type="button"
+      class="q-combo__trigger"
+      @click="setOpen(!open)"
+      @keydown="onTriggerKeyDown"
+    >
+      <span
+        :id="valueId"
+        :class="['q-combo__value', isEmpty && 'q-combo__value--placeholder', srValue && 'q-visually-hidden']"
+      >
+        {{ srValue || display || '\u00a0' }}
       </span>
     </button>
     <button

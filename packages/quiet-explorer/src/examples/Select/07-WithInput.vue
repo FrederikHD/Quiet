@@ -9,8 +9,12 @@ const values = reactive({ amount: '120,00', currency: 'EUR' });
 <template>
   <QForm label-placement="top">
     <QFieldGroup label="Gift card value" :columns="[3, 1]" connected>
-      <QField label="Amount" label-hidden><QInput v-model="values.amount" numeric align="end" inputmode="decimal" /></QField>
-      <QField label="Currency" label-hidden><QSelect v-model="values.currency" :options="['EUR', 'CHF', 'GBP']" /></QField>
+      <QField label="Amount" label-hidden
+        ><QInput v-model="values.amount" numeric align="end" inputmode="decimal"
+      /></QField>
+      <QField label="Currency" label-hidden
+        ><QSelect v-model="values.currency" :options="['EUR', 'CHF', 'GBP']"
+      /></QField>
     </QFieldGroup>
   </QForm>
 </template>

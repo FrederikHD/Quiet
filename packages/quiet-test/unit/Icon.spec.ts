@@ -28,8 +28,16 @@ describe('QIcon', () => {
   });
 
   it('maps sizes to tokens', () => {
-    for (const [size, token] of [['sm', '--icon-sm'], ['lg', '--icon-lg'], ['control', '--ctl-icon']] as const) {
-      expect(mount(QIcon, { props: { name: 'x', size } }).get('svg').attributes('style')).toContain(token);
+    for (const [size, token] of [
+      ['sm', '--icon-sm'],
+      ['lg', '--icon-lg'],
+      ['control', '--ctl-icon'],
+    ] as const) {
+      expect(
+        mount(QIcon, { props: { name: 'x', size } })
+          .get('svg')
+          .attributes('style'),
+      ).toContain(token);
     }
   });
 

@@ -18,7 +18,10 @@ const fontStack = (family: string) => (tokens.type.families as Record<string, st
 </script>
 
 <template>
-  <QPage title="Tokens" subtitle="Generated into tokens.css as CSS custom properties: var(--brand), var(--space-4), var(--text-body) …">
+  <QPage
+    title="Tokens"
+    subtitle="Generated into tokens.css as CSS custom properties: var(--brand), var(--space-4), var(--text-body) …"
+  >
     <section class="ex-section" aria-labelledby="tokens-colour">
       <h2 id="tokens-colour" class="ex-h2">Colour</h2>
       <QTable
@@ -32,7 +35,9 @@ const fontStack = (family: string) => (tokens.type.families as Record<string, st
         :rows="colours"
         row-key="name"
       >
-        <template #cell-name="{ row }"><code>--{{ row.name }}</code></template>
+        <template #cell-name="{ row }"
+          ><code>--{{ row.name }}</code></template
+        >
         <template v-for="t in themes" :key="t.id" #[`cell-${t.id}`]="{ row }">
           <span class="ex-swatch">
             <span class="ex-swatch__chip" :style="{ background: valueIn(row, t.id) }" />
@@ -43,23 +48,38 @@ const fontStack = (family: string) => (tokens.type.families as Record<string, st
     </section>
 
     <QCard title="Type" :heading-level="2">
-      <p class="ex-muted">Font: <code>{{ fontStack('sans') }}</code>. Use the shorthand <code>font: var(--text-body)</code> or the class <code>.q-text-body</code>.</p>
+      <p class="ex-muted">
+        Font: <code>{{ fontStack('sans') }}</code
+        >. Use the shorthand <code>font: var(--text-body)</code> or the class <code>.q-text-body</code>.
+      </p>
       <div v-for="g in tokens.type.groups" :key="g.name" class="ex-type-group">
         <h3 class="ex-h3">{{ g.name }}</h3>
         <div v-for="s in g.styles" :key="s.name" class="ex-type-row">
           <code>{{ s.name }}</code>
           <span class="ex-type-meta">{{ s.fontSize }}/{{ s.lineHeight }} · {{ s.fontWeight }}</span>
-          <span :style="{ font: `${s.fontWeight} ${s.fontSize}/${s.lineHeight} ${fontStack(g.family)}` }">Linen shirt, navy — 59,00 €</span>
+          <span :style="{ font: `${s.fontWeight} ${s.fontSize}/${s.lineHeight} ${fontStack(g.family)}` }"
+            >Linen shirt, navy — 59,00 €</span
+          >
         </div>
       </div>
     </QCard>
 
-    <QCard v-for="[family, def] in families" :key="family" :title="family.charAt(0).toUpperCase() + family.slice(1)" :heading-level="2" :description="def.note">
+    <QCard
+      v-for="[family, def] in families"
+      :key="family"
+      :title="family.charAt(0).toUpperCase() + family.slice(1)"
+      :heading-level="2"
+      :description="def.note"
+    >
       <div v-for="t in def.tokens" :key="t.name" class="ex-scale-row">
         <code>--{{ t.name }}</code>
         <span class="ex-type-meta">{{ t.value }}</span>
         <span v-if="family === 'radius'" class="ex-radius" :style="{ borderRadius: String(t.value) }" />
-        <span v-else-if="family === 'spacing' || family === 'size'" class="ex-bar" :style="{ width: String(t.value) }" />
+        <span
+          v-else-if="family === 'spacing' || family === 'size'"
+          class="ex-bar"
+          :style="{ width: String(t.value) }"
+        />
         <span class="ex-muted">{{ t.usage }}</span>
       </div>
     </QCard>

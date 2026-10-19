@@ -13,5 +13,7 @@ const query = ref('#1049');
 </template>
 
 <style scoped>
-.search { max-width: 320px; }
+.search {
+  max-width: 320px;
+}
 </style>

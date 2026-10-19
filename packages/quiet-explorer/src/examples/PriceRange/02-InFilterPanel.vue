@@ -13,5 +13,7 @@ const range = ref<[number, number]>([20, 120]);
 </template>
 
 <style scoped>
-.panel { max-width: 300px; }
+.panel {
+  max-width: 300px;
+}
 </style>

@@ -18,7 +18,9 @@ export interface BreadcrumbsProps {
 }
 
 const props = withDefaults(defineProps<BreadcrumbsProps>(), { strings: undefined });
-const emit = defineEmits<{ /** A crumb was clicked (for client-side routing). */ navigate: [item: BreadcrumbItem, event: MouseEvent] }>();
+const emit = defineEmits<{
+  /** A crumb was clicked (for client-side routing). */ navigate: [item: BreadcrumbItem, event: MouseEvent];
+}>();
 
 const strings = useStrings('breadcrumbs', { label: 'Breadcrumb' }, () => props.strings);
 const items = computed(() => props.items.filter((x): x is BreadcrumbItem => !!x));

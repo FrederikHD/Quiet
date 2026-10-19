@@ -1,36 +1,86 @@
 /* Group label: heads its fields — heavier, a little more room above the row.
    Without a label the column only exists when labels sit beside, to keep the row aligned with other fields. */
-.q-fgroup > .q-field__layout > .q-field__labelcol > .q-field__label { font-weight: 600; }
-.q-fgroup > .q-field__layout { row-gap: var(--space-2); }
-.q-fgroup--unlabelled > .q-field__layout > .q-field__labelcol { display: none; }
+.q-fgroup > .q-field__layout > .q-field__labelcol > .q-field__label {
+  font-weight: 600;
+}
+.q-fgroup > .q-field__layout {
+  row-gap: var(--space-2);
+}
+.q-fgroup--unlabelled > .q-field__layout > .q-field__labelcol {
+  display: none;
+}
 
 /* Group row: FieldGroup measures itself and adds --stacked when its narrowest column would be too small
    (about 100px; 88px for stack="late" rows of short values, which also get tighter input padding). */
-.q-fgroup__controls { container-type: inline-size; min-width: 0; }
-.q-fgroup__row { display: grid; gap: var(--field-gap) var(--space-3); align-items: start; }
-.q-fgroup--stacked > .q-field__layout .q-fgroup__row { grid-template-columns: minmax(0, 1fr) !important; }
+.q-fgroup__controls {
+  container-type: inline-size;
+  min-width: 0;
+}
+.q-fgroup__row {
+  display: grid;
+  gap: var(--field-gap) var(--space-3);
+  align-items: start;
+}
+.q-fgroup--stacked > .q-field__layout .q-fgroup__row {
+  grid-template-columns: minmax(0, 1fr) !important;
+}
 @supports (grid-template-rows: subgrid) {
   /* A field in a row joins the row's lines. It must not be a size container (containment blocks subgrid);
      it doesn't need to be one, since labels in a group are always on top. */
-  .q-fgroup__row > .q-field { container-type: normal; display: grid; grid-row: span 2; grid-template-rows: subgrid; row-gap: var(--ctl-gap); }
-  .q-fgroup__row > .q-field > .q-field__layout { display: contents; }
-  .q-fgroup__row > .q-field > .q-field__layout > .q-field__labelcol { align-self: end; }
+  .q-fgroup__row > .q-field {
+    container-type: normal;
+    display: grid;
+    grid-row: span 2;
+    grid-template-rows: subgrid;
+    row-gap: var(--ctl-gap);
+  }
+  .q-fgroup__row > .q-field > .q-field__layout {
+    display: contents;
+  }
+  .q-fgroup__row > .q-field > .q-field__layout > .q-field__labelcol {
+    align-self: end;
+  }
 }
 /* Connected: the parts join into one control — no gap, one shared 1px border between parts, only the outer corners rounded.
    The hovered, focused or invalid part is drawn on top so its border and ring are never hidden. Stacked rows come apart. */
-.q-fgroup--connected:not(.q-fgroup--stacked) > .q-field__layout .q-fgroup__row { column-gap: 0; }
-.q-fgroup--connected:not(.q-fgroup--stacked) .q-fgroup__row > .q-field + .q-field .q-input { margin-left: -1px; width: calc(100% + 1px); }
-.q-fgroup--connected:not(.q-fgroup--stacked) .q-fgroup__row > .q-field:not(:first-child) .q-input { border-top-left-radius: 0; border-bottom-left-radius: 0; }
-.q-fgroup--connected:not(.q-fgroup--stacked) .q-fgroup__row > .q-field:not(:last-child) .q-input { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+.q-fgroup--connected:not(.q-fgroup--stacked) > .q-field__layout .q-fgroup__row {
+  column-gap: 0;
+}
+.q-fgroup--connected:not(.q-fgroup--stacked) .q-fgroup__row > .q-field + .q-field .q-input {
+  margin-left: -1px;
+  width: calc(100% + 1px);
+}
+.q-fgroup--connected:not(.q-fgroup--stacked) .q-fgroup__row > .q-field:not(:first-child) .q-input {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.q-fgroup--connected:not(.q-fgroup--stacked) .q-fgroup__row > .q-field:not(:last-child) .q-input {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
 .q-fgroup--connected .q-fgroup__row .q-input:hover,
-.q-fgroup--connected .q-fgroup__row .q-input--invalid { z-index: 1; }
-.q-fgroup--connected .q-fgroup__row .q-input:focus-within { z-index: 2; }
-.q-fgroup--connected:not(.q-fgroup--stacked) .q-fgroup__row > .q-field + .q-field .q-field__label { padding-left: var(--space-2); }
+.q-fgroup--connected .q-fgroup__row .q-input--invalid {
+  z-index: 1;
+}
+.q-fgroup--connected .q-fgroup__row .q-input:focus-within {
+  z-index: 2;
+}
+.q-fgroup--connected:not(.q-fgroup--stacked) .q-fgroup__row > .q-field + .q-field .q-field__label {
+  padding-left: var(--space-2);
+}
 
 @container (max-width: 459px) {
-  .q-fgroup--late > .q-field__layout .q-fgroup__row { column-gap: var(--space-2); }
+  .q-fgroup--late > .q-field__layout .q-fgroup__row {
+    column-gap: var(--space-2);
+  }
   .q-fgroup--late > .q-field__layout .q-input,
-  .q-fgroup--connected:not(.q-fgroup--stacked) > .q-field__layout .q-input { padding: 0 var(--space-2); gap: var(--space-1); }
+  .q-fgroup--connected:not(.q-fgroup--stacked) > .q-field__layout .q-input {
+    padding: 0 var(--space-2);
+    gap: var(--space-1);
+  }
   .q-fgroup--late > .q-field__layout .q-select,
-  .q-fgroup--connected:not(.q-fgroup--stacked) > .q-field__layout .q-select { --q-select-pad-l: var(--space-2); --q-select-pad-r: calc(var(--space-2) + var(--ctl-icon) + var(--space-1)); }
+  .q-fgroup--connected:not(.q-fgroup--stacked) > .q-field__layout .q-select {
+    --q-select-pad-l: var(--space-2);
+    --q-select-pad-r: calc(var(--space-2) + var(--ctl-icon) + var(--space-1));
+  }
 }

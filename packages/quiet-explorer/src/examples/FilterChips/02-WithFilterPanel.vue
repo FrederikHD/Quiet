@@ -19,5 +19,8 @@ const chips = computed(() => chosen.value.map((c) => ({ key: c, label: c, swatch
 </template>
 
 <style scoped>
-.filters { display: grid; gap: var(--space-4); }
+.filters {
+  display: grid;
+  gap: var(--space-4);
+}
 </style>

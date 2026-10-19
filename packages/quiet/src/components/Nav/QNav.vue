@@ -15,7 +15,12 @@ export interface NavProps {
 }
 
 const props = withDefaults(defineProps<NavProps>(), { sections: undefined, items: undefined, strings: undefined });
-const emit = defineEmits<{ /** An item was clicked (for client-side routing; links still navigate unless you prevent it). */ navigate: [item: NavItem, event: MouseEvent] }>();
+const emit = defineEmits<{
+  /** An item was clicked (for client-side routing; links still navigate unless you prevent it). */ navigate: [
+    item: NavItem,
+    event: MouseEvent,
+  ];
+}>();
 
 const strings = useStrings('shell', { nav: 'Main' }, () => props.strings);
 const baseId = useQuietId('q-nav-');
@@ -33,7 +38,13 @@ const sections = computed<NavSection[]>(() => props.sections ?? [{ items: props.
     >
       <div v-if="s.title" :id="`${baseId}-s${si}`" class="q-nav__title">{{ s.title }}</div>
       <ul class="q-nav__list">
-        <QNavItem v-for="(it, i) in s.items" :key="it.key ?? it.href ?? i" :item="it" :depth="0" @navigate="(item, e) => emit('navigate', item, e)" />
+        <QNavItem
+          v-for="(it, i) in s.items"
+          :key="it.key ?? it.href ?? i"
+          :item="it"
+          :depth="0"
+          @navigate="(item, e) => emit('navigate', item, e)"
+        />
       </ul>
     </div>
   </nav>

@@ -13,5 +13,7 @@ const billing = ref<Address>({ country: 'AT', company: 'Leinenhaus GmbH' });
 </template>
 
 <style scoped>
-.address { max-width: 560px; }
+.address {
+  max-width: 560px;
+}
 </style>

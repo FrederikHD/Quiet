@@ -33,14 +33,14 @@ function go(tab: TabItem, e: MouseEvent) {
   e.preventDefault();
   void router.push(path);
 }
-const usage = computed(
-  () => `import { ${entry.value.apis.map((a) => a.name).join(', ')} } from '@frederikhd/quiet';`,
-);
+const usage = computed(() => `import { ${entry.value.apis.map((a) => a.name).join(', ')} } from '@frederikhd/quiet';`);
 </script>
 
 <template>
   <QPage :title="entry.title" :subtitle="entry.summary">
-    <template #title-meta><QBadge>{{ entry.group }}</QBadge></template>
+    <template #title-meta
+      ><QBadge>{{ entry.group }}</QBadge></template
+    >
     <QTabs :model-value="current" :label="`${entry.title} documentation`" :tabs="tabs" @navigate="go">
       <div v-if="current === 'docs'" class="ex-stack">
         <ExampleView v-if="entry.examples[0]" :example="entry.examples[0]" />
@@ -69,9 +69,16 @@ const usage = computed(
             mobile="cards"
             density="compact"
           >
-            <template #cell-name="{ row }"><code>{{ row.name }}</code><span v-if="row.required" class="ex-required"> required</span></template>
-            <template #cell-type="{ row }"><code class="ex-type">{{ row.type }}</code></template>
-            <template #cell-default="{ row }"><code v-if="row.default">{{ row.default }}</code></template>
+            <template #cell-name="{ row }"
+              ><code>{{ row.name }}</code
+              ><span v-if="row.required" class="ex-required"> required</span></template
+            >
+            <template #cell-type="{ row }"
+              ><code class="ex-type">{{ row.type }}</code></template
+            >
+            <template #cell-default="{ row }"
+              ><code v-if="row.default">{{ row.default }}</code></template
+            >
             <template #empty>No props.</template>
           </QTable>
           <QTable
@@ -87,8 +94,12 @@ const usage = computed(
             mobile="cards"
             density="compact"
           >
-            <template #cell-name="{ row }"><code>@{{ row.name }}</code></template>
-            <template #cell-type="{ row }"><code class="ex-type">{{ row.type }}</code></template>
+            <template #cell-name="{ row }"
+              ><code>@{{ row.name }}</code></template
+            >
+            <template #cell-type="{ row }"
+              ><code class="ex-type">{{ row.type }}</code></template
+            >
           </QTable>
           <QTable
             v-if="api.slots.length"
@@ -103,8 +114,12 @@ const usage = computed(
             mobile="cards"
             density="compact"
           >
-            <template #cell-name="{ row }"><code>#{{ row.name }}</code></template>
-            <template #cell-type="{ row }"><code class="ex-type">{{ row.type === '{}' ? '' : row.type }}</code></template>
+            <template #cell-name="{ row }"
+              ><code>#{{ row.name }}</code></template
+            >
+            <template #cell-type="{ row }"
+              ><code class="ex-type">{{ row.type === '{}' ? '' : row.type }}</code></template
+            >
           </QTable>
           <QTable
             v-if="api.exposed.length"
@@ -118,15 +133,21 @@ const usage = computed(
             mobile="cards"
             density="compact"
           >
-            <template #cell-name="{ row }"><code>{{ row.name }}</code></template>
-            <template #cell-type="{ row }"><code class="ex-type">{{ row.type }}</code></template>
+            <template #cell-name="{ row }"
+              ><code>{{ row.name }}</code></template
+            >
+            <template #cell-type="{ row }"
+              ><code class="ex-type">{{ row.type }}</code></template
+            >
           </QTable>
         </section>
       </div>
 
       <div v-else class="ex-stack">
         <nav v-if="entry.examples.length > 2" class="ex-toc" aria-label="Examples on this page">
-          <RouterLink v-for="ex in entry.examples" :key="ex.id" :to="{ hash: `#${ex.id}` }" class="ex-toc__link">{{ ex.title }}</RouterLink>
+          <RouterLink v-for="ex in entry.examples" :key="ex.id" :to="{ hash: `#${ex.id}` }" class="ex-toc__link">{{
+            ex.title
+          }}</RouterLink>
         </nav>
         <ExampleView v-for="ex in entry.examples" :key="ex.id" :example="ex" />
         <p v-if="!entry.examples.length" class="ex-muted">No examples yet.</p>

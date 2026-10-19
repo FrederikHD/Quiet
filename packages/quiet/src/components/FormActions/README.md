@@ -25,7 +25,10 @@ The row of buttons that ends a form: secondary actions first, the primary action
 </QFormActions>
 
 <style scoped>
-.end { display: flex; gap: var(--space-2); }
+.end {
+  display: flex;
+  gap: var(--space-2);
+}
 </style>
 ```
 

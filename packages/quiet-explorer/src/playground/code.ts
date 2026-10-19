@@ -21,9 +21,19 @@ function attr(name: string, value: unknown): string | null {
   return `:${k}="${literal(value)}"`;
 }
 
-export function templateFor(story: Story, props: Record<string, unknown>, defaults: Record<string, unknown>, slotText: Record<string, string>): string {
+export function templateFor(
+  story: Story,
+  props: Record<string, unknown>,
+  defaults: Record<string, unknown>,
+  slotText: Record<string, string>,
+): string {
   const attrs: string[] = [];
-  if (story.model) attrs.push(story.model.prop && story.model.prop !== 'modelValue' ? `v-model:${kebab(story.model.prop)}="${story.model.prop}"` : 'v-model="value"');
+  if (story.model)
+    attrs.push(
+      story.model.prop && story.model.prop !== 'modelValue'
+        ? `v-model:${kebab(story.model.prop)}="${story.model.prop}"`
+        : 'v-model="value"',
+    );
   for (const [k, v] of Object.entries(props)) {
     if (k === story.model?.prop || (story.model && !story.model.prop && k === 'modelValue')) continue;
     if (JSON.stringify(v) === JSON.stringify(defaults[k])) continue;
@@ -35,8 +45,14 @@ export function templateFor(story: Story, props: Record<string, unknown>, defaul
     ...(slotText.default ? [slotText.default] : []),
     ...named.map(([n, t]) => `<template #${n}>${t}</template>`),
   ];
-  const open = attrs.length > 2 || attrs.join(' ').length > 60 ? `<${story.name}\n  ${attrs.join('\n  ')}\n` : `<${story.name}${attrs.length ? ' ' + attrs.join(' ') : ''}`;
-  let code = inner.length ? `${open}>${inner.length > 1 || open.includes('\n') ? `\n  ${inner.join('\n  ')}\n` : inner[0]}</${story.name}>` : `${open}${open.endsWith('\n') ? '' : ' '}/>`;
-  if (story.field) code = `<QField label="${story.field.label}"${story.field.hint ? ` hint="${story.field.hint}"` : ''}>\n  ${code.replace(/\n/g, '\n  ')}\n</QField>`;
+  const open =
+    attrs.length > 2 || attrs.join(' ').length > 60
+      ? `<${story.name}\n  ${attrs.join('\n  ')}\n`
+      : `<${story.name}${attrs.length ? ' ' + attrs.join(' ') : ''}`;
+  let code = inner.length
+    ? `${open}>${inner.length > 1 || open.includes('\n') ? `\n  ${inner.join('\n  ')}\n` : inner[0]}</${story.name}>`
+    : `${open}${open.endsWith('\n') ? '' : ' '}/>`;
+  if (story.field)
+    code = `<QField label="${story.field.label}"${story.field.hint ? ` hint="${story.field.hint}"` : ''}>\n  ${code.replace(/\n/g, '\n  ')}\n</QField>`;
   return code;
 }

@@ -91,7 +91,10 @@ const isEmpty = computed(() => props.placeholder != null && (model.value == null
 const hasPrefix = computed(() => !!props.prefixIcon || !!slots.prefix);
 
 if (import.meta.env.DEV && !controlId.value && !attrs['aria-label'] && !attrs['aria-labelledby']) {
-  warnOnce('select-label', 'Select: give it a visible label — wrap it in Field, or pass id, aria-label or aria-labelledby.');
+  warnOnce(
+    'select-label',
+    'Select: give it a visible label — wrap it in Field, or pass id, aria-label or aria-labelledby.',
+  );
 }
 
 const selectAttrs = computed<Record<string, unknown>>(() => {
@@ -142,13 +145,16 @@ defineExpose({ select, focus: () => select.value?.focus() });
     <span v-if="hasPrefix" class="q-input__affix q-input__affix--start q-select__prefix" aria-hidden="true">
       <slot name="prefix"><QIcon v-if="prefixIcon" :name="prefixIcon" /></slot>
     </span>
+    <!-- eslint-disable-next-line vuejs-accessibility/form-control-has-label -- labelled from outside: by the Field label (for=id) or an aria-label passed through -->
     <select ref="select" v-bind="selectAttrs" class="q-select__field" @change="onChange">
       <!-- Required: the placeholder can't be picked again once something is chosen. Optional: it stays as the "none" choice. -->
       <option v-if="placeholder != null" value="" :disabled="isRequired" :hidden="isRequired">{{ placeholder }}</option>
       <template v-if="options">
         <template v-for="(o, i) in options" :key="isGroup(o) ? `g${i}` : optValue(o)">
           <optgroup v-if="isGroup(o)" :label="o.label" :disabled="o.disabled">
-            <option v-for="c in o.options" :key="optValue(c)" :value="optValue(c)" :disabled="optDisabled(c)">{{ optLabel(c) }}</option>
+            <option v-for="c in o.options" :key="optValue(c)" :value="optValue(c)" :disabled="optDisabled(c)">
+              {{ optLabel(c) }}
+            </option>
           </optgroup>
           <option v-else :value="optValue(o)" :disabled="optDisabled(o)">{{ optLabel(o) }}</option>
         </template>

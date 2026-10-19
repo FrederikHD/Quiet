@@ -112,7 +112,11 @@ let seq = 0;
 const made = new Map<string, string>();
 watch(model, (list) => {
   const keep = new Set(list.map((i) => i.key));
-  for (const [k, url] of made) if (!keep.has(k)) (URL.revokeObjectURL(url), made.delete(k));
+  for (const [k, url] of made) {
+    if (keep.has(k)) continue;
+    URL.revokeObjectURL(url);
+    made.delete(k);
+  }
 });
 onBeforeUnmount(() => made.clear()); // items still in the value keep their preview: the app may show them again
 
@@ -123,7 +127,12 @@ function add(files: FileList | null | undefined) {
   const room = props.maxFiles ? props.maxFiles - (multiple.value ? model.value.length : 0) : Infinity;
   for (const f of Array.from(files ?? [])) {
     if (!matches(f, accept.value)) {
-      errs.push(strings.value.wrongType(f.name, images.value && !props.accept ? strings.value.acceptImages : (props.acceptLabel ?? accept.value ?? '')));
+      errs.push(
+        strings.value.wrongType(
+          f.name,
+          images.value && !props.accept ? strings.value.acceptImages : (props.acceptLabel ?? accept.value ?? ''),
+        ),
+      );
       continue;
     }
     if (props.maxSize && f.size > props.maxSize) {
@@ -153,7 +162,9 @@ async function remove(it: FileUploadItem, i: number) {
   (btns[Math.min(i, btns.length - 1)] ?? root.value?.querySelector<HTMLElement>('.q-upload__zone .q-btn'))?.focus();
 }
 
-const chooseLabel = computed(() => (images.value ? strings.value.chooseImages : multiple.value ? strings.value.choose : strings.value.chooseOne));
+const chooseLabel = computed(() =>
+  images.value ? strings.value.chooseImages : multiple.value ? strings.value.choose : strings.value.chooseOne,
+);
 const hasRoom = computed(() => !props.maxFiles || model.value.length < props.maxFiles || !multiple.value);
 const buttonAttrs = computed<Record<string, unknown>>(() => {
   const { class: _c, style: _s, ...rest } = attrs;
@@ -162,8 +173,14 @@ const buttonAttrs = computed<Record<string, unknown>>(() => {
     id: controlId.value,
     'aria-invalid': isInvalid.value ? 'true' : undefined,
     // Named by the field's label and its own text — "Images, Add images" — not by the label alone.
-    'aria-labelledby': rest['aria-label'] ? undefined : joinIds((rest['aria-labelledby'] as string) ?? (controlId.value ? `${controlId.value}-label` : null), textId),
-    'aria-describedby': joinIds(rest['aria-describedby'] as string | undefined, field?.value.describedBy, rejects.value.length > 0 && msgId),
+    'aria-labelledby': rest['aria-label']
+      ? undefined
+      : joinIds((rest['aria-labelledby'] as string) ?? (controlId.value ? `${controlId.value}-label` : null), textId),
+    'aria-describedby': joinIds(
+      rest['aria-describedby'] as string | undefined,
+      field?.value.describedBy,
+      rejects.value.length > 0 && msgId,
+    ),
   };
 });
 function onDragOver(e: DragEvent) {
@@ -185,13 +202,25 @@ defineExpose({ add, focus: () => (button.value?.$el as HTMLElement | undefined)?
 <template>
   <div
     ref="root"
-    :class="['q-upload', images && 'q-upload--images', isInvalid && 'is-invalid', isDisabled && 'is-disabled', attrs.class]"
+    :class="[
+      'q-upload',
+      images && 'q-upload--images',
+      isInvalid && 'is-invalid',
+      isDisabled && 'is-disabled',
+      attrs.class,
+    ]"
     :style="attrs.style as any"
   >
     <!-- Images: the grid first, then the add zone. Files: the zone first, then the list. -->
     <template v-for="part in images ? ['list', 'zone'] : ['zone', 'list']" :key="part">
       <div v-if="part === 'zone'">
-        <div :class="['q-upload__zone', over && 'is-over']" @dragover="onDragOver" @dragleave="onDragLeave" @drop="onDrop">
+        <!-- eslint-disable-next-line vuejs-accessibility/no-static-element-interactions -- drag-and-drop target; the "Choose files" button is the keyboard path -->
+        <div
+          :class="['q-upload__zone', over && 'is-over']"
+          @dragover="onDragOver"
+          @dragleave="onDragLeave"
+          @drop="onDrop"
+        >
           <input
             :ref="(el) => (input = el as HTMLInputElement | null)"
             type="file"
@@ -228,10 +257,22 @@ defineExpose({ add, focus: () => (button.value?.$el as HTMLElement | undefined)?
             <span class="q-upload__text">
               <span class="q-upload__name">{{ it.name }}</span>
               <span class="q-upload__meta">
-                {{ images && i === 0 ? strings.main + (it.size ? ` · ${formatSize(it.size)}` : '') : it.size ? formatSize(it.size) : '' }}
+                {{
+                  images && i === 0
+                    ? strings.main + (it.size ? ` · ${formatSize(it.size)}` : '')
+                    : it.size
+                      ? formatSize(it.size)
+                      : ''
+                }}
               </span>
             </span>
-            <button v-if="!isDisabled" type="button" class="q-upload__remove" :aria-label="strings.remove(it.name)" @click="remove(it, i)">
+            <button
+              v-if="!isDisabled"
+              type="button"
+              class="q-upload__remove"
+              :aria-label="strings.remove(it.name)"
+              @click="remove(it, i)"
+            >
               <QIcon name="x" size="sm" />
             </button>
           </li>

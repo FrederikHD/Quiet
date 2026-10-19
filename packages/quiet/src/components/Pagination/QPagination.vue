@@ -96,22 +96,32 @@ const strings = useStrings<Required<PaginationStrings>>(
   () => props.strings,
 );
 
-const size = computed(() => pageSizeModel.value || 50);
-const pages = computed(() => (props.total != null ? Math.max(1, Math.ceil(props.total / size.value)) : null));
+const perPage = computed(() => pageSizeModel.value || 50);
+const pages = computed(() => (props.total != null ? Math.max(1, Math.ceil(props.total / perPage.value)) : null));
 const current = computed(() => Math.max(1, Math.min(page.value || 1, pages.value ?? Infinity)));
-const from = computed(() => (props.total === 0 ? 0 : (current.value - 1) * size.value + 1));
-const to = computed(() => (props.total != null ? Math.min(props.total, current.value * size.value) : current.value * size.value));
+const from = computed(() => (props.total === 0 ? 0 : (current.value - 1) * perPage.value + 1));
+const to = computed(() =>
+  props.total != null ? Math.min(props.total, current.value * perPage.value) : current.value * perPage.value,
+);
 const hasPrev = computed(() => current.value > 1);
 const hasNextPage = computed(() => props.hasNext ?? (pages.value != null && current.value < pages.value));
 // Numbered pages and first/last need the total; without it Pagination stays simple.
-const variant = computed(() => (pages.value != null && (props.variant === 'pages' || props.variant === 'compact') ? props.variant : 'simple'));
+const variant = computed(() =>
+  pages.value != null && (props.variant === 'pages' || props.variant === 'compact') ? props.variant : 'simple',
+);
 const firstLast = computed(() => props.showFirstLast && pages.value != null);
 const rangeText = computed(() =>
-  props.total != null ? strings.value.range(from.value, to.value, props.total) : strings.value.rangeOpen(from.value, to.value),
+  props.total != null
+    ? strings.value.range(from.value, to.value, props.total)
+    : strings.value.rangeOpen(from.value, to.value),
 );
 // What screen readers hear when the page changes: the range, or the page when the range is hidden.
 const announce = computed(() =>
-  props.showRange ? rangeText.value : pages.value != null ? strings.value.pageOf(current.value, pages.value) : strings.value.page(current.value),
+  props.showRange
+    ? rangeText.value
+    : pages.value != null
+      ? strings.value.pageOf(current.value, pages.value)
+      : strings.value.page(current.value),
 );
 
 // Page numbers with gaps: 1 … 4 5 6 … 25 (always the first and last page, `siblings` either side of the current one).
@@ -122,7 +132,13 @@ const pageItems = computed<(number | 'gap-start' | 'gap-end')[]>(() => {
   if (n <= 5 + s * 2) return range(1, n);
   const start = Math.max(Math.min(current.value - s, n - 1 - s * 2 - 1), 3);
   const end = Math.min(Math.max(current.value + s, 1 + s * 2 + 2), n - 2);
-  return [1, ...(start > 3 ? ['gap-start' as const] : [2]), ...range(start, end), ...(end < n - 2 ? ['gap-end' as const] : [n - 1]), n];
+  return [
+    1,
+    ...(start > 3 ? ['gap-start' as const] : [2]),
+    ...range(start, end),
+    ...(end < n - 2 ? ['gap-end' as const] : [n - 1]),
+    n,
+  ];
 });
 
 const root = ref<HTMLElement | null>(null);
@@ -145,7 +161,9 @@ watch(current, async () => {
   const r = root.value;
   const a = document.activeElement as HTMLButtonElement | null;
   if (!r || (a && r.contains(a) && !a.disabled)) return;
-  const next = r.querySelector<HTMLElement>('[aria-current="page"]') ?? r.querySelector<HTMLElement>('.q-pager__controls button:not([disabled]), .q-pager__controls a[href]');
+  const next =
+    r.querySelector<HTMLElement>('[aria-current="page"]') ??
+    r.querySelector<HTMLElement>('.q-pager__controls button:not([disabled]), .q-pager__controls a[href]');
   next?.focus();
 });
 
@@ -169,7 +187,8 @@ const jumpId = useQuietId('q-pager-jump-');
 const sizeId = useQuietId('q-pager-size-');
 const showJump = computed(() => props.jumpToPage && pages.value != null);
 const showSize = computed(() => props.showPageSize && !!props.pageSizeOptions?.length);
-const href = (p: number, enabled = true) => (props.hrefFor && enabled && !props.disabled ? props.hrefFor(p) : undefined);
+const href = (p: number, enabled = true) =>
+  props.hrefFor && enabled && !props.disabled ? props.hrefFor(p) : undefined;
 </script>
 
 <template>
@@ -186,7 +205,7 @@ const href = (p: number, enabled = true) => (props.hrefFor && enabled && !props.
           <QSelect
             :id="sizeId"
             :size="props.size"
-            :model-value="String(size)"
+            :model-value="String(perPage)"
             :options="pageSizeOptions!.map(String)"
             :disabled="disabled"
             @update:model-value="pageSizeModel = Number($event)"

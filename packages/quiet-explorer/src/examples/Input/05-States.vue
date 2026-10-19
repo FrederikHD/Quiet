@@ -15,5 +15,9 @@ const values = reactive({ email: 'anna@example', order: 'ORD-2026-01049', weight
 </template>
 
 <style scoped>
-.stack { display: grid; gap: var(--space-3); max-width: 320px; }
+.stack {
+  display: grid;
+  gap: var(--space-3);
+  max-width: 320px;
+}
 </style>

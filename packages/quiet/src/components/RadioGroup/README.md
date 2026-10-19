@@ -25,6 +25,7 @@ It is to Radio what Field is to Input. You put `<QRadio>`s inside, and the group
 - **CheckboxGroup:** any number of the options can be chosen.
 
 **Default or empty?**
+
 - Preselect the most common answer when there is one, such as product status "Active".
 - Leave it empty (`null`) when the choice is the customer's to make, such as payment, or delivery options at different prices. Mark it `required` and show an `error` if they submit without choosing.
 

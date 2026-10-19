@@ -3,16 +3,23 @@
 import { QBadge, QTable, money } from '@frederikhd/quiet';
 import { tile } from '../../fixtures/pictures';
 
-const products = ['Linen shirt, blue', 'Linen trousers, sand', 'Linen dress, olive', 'Linen apron, rust', 'Linen napkins (4)', 'Linen bed sheet, sage', 'Linen tea towel', 'Linen tote, natural'].map(
-  (name, i) => ({
-    id: `p${i}`,
-    name,
-    sku: `LS-${2040 + i * 7}`,
-    stock: [24, 3, 0, 58, 12, 7, 31, 0][i],
-    price: [59, 79, 99, 35, 24, 89, 14, 25][i],
-    vendor: ['Leinenweberei Rhön', 'Atelier Nord', 'Leinenweberei Rhön', 'Strickhaus Allgäu'][i % 4],
-  }),
-);
+const products = [
+  'Linen shirt, blue',
+  'Linen trousers, sand',
+  'Linen dress, olive',
+  'Linen apron, rust',
+  'Linen napkins (4)',
+  'Linen bed sheet, sage',
+  'Linen tea towel',
+  'Linen tote, natural',
+].map((name, i) => ({
+  id: `p${i}`,
+  name,
+  sku: `LS-${2040 + i * 7}`,
+  stock: [24, 3, 0, 58, 12, 7, 31, 0][i],
+  price: [59, 79, 99, 35, 24, 89, 14, 25][i],
+  vendor: ['Leinenweberei Rhön', 'Atelier Nord', 'Leinenweberei Rhön', 'Strickhaus Allgäu'][i % 4],
+}));
 </script>
 
 <template>
@@ -43,6 +50,15 @@ const products = ['Linen shirt, blue', 'Linen trousers, sand', 'Linen dress, oli
 </template>
 
 <style scoped>
-.product { display: inline-flex; align-items: center; gap: var(--space-3); }
-.thumb { flex: none; width: 32px; height: 32px; border-radius: var(--radius-sm); }
+.product {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.thumb {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+}
 </style>

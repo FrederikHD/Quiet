@@ -17,5 +17,7 @@ import { QCard, QDescriptionList } from '@frederikhd/quiet';
 </template>
 
 <style scoped>
-.narrow { max-width: 300px; }
+.narrow {
+  max-width: 300px;
+}
 </style>

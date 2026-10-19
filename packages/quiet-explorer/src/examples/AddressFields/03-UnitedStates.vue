@@ -13,5 +13,7 @@ const address = ref<Address>({ country: 'US' });
 </template>
 
 <style scoped>
-.address { max-width: 560px; }
+.address {
+  max-width: 560px;
+}
 </style>

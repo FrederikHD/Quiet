@@ -10,5 +10,7 @@ import { QCard, QMetric } from '@frederikhd/quiet';
 </template>
 
 <style scoped>
-.kpi { max-width: 280px; }
+.kpi {
+  max-width: 280px;
+}
 </style>

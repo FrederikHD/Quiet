@@ -29,7 +29,19 @@ const chose = ref('');
 </template>
 
 <style scoped>
-.stack { display: grid; gap: var(--space-3); }
-.row { display: flex; flex-wrap: wrap; gap: var(--space-2); }
-.log { margin: 0; min-height: 18px; font: var(--text-small); color: var(--ink-muted); }
+.stack {
+  display: grid;
+  gap: var(--space-3);
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.log {
+  margin: 0;
+  min-height: 18px;
+  font: var(--text-small);
+  color: var(--ink-muted);
+}
 </style>

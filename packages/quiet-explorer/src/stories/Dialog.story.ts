@@ -13,5 +13,7 @@ export default defineStory({
   },
   model: { prop: 'open', value: false },
   opener: 'Open the dialog',
-  slots: { footer: () => [h(QButton, null, () => 'Cancel'), h(QButton, { variant: 'danger' }, () => 'Delete product')] },
+  slots: {
+    footer: () => [h(QButton, null, () => 'Cancel'), h(QButton, { variant: 'danger' }, () => 'Delete product')],
+  },
 });

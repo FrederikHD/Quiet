@@ -6,13 +6,24 @@ import { computed, ref } from 'vue';
 const open = ref(false);
 const q = ref('');
 const suggestions = computed<SearchSuggestion[]>(() =>
-  q.value.trim() ? ['Linen shirt', 'Linen trousers', 'Linen dress'].filter((n) => n.toLowerCase().includes(q.value.trim().toLowerCase())).map((label) => ({ label, icon: 'search' as const })) : [],
+  q.value.trim()
+    ? ['Linen shirt', 'Linen trousers', 'Linen dress']
+        .filter((n) => n.toLowerCase().includes(q.value.trim().toLowerCase()))
+        .map((label) => ({ label, icon: 'search' as const }))
+    : [],
 );
 </script>
 
 <template>
   <QButton icon-start="search" @click="open = true">Search</QButton>
   <QDialog v-model:open="open" title="Search">
-    <QSearchBox v-model="q" inline autofocus label="Search the shop" :suggestions="suggestions" @select="open = false" @submit="open = false" />
+    <QSearchBox
+      v-model="q"
+      inline
+      label="Search the shop"
+      :suggestions="suggestions"
+      @select="open = false"
+      @submit="open = false"
+    />
   </QDialog>
 </template>

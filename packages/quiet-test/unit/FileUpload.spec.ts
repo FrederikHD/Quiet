@@ -37,7 +37,9 @@ describe('QFileUpload', () => {
   });
 
   it('takes several images in the images variant, list first', () => {
-    const w = mount(QFileUpload, { props: { variant: 'images', modelValue: [{ key: 'a', name: 'front.jpg', size: 284000, url: 'x.jpg' }] } });
+    const w = mount(QFileUpload, {
+      props: { variant: 'images', modelValue: [{ key: 'a', name: 'front.jpg', size: 284000, url: 'x.jpg' }] },
+    });
     expect(w.get('.q-upload').classes()).toContain('q-upload--images');
     expect(w.get('input').attributes('multiple')).toBeDefined();
     expect(w.get('input').attributes('accept')).toBe('image/jpeg,image/png,image/webp,image/gif');
@@ -67,8 +69,15 @@ describe('QFileUpload', () => {
   });
 
   it('rejects the wrong type, too big and too many — and says why', async () => {
-    const w = mount(QFileUpload, { props: { multiple: true, accept: '.pdf', acceptLabel: 'a PDF', maxSize: 1048576, maxFiles: 1 } });
-    await choose(w, [file('photo.jpg', 10, 'image/jpeg'), file('huge.pdf', 5 * 1048576, 'application/pdf'), file('a.pdf', 10, ''), file('b.pdf', 10, '')]);
+    const w = mount(QFileUpload, {
+      props: { multiple: true, accept: '.pdf', acceptLabel: 'a PDF', maxSize: 1048576, maxFiles: 1 },
+    });
+    await choose(w, [
+      file('photo.jpg', 10, 'image/jpeg'),
+      file('huge.pdf', 5 * 1048576, 'application/pdf'),
+      file('a.pdf', 10, ''),
+      file('b.pdf', 10, ''),
+    ]);
     const msgs = w.findAll('.q-upload__msg .q-field__msg--error').map((m) => m.text());
     expect(msgs).toEqual(['“photo.jpg” isn’t a PDF.', '“huge.pdf” is larger than 1 MB.', 'Only 1 file can be added.']);
     expect((w.emitted('update:modelValue')!.at(-1)![0] as FileUploadItem[]).map((i) => i.name)).toEqual(['a.pdf']);
@@ -77,7 +86,9 @@ describe('QFileUpload', () => {
   });
 
   it('disables the choose button when the list is full', () => {
-    const w = mount(QFileUpload, { props: { variant: 'images', maxFiles: 1, modelValue: [{ key: 'a', name: 'a.jpg' }] } });
+    const w = mount(QFileUpload, {
+      props: { variant: 'images', maxFiles: 1, modelValue: [{ key: 'a', name: 'a.jpg' }] },
+    });
     expect(w.get('.q-upload__zone button').attributes('disabled')).toBeDefined();
   });
 
@@ -86,7 +97,10 @@ describe('QFileUpload', () => {
       attachTo: document.body,
       props: {
         multiple: true,
-        modelValue: [{ key: 'a', name: 'a.pdf' }, { key: 'b', name: 'b.pdf' }],
+        modelValue: [
+          { key: 'a', name: 'a.pdf' },
+          { key: 'b', name: 'b.pdf' },
+        ],
         'onUpdate:modelValue': (v: FileUploadItem[]) => w.setProps({ modelValue: v }),
       },
     });

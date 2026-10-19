@@ -34,7 +34,9 @@ describe('QToaster and toast()', () => {
     const a = toast('Product saved');
     const b = toast('Couldn’t save', { tone: 'error' });
     await flushPromises();
-    expect(toaster().querySelector('[role="status"] .q-toast--neutral .q-toast__msg')?.textContent).toBe('Product saved');
+    expect(toaster().querySelector('[role="status"] .q-toast--neutral .q-toast__msg')?.textContent).toBe(
+      'Product saved',
+    );
     const err = toaster().querySelector('[role="alert"] .q-toast--error');
     expect(err?.querySelector('.q-lead')).not.toBeNull();
     expect(typeof a).toBe('number');

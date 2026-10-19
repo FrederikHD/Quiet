@@ -17,5 +17,10 @@ import { photo } from '../../fixtures/pictures';
 </template>
 
 <style scoped>
-.panel { max-width: 420px; padding: 0 var(--space-4); border-radius: var(--radius-md); background: var(--surface-sunken); }
+.panel {
+  max-width: 420px;
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--surface-sunken);
+}
 </style>

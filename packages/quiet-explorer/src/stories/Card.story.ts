@@ -6,6 +6,9 @@ export default defineStory({
   component: QCard,
   name: 'QCard',
   props: { title: 'Customer', description: 'Since March 2024 · 6 orders', headingLevel: 2 },
-  slots: { default: 'Anna Schmidt, anna@example.com', actions: () => h(QButton, { size: 'slim', variant: 'ghost' }, () => 'Edit') },
+  slots: {
+    default: 'Anna Schmidt, anna@example.com',
+    actions: () => h(QButton, { size: 'slim', variant: 'ghost' }, () => 'Edit'),
+  },
   layout: 'block',
 });

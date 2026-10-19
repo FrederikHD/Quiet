@@ -53,7 +53,11 @@ describe('QSearchBox', () => {
     const list = w.get('[role="listbox"]');
     expect(input.attributes('aria-controls')).toBe(list.attributes('id'));
     expect(list.attributes('aria-label')).toBe('Search');
-    expect(opts().map((o) => o.querySelector('.q-search__label')?.textContent)).toEqual(['Linen shirt', 'Linen trousers', 'Search for “lin”']);
+    expect(opts().map((o) => o.querySelector('.q-search__label')?.textContent)).toEqual([
+      'Linen shirt',
+      'Linen trousers',
+      'Search for “lin”',
+    ]);
     const first = opts()[0];
     expect(first.querySelector('img')?.getAttribute('alt')).toBe('');
     expect(first.querySelector('.q-search__desc')?.textContent).toBe('Shirts');
@@ -160,7 +164,12 @@ describe('QSearchBox', () => {
   });
 
   it('takes label, placeholder, strings and autofocus', async () => {
-    const w = box({ label: 'Search products', placeholder: 'Linen, shirts…', autofocus: true, strings: { searchFor: (q: string) => `Suche nach „${q}“`, count: () => 'n' } });
+    const w = box({
+      label: 'Search products',
+      placeholder: 'Linen, shirts…',
+      autofocus: true,
+      strings: { searchFor: (q: string) => `Suche nach „${q}“`, count: () => 'n' },
+    });
     await flushPromises();
     expect(w.get('label').text()).toBe('Search products');
     expect(w.get('input').attributes('placeholder')).toBe('Linen, shirts…');

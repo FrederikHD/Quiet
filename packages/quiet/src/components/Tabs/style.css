@@ -3,37 +3,127 @@
    segmented: a `surface-sunken` track; the chosen one is a raised `surface-raised` pill — for view switches (7 days | 30 days).
    Tabs follow the density (--ctl-h); slim is 28px on desktop like the other slim controls. */
 /* contain: the row's full width never leaks out to the page grid; it scrolls inside instead. */
-.q-tabs { --q-tab-h: var(--ctl-h); display: flex; flex-direction: column; box-sizing: border-box; width: 100%; min-width: 0; contain: inline-size; font-family: var(--font-sans); color: var(--ink); }
-.q-tabs--slim { --q-tab-h: var(--control-slim); }
-.q-tabs__bar { position: relative; min-width: 0; }
+.q-tabs {
+  --q-tab-h: var(--ctl-h);
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  contain: inline-size;
+  font-family: var(--font-sans);
+  color: var(--ink);
+}
+.q-tabs--slim {
+  --q-tab-h: var(--control-slim);
+}
+.q-tabs__bar {
+  position: relative;
+  min-width: 0;
+}
 .q-tabs__list {
-  position: relative; display: flex; gap: var(--space-1); margin: 0; padding: 0; list-style: none;
-  overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none; -webkit-overflow-scrolling: touch;
+  position: relative;
+  display: flex;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
 }
-.q-tabs__list::-webkit-scrollbar { display: none; }
+.q-tabs__list::-webkit-scrollbar {
+  display: none;
+}
 /* Edges that hide more tabs fade out. */
-.q-tabs__bar.is-end .q-tabs__list { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent); }
-.q-tabs__bar.is-start .q-tabs__list { -webkit-mask-image: linear-gradient(to left, #000 calc(100% - 32px), transparent); mask-image: linear-gradient(to left, #000 calc(100% - 32px), transparent); }
-.q-tabs__bar.is-start.is-end .q-tabs__list { -webkit-mask-image: linear-gradient(to right, transparent, #000 32px, #000 calc(100% - 32px), transparent); mask-image: linear-gradient(to right, transparent, #000 32px, #000 calc(100% - 32px), transparent); }
-.q-tabs__item { display: flex; flex: none; }
+.q-tabs__bar.is-end .q-tabs__list {
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent);
+  mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent);
+}
+.q-tabs__bar.is-start .q-tabs__list {
+  -webkit-mask-image: linear-gradient(to left, #000 calc(100% - 32px), transparent);
+  mask-image: linear-gradient(to left, #000 calc(100% - 32px), transparent);
+}
+.q-tabs__bar.is-start.is-end .q-tabs__list {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 32px, #000 calc(100% - 32px), transparent);
+  mask-image: linear-gradient(to right, transparent, #000 32px, #000 calc(100% - 32px), transparent);
+}
+.q-tabs__item {
+  display: flex;
+  flex: none;
+}
 .q-tabs__tab {
-  position: relative; display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); flex: none;
-  box-sizing: border-box; min-height: var(--q-tab-h); padding: 0 var(--space-3);
-  border: 0; border-radius: var(--radius-md) var(--radius-md) 0 0; background: transparent;
-  color: var(--ink-muted); font: inherit; font-size: var(--ctl-text); line-height: 1.35; font-weight: 500; white-space: nowrap;
-  text-decoration: none; cursor: pointer; -webkit-tap-highlight-color: transparent;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  flex: none;
+  box-sizing: border-box;
+  min-height: var(--q-tab-h);
+  padding: 0 var(--space-3);
+  border: 0;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  background: transparent;
+  color: var(--ink-muted);
+  font: inherit;
+  font-size: var(--ctl-text);
+  line-height: 1.35;
+  font-weight: 500;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
-.q-tabs__label { white-space: nowrap; }
-.q-tabs__icon { display: inline-flex; flex: none; width: var(--ctl-icon); height: var(--ctl-icon); }
-.q-tabs__icon > .q-icon { width: 100% !important; height: 100% !important; }
+.q-tabs__label {
+  white-space: nowrap;
+}
+.q-tabs__icon {
+  display: inline-flex;
+  flex: none;
+  width: var(--ctl-icon);
+  height: var(--ctl-icon);
+}
+.q-tabs__icon > .q-icon {
+  width: 100% !important;
+  height: 100% !important;
+}
 .q-tabs__count {
-  flex: none; min-width: 20px; box-sizing: border-box; padding: 0 6px; border-radius: var(--radius-full);
-  background: var(--surface-sunken); color: var(--ink-muted); font-size: 12px; line-height: 20px; font-weight: 500; text-align: center; font-variant-numeric: tabular-nums;
+  flex: none;
+  min-width: 20px;
+  box-sizing: border-box;
+  padding: 0 6px;
+  border-radius: var(--radius-full);
+  background: var(--surface-sunken);
+  color: var(--ink-muted);
+  font-size: 12px;
+  line-height: 20px;
+  font-weight: 500;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
 }
-.q-tabs__error { flex: none; width: 8px; height: 8px; border-radius: var(--radius-full); background: var(--danger); }
-.q-tabs__tab:focus-visible { outline: 2px solid var(--brand); outline-offset: -2px; }  /* inset: the row scrolls and would clip an outside ring */
-.q-tabs__tab:disabled { color: var(--ink-muted); opacity: .55; cursor: not-allowed; }
-.q-tabs--fill > .q-tabs__bar .q-tabs__tab, .q-tabs--fill > .q-tabs__bar .q-tabs__item { flex: 1 1 0; min-width: max-content; }
+.q-tabs__error {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--danger);
+}
+.q-tabs__tab:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: -2px;
+} /* inset: the row scrolls and would clip an outside ring */
+.q-tabs__tab:disabled {
+  color: var(--ink-muted);
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.q-tabs--fill > .q-tabs__bar .q-tabs__tab,
+.q-tabs--fill > .q-tabs__bar .q-tabs__item {
+  flex: 1 1 0;
+  min-width: max-content;
+}
 
 /* Variant rules reach through this Tabs' own bar only, so a segmented Tabs inside a line Tabs' panel (or the
    reverse) keeps its own look. */
@@ -41,41 +131,130 @@
 /* line */
 /* The first label lines up with the content below; the bar sits exactly under the label; the 8px either side of
    each label is still part of the tab, so the gaps between tabs are clickable. */
-.q-tabs--line > .q-tabs__bar { box-shadow: inset 0 -1px 0 var(--line); }
-.q-tabs--line > .q-tabs__bar .q-tabs__list { gap: 0; margin: 0 calc(var(--space-2) * -1); }
-.q-tabs--line > .q-tabs__bar .q-tabs__tab { padding: 0 var(--space-2); }
-.q-tabs--line > .q-tabs__bar .q-tabs__tab + .q-tabs__tab, .q-tabs--line > .q-tabs__bar .q-tabs__item + .q-tabs__item { margin-left: var(--space-2); }
-.q-tabs--line > .q-tabs__bar .q-tabs__tab::before { content: ""; position: absolute; left: var(--space-2); right: var(--space-2); bottom: 0; height: 2px; border-radius: 2px 2px 0 0; background: transparent; }
-@media (hover: hover) {
-  .q-tabs--line > .q-tabs__bar .q-tabs__tab:not(:disabled):hover { color: var(--ink); }
-  .q-tabs--line > .q-tabs__bar .q-tabs__tab:not(:disabled):not(.is-active):hover::before { background: var(--line-strong); }
+.q-tabs--line > .q-tabs__bar {
+  box-shadow: inset 0 -1px 0 var(--line);
 }
-.q-tabs--line > .q-tabs__bar .q-tabs__tab.is-active { color: var(--ink); }
-.q-tabs--line > .q-tabs__bar .q-tabs__tab.is-active::before { background: var(--brand); }
-.q-tabs--line > .q-tabs__bar .q-tabs__tab.is-active .q-tabs__count { background: var(--brand-tint); color: var(--brand); }
-.q-tabs--line > .q-tabs__panel { margin-top: var(--space-4); }
+.q-tabs--line > .q-tabs__bar .q-tabs__list {
+  gap: 0;
+  margin: 0 calc(var(--space-2) * -1);
+}
+.q-tabs--line > .q-tabs__bar .q-tabs__tab {
+  padding: 0 var(--space-2);
+}
+.q-tabs--line > .q-tabs__bar .q-tabs__tab + .q-tabs__tab,
+.q-tabs--line > .q-tabs__bar .q-tabs__item + .q-tabs__item {
+  margin-left: var(--space-2);
+}
+.q-tabs--line > .q-tabs__bar .q-tabs__tab::before {
+  content: '';
+  position: absolute;
+  left: var(--space-2);
+  right: var(--space-2);
+  bottom: 0;
+  height: 2px;
+  border-radius: 2px 2px 0 0;
+  background: transparent;
+}
+@media (hover: hover) {
+  .q-tabs--line > .q-tabs__bar .q-tabs__tab:not(:disabled):hover {
+    color: var(--ink);
+  }
+  .q-tabs--line > .q-tabs__bar .q-tabs__tab:not(:disabled):not(.is-active):hover::before {
+    background: var(--line-strong);
+  }
+}
+.q-tabs--line > .q-tabs__bar .q-tabs__tab.is-active {
+  color: var(--ink);
+}
+.q-tabs--line > .q-tabs__bar .q-tabs__tab.is-active::before {
+  background: var(--brand);
+}
+.q-tabs--line > .q-tabs__bar .q-tabs__tab.is-active .q-tabs__count {
+  background: var(--brand-tint);
+  color: var(--brand);
+}
+.q-tabs--line > .q-tabs__panel {
+  margin-top: var(--space-4);
+}
 
 /* segmented */
-.q-tabs--segmented > .q-tabs__bar { align-self: flex-start; max-width: 100%; }
-.q-tabs--segmented.q-tabs--fill > .q-tabs__bar { align-self: stretch; }
-.q-tabs--segmented > .q-tabs__bar .q-tabs__list { gap: 2px; padding: 2px; border-radius: var(--radius-md); background: var(--surface-sunken); }
-.q-tabs--segmented > .q-tabs__bar .q-tabs__tab { min-height: calc(var(--q-tab-h) - 4px); padding: 0 var(--space-3); border-radius: calc(var(--radius-md) - 2px); }
-@media (hover: hover) { .q-tabs--segmented > .q-tabs__bar .q-tabs__tab:not(:disabled):not(.is-active):hover { color: var(--ink); background: color-mix(in srgb, var(--surface-raised) 50%, transparent); } }
-.q-tabs--segmented > .q-tabs__bar .q-tabs__tab.is-active { background: var(--surface-raised); color: var(--ink); box-shadow: 0 0 0 1px var(--line), 0 1px 2px color-mix(in srgb, var(--ink) 10%, transparent); }
-.q-tabs--segmented > .q-tabs__bar .q-tabs__tab.is-active .q-tabs__count { background: var(--brand-tint); color: var(--brand); }
-.q-tabs--segmented > .q-tabs__panel { margin-top: var(--space-4); }
+.q-tabs--segmented > .q-tabs__bar {
+  align-self: flex-start;
+  max-width: 100%;
+}
+.q-tabs--segmented.q-tabs--fill > .q-tabs__bar {
+  align-self: stretch;
+}
+.q-tabs--segmented > .q-tabs__bar .q-tabs__list {
+  gap: 2px;
+  padding: 2px;
+  border-radius: var(--radius-md);
+  background: var(--surface-sunken);
+}
+.q-tabs--segmented > .q-tabs__bar .q-tabs__tab {
+  min-height: calc(var(--q-tab-h) - 4px);
+  padding: 0 var(--space-3);
+  border-radius: calc(var(--radius-md) - 2px);
+}
+@media (hover: hover) {
+  .q-tabs--segmented > .q-tabs__bar .q-tabs__tab:not(:disabled):not(.is-active):hover {
+    color: var(--ink);
+    background: color-mix(in srgb, var(--surface-raised) 50%, transparent);
+  }
+}
+.q-tabs--segmented > .q-tabs__bar .q-tabs__tab.is-active {
+  background: var(--surface-raised);
+  color: var(--ink);
+  box-shadow:
+    0 0 0 1px var(--line),
+    0 1px 2px color-mix(in srgb, var(--ink) 10%, transparent);
+}
+.q-tabs--segmented > .q-tabs__bar .q-tabs__tab.is-active .q-tabs__count {
+  background: var(--brand-tint);
+  color: var(--brand);
+}
+.q-tabs--segmented > .q-tabs__panel {
+  margin-top: var(--space-4);
+}
 
-.q-tabs__panel { min-width: 0; outline: none; }
-.q-tabs__panel[hidden] { display: none; }
-.q-tabs__panel:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: var(--radius-sm); }
+.q-tabs__panel {
+  min-width: 0;
+  outline: none;
+}
+.q-tabs__panel[hidden] {
+  display: none;
+}
+.q-tabs__panel:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
 @media (max-width: 639px) {
-  .q-tabs--slim { --q-tab-h: var(--ctl-h); }
-  .q-tabs__tab { font-size: var(--control-text-md); }
+  .q-tabs--slim {
+    --q-tab-h: var(--ctl-h);
+  }
+  .q-tabs__tab {
+    font-size: var(--control-text-md);
+  }
 }
 @media (forced-colors: active) {
-  .q-tabs--line > .q-tabs__bar { border-bottom: 1px solid CanvasText; box-shadow: none; }
-  .q-tabs--line > .q-tabs__bar .q-tabs__tab.is-active::before { background: Highlight; forced-color-adjust: none; }
-  .q-tabs--segmented > .q-tabs__bar .q-tabs__list { border: 1px solid CanvasText; }
-  .q-tabs--segmented > .q-tabs__bar .q-tabs__tab.is-active { outline: 2px solid Highlight; outline-offset: -2px; }
-  .q-tabs__error { forced-color-adjust: none; background: Mark; }
+  .q-tabs--line > .q-tabs__bar {
+    border-bottom: 1px solid CanvasText;
+    box-shadow: none;
+  }
+  .q-tabs--line > .q-tabs__bar .q-tabs__tab.is-active::before {
+    background: Highlight;
+    forced-color-adjust: none;
+  }
+  .q-tabs--segmented > .q-tabs__bar .q-tabs__list {
+    border: 1px solid CanvasText;
+  }
+  .q-tabs--segmented > .q-tabs__bar .q-tabs__tab.is-active {
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+  }
+  .q-tabs__error {
+    forced-color-adjust: none;
+    background: Mark;
+  }
 }

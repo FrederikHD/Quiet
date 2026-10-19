@@ -8,7 +8,11 @@ export default defineStory({
   name: 'QToaster',
   wrap: (target) => [
     h(QButton, { onClick: () => toast('Product saved') }, () => 'Show a toast'),
-    h(QButton, { onClick: () => toast('Couldn’t save — check your connection.', { tone: 'error' }) }, () => 'Show an error'),
+    h(
+      QButton,
+      { onClick: () => toast('Couldn’t save — check your connection.', { tone: 'error' }) },
+      () => 'Show an error',
+    ),
     target(),
   ],
 });

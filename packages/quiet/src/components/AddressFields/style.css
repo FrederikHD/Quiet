@@ -1,2 +1,7 @@
 /* ---------- AddressFields ---------- */
-.q-address { display: flex; flex-direction: column; gap: var(--field-gap); min-width: 0; }
+.q-address {
+  display: flex;
+  flex-direction: column;
+  gap: var(--field-gap);
+  min-width: 0;
+}

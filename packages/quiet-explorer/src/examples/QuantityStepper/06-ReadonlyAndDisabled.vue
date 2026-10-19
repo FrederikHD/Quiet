@@ -9,7 +9,11 @@ const reserved = ref(1);
 
 <template>
   <QForm label-placement="top">
-    <QField label="Shipped" readonly hint="The order has left the warehouse."><QQuantityStepper v-model="shipped" /></QField>
-    <QField label="Reserved" disabled hint="Locked while the payment is pending."><QQuantityStepper v-model="reserved" /></QField>
+    <QField label="Shipped" readonly hint="The order has left the warehouse."
+      ><QQuantityStepper v-model="shipped"
+    /></QField>
+    <QField label="Reserved" disabled hint="Locked while the payment is pending."
+      ><QQuantityStepper v-model="reserved"
+    /></QField>
   </QForm>
 </template>

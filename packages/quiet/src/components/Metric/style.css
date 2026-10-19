@@ -1,13 +1,54 @@
 /* ---------- Metric ----------
    Label `small` ink-muted, the figure in `metric` (28/32 semibold, tabular), the change in `small`:
    success when it's good, danger when it's bad, ink-muted when flat — always with an arrow and words. */
-.q-metric { display: grid; gap: var(--space-1); min-width: 0; font-family: var(--font-sans); color: var(--ink); }
-.q-metric__label { font-size: var(--control-text-sm); line-height: 18px; color: var(--ink-muted); }
-.q-metric__value { font-size: 28px; line-height: 32px; font-weight: 600; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
-.q-metric--small .q-metric__value { font-size: 20px; line-height: 28px; }
-.q-metric__change { display: flex; align-items: baseline; gap: var(--space-1); font-size: var(--control-text-sm); line-height: 18px; color: var(--ink-muted); }
-.q-metric__change.is-good { color: var(--success); }
-.q-metric__change.is-bad { color: var(--danger); }
-.q-metric__extra { font-size: var(--control-text-sm); line-height: 18px; }
-.q-metric__extra a { color: inherit; text-underline-offset: 2px; }
-.q-metric__extra a:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: 2px; }
+.q-metric {
+  display: grid;
+  gap: var(--space-1);
+  min-width: 0;
+  font-family: var(--font-sans);
+  color: var(--ink);
+}
+.q-metric__label {
+  font-size: var(--control-text-sm);
+  line-height: 18px;
+  color: var(--ink-muted);
+}
+.q-metric__value {
+  font-size: 28px;
+  line-height: 32px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+.q-metric--small .q-metric__value {
+  font-size: 20px;
+  line-height: 28px;
+}
+.q-metric__change {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-1);
+  font-size: var(--control-text-sm);
+  line-height: 18px;
+  color: var(--ink-muted);
+}
+.q-metric__change.is-good {
+  color: var(--success);
+}
+.q-metric__change.is-bad {
+  color: var(--danger);
+}
+.q-metric__extra {
+  font-size: var(--control-text-sm);
+  line-height: 18px;
+}
+.q-metric__extra a {
+  color: inherit;
+  text-underline-offset: 2px;
+}
+.q-metric__extra a:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+  border-radius: 2px;
+}

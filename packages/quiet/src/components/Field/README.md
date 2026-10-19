@@ -13,14 +13,14 @@ Wraps one control with its label, an optional help tip, a visible hint and an er
 
 ## Messages and states
 
-| Prop | Colour and icon | Control | Use for |
-| --- | --- | --- | --- |
-| `error` | `danger`, alert-circle | red border, `aria-invalid` | Blocks saving: missing, wrong format, out of range |
-| `warning` | `warning`, alert-triangle | unchanged | Allowed but worth a second look: price below cost, stock below the reorder level |
-| `success` | `success`, check-circle | unchanged | A check that ran and passed: discount code applied, address verified |
-| `hint` | `ink-muted`, no icon | unchanged | Always-on guidance |
-| `disabled` | label `ink-muted` | disabled | Not editable now; say why in the hint |
-| `readonly` | — | read-only | Shown and copyable, never editable: order number, created date |
+| Prop       | Colour and icon           | Control                    | Use for                                                                          |
+| ---------- | ------------------------- | -------------------------- | -------------------------------------------------------------------------------- |
+| `error`    | `danger`, alert-circle    | red border, `aria-invalid` | Blocks saving: missing, wrong format, out of range                               |
+| `warning`  | `warning`, alert-triangle | unchanged                  | Allowed but worth a second look: price below cost, stock below the reorder level |
+| `success`  | `success`, check-circle   | unchanged                  | A check that ran and passed: discount code applied, address verified             |
+| `hint`     | `ink-muted`, no icon      | unchanged                  | Always-on guidance                                                               |
+| `disabled` | label `ink-muted`         | disabled                   | Not editable now; say why in the hint                                            |
+| `readonly` | —                         | read-only                  | Shown and copyable, never editable: order number, created date                   |
 
 Messages sit in a live region, so one that appears after a check is announced. Screen readers hear "Error:" or "Warning:" before the text — translate with `strings`.
 

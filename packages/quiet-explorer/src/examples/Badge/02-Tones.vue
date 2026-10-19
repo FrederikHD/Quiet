@@ -20,6 +20,13 @@ const rows: [BadgeTone, string[]][] = [
 </template>
 
 <style scoped>
-.rows { display: grid; gap: var(--space-3); }
-.row { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.rows {
+  display: grid;
+  gap: var(--space-3);
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
 </style>

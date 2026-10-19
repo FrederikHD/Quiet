@@ -18,5 +18,7 @@ const colours = ref<string[]>(['Navy', 'Sand']);
 </template>
 
 <style scoped>
-.filters { max-width: 320px; }
+.filters {
+  max-width: 320px;
+}
 </style>

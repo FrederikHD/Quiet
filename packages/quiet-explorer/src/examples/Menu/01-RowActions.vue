@@ -26,7 +26,25 @@ const items: MenuItem[] = [
 </template>
 
 <style scoped>
-.stack { display: grid; gap: var(--space-3); max-width: 420px; }
-.row { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4); background: var(--surface-raised); border: 1px solid var(--line); border-radius: var(--radius-lg); }
-.log { margin: 0; min-height: 18px; font: var(--text-small); color: var(--ink-muted); }
+.stack {
+  display: grid;
+  gap: var(--space-3);
+  max-width: 420px;
+}
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4);
+  background: var(--surface-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+}
+.log {
+  margin: 0;
+  min-height: 18px;
+  font: var(--text-small);
+  color: var(--ink-muted);
+}
 </style>

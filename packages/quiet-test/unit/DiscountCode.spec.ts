@@ -44,7 +44,10 @@ describe('QDiscountCode', () => {
 
   it('shows the message from a rejected code, busy meanwhile, and focuses the field', async () => {
     let resolve!: (m: string) => void;
-    const w = mount(QDiscountCode, { attachTo: document.body, props: { apply: () => new Promise<string>((r) => (resolve = r)) } });
+    const w = mount(QDiscountCode, {
+      attachTo: document.body,
+      props: { apply: () => new Promise<string>((r) => (resolve = r)) },
+    });
     await w.get('input').setValue('NOPE');
     await w.get('.q-btn').trigger('click');
     expect(w.get('.q-btn').attributes('aria-busy')).toBe('true');
@@ -122,7 +125,9 @@ describe('QDiscountCode', () => {
   });
 
   it('takes its own label and strings', () => {
-    const w = mount(QDiscountCode, { props: { apply: () => undefined, label: 'Gutschein', strings: { apply: 'Einlösen' } } });
+    const w = mount(QDiscountCode, {
+      props: { apply: () => undefined, label: 'Gutschein', strings: { apply: 'Einlösen' } },
+    });
     expect(w.get('label').text()).toBe('Gutschein');
     expect(w.get('.q-btn').text()).toBe('Einlösen');
   });

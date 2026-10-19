@@ -14,5 +14,8 @@ import { QButton, QFormActions } from '@frederikhd/quiet';
 </template>
 
 <style scoped>
-.end { display: flex; gap: var(--space-2); }
+.end {
+  display: flex;
+  gap: var(--space-2);
+}
 </style>

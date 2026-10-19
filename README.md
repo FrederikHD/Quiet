@@ -6,11 +6,11 @@ A calm, neutral-first design system for commerce — storefront and back office 
 
 ## Packages
 
-| Package | What it is |
-| --- | --- |
-| [`packages/quiet`](packages/quiet) | The library, published as `@frederikhd/quiet`: 49 components, design tokens, styles, the `Quiet` plugin and formatting helpers. |
-| [`packages/quiet-explorer`](packages/quiet-explorer) | The documentation app: brand book, tokens, icons, and for every component its guidelines, API tables, examples and a live playground. |
-| [`packages/quiet-test`](packages/quiet-test) | Unit tests (Vitest + Vue Test Utils) and browser tests (Playwright): end-to-end, keyboard, accessibility (axe), responsive and visual. |
+| Package                                              | What it is                                                                                                                             |
+| ---------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| [`packages/quiet`](packages/quiet)                   | The library, published as `@frederikhd/quiet`: 49 components, design tokens, styles, the `Quiet` plugin and formatting helpers.        |
+| [`packages/quiet-explorer`](packages/quiet-explorer) | The documentation app: brand book, tokens, icons, and for every component its guidelines, API tables, examples and a live playground.  |
+| [`packages/quiet-test`](packages/quiet-test)         | Unit tests (Vitest + Vue Test Utils) and browser tests (Playwright): end-to-end, keyboard, accessibility (axe), responsive and visual. |
 
 ## Getting started
 
@@ -23,17 +23,20 @@ Edit a component in `packages/quiet/src/components/<Name>/` and the explorer upd
 
 ## Commands
 
-| Command | Does |
-| --- | --- |
-| `npm run dev` | Starts the explorer. |
-| `npm run build` | Builds the library (`dist/quiet.js`, `dist/quiet.css`, types) and the explorer. |
-| `npm run typecheck` | Type-checks the library and the explorer with `vue-tsc`. |
-| `npm run tokens` | Regenerates `tokens.css` from `tokens.json`. |
-| `npm run test:unit` | Component and library tests in jsdom (fast; run them while you work). |
-| `npm run test:e2e` | Builds the explorer and runs every Playwright spec against it. |
-| `npm run test:visual` | Screenshot comparison of every example, light and dark, against the baselines in `packages/quiet-test/e2e/__screenshots__/<platform>/`. After a deliberate change, `npm run test:visual:update -w quiet-test` accepts the new look; review the changed images in the diff. |
-| `npm run test:package` | Packs the library as it will be published, installs it into a fresh app and type-checks, builds and server-renders that app. |
-| `npm test` | Unit, then end-to-end tests. |
+| Command                                                      | Does                                                                                                                                                                                                                                                                       |
+| ------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `npm run dev`                                                | Starts the explorer.                                                                                                                                                                                                                                                       |
+| `npm run build`                                              | Builds the library (`dist/quiet.js`, `dist/quiet.css`, types) and the explorer.                                                                                                                                                                                            |
+| `npm run lint`                                               | ESLint over everything, including accessibility rules for templates (`lint:fix` fixes what it can).                                                                                                                                                                        |
+| `npm run format`                                             | Prettier over everything (`format:check` only checks, as CI does).                                                                                                                                                                                                         |
+| `npm run typecheck`                                          | Type-checks the library, the explorer and the tests with `vue-tsc`.                                                                                                                                                                                                        |
+| `npm run tokens`                                             | Regenerates `tokens.css` from `tokens.json`.                                                                                                                                                                                                                               |
+| `npm run test:unit`                                          | Component and library tests in jsdom (fast; run them while you work).                                                                                                                                                                                                      |
+| `npm run test:e2e`                                           | Builds the explorer and runs every Playwright spec against it.                                                                                                                                                                                                             |
+| `npm run test:e2e:firefox -w quiet-test` / `test:e2e:webkit` | The same e2e suite in Firefox or WebKit (Safari's engine); needs `npx playwright install firefox webkit`. CI runs all three browsers.                                                                                                                                      |
+| `npm run test:visual`                                        | Screenshot comparison of every example, light and dark, against the baselines in `packages/quiet-test/e2e/__screenshots__/<platform>/`. After a deliberate change, `npm run test:visual:update -w quiet-test` accepts the new look; review the changed images in the diff. |
+| `npm run test:package`                                       | Packs the library as it will be published, installs it into a fresh app and type-checks, builds and server-renders that app.                                                                                                                                               |
+| `npm test`                                                   | Unit, then end-to-end tests.                                                                                                                                                                                                                                               |
 
 Playwright needs a Chromium: run `npx playwright install chromium` once, or point `PW_CHROMIUM_PATH` at one you have.
 
@@ -101,7 +104,7 @@ Releases of `@frederikhd/quiet` are published to npm by `.github/workflows/relea
 The workflow checks that the tag, the package version and the changelog agree, runs the whole CI suite, publishes to
 npm with provenance (a version with a suffix such as `0.2.0-beta.1` goes out under the `next` tag) and creates a
 GitHub Release from the changelog section. It needs the repository secret `NPM_TOKEN` (Settings → Secrets and
-variables → Actions): an npm *granular access token* with read and write access to packages. For the very first
+variables → Actions): an npm _granular access token_ with read and write access to packages. For the very first
 release the package doesn't exist yet, so give the token the whole `@frederikhd` scope; once it's published you can
 narrow a new token to `@frederikhd/quiet`. The scope `@frederikhd` must be your npm username, or an npm organisation
 you own. The publish job runs in the `npm` environment, so you can require an approval there before anything goes

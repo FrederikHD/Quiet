@@ -49,20 +49,20 @@ Back-office lists: orders, products, customers, refunds. It's a real `<table>` a
 
 `columns` is a list of `{ key, header, … }`. Falsy entries are skipped, so a column can be added conditionally.
 
-| Field | What it does |
-| --- | --- |
-| `key` | Field name in the row, the sort key, and the slot names `#cell-<key>` and `#header-<key>`. |
-| `header` | Header text (rich headers: the `#header-<key>` slot). Also the label in phone cards. |
-| `format(row, index)` | Plain text for the cell; default `row[key]`. For rich cells (a Badge for statuses) use the `#cell-<key>` slot. |
-| `numeric` | Right-aligned, tabular figures; sorts high to low first. |
-| `align` | `start` (default) / `end` / `center`. |
-| `sortable`, `sortValue(row)`, `sortFirst` | Make it sortable; the value to sort by (default `row[key]`); the first direction, `asc` or `desc`. |
-| `sortLabels` | Phone sort menu wording, `[ascending, descending]`, e.g. `['Oldest first', 'Newest first']`. Default "Total, ascending" / "Total, descending". |
-| `primary` | The column that names the row (default: the first). |
-| `truncate` | One line with an ellipsis: `true` (18rem) or a CSS length. The full text shows on hover (native title, plain-text cells only) and in phone cards. |
-| `wrap` | Let long text wrap (12rem minimum). |
-| `width`, `minWidth` | Column width, as CSS lengths. |
-| `mobile: false` | Hide this column in phone cards. |
+| Field                                     | What it does                                                                                                                                      |
+| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `key`                                     | Field name in the row, the sort key, and the slot names `#cell-<key>` and `#header-<key>`.                                                        |
+| `header`                                  | Header text (rich headers: the `#header-<key>` slot). Also the label in phone cards.                                                              |
+| `format(row, index)`                      | Plain text for the cell; default `row[key]`. For rich cells (a Badge for statuses) use the `#cell-<key>` slot.                                    |
+| `numeric`                                 | Right-aligned, tabular figures; sorts high to low first.                                                                                          |
+| `align`                                   | `start` (default) / `end` / `center`.                                                                                                             |
+| `sortable`, `sortValue(row)`, `sortFirst` | Make it sortable; the value to sort by (default `row[key]`); the first direction, `asc` or `desc`.                                                |
+| `sortLabels`                              | Phone sort menu wording, `[ascending, descending]`, e.g. `['Oldest first', 'Newest first']`. Default "Total, ascending" / "Total, descending".    |
+| `primary`                                 | The column that names the row (default: the first).                                                                                               |
+| `truncate`                                | One line with an ellipsis: `true` (18rem) or a CSS length. The full text shows on hover (native title, plain-text cells only) and in phone cards. |
+| `wrap`                                    | Let long text wrap (12rem minimum).                                                                                                               |
+| `width`, `minWidth`                       | Column width, as CSS lengths.                                                                                                                     |
+| `mobile: false`                           | Hide this column in phone cards.                                                                                                                  |
 
 ## Sorting
 
@@ -99,7 +99,7 @@ The `#row-actions="{ row }"` slot holds slim ghost icon Buttons for the last col
 ## Phones
 
 - **`mobile="scroll"`** (default): the table scrolls sideways, and the first column (with its checkbox) stays pinned, with an edge once scrolled. `pinFirst: false` turns the pinning off; it only applies when the primary column is the first. Under 640px the pinned column is as wide as its content, up to 40%, and long names wrap. For long names (products), give the column a `minWidth` such as `'min(11rem, 40cqi)'` so they don't wrap onto many lines.
-- **`mobile="cards"`:** under 640px each row becomes a card. The checkbox, name and actions sit on top, then "Label  value" lines. The header disappears; "Select all" and a "Sort by" menu sit above the cards. Use it for orders and anything people work through on a phone.
+- **`mobile="cards"`:** under 640px each row becomes a card. The checkbox, name and actions sit on top, then "Label value" lines. The header disappears; "Select all" and a "Sort by" menu sit above the cards. Use it for orders and anything people work through on a phone.
 - **Both** measure the table's own width, not the screen's.
 - **`maxHeight`** (a number in px, or a CSS length) scrolls the body inside that height; the header row stays on top.
 

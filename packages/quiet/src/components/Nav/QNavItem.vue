@@ -16,7 +16,12 @@ const expanded = computed(() => !!kids.value && (props.item.expanded ?? within(p
   <li class="q-nav__item">
     <component
       :is="item.href != null ? 'a' : 'button'"
-      :class="['q-nav__link', depth > 0 && 'q-nav__link--sub', item.current && 'is-current', !item.current && kids && within(item) && 'is-within']"
+      :class="[
+        'q-nav__link',
+        depth > 0 && 'q-nav__link--sub',
+        item.current && 'is-current',
+        !item.current && kids && within(item) && 'is-within',
+      ]"
       :href="item.href"
       :type="item.href != null ? undefined : 'button'"
       :aria-current="item.current ? 'page' : undefined"
@@ -30,7 +35,13 @@ const expanded = computed(() => !!kids.value && (props.item.expanded ?? within(p
       </template>
     </component>
     <ul v-if="expanded" class="q-nav__list q-nav__list--sub">
-      <QNavItem v-for="(c, j) in kids!" :key="c.key ?? c.href ?? j" :item="c" :depth="depth + 1" @navigate="(i, e) => emit('navigate', i, e)" />
+      <QNavItem
+        v-for="(c, j) in kids!"
+        :key="c.key ?? c.href ?? j"
+        :item="c"
+        :depth="depth + 1"
+        @navigate="(i, e) => emit('navigate', i, e)"
+      />
     </ul>
   </li>
 </template>

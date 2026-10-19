@@ -19,10 +19,19 @@
     "test:visual": "npm run test:visual -w quiet-test",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "test:package": "npm run test:package -w quiet-test"
+    "test:package": "npm run test:package -w quiet-test",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "devDependencies": {
-    "prettier": "^3.9.10"
+    "@eslint/js": "^9.39.5",
+    "eslint": "^9.39.5",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-vue": "^10.11.1",
+    "eslint-plugin-vuejs-accessibility": "^2.6.2",
+    "globals": "^17.13.0",
+    "prettier": "^3.9.10",
+    "typescript-eslint": "^8.72.0"
   },
   "engines": {
     "node": ">=20"

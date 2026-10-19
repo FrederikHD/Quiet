@@ -4,7 +4,13 @@ import { QNav, type NavItem, type NavSection } from '@frederikhd/quiet';
 import { computed, ref } from 'vue';
 
 const page = ref('orders');
-const link = (key: string, label: string, extra: Partial<NavItem>): NavItem => ({ key, label, href: `#${key}`, current: page.value === key, ...extra });
+const link = (key: string, label: string, extra: Partial<NavItem>): NavItem => ({
+  key,
+  label,
+  href: `#${key}`,
+  current: page.value === key,
+  ...extra,
+});
 const sections = computed<NavSection[]>(() => [
   {
     items: [
@@ -14,7 +20,13 @@ const sections = computed<NavSection[]>(() => [
       link('customers', 'Customers', { icon: 'user' }),
     ],
   },
-  { title: 'Shop', items: [link('online', 'Online store', { icon: 'external-link' }), link('settings', 'Settings', { icon: 'sliders' })] },
+  {
+    title: 'Shop',
+    items: [
+      link('online', 'Online store', { icon: 'external-link' }),
+      link('settings', 'Settings', { icon: 'sliders' }),
+    ],
+  },
 ]);
 // A client-side router would route here; links still work when opened in a new tab.
 function navigate(item: NavItem, e: MouseEvent) {
@@ -30,5 +42,11 @@ function navigate(item: NavItem, e: MouseEvent) {
 </template>
 
 <style scoped>
-.column { max-width: 280px; padding: var(--space-3); background: var(--surface-raised); border: 1px solid var(--line); border-radius: var(--radius-lg); }
+.column {
+  max-width: 280px;
+  padding: var(--space-3);
+  background: var(--surface-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+}
 </style>

@@ -18,7 +18,12 @@ export interface DisclosureProps {
   divider?: boolean;
 }
 
-const props = withDefaults(defineProps<DisclosureProps>(), { title: undefined, meta: undefined, headingLevel: 3, divider: true });
+const props = withDefaults(defineProps<DisclosureProps>(), {
+  title: undefined,
+  meta: undefined,
+  headingLevel: 3,
+  divider: true,
+});
 /** Open or not; v-model:open to control it. */
 const open = defineModel<boolean>('open', { default: false });
 defineSlots<{
@@ -38,9 +43,20 @@ if (props.defaultOpen && !open.value) open.value = true;
 <template>
   <div :class="['q-disc', open && 'is-open', !divider && 'q-disc--plain']">
     <component :is="headingLevel ? `h${headingLevel}` : 'div'" class="q-disc__head">
-      <button :id="`${id}-btn`" type="button" class="q-disc__btn" :aria-expanded="open" :aria-controls="`${id}-panel`" @click="open = !open">
-        <span class="q-disc__title"><slot name="title">{{ title }}</slot></span>
-        <span v-if="(meta != null && meta !== '') || slots.meta" class="q-disc__meta"><slot name="meta">{{ meta }}</slot></span>
+      <button
+        :id="`${id}-btn`"
+        type="button"
+        class="q-disc__btn"
+        :aria-expanded="open"
+        :aria-controls="`${id}-panel`"
+        @click="open = !open"
+      >
+        <span class="q-disc__title"
+          ><slot name="title">{{ title }}</slot></span
+        >
+        <span v-if="(meta != null && meta !== '') || slots.meta" class="q-disc__meta"
+          ><slot name="meta">{{ meta }}</slot></span
+        >
         <QIcon name="chevron-down" class="q-disc__chev" />
       </button>
     </component>

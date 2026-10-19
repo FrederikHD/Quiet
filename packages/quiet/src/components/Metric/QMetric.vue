@@ -26,7 +26,12 @@ export interface MetricProps {
   strings?: { up?: string; down?: string; same?: string };
 }
 
-const props = withDefaults(defineProps<MetricProps>(), { change: undefined, goodWhen: 'up', size: 'default', strings: undefined });
+const props = withDefaults(defineProps<MetricProps>(), {
+  change: undefined,
+  goodWhen: 'up',
+  size: 'default',
+  strings: undefined,
+});
 defineSlots<{
   /** Under the change: a link to the list behind the number. */
   default?(): unknown;
@@ -38,19 +43,28 @@ defineSlots<{
 
 const slots = useSlots();
 const strings = useStrings('metric', { up: 'up', down: 'down', same: 'no change' }, () => props.strings);
-const dir = computed(() => (props.change?.direction === 'up' || props.change?.direction === 'down' ? props.change.direction : 'same'));
+const dir = computed(() =>
+  props.change?.direction === 'up' || props.change?.direction === 'down' ? props.change.direction : 'same',
+);
 // Coloured by whether it's good, never by colour alone — an arrow and the words carry it too.
-const good = computed(() => (!props.change || dir.value === 'same' ? null : props.goodWhen === 'down' ? dir.value === 'down' : dir.value === 'up'));
+const good = computed(() =>
+  !props.change || dir.value === 'same' ? null : props.goodWhen === 'down' ? dir.value === 'down' : dir.value === 'up',
+);
 </script>
 
 <template>
   <div :class="['q-metric', size === 'small' && 'q-metric--small']">
-    <div class="q-metric__label"><slot name="label">{{ label }}</slot></div>
-    <div class="q-metric__value"><slot name="value">{{ value }}</slot></div>
+    <div class="q-metric__label">
+      <slot name="label">{{ label }}</slot>
+    </div>
+    <div class="q-metric__value">
+      <slot name="value">{{ value }}</slot>
+    </div>
     <div v-if="change" :class="['q-metric__change', good === true && 'is-good', good === false && 'is-bad']">
       <QLead v-if="dir !== 'same'" :icon="dir === 'up' ? 'arrow-up' : 'arrow-down'" />
       <span>
-        <span class="q-visually-hidden">{{ `${strings[dir]} ` }}</span>{{ change.value != null ? `${change.value} ` : '' }}{{ change.label }}
+        <span class="q-visually-hidden">{{ `${strings[dir]} ` }}</span
+        >{{ change.value != null ? `${change.value} ` : '' }}{{ change.label }}
       </span>
     </div>
     <div v-if="slots.default" class="q-metric__extra"><slot /></div>

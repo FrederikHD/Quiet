@@ -9,7 +9,9 @@ import { createApp } from 'vue';
 import { describe, expect, it } from 'vitest';
 
 const lib = fileURLToPath(new URL('../../quiet/', import.meta.url));
-const exported = Object.keys(quiet).filter((n) => /^Q[A-Z]/.test(n)).sort();
+const exported = Object.keys(quiet)
+  .filter((n) => /^Q[A-Z]/.test(n))
+  .sort();
 
 describe('library', () => {
   it('app.use(Quiet) registers every Q component', () => {
@@ -40,7 +42,10 @@ describe('library', () => {
     for (const { name } of folders) {
       const dir = `${lib}src/components/${name}`;
       for (const file of ['index.ts', 'README.md']) expect(existsSync(`${dir}/${file}`), `${name}/${file}`).toBe(true);
-      expect(readdirSync(dir).some((f) => /^Q\w+\.vue$/.test(f)), `${name} has a component`).toBe(true);
+      expect(
+        readdirSync(dir).some((f) => /^Q\w+\.vue$/.test(f)),
+        `${name} has a component`,
+      ).toBe(true);
       // Some share a stylesheet (Checkbox and Radio use styles/choice.css).
       if (existsSync(`${lib}src/components/${name}/style.css`)) {
         expect(css, `${name} styles imported`).toContain(`../components/${name}/style.css`);

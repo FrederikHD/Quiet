@@ -8,7 +8,13 @@ const values = reactive({ order: 'ORD-2026-01049', vat: '' });
 
 <template>
   <div class="stack">
-    <QField label="Order number" label-placement="top" width="m" readonly hint="Quote it in emails to customer service.">
+    <QField
+      label="Order number"
+      label-placement="top"
+      width="m"
+      readonly
+      hint="Quote it in emails to customer service."
+    >
       <QInput v-model="values.order" numeric />
     </QField>
     <QField label="Company VAT ID" label-placement="top" width="m" disabled hint="Only for business accounts.">
@@ -18,5 +24,8 @@ const values = reactive({ order: 'ORD-2026-01049', vat: '' });
 </template>
 
 <style scoped>
-.stack { display: grid; gap: var(--field-gap); }
+.stack {
+  display: grid;
+  gap: var(--field-gap);
+}
 </style>

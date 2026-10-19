@@ -9,10 +9,18 @@ import type { Component } from 'vue';
 import type { ComponentDoc } from '../plugins/quiet-meta';
 import type { Story } from './stories/story';
 
-const readmes = import.meta.glob<string>('@quiet/src/components/*/README.md', { query: '?raw', import: 'default', eager: true });
+const readmes = import.meta.glob<string>('@quiet/src/components/*/README.md', {
+  query: '?raw',
+  import: 'default',
+  eager: true,
+});
 const stories = import.meta.glob<Story>('./stories/*.story.ts', { import: 'default', eager: true });
 const exampleModules = import.meta.glob<Component>('./examples/*/*.vue', { import: 'default', eager: true });
-const exampleSources = import.meta.glob<string>('./examples/*/*.vue', { query: '?raw', import: 'default', eager: true });
+const exampleSources = import.meta.glob<string>('./examples/*/*.vue', {
+  query: '?raw',
+  import: 'default',
+  eager: true,
+});
 
 export interface Example {
   title: string;
@@ -59,7 +67,8 @@ function splitReadme(md: string) {
   // lead-in, and the lead-in stays with its list.
   if (first.endsWith(':')) {
     const cut = first.search(/[.!?]\s+[^.!?]*:$/);
-    if (cut !== -1) return { summary: plain(first.slice(0, cut + 1)), rest: `${first.slice(cut + 1).trim()}\n\n${rest}` };
+    if (cut !== -1)
+      return { summary: plain(first.slice(0, cut + 1)), rest: `${first.slice(cut + 1).trim()}\n\n${rest}` };
   }
   return { summary: plain(first), rest };
 }
@@ -70,7 +79,11 @@ function examplesFor(folder: string): Example[] {
     .sort()
     .map((p) => {
       // 01-Variants.vue → "Variants"
-      const name = p.split('/').pop()!.replace(/\.vue$/, '').replace(/^\d+-/, '');
+      const name = p
+        .split('/')
+        .pop()!
+        .replace(/\.vue$/, '')
+        .replace(/^\d+-/, '');
       const lead = exampleSources[p].match(/^<!--\s*([\s\S]*?)\s*-->\s*/);
       return {
         title: sentenceCase(name),

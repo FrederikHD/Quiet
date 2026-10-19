@@ -10,6 +10,8 @@ const values = reactive({ title: 'Linen shirt, blue', sku: 'LS-2041-BL-M', price
   <QForm label-placement="side">
     <QField label="Title" required><QInput v-model="values.title" /></QField>
     <QField label="SKU" width="m" hint="Your own article number."><QInput v-model="values.sku" numeric /></QField>
-    <QField label="Price" width="s" required><QInput v-model="values.price" suffix="€" numeric align="end" inputmode="decimal" /></QField>
+    <QField label="Price" width="s" required
+      ><QInput v-model="values.price" suffix="€" numeric align="end" inputmode="decimal"
+    /></QField>
   </QForm>
 </template>

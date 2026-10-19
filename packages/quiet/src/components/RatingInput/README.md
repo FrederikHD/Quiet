@@ -3,7 +3,13 @@
 Five stars to give a rating — in the "Write a review" form.
 
 ```vue
-<QRatingInput id="rv-rating" v-model="stars" label="Your rating" required :error="tried && !stars ? 'Choose from 1 to 5 stars' : null" />
+<QRatingInput
+  id="rv-rating"
+  v-model="stars"
+  label="Your rating"
+  required
+  :error="tried && !stars ? 'Choose from 1 to 5 stars' : null"
+/>
 ```
 
 ## Behaviour

@@ -11,7 +11,11 @@ describe('QSteps', () => {
     const w = mount(QSteps, { props: { steps, current: 1 } });
     expect(w.get('nav.q-steps').attributes('aria-label')).toBe('Checkout steps');
     const items = w.findAll('li.q-steps__item');
-    expect(items.map((i) => i.classes().find((c) => c.startsWith('is-')))).toEqual(['is-done', 'is-current', 'is-todo']);
+    expect(items.map((i) => i.classes().find((c) => c.startsWith('is-')))).toEqual([
+      'is-done',
+      'is-current',
+      'is-todo',
+    ]);
     expect(items[1].get('.q-steps__step').attributes('aria-current')).toBe('step');
     expect(items[0].find('[aria-current]').exists()).toBe(false);
   });
@@ -57,19 +61,35 @@ describe('QSteps', () => {
     const count = w.get('.q-steps__count');
     expect(count.text()).toBe('Step 3 of 3');
     expect(count.attributes('aria-hidden')).toBe('true');
-    expect(mount(QSteps, { props: { steps, current: -2 } }).findAll('li')[0].classes()).toContain('is-current');
+    expect(
+      mount(QSteps, { props: { steps, current: -2 } })
+        .findAll('li')[0]
+        .classes(),
+    ).toContain('is-current');
   });
 
   it('shows the counter only when narrow (under 520px of its own width)', () => {
-    const css = readFileSync(resolve(__dirname, '../../quiet/src/components/Steps/style.css'), 'utf8');
-    expect(css).toMatch(/^\.q-steps__count \{ display: none; \}/m);
-    const narrow = css.slice(css.indexOf('@container (max-width: 519px)'));
-    expect(narrow).toMatch(/\.q-steps__count \{ display: block;/);
+    // Whitespace collapsed, so the check doesn't depend on how the stylesheet is formatted.
+    const css = readFileSync(resolve(__dirname, '../../quiet/src/components/Steps/style.css'), 'utf8').replace(
+      /\s+/g,
+      ' ',
+    );
+    const narrowAt = css.indexOf('@container (max-width: 519px)');
+    expect(css.slice(0, narrowAt)).toMatch(/\.q-steps__count \{ display: none; \}/);
+    expect(css.slice(narrowAt)).toMatch(/\.q-steps__count \{ display: block;/);
   });
 
   it('translates its phrases', () => {
     const w = mount(QSteps, {
-      props: { steps, current: 1, strings: { label: 'Bestellschritte', done: 'erledigt', step: (i: number, n: number) => `Schritt ${i} von ${n}` } },
+      props: {
+        steps,
+        current: 1,
+        strings: {
+          label: 'Bestellschritte',
+          done: 'erledigt',
+          step: (i: number, n: number) => `Schritt ${i} von ${n}`,
+        },
+      },
     });
     expect(w.get('nav').attributes('aria-label')).toBe('Bestellschritte');
     expect(w.get('li.is-done .q-steps__label').text()).toBe('Address (erledigt)');

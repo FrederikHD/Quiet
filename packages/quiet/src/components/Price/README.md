@@ -4,8 +4,10 @@ Shows an amount of money the same way everywhere — in product cards, on the pr
 
 ```vue
 <QPrice :amount="59" :compare-at="79" show-saving />
-<QPrice :amount="99" size="large" tax-note />            <!-- product page -->
-<QPrice :amount="29" from />                             <!-- "from 29,00 €" when variants differ -->
+<QPrice :amount="99" size="large" tax-note />
+<!-- product page -->
+<QPrice :amount="29" from />
+<!-- "from 29,00 €" when variants differ -->
 <QPrice :amount="19.9" :unit-price="{ amount: 4.98, per: '100 ml' }" tax-note />
 ```
 

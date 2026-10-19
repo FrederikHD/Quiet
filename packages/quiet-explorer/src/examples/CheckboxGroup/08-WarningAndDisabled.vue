@@ -5,7 +5,11 @@ import { QCheckbox, QCheckboxGroup, QForm } from '@frederikhd/quiet';
 
 <template>
   <QForm label-placement="top">
-    <QCheckboxGroup label="Discount applies to" warning="Sale items are already reduced by 30 %" :default-value="['full', 'sale']">
+    <QCheckboxGroup
+      label="Discount applies to"
+      warning="Sale items are already reduced by 30 %"
+      :default-value="['full', 'sale']"
+    >
       <QCheckbox value="full" label="Full-price items" />
       <QCheckbox value="sale" label="Sale items" />
     </QCheckboxGroup>

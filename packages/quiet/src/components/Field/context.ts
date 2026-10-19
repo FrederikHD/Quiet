@@ -135,7 +135,13 @@ export function useFieldSetup(props: FieldCommonProps) {
   const markers = computed<Markers>(() => props.markers ?? form?.value.markers ?? 'required');
   const summaryShown = computed(() => !!form?.value.summaryShown);
   const status = computed<['error' | 'warning' | 'success', string] | [null, null]>(() =>
-    props.error ? ['error', props.error] : props.warning ? ['warning', props.warning] : props.success ? ['success', props.success] : [null, null],
+    props.error
+      ? ['error', props.error]
+      : props.warning
+        ? ['warning', props.warning]
+        : props.success
+          ? ['success', props.success]
+          : [null, null],
   );
   return { form, group, strings, placement, markers, summaryShown, status };
 }

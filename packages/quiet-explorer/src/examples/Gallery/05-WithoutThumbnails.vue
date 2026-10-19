@@ -14,5 +14,7 @@ const images = [
 </template>
 
 <style scoped>
-.gallery { max-width: 320px; }
+.gallery {
+  max-width: 320px;
+}
 </style>

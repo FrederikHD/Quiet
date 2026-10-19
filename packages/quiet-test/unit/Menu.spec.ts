@@ -20,7 +20,10 @@ async function openMenu(items: (MenuItem | null | false)[], extra: Record<string
 
 describe('QMenu', () => {
   it('renders a ghost ⋯ trigger named by the label, announcing a menu', async () => {
-    const w = mount(QMenu, { props: { label: 'Actions for #10530', items: [{ label: 'Edit' }] }, attachTo: document.body });
+    const w = mount(QMenu, {
+      props: { label: 'Actions for #10530', items: [{ label: 'Edit' }] },
+      attachTo: document.body,
+    });
     await nextTick();
     const b = w.get('button');
     expect(b.attributes('aria-label')).toBe('Actions for #10530');
@@ -31,7 +34,10 @@ describe('QMenu', () => {
   });
 
   it('passes variant and size to the default trigger', () => {
-    const w = mount(QMenu, { props: { label: 'More', items: [], variant: 'secondary', size: 'slim' }, attachTo: document.body });
+    const w = mount(QMenu, {
+      props: { label: 'More', items: [], variant: 'secondary', size: 'slim' },
+      attachTo: document.body,
+    });
     expect(w.get('button').classes()).toEqual(expect.arrayContaining(['q-btn--secondary', 'q-btn--slim']));
   });
 
@@ -48,7 +54,11 @@ describe('QMenu', () => {
     const menu = document.querySelector('[role="menu"]')!;
     expect(menu.getAttribute('aria-label')).toBe('Actions for #10530');
     expect(trigger.attributes('aria-controls')).toBe(menu.closest('.q-popover')!.id);
-    expect(panelItems().map((i) => i.textContent?.trim())).toEqual(['Edit', 'ArchiveHidden, kept in reports', 'Delete']);
+    expect(panelItems().map((i) => i.textContent?.trim())).toEqual([
+      'Edit',
+      'ArchiveHidden, kept in reports',
+      'Delete',
+    ]);
     expect(menu.querySelectorAll('[role="separator"]')).toHaveLength(1);
     expect(menu.querySelector('.q-menu__icon')?.getAttribute('aria-hidden')).toBe('true');
     expect(panelItems()[2].classList.contains('q-menu__item--danger')).toBe(true);
@@ -56,10 +66,18 @@ describe('QMenu', () => {
   });
 
   it('moves focus into the first item and through the items with the keys', async () => {
-    await openMenu([{ label: 'Edit' }, { label: 'Duplicate', disabled: true }, { label: 'Delete' }, { label: 'Archive' }]);
+    await openMenu([
+      { label: 'Edit' },
+      { label: 'Duplicate', disabled: true },
+      { label: 'Delete' },
+      { label: 'Archive' },
+    ]);
     const [edit, , del, archive] = panelItems();
     expect(document.activeElement).toBe(edit);
-    const key = (k: string) => (document.activeElement as HTMLElement).dispatchEvent(new KeyboardEvent('keydown', { key: k, bubbles: true, cancelable: true }));
+    const key = (k: string) =>
+      (document.activeElement as HTMLElement).dispatchEvent(
+        new KeyboardEvent('keydown', { key: k, bubbles: true, cancelable: true }),
+      );
     key('ArrowDown');
     expect(document.activeElement).toBe(del); // the disabled one is skipped
     key('End');
@@ -99,7 +117,10 @@ describe('QMenu', () => {
   });
 
   it('renders link items, without href while disabled', async () => {
-    await openMenu([{ label: 'View in shop', href: '/p/1' }, { label: 'Old', href: '/old', disabled: true }]);
+    await openMenu([
+      { label: 'View in shop', href: '/p/1' },
+      { label: 'Old', href: '/old', disabled: true },
+    ]);
     const [a, b] = panelItems();
     expect(a.tagName).toBe('A');
     expect(a.getAttribute('href')).toBe('/p/1');

@@ -4,7 +4,9 @@ import { beforeAll, describe, expect, it } from 'vitest';
 
 beforeAll(() => configure({ locale: 'en-US', currency: 'EUR' }));
 const card = (props: Record<string, unknown> = {}) =>
-  mount(QProductCard, { props: { name: 'Linen shirt', href: '#shirt', price: 59, image: { src: 'shirt.jpg' }, ...props } as never });
+  mount(QProductCard, {
+    props: { name: 'Linen shirt', href: '#shirt', price: 59, image: { src: 'shirt.jpg' }, ...props } as never,
+  });
 
 describe('QProductCard', () => {
   it('is an article named by its heading, with one link', () => {
@@ -45,7 +47,11 @@ describe('QProductCard', () => {
     expect(badges.map((b) => b.text())).toEqual(['Sale', 'New']);
     expect(badges[1].classes()).toContain('q-badge--neutral');
     expect(w.find('h2.q-pcard__name').exists()).toBe(true);
-    expect(card({ rating: { value: 0, count: 0 } }).find('.q-rating').exists()).toBe(false);
+    expect(
+      card({ rating: { value: 0, count: 0 } })
+        .find('.q-rating')
+        .exists(),
+    ).toBe(false);
   });
 
   it('lists the colours for screen readers and caps the dots', () => {

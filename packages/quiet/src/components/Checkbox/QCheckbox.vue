@@ -107,7 +107,11 @@ const inputAttrs = computed<Record<string, unknown>>(() => {
     disabled: isDisabled.value,
     'aria-invalid': isInvalid.value ? 'true' : undefined,
     'aria-required': rest['aria-required'] ?? (g?.requiredSingle || field?.value.required ? 'true' : undefined),
-    'aria-describedby': joinIds(rest['aria-describedby'] as string | undefined, g?.describedBy, field?.value.describedBy),
+    'aria-describedby': joinIds(
+      rest['aria-describedby'] as string | undefined,
+      g?.describedBy,
+      field?.value.describedBy,
+    ),
     onChange,
   };
 });

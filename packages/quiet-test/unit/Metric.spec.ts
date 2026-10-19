@@ -5,7 +5,9 @@ import { h } from 'vue';
 
 describe('QMetric', () => {
   it('renders the label, the figure and the change', () => {
-    const w = mount(QMetric, { props: { label: 'Sales', value: '4.280,00 €', change: { direction: 'up', value: '12 %', label: 'on yesterday' } } });
+    const w = mount(QMetric, {
+      props: { label: 'Sales', value: '4.280,00 €', change: { direction: 'up', value: '12 %', label: 'on yesterday' } },
+    });
     expect(w.classes()).toEqual(['q-metric']);
     expect(w.get('.q-metric__label').text()).toBe('Sales');
     expect(w.get('.q-metric__value').text()).toBe('4.280,00 €');
@@ -17,15 +19,21 @@ describe('QMetric', () => {
   });
 
   it('colours by goodWhen, never by colour alone', () => {
-    const bad = mount(QMetric, { props: { label: 'Orders', value: 38, change: { direction: 'down', value: 3, label: 'on yesterday' } } });
+    const bad = mount(QMetric, {
+      props: { label: 'Orders', value: 38, change: { direction: 'down', value: 3, label: 'on yesterday' } },
+    });
     expect(bad.get('.q-metric__change').classes()).toContain('is-bad');
     expect(bad.get('.q-metric__change').text()).toBe('down 3 on yesterday');
-    const good = mount(QMetric, { props: { label: 'Returns', value: 4, goodWhen: 'down', change: { direction: 'down', value: 2 } } });
+    const good = mount(QMetric, {
+      props: { label: 'Returns', value: 4, goodWhen: 'down', change: { direction: 'down', value: 2 } },
+    });
     expect(good.get('.q-metric__change').classes()).toContain('is-good');
   });
 
   it('shows a flat change without an arrow or colour', () => {
-    const w = mount(QMetric, { props: { label: 'Orders', value: 38, change: { direction: 'same', label: 'on yesterday' } } });
+    const w = mount(QMetric, {
+      props: { label: 'Orders', value: 38, change: { direction: 'same', label: 'on yesterday' } },
+    });
     const ch = w.get('.q-metric__change');
     expect(ch.classes()).not.toContain('is-good');
     expect(ch.classes()).not.toContain('is-bad');

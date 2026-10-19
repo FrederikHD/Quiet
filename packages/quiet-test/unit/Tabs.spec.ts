@@ -17,7 +17,8 @@ const panels = {
   'panel-returns': () => null,
   'panel-notes': () => h('p', 'Notes panel'),
 };
-const key = (el: Element, k: string) => el.dispatchEvent(new KeyboardEvent('keydown', { key: k, bubbles: true, cancelable: true }));
+const key = (el: Element, k: string) =>
+  el.dispatchEvent(new KeyboardEvent('keydown', { key: k, bubbles: true, cancelable: true }));
 
 describe('QTabs', () => {
   it('renders a labelled tablist with a panel per tab, the first one chosen', () => {
@@ -60,9 +61,21 @@ describe('QTabs', () => {
   });
 
   it('starts at defaultValue, and falls back from a disabled or unknown value', () => {
-    expect(mount(QTabs, { props: { label: 'O', tabs: TABS, defaultValue: 'notes' }, slots: panels }).find('[aria-selected="true"]').text()).toBe('Notes');
-    expect(mount(QTabs, { props: { label: 'O', tabs: TABS, modelValue: 'returns' }, slots: panels }).find('[aria-selected="true"]').text()).toBe('Details');
-    expect(mount(QTabs, { props: { label: 'O', tabs: TABS, modelValue: 'nope' }, slots: panels }).find('[aria-selected="true"]').text()).toBe('Details');
+    expect(
+      mount(QTabs, { props: { label: 'O', tabs: TABS, defaultValue: 'notes' }, slots: panels })
+        .find('[aria-selected="true"]')
+        .text(),
+    ).toBe('Notes');
+    expect(
+      mount(QTabs, { props: { label: 'O', tabs: TABS, modelValue: 'returns' }, slots: panels })
+        .find('[aria-selected="true"]')
+        .text(),
+    ).toBe('Details');
+    expect(
+      mount(QTabs, { props: { label: 'O', tabs: TABS, modelValue: 'nope' }, slots: panels })
+        .find('[aria-selected="true"]')
+        .text(),
+    ).toBe('Details');
   });
 
   it('arrow keys, Home and End move and choose, skipping disabled tabs', async () => {
@@ -92,7 +105,11 @@ describe('QTabs', () => {
   });
 
   it('manual activation moves focus without choosing', async () => {
-    const w = mount(QTabs, { props: { label: 'Order', tabs: TABS, activation: 'manual' }, slots: panels, attachTo: document.body });
+    const w = mount(QTabs, {
+      props: { label: 'Order', tabs: TABS, activation: 'manual' },
+      slots: panels,
+      attachTo: document.body,
+    });
     const tabs = w.findAll<HTMLElement>('[role="tab"]').map((t) => t.element);
     tabs[0].focus();
     key(tabs[0], 'ArrowRight');
@@ -104,7 +121,13 @@ describe('QTabs', () => {
 
   it('shows one shared panel when no tab has its own', async () => {
     const w = mount(QTabs, {
-      props: { label: 'Order views', tabs: [{ value: 'all', label: 'All' }, { value: 'open', label: 'Open' }] },
+      props: {
+        label: 'Order views',
+        tabs: [
+          { value: 'all', label: 'All' },
+          { value: 'open', label: 'Open' },
+        ],
+      },
       slots: { default: '<ul><li>#10530</li></ul>' },
     });
     const ps = w.findAll('[role="tabpanel"]');
@@ -119,7 +142,14 @@ describe('QTabs', () => {
 
   it('variant, fill, size and panelFocusable', () => {
     const w = mount(QTabs, {
-      props: { label: 'Period', variant: 'segmented', fill: true, size: 'slim', panelFocusable: false, tabs: [{ value: '1', label: 'Today' }] },
+      props: {
+        label: 'Period',
+        variant: 'segmented',
+        fill: true,
+        size: 'slim',
+        panelFocusable: false,
+        tabs: [{ value: '1', label: 'Today' }],
+      },
       slots: { default: 'x' },
     });
     expect(w.classes()).toEqual(expect.arrayContaining(['q-tabs--segmented', 'q-tabs--fill', 'q-tabs--slim']));
@@ -146,13 +176,21 @@ describe('QTabs', () => {
   });
 
   it('link tabs with null mark no tab as current', () => {
-    const w = mount(QTabs, { props: { label: 'Shop', tabs: [{ value: 'a', label: 'A', href: '/a' }], modelValue: null } });
+    const w = mount(QTabs, {
+      props: { label: 'Shop', tabs: [{ value: 'a', label: 'A', href: '/a' }], modelValue: null },
+    });
     expect(w.find('[aria-current]').exists()).toBe(false);
   });
 
   it('marks a tab whose panel holds an invalid field', async () => {
     const w = mount(QTabs, {
-      props: { label: 'Settings', tabs: [{ value: 'store', label: 'Store' }, { value: 'contact', label: 'Contact' }] },
+      props: {
+        label: 'Settings',
+        tabs: [
+          { value: 'store', label: 'Store' },
+          { value: 'contact', label: 'Contact' },
+        ],
+      },
       slots: { 'panel-store': () => h('input'), 'panel-contact': () => h('input', { 'aria-invalid': 'true' }) },
       attachTo: document.body,
     });
@@ -169,7 +207,13 @@ describe('QTabs', () => {
 
   it('opens the tab of a hidden panel that asks to be revealed', async () => {
     const w = mount(QTabs, {
-      props: { label: 'Settings', tabs: [{ value: 'store', label: 'Store' }, { value: 'contact', label: 'Contact' }] },
+      props: {
+        label: 'Settings',
+        tabs: [
+          { value: 'store', label: 'Store' },
+          { value: 'contact', label: 'Contact' },
+        ],
+      },
       slots: { 'panel-store': () => h('input'), 'panel-contact': () => h('input', { id: 'email' }) },
       attachTo: document.body,
     });
@@ -179,7 +223,11 @@ describe('QTabs', () => {
   });
 
   it('fades the edges of a row that scrolls, and keeps the chosen tab in view', async () => {
-    const w = mount(QTabs, { props: { label: 'Product', tabs: TABS, modelValue: 'notes' }, slots: panels, attachTo: document.body });
+    const w = mount(QTabs, {
+      props: { label: 'Product', tabs: TABS, modelValue: 'notes' },
+      slots: panels,
+      attachTo: document.body,
+    });
     const list = w.get('.q-tabs__list').element as HTMLElement;
     Object.defineProperty(list, 'scrollWidth', { configurable: true, value: 500 });
     Object.defineProperty(list, 'clientWidth', { configurable: true, value: 300 });
@@ -210,8 +258,12 @@ describe('QTabs', () => {
     const observed: Element[] = [];
     class RO {
       constructor(_: ResizeObserverCallback) {}
-      observe(el: Element) { observed.push(el); }
-      disconnect() { observed.length = 0; }
+      observe(el: Element) {
+        observed.push(el);
+      }
+      disconnect() {
+        observed.length = 0;
+      }
       unobserve() {}
     }
     vi.stubGlobal('ResizeObserver', RO);

@@ -15,6 +15,7 @@ Switches between views of one thing without leaving the page: an order's details
 ## Size
 
 Tabs are as tall as a control (40px comfortable, 32px compact). `size="slim"` is 28px on desktop, like the other slim controls, and takes the density height again below 640px.
+
 - **`fill`** shares the width equally — segmented controls on phones, two or three line tabs in a narrow card.
 
 ## Content

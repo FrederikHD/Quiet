@@ -10,7 +10,12 @@ const error = computed(() => (tried.value && !stars.value ? 'Choose from 1 to 5 
 </script>
 
 <template>
-  <QForm label-placement="top" :errors="error ? [{ id: 'review-stars', message: error }] : null" class="review" @submit.prevent="tried = true">
+  <QForm
+    label-placement="top"
+    :errors="error ? [{ id: 'review-stars', message: error }] : null"
+    class="review"
+    @submit.prevent="tried = true"
+  >
     <QRatingInput id="review-stars" v-model="stars" label="Your rating" required :error="error" />
     <QField label="Your review"><QTextarea v-model="text" :rows="3" /></QField>
     <QFormActions align="start"><QButton type="submit" variant="primary">Send review</QButton></QFormActions>
@@ -18,5 +23,7 @@ const error = computed(() => (tried.value && !stars.value ? 'Choose from 1 to 5 
 </template>
 
 <style scoped>
-.review { max-width: 480px; }
+.review {
+  max-width: 480px;
+}
 </style>

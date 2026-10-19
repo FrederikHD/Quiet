@@ -39,7 +39,9 @@ const titled = computed(() => props.title != null || !!slots.title);
         <component :is="`h${headingLevel}`" v-if="titled" :id="`${id}-title`" class="q-card__title">
           <slot name="title">{{ title }}</slot>
         </component>
-        <p v-if="description || slots.description" class="q-card__desc"><slot name="description">{{ description }}</slot></p>
+        <p v-if="description || slots.description" class="q-card__desc">
+          <slot name="description">{{ description }}</slot>
+        </p>
       </div>
       <div v-if="slots.actions" class="q-card__actions"><slot name="actions" /></div>
     </div>

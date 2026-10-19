@@ -20,6 +20,10 @@ import { QTabs } from '@frederikhd/quiet';
 </template>
 
 <style scoped>
-.tabs { max-width: 360px; }
-p { margin: 0; }
+.tabs {
+  max-width: 360px;
+}
+p {
+  margin: 0;
+}
 </style>

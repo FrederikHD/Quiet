@@ -15,6 +15,11 @@ const page = ref('orders');
       { value: 'drafts', label: 'Drafts', href: '#orders/drafts' },
       { value: 'abandoned', label: 'Abandoned checkouts', href: '#orders/abandoned' },
     ]"
-    @navigate="(tab, e) => { e.preventDefault(); page = tab.value; }"
+    @navigate="
+      (tab, e) => {
+        e.preventDefault();
+        page = tab.value;
+      }
+    "
   />
 </template>
