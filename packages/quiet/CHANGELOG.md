@@ -6,6 +6,8 @@ breaking changes, a patch version (0.x.y) never does.
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-10-20
+
 ### Added
 
 - Review: one customer review — stars, title, author, date in the shop's locale, "Verified purchase", what they
@@ -126,7 +128,8 @@ First release.
 - WCAG 2.2 AA throughout: keyboard support, focus management, screen-reader announcements, both themes checked with
   axe; layouts that adapt to their own width; print styles; server rendering.
 
-[Unreleased]: https://github.com/FrederikHD/Quiet/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/FrederikHD/Quiet/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/FrederikHD/Quiet/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/FrederikHD/Quiet/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/FrederikHD/Quiet/compare/v0.2.1...v0.3.0
 [0.2.1]: https://github.com/FrederikHD/Quiet/compare/v0.2.0...v0.2.1
