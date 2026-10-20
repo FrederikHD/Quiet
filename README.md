@@ -114,5 +114,4 @@ Releases of `@frederikhd/quiet` are published to npm by `.github/workflows/relea
 The workflow checks that the tag, the package version and the changelog agree, runs the whole CI suite, publishes to
 npm with provenance (a version with a suffix such as `0.2.0-beta.1` goes out under the `next` tag), creates a GitHub
 Release from the changelog section and deploys the explorer. It publishes through npm trusted publishing, so there is
-no npm token to keep. The publish job runs in the `npm` environment: to have each release wait for someone's
-approval before it is published, add required reviewers to that environment (Settings → Environments → npm).
+no npm token to keep.
