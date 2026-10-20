@@ -78,8 +78,8 @@ The panel never gets taller than the screen minus 32px; the header and footer st
 ## What you provide
 
 - **Required:** `title` ("Delete product?"; or the `#title` slot), and the content (default slot).
-- **Optional:** `description` (or `#description`), `size` (`sm` | `md` | `lg`, default `md`), `placement` (`center` | `start` | `end`, default `center`), `mobile` (`sheet` | `inset` | `full`, default `sheet`), `role` (`dialog` | `alertdialog`, default `dialog`), `dismissible` (default true), `closeText` (a text button in place of the ×), `closeLabel` (the ×'s name, default "Close"), `initialFocus`, `flush`, `density` (`comfortable` | `compact`, default: inherited), `teleport` (default "body"; false renders in place).
+- **Optional:** `description` (or `#description`), `size` (`sm` | `md` | `lg`, default `md`), `placement` (`center` | `start` | `end`, default `center`), `mobile` (`sheet` | `inset` | `full`, default `sheet`), `role` (`dialog` | `alertdialog`, default `dialog`), `dismissible` (default true), `closeText` (a text button in place of the ×), `initialFocus`, `flush`, `density` (`comfortable` | `compact`, default: inherited), `teleport` (default "body"; false renders in place).
 - **v-model:** `v-model:open` (default false).
 - **Events:** `@close` (Escape, the backdrop or the close button).
 - **Slots:** the default slot (the body), `#title`, `#description`, `#footer` (Buttons, primary last; a form's submit button can sit here with `form="<form id>"`).
-- **Translations:** `closeLabel`, or once for the shop with `configure({ strings: { dialog: { close: 'Schließen' } } })`.
+- **Translations:** `strings` — `close` (the ×'s name, "Close"); or once for the shop with `configure({ strings: { dialog: { close: 'Schließen' } } })`.

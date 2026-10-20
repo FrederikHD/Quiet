@@ -22,8 +22,6 @@ export interface AppShellProps {
   mainId?: string;
   /** AppShell renders a Toaster, so toast() works on every page; false leaves it out. Default true. */
   toaster?: boolean;
-  /** Phrases for the built-in Toaster: the dismiss button and the region's name (as Toaster's `strings`). */
-  toastStrings?: { dismiss?: string; region?: string };
   /** Built-in phrases: the menu button, the skip link and the drawer's close button. */
   strings?: ShellStrings;
   /** Fill a box instead of the window: the shell scrolls inside its parent (give that a height) and the drawer opens
@@ -35,7 +33,6 @@ const props = withDefaults(defineProps<AppShellProps>(), {
   brand: undefined,
   mainId: undefined,
   toaster: true,
-  toastStrings: undefined,
   strings: undefined,
   contained: false,
 });
@@ -113,13 +110,13 @@ function onDrawerClick(e: MouseEvent) {
       <div v-if="slots['nav-footer']" class="q-shell__navfoot"><slot name="nav-footer" /></div>
     </div>
     <main :id="mainId()" class="q-shell__main" tabindex="-1"><slot /></main>
-    <QToaster v-if="toaster" :strings="toastStrings" />
+    <QToaster v-if="toaster" />
     <QDialog
       v-model:open="open"
       :title="brand || strings.menu"
       placement="start"
       flush
-      :close-label="strings.closeMenu"
+      :strings="{ close: strings.closeMenu }"
       class="q-shell__drawerpanel"
       :teleport="contained ? false : 'body'"
     >

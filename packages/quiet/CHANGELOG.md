@@ -6,6 +6,15 @@ breaking changes, a patch version (0.x.y) never does.
 
 ## [Unreleased]
 
+### Removed
+
+- **Breaking:** the last label props outside `strings`, so every built-in word is translated the same way:
+  - Input `clearLabel` → `:strings="{ clear: 'Leeren' }"` (new `InputStrings`).
+  - Dialog `closeLabel` → `:strings="{ close: 'Schließen' }"` (new `DialogStrings`). `closeText`, the visible text
+    of a close button, stays.
+  - AppShell `toastStrings` → `configure({ strings: { toast: { dismiss, region } } })`, which the Toaster already
+    read.
+
 ### Added
 
 - Checkbox `required` and `error`, for a single checkbox in a form ("I accept the terms"): the message shows under

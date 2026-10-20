@@ -19,6 +19,10 @@ import {
 } from '../../utils/overlay';
 import QButton from '../Button/QButton.vue';
 
+export interface DialogStrings {
+  /** The × button's name. Default "Close". */
+  close?: string;
+}
 export interface DialogProps {
   /** Names the dialog: a short phrase saying what it is for — "Delete product?", "Edit shipping address". Required (or use the `title` slot for rich content). */
   title: string;
@@ -36,8 +40,6 @@ export interface DialogProps {
   dismissible?: boolean;
   /** Text button instead of the × in the header, e.g. "Done". */
   closeText?: string;
-  /** Name of the × button. Default "Close" — translate it ("Schließen"). */
-  closeLabel?: string;
   /** Focused when it opens. Default: the first control in the body, else the first footer button (Cancel in a confirmation), else the dialog itself. */
   initialFocus?: HTMLElement | null;
   /** Body without padding, for content that scrolls on its own (a list). */
@@ -47,6 +49,8 @@ export interface DialogProps {
   /** Where it renders: a selector, default "body". false renders it in place, so it covers the nearest ancestor that
    *  contains fixed elements (one with a transform) instead of the window — for previews and embedded shells. */
   teleport?: string | false;
+  /** Translations ("Schließen"); or once for the shop with configure({ strings: { dialog } }). */
+  strings?: DialogStrings;
 }
 
 defineOptions({ inheritAttrs: false });
@@ -59,7 +63,7 @@ const props = withDefaults(defineProps<DialogProps>(), {
   dismissible: true,
   description: undefined,
   closeText: undefined,
-  closeLabel: undefined,
+  strings: undefined,
   initialFocus: undefined,
   teleport: 'body',
   density: undefined,
@@ -83,7 +87,7 @@ defineSlots<{
 
 const slots = useSlots();
 const hasDesc = () => !!props.description || !!slots.description;
-const strings = useStrings('dialog', { close: 'Close' });
+const strings = useStrings<Required<DialogStrings>>('dialog', { close: 'Close' }, () => props.strings);
 const baseId = useQuietId('q-dialog-');
 const titleId = `${baseId}-title`;
 const descId = `${baseId}-desc`;
@@ -222,13 +226,7 @@ defineExpose({ panel, close });
             <slot name="title">{{ title }}</slot>
           </h2>
           <QButton v-if="closeText" variant="ghost" @click="close">{{ closeText }}</QButton>
-          <QButton
-            v-else-if="dismissible"
-            variant="ghost"
-            icon-start="x"
-            :aria-label="closeLabel || strings.close"
-            @click="close"
-          />
+          <QButton v-else-if="dismissible" variant="ghost" icon-start="x" :aria-label="strings.close" @click="close" />
         </div>
         <p v-if="hasDesc()" :id="descId" class="q-dialog__desc">
           <slot name="description">{{ description }}</slot>
