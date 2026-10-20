@@ -163,3 +163,15 @@ test.describe('FileUpload reordering', () => {
     await expect(upload.locator('.q-upload__meta').first()).toContainText('Main image');
   });
 });
+
+test('Popover holding a field is wide enough for it and lines up with the end of its trigger', async ({ page }) => {
+  await page.goto('/components/popover/examples');
+  const trigger = page.getByRole('button', { name: 'Columns' });
+  await trigger.click();
+  const panel = page.getByRole('dialog', { name: 'Columns' });
+  await expect(panel.getByRole('checkbox', { name: 'Product' })).toBeVisible();
+  const p = (await panel.boundingBox())!;
+  const t = (await trigger.boundingBox())!;
+  expect(p.width).toBeGreaterThan(200);
+  expect(Math.abs(p.x + p.width - (t.x + t.width))).toBeLessThan(1.5);
+});
