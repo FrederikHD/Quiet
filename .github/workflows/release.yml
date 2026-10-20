@@ -5,8 +5,10 @@
 # Then:
 #   1. the version must have a section in CHANGELOG.md (and match the tag, or have no tag yet);
 #   2. the full CI suite runs (types, unit, package check, browser tests);
-#   3. the package is published with provenance, and a GitHub Release is created from the changelog section.
-# How to release: see "Releasing" in the root README. Needs the repository secret NPM_TOKEN (an npm automation token).
+#   3. the package is published with provenance, and a GitHub Release is created from the changelog section;
+#   4. the explorer is deployed to GitHub Pages, so the docs match what is on npm.
+# How to release: see "Releasing" in the root README. Publishing uses npm trusted publishing (OIDC): no token, npm
+# accepts this workflow because the package names it as its trusted publisher (set up on npmjs.com, see the README).
 name: Release
 
 on:
@@ -56,7 +58,7 @@ jobs:
     environment: npm
     permissions:
       contents: write # the GitHub Release
-      id-token: write # npm provenance
+      id-token: write # npm trusted publishing and provenance
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -66,11 +68,11 @@ jobs:
           registry-url: https://registry.npmjs.org
       - run: npm ci
       - run: npm run build -w @frederikhd/quiet
+      # Trusted publishing needs npm 11.5.1 or later; Node 22 ships npm 10. The build above stays on the tested toolchain.
+      - run: npm install -g npm@^11.5.1
       - name: Publish to npm
         # A version like 0.2.0-beta.1 goes out under the "next" tag, so `npm install` keeps getting the last stable one.
         run: npm publish -w @frederikhd/quiet --provenance --access public ${{ needs.verify.outputs.prerelease == 'true' && '--tag next' || '' }}
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: GitHub Release from the changelog
         run: |
           v="${{ needs.verify.outputs.version }}"
@@ -82,3 +84,11 @@ jobs:
             ${{ needs.verify.outputs.prerelease == 'true' && '--prerelease' || '' }}
         env:
           GH_TOKEN: ${{ github.token }}
+
+  docs:
+    needs: publish
+    uses: ./.github/workflows/pages.yml
+    permissions:
+      contents: read
+      pages: write
+      id-token: write

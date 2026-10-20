@@ -5,3 +5,4 @@ playwright-report
 test-results
 packages/quiet/src/styles/tokens.css
 **/__screenshots__
+/site

@@ -7,6 +7,12 @@ updates:
     directory: /
     schedule:
       interval: weekly
+    ignore:
+      # TypeScript majors wait until vue-tsc supports them; @types/node follows the Node version CI runs (22).
+      - dependency-name: typescript
+        update-types: ['version-update:semver-major']
+      - dependency-name: '@types/node'
+        update-types: ['version-update:semver-major']
     groups:
       playwright:
         patterns: ['@playwright/test', 'playwright', 'playwright-core']

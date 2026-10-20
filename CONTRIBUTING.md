@@ -69,11 +69,11 @@ matching image by itself. If the `visual` job fails on that PR, check out its br
 ## Releasing
 
 Releases publish `@frederikhd/quiet` to npm. The [README](README.md#releasing) has the details, including the
-`NPM_TOKEN` setup.
+one-time trusted publishing setup on npmjs.com.
 
 1. In a PR into `develop`, set the version in `packages/quiet/package.json` and turn `## [Unreleased]` in the
    changelog into `## [x.y.z] - YYYY-MM-DD`. Before 1.0, a release with breaking changes bumps the minor version
    (0.1.0 → 0.2.0).
 2. Merge it once CI is green.
 3. Actions → **Release** → **Run workflow** on `develop`. It checks that the version and the changelog agree, runs the
-   whole CI suite, publishes to npm with provenance and creates the GitHub Release and its tag.
+   whole CI suite, publishes to npm with provenance, creates the GitHub Release and its tag, and deploys the docs site.

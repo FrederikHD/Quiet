@@ -1,10 +1,13 @@
-# Builds quiet-explorer and publishes it to GitHub Pages.
+# Publishes quiet-explorer to GitHub Pages, in two versions: the latest release at the site's root (the default, matching
+# npm) and develop under next/. A switch in the explorer's header moves between them. Every run builds both, so it runs
+# on each push to develop, from the release workflow after publishing, and by hand (Actions → Run workflow).
 # One-time setup: repository Settings → Pages → Source: "GitHub Actions".
 name: Explorer on GitHub Pages
 
 on:
   push:
-    branches: [main, develop]
+    branches: [develop]
+  workflow_call:
   workflow_dispatch:
 
 permissions:
@@ -12,29 +15,28 @@ permissions:
   pages: write
   id-token: write
 
+# Queued, not cancelled: a release's deploy must not be cut off by a push. The last run wins, and every run builds both.
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0 # the release tags: the root is built from the latest one
       - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
       - run: npm ci
-      - name: Build the explorer
-        run: npm run build -w quiet-explorer
-        env:
-          EXPLORER_BASE: /${{ github.event.repository.name }}/
-      # Pages has no SPA fallback: serve the app for deep links such as /components/button/playground.
-      - run: cp packages/quiet-explorer/dist/index.html packages/quiet-explorer/dist/404.html
+      - name: Build the released and the develop explorer
+        run: packages/quiet-explorer/scripts/build-pages.sh /${{ github.event.repository.name }}/
       - uses: actions/upload-pages-artifact@v5
         with:
-          path: packages/quiet-explorer/dist
+          path: site
 
   deploy:
     needs: build

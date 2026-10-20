@@ -88,13 +88,21 @@ props, slots instead of render props, and class names shared with the original d
 
 ## Deploying the explorer
 
-`.github/workflows/pages.yml` builds the explorer and publishes it to GitHub Pages on every push to `main` and
-`develop`, or by hand from the Actions tab.
-In the repository settings, Pages → Source must be "GitHub Actions".
+The explorer is published to GitHub Pages in two versions:
+
+- **Released** (the default, at the site's root): built from the latest release tag, so it documents what is on npm.
+- **Develop** (under `next/`): built from `develop`, so it shows what the next release will contain.
+
+A switch in the explorer's header moves between them and keeps the page you are on.
+`.github/workflows/pages.yml` builds both on every push to `develop`, after each release (the release workflow calls
+it) and by hand from the Actions tab; `packages/quiet-explorer/scripts/build-pages.sh` does the building. In the
+repository settings, Pages → Source must be "GitHub Actions". The `github-pages` environment decides which refs may
+deploy: pushes and releases started with **Run workflow** deploy as `develop`, while a release started by pushing a tag
+deploys as that tag, so add a `v*` tag rule there if you release that way.
 
 ## Releasing
 
-Releases of `@frederikhd/quiet` are published to npm by `.github/workflows/release.yml` when a version tag is pushed.
+Releases of `@frederikhd/quiet` are published to npm by `.github/workflows/release.yml`.
 
 1. In a PR into `develop`, set the new version in `packages/quiet/package.json` (semver; before 1.0, breaking changes
    bump the minor version) and move the entries under `## [Unreleased]` in `packages/quiet/CHANGELOG.md` into a
@@ -104,10 +112,18 @@ Releases of `@frederikhd/quiet` are published to npm by `.github/workflows/relea
    commit and push the tag yourself: `git tag vx.y.z && git push origin vx.y.z`.
 
 The workflow checks that the tag, the package version and the changelog agree, runs the whole CI suite, publishes to
-npm with provenance (a version with a suffix such as `0.2.0-beta.1` goes out under the `next` tag) and creates a
-GitHub Release from the changelog section. It needs the repository secret `NPM_TOKEN` (Settings → Secrets and
-variables → Actions): an npm _granular access token_ with read and write access to packages. For the very first
-release the package doesn't exist yet, so give the token the whole `@frederikhd` scope; once it's published you can
-narrow a new token to `@frederikhd/quiet`. The scope `@frederikhd` must be your npm username, or an npm organisation
-you own. The publish job runs in the `npm` environment, so you can require an approval there before anything goes
-out.
+npm with provenance (a version with a suffix such as `0.2.0-beta.1` goes out under the `next` tag), creates a GitHub
+Release from the changelog section and deploys the explorer. The publish job runs in the `npm` environment, so you can
+require an approval there before anything goes out.
+
+### Publishing without a token
+
+The workflow publishes through npm _trusted publishing_: npm accepts the package from this repository's release
+workflow itself, so there is no npm token to store, leak or renew. It is set up once, on npmjs.com:
+
+1. Open the package's **Settings** → **Trusted Publisher** → **GitHub Actions**, and enter organisation or user
+   `FrederikHD`, repository `Quiet`, workflow filename `release.yml` and environment `npm`.
+2. Under **Publishing access**, choose "Require two-factor authentication and disallow tokens", so only the workflow
+   can publish.
+3. Delete the `NPM_TOKEN` repository secret (Settings → Secrets and variables → Actions) and revoke that token on
+   npmjs.com: nothing uses it any more.

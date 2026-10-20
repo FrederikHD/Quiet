@@ -3,6 +3,7 @@ import { QAppShell, QNav, QSelect, type NavItem, type NavSection } from '@freder
 import { computed, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { groups } from './catalog';
+import VersionSwitch from './VersionSwitch.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -90,6 +91,7 @@ watch(
 
 <template>
   <QAppShell brand="Quiet explorer" :toaster="!toasterPlayground">
+    <template #brand>Quiet explorer <VersionSwitch /></template>
     <template #nav><QNav :sections="sections" @navigate="navigate" /></template>
     <template #nav-footer>
       <div class="ex-settings">
