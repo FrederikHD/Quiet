@@ -13,7 +13,7 @@ A small panel anchored to a trigger, opened by click or tap: short help text (`k
 - Closes on Escape, a click outside, pressing the trigger again, or focus moving elsewhere. It also closes when its trigger scrolls out of view. Inside a Dialog it sits above the dialog, and Escape closes it before the dialog.
 - Sits below the trigger, `space-2` (8px) away; flips above when there's no room and stays 8px inside the viewport. Use `placement="top"` to prefer above and `align` (`start` by default, `center`, `end`) to line up with the trigger.
 - Renders at the end of the page, so it is never clipped by a table, card or scroll container, and follows its trigger on scroll and resize. A `class` or `style` set on the Popover goes to this panel, as does `panel-class`.
-- `width` fixes the panel's width (a number in px, or any CSS length). `flush` removes the panel's padding, for lists that reach the edges.
+- `width` fixes the panel's width (a number in px, or any CSS length). Without it the panel is as wide as its content, up to 320px. Fields and groups (Field, CheckboxGroup, RadioGroup, FieldGroup) measure their own width and so have none to give, so a panel holding one takes the full 320px; pass `width` for a narrower one. `flush` removes the panel's padding, for lists that reach the edges.
 - A template ref gives `show()`, `hide()` and `toggle()`.
 
 ## Look
@@ -48,6 +48,6 @@ A third kind, `menu`, is what Menu builds on: focus moves into the panel like `d
 ## What you provide
 
 - **Required:** `label` ("Help: SKU", "Change order status") — names a `dialog` panel for screen readers; the component warns without it. The default slot — exactly one trigger element, usually a Button.
-- **Optional:** `content` (text for the panel), `kind` (`tip` | `dialog` | `menu`, default `dialog`), `placement` (`bottom` | `top`, default `bottom`), `align` (`start` | `center` | `end`, default `start`), `width` (px number or CSS length; default fits the content up to 320px, 280px for tips), `defaultOpen` (opens on first render), `initialFocus` (dialog kind: the element focused on open), `flush` (no panel padding), `panelClass` (class for the panel).
+- **Optional:** `content` (text for the panel), `kind` (`tip` | `dialog` | `menu`, default `dialog`), `placement` (`bottom` | `top`, default `bottom`), `align` (`start` | `center` | `end`, default `start`), `width` (px number or CSS length; default fits the content up to 320px, 280px for tips, and 320px when it holds a field), `defaultOpen` (opens on first render), `initialFocus` (dialog kind: the element focused on open), `flush` (no panel padding), `panelClass` (class for the panel).
 - **v-model:** `v-model:open` (default false).
 - **Slots:** the default slot (the trigger — it receives `aria-expanded`, `aria-controls` and the click that toggles the panel; your own `@click` runs first, and `preventDefault()` in it stops the toggle), `#content` (the panel's contents, in place of `content`).

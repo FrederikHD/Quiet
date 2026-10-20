@@ -29,6 +29,12 @@ breaking changes, a patch version (0.x.y) never does.
   `console.warn` now see "[Vue warn]: [Quiet] …" followed by the component trace.
 - The published `dist/quiet.js` is no longer minified, so it reads like the source. Apps minify it when they build.
 
+### Fixed
+
+- A Popover holding a field (a CheckboxGroup of columns, a RadioGroup, a Field) shrank to its padding: those
+  measure their own width, so they gave the panel none to fit. The panel now takes its full width (320px, or the
+  screen less 16px) when it holds one, and `align="end"` lines it up with the trigger's end again.
+
 ## [0.4.0] - 2026-10-20
 
 ### Changed

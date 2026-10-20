@@ -42,6 +42,23 @@
   }
 }
 
+/* A panel is as wide as its content (max-content), but a component that measures its own width (Field and the
+   groups built on it, FormSection, Table …) is a size container, which has no width of its own: the panel would
+   shrink to its padding. Holding one, the panel takes its full width instead; a width prop still wins. */
+.q-popover:has(
+  .q-field,
+  .q-fgroup__controls,
+  .q-fsection,
+  .q-dl,
+  .q-table,
+  .q-factions,
+  .q-pager,
+  .q-steps,
+  .q-crumbs
+) {
+  width: min(320px, calc(100vw - 16px));
+}
+
 /* Popover variants used by Combobox */
 .q-popover--flush {
   padding: 0;
