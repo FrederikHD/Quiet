@@ -78,7 +78,7 @@ const showClear = computed(
   () => props.clearable && !isDisabled.value && !isReadonly.value && model.value != null && model.value !== '',
 );
 
-if (import.meta.env.DEV && !controlId.value && !attrs['aria-label'] && !attrs['aria-labelledby']) {
+if (!controlId.value && !attrs['aria-label'] && !attrs['aria-labelledby']) {
   warnOnce(
     'input-label',
     'Input: give it a visible label — wrap it in Field, or pass id, aria-label or aria-labelledby.',

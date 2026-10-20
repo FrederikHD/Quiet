@@ -129,7 +129,7 @@ const strings = useStrings<Required<TableStrings>>(
   () => props.strings,
 );
 const captionId = `${useQuietId('q-table-')}-caption`;
-if (import.meta.env.DEV && !props.caption)
+if (!props.caption)
   warnOnce('table-caption', 'Table: pass a caption — it names the table for screen readers ("Orders").');
 
 const columns = computed(() => props.columns.filter((c): c is TableColumn<Row> => !!c));

@@ -40,7 +40,7 @@ defineSlots<{
   hint?(): unknown;
 }>();
 
-if (import.meta.env.DEV && props.label == null && !props.ariaLabel && !useAttrs()['aria-labelledby'])
+if (props.label == null && !props.ariaLabel && !useAttrs()['aria-labelledby'])
   warnOnce('radiogroup-label', 'RadioGroup: pass a label — it is the question the radios answer.');
 
 if (model.value === undefined && props.defaultValue !== undefined) model.value = props.defaultValue;

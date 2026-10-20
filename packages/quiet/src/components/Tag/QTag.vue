@@ -60,7 +60,7 @@ function label() {
   const text = textOf(slots.default?.()).trim();
   const name = props.removeLabel || strings.value.remove(text);
   if (isField.value) return name;
-  if (import.meta.env.DEV && text && !name.toLowerCase().includes(text.toLowerCase()))
+  if (text && !name.toLowerCase().includes(text.toLowerCase()))
     warnOnce('tag-label', `Tag: removeLabel "${name}" should contain the visible text "${text}".`);
   const detail = detailText();
   return detail && !name.includes(detail) ? `${name} ${detail}` : name;

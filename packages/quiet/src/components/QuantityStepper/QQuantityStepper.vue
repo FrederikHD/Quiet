@@ -68,7 +68,7 @@ const isInvalid = computed(
 const canDown = computed(() => !isDisabled.value && !isReadonly.value && value.value > props.min);
 const canUp = computed(() => !isDisabled.value && !isReadonly.value && value.value < props.max);
 
-if (import.meta.env.DEV && !controlId.value && !attrs['aria-label'] && !attrs['aria-labelledby']) {
+if (!controlId.value && !attrs['aria-label'] && !attrs['aria-labelledby']) {
   warnOnce('stepper-label', 'QuantityStepper: wrap it in a Field, or pass aria-label ("Quantity of Linen shirt").');
 }
 

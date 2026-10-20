@@ -77,7 +77,7 @@ const left = computed(() => (props.maxlength != null ? props.maxlength - length.
 // Read out only when it matters: the last 10% of the limit.
 const near = computed(() => props.maxlength != null && left.value <= Math.max(10, Math.round(props.maxlength * 0.1)));
 
-if (import.meta.env.DEV && !controlId.value && !attrs['aria-label'] && !attrs['aria-labelledby']) {
+if (!controlId.value && !attrs['aria-label'] && !attrs['aria-labelledby']) {
   warnOnce(
     'textarea-label',
     'Textarea: give it a label — wrap it in Field, or pass id, aria-label or aria-labelledby.',

@@ -120,7 +120,7 @@ const isRequired = computed(
     props.required || !!field?.value.required || attrs['aria-required'] === true || attrs['aria-required'] === 'true',
 );
 
-if (import.meta.env.DEV && !props.id && !field && !attrs['aria-label'] && !attrs['aria-labelledby']) {
+if (!props.id && !field && !attrs['aria-label'] && !attrs['aria-labelledby']) {
   warnOnce('combo-label', 'Combobox: give it a label — wrap it in Field, or pass aria-label.');
 }
 
