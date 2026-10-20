@@ -111,7 +111,7 @@ Every component follows the same rules, so they look and behave alike next to ea
   - Field puts labels beside at 400 / 520px.
   - FieldGroup stacks by measuring its own width.
   - FormActions stacks under 480px; a sticky bar stays one row.
-  - Table switches to cards under 640px.
+  - Table switches to cards under 640px (`cardsBelow` moves it for a table of a few columns).
   - Pagination drops its extras step by step under 560, 460, 400 and 280px.
   - Tabs scroll sideways when they don't fit, never wrap.
   - Page puts its side column beside the main one from 900px.
@@ -129,6 +129,19 @@ Every component follows the same rules, so they look and behave alike next to ea
 ## Voice
 
 Plain, short, sentence case. Buttons are verbs: "Add to cart", "Save changes", "Refund order" — never "OK" or "Submit". Errors say what happened and what to do next: "Card declined — try another payment method." Storefront copy may be warm; back-office copy is strictly functional.
+
+## Product titles
+
+A product's title is its name in the shop, in the customer's words. It's the same everywhere the product appears: the card, the product page's `h1`, search suggestions, the cart, the order summary, and the order and product screens in the back office.
+
+- **Say what it is:** the type, with the word that sets it apart from its neighbours. "Linen shirt", "Relaxed linen trousers", "Heavy linen jacket". Not "Shirt LS-2041", and not "Premium ultra-soft summer linen shirt".
+- **Sentence case:** only the first word and names capitalised. No ALL CAPS, no emoji, no symbols.
+- **Short:** aim for 40 characters or fewer, so a phone card shows it in two lines and the cart line doesn't wrap. Cards show the whole title; nothing cuts it off, so a long one makes the grid uneven.
+- **Options aren't in the title:** colour and size are the variant, shown under the title as "Navy · M" in the cart, the order summary and the back office, and as choices on the product page. If each colour is its own product, add it after a comma in lower case: "Linen shirt, navy".
+- **No marketing in the title:** "new", "sale", "bestseller", "free shipping" are Badges or Prices, which change; the title doesn't.
+- **The brand:** in a shop that sells one brand, leave it out. A shop of several brands shows it as the card's `vendor` line above the title, not in it.
+- **Searchable words:** the words people search for belong in the title only when they're true to the product ("linen", "shirt"). Everything else goes in the description, where search finds it too.
+- **Translated, not transliterated:** in a German shop, "Leinenhemd", not "Linen shirt". Keep the article number (SKU) out of it: it is the back office's subtitle ("SKU LS-2041").
 
 ## Visual foundations
 
@@ -189,12 +202,12 @@ The Badge component: pill (`radius-full`), `label` type, tint background with th
 - **Checkout:** Steps above the title (Address → Shipping → Payment; done steps link back, later ones can't be skipped to). The form on `surface`, the OrderSummary beside it on `surface-sunken`, sticky; under 900px the summary folds into one "Show order summary · total" row above the form. Addresses with AddressFields; delivery and payment as RadioGroup `cards`; a DiscountCode inside the summary. Labels on `top`, optional fields marked "(optional)". The final button names the obligation to pay and the amount: "Buy now · 84,60 €".
 - **Browsing:** filters beside the grid from 900px (Disclosures: Colour as swatches, Size as tiles, Price as a PriceRange, Availability), in a "Filter (2)" sheet on phones with "Show 12 products" at the bottom. The filters in use as FilterChips above the results; the count, then sort. Filters and sort live in the URL. Show 12 products, then "Show more" with "Showing 12 of 40". Nothing left: an EmptyState that offers to clear the filters.
 - **Search:** a SearchBox in the header (an icon that opens it full-screen on phones), suggesting collections and products as you type; Enter opens the results page, which filters like a collection.
-- **Reviews:** a Rating under the product title links to the reviews. The section: ReviewSummary (bars filter by stars, "Write a review"), the list sorted by most recent, four at a time. Each review: stars, title, text, name · date · size bought, "Verified purchase" in `success`.
+- **Reviews:** a Rating under the product title links to the reviews. The section: ReviewSummary (bars filter by stars, "Write a review") beside the list on wide screens, above it on phones. The list is Review components, sorted by most recent (a Select offers most helpful, highest and lowest rated), three at a time with "Show more". Each review: stars, title, author, date and "Verified purchase" in `success`, what they bought, text that folds after five lines, the shop's reply, and a "Helpful" toggle.
 - **Confirmation:** a `success` check, the order number, where the confirmation went, the details as a DescriptionList and the OrderSummary — no Steps.
 
 ## Iconography
 
-Use only the Quiet icon set (the Icon component): 53 outline icons on a 20px grid with a 1.5px round stroke, never filled (rating stars are the one exception — see Rating). Size them with the icon tokens — `--ctl-icon` inside controls (`icon-md` 20 or `icon-sm` 16) and `icon-lg` 24 in the storefront header — and colour them `ink` or `ink-muted` through `currentColor`. The exception: icons in buttons that trigger an action or open a menu use `brand` (secondary and ghost Buttons; on solid buttons they take the label's colour). A status icon always sits next to its word. Help and explanations open from a `help` icon as a Popover tip, on click, never on hover.
+Use only the Quiet icon set (the Icon component): 54 outline icons on a 20px grid with a 1.5px round stroke, never filled (rating stars are the one exception — see Rating). Size them with the icon tokens — `--ctl-icon` inside controls (`icon-md` 20 or `icon-sm` 16) and `icon-lg` 24 in the storefront header — and colour them `ink` or `ink-muted` through `currentColor`. The exception: icons in buttons that trigger an action or open a menu use `brand` (secondary and ghost Buttons; on solid buttons they take the label's colour). A status icon always sits next to its word. Help and explanations open from a `help` icon as a Popover tip, on click, never on hover.
 
 ## Logo
 
