@@ -19,6 +19,7 @@ The Input box (`surface-raised`, `line-strong` border, `radius-md`) with an opti
 - Order options the way people look for them: by frequency for statuses, alphabetically for countries (with the 2–3 most common first in a group), by size order for S–XL — never by database id.
 - Labels are short and parallel: "Newest first", "Price: low to high", "Price: high to low". A select can't wrap its text, so a long label gets cut off on a phone — keep labels to about 20 characters and put details (delivery times, conditions) in the Field's hint.
 - In a connected FieldGroup the select's part is measured, so its longest option always fits beside the chevron; short labels ("DE +49", "per month") keep the other part roomy.
+- A select fills its container. In a toolbar (a sort order beside a product count), give it `width: auto` and it is as wide as its longest option needs.
 
 ## Placeholder
 

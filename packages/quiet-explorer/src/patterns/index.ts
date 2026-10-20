@@ -39,6 +39,26 @@ export const patterns: Pattern[] = [
     load: () => import('./ProductPage.vue'),
   },
   {
+    slug: 'collection',
+    title: 'Collection',
+    summary:
+      'A storefront collection: filters beside the grid (in a sheet on phones), chips for the filters in use, sort, 12 products at a time and an empty result, all kept in the URL.',
+    uses: [
+      'Breadcrumbs',
+      'Disclosure',
+      'CheckboxGroup',
+      'Checkbox',
+      'PriceRange',
+      'FilterChips',
+      'Select',
+      'ProductCard',
+      'EmptyState',
+      'Dialog',
+      'Button',
+    ],
+    load: () => import('./CollectionPage.vue'),
+  },
+  {
     slug: 'checkout',
     title: 'Checkout',
     summary:

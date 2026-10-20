@@ -104,6 +104,60 @@ test.describe('Orders', () => {
   });
 });
 
+test.describe('Collection', () => {
+  test('a filter narrows the list, lives in the URL and comes off with its chip', async ({ page }) => {
+    await page.goto('/patterns/collection');
+    const screen = page.getByTestId('pattern');
+    const count = screen.getByRole('status').filter({ hasText: 'products' });
+    await expect(count).toHaveText('40 products');
+
+    await screen.getByRole('checkbox', { name: /^Navy/ }).press('Space');
+    await expect(page).toHaveURL(/colour=Navy/);
+    await expect(count).not.toHaveText('40 products');
+    const filtered = await count.textContent();
+
+    await page.reload();
+    await expect(screen.getByRole('checkbox', { name: /^Navy/ })).toBeChecked();
+    await expect(count).toHaveText(filtered!);
+
+    await screen.getByRole('button', { name: 'Remove filter: Navy' }).click();
+    await expect(count).toHaveText('40 products');
+    await expect(page).not.toHaveURL(/colour=/);
+  });
+
+  test('"Show more" adds the next 12 and moves focus to the first of them', async ({ page }) => {
+    await page.goto('/patterns/collection');
+    const screen = page.getByTestId('pattern');
+    await expect(screen.getByText('Showing 12 of 40')).toBeVisible();
+    await screen.getByRole('button', { name: 'Show more' }).click();
+    await expect(screen.getByText('Showing 24 of 40')).toBeVisible();
+    await expect(screen.locator('.q-pcard__link').nth(12)).toBeFocused();
+  });
+
+  test('filters that match nothing offer to clear them', async ({ page }) => {
+    await page.goto('/patterns/collection?max=20');
+    const screen = page.getByTestId('pattern');
+    await expect(screen.getByText('No products match these filters')).toBeVisible();
+    await screen.getByRole('button', { name: 'Clear filters' }).click();
+    await expect(screen.getByRole('status').filter({ hasText: 'products' })).toHaveText('40 products');
+  });
+
+  test('on a phone the filters open in a sheet that says how many products it will show', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 800 });
+    await page.goto('/patterns/collection');
+    const screen = page.getByTestId('pattern');
+    await screen.getByRole('button', { name: 'Filter', exact: true }).click();
+    const sheet = page.getByRole('dialog', { name: 'Filter' });
+    await sheet.getByRole('checkbox', { name: 'In stock only' }).check();
+    const show = sheet.getByRole('button', { name: /^Show \d+ products$/ });
+    await expect(show).not.toHaveText('Show 40 products');
+    await show.click();
+    await expect(sheet).toBeHidden();
+    await expect(screen.getByRole('button', { name: 'Filter (1)' })).toBeVisible();
+    await expect(page).toHaveURL(/stock=1/);
+  });
+});
+
 test.describe('Checkout', () => {
   test('goes through address, shipping and payment to the confirmation, asking for what is missing', async ({
     page,
