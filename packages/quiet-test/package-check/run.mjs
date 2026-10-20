@@ -41,16 +41,20 @@ try {
   console.log('\n› Type-checking the app against the published types');
   run('npx', ['vue-tsc', '--noEmit'], app);
 
+  // What supply-chain scanners (Socket) look at: the published bundle reads no environment variables (development
+  // warnings go through Vue's own warn, which Vue's production build turns off) and isn't minified.
+  const published = readFileSync(join(app, 'node_modules', '@frederikhd', 'quiet', 'dist', 'quiet.js'), 'utf8');
+  if (/process\.env|import\.meta\.env/.test(published)) throw new Error('dist/quiet.js reads environment variables');
+  if (!published.includes('function warnOnce(')) throw new Error('dist/quiet.js looks minified: its names are gone');
+
   console.log('\n› Building the app');
   run('npx', ['vite', 'build', '--logLevel', 'warn'], app);
-  // The library's development warnings are process.env.NODE_ENV checks for the app's bundler to resolve. Left in, the
-  // production bundle would throw "process is not defined" in the browser; resolved, the warnings are gone with them.
+  // Left in, process.env would throw "process is not defined" in the browser.
   const assets = join(app, 'dist', 'assets');
   for (const f of readdirSync(assets).filter((n) => n.endsWith('.js'))) {
     const js = readFileSync(join(assets, f), 'utf8');
     if (js.includes('process.env'))
       throw new Error(`${f} still contains process.env: the app's bundler didn't resolve it`);
-    if (js.includes('[Quiet]')) throw new Error(`${f} still contains development warnings`);
   }
 
   console.log('\n› Rendering on the server');

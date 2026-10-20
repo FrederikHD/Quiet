@@ -12,7 +12,7 @@ describe('QProductCard', () => {
   it('warns in development when href is empty: the name is the only way to the product', () => {
     const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
     card({ href: '' });
-    expect(warn).toHaveBeenCalledWith(expect.stringContaining('ProductCard: pass href'));
+    expect(warn.mock.calls.some(([m]) => String(m).includes('ProductCard: pass href'))).toBe(true);
     warn.mockRestore();
   });
 

@@ -70,7 +70,7 @@ const field = group ? null : useFieldControl();
 const input = ref<HTMLInputElement | null>(null);
 const ownId = useControlId(field, () => props.id);
 
-if (import.meta.env.DEV && props.label == null && !slots.label && !attrs['aria-label']) {
+if (props.label == null && !slots.label && !attrs['aria-label']) {
   warnOnce('check-label', 'Checkbox: pass a label (use labelHidden to hide it visually, e.g. in table rows).');
 }
 

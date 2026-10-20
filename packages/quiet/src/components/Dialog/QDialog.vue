@@ -172,7 +172,7 @@ watch(
       deactivate();
       return;
     }
-    if (import.meta.env.DEV && !props.title && !slots.title)
+    if (!props.title && !slots.title)
       warnOnce('dialog-title', 'Dialog: pass a title — it names the dialog for screen readers.');
     place = rememberPlace(returnTarget());
     inheritedDensity.value = place?.el.closest('[data-density]')?.getAttribute('data-density') ?? undefined;

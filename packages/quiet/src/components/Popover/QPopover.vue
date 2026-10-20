@@ -58,8 +58,7 @@ const panelId = useQuietId('q-popover-');
 const wrap = ref<HTMLElement | null>(null);
 const trigger = ref<HTMLElement | null>(null);
 
-if (import.meta.env.DEV && !props.label)
-  warnOnce('popover-label', 'Popover: pass a label — it names the panel for screen readers.');
+if (!props.label) warnOnce('popover-label', 'Popover: pass a label — it names the panel for screen readers.');
 if (props.defaultOpen && !open.value) open.value = true;
 
 // The trigger is the slot's first element; follow it if the slot swaps it for another.

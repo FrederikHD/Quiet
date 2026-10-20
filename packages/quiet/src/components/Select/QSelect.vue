@@ -90,7 +90,7 @@ const isRequired = computed(() => props.required || !!field?.value.required || a
 const isEmpty = computed(() => props.placeholder != null && (model.value == null || model.value === ''));
 const hasPrefix = computed(() => !!props.prefixIcon || !!slots.prefix);
 
-if (import.meta.env.DEV && !controlId.value && !attrs['aria-label'] && !attrs['aria-labelledby']) {
+if (!controlId.value && !attrs['aria-label'] && !attrs['aria-labelledby']) {
   warnOnce(
     'select-label',
     'Select: give it a visible label — wrap it in Field, or pass id, aria-label or aria-labelledby.',

@@ -89,20 +89,18 @@ function classes() {
 }
 
 function stateAttrs() {
-  if (import.meta.env.DEV) {
-    if (isIconOnly() && !attrs['aria-label'] && !attrs['aria-labelledby'])
-      warnOnce('icon-label', 'Button: an icon-only button needs an aria-label (or aria-labelledby).');
-    if (props.pressed !== undefined && !isToggle.value)
-      warnOnce(
-        'pressed-variant',
-        `Button: \`pressed\` only works on the secondary and ghost variants; ignored on "${props.variant}".`,
-      );
-    if (props.size === 'large' && props.variant === 'ghost')
-      warnOnce(
-        'large-ghost',
-        'Button: size="large" is for storefront primary actions; a large ghost button is probably not what you want.',
-      );
-  }
+  if (isIconOnly() && !attrs['aria-label'] && !attrs['aria-labelledby'])
+    warnOnce('icon-label', 'Button: an icon-only button needs an aria-label (or aria-labelledby).');
+  if (props.pressed !== undefined && !isToggle.value)
+    warnOnce(
+      'pressed-variant',
+      `Button: \`pressed\` only works on the secondary and ghost variants; ignored on "${props.variant}".`,
+    );
+  if (props.size === 'large' && props.variant === 'ghost')
+    warnOnce(
+      'large-ghost',
+      'Button: size="large" is for storefront primary actions; a large ghost button is probably not what you want.',
+    );
   return {
     // With an aria-label the button's content isn't read, so the count joins the label: "Cart, 2 items".
     'aria-label':

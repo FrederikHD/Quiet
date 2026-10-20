@@ -1,4 +1,4 @@
-import { Comment, Fragment, Text, isVNode, type VNode, type VNodeArrayChildren } from 'vue';
+import { Comment, Fragment, Text, isVNode, warn, type VNode, type VNodeArrayChildren } from 'vue';
 
 export const FOCUSABLE =
   'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -12,11 +12,14 @@ export function joinIds(...ids: (string | false | null | undefined)[]): string |
 }
 
 const warned = new Set<string>();
-/** Warns once per key, in development only. */
+/**
+ * Warns once per key, in development only. Vue's own `warn` decides: it logs in Vue's development build and does
+ * nothing in production, so the app's bundler settles it and Quiet itself never reads the environment.
+ */
 export function warnOnce(key: string, message: string): void {
-  if (!import.meta.env?.DEV || warned.has(key) || typeof console === 'undefined') return;
+  if (warned.has(key)) return;
   warned.add(key);
-  console.warn(`[Quiet] ${message}`);
+  warn(`[Quiet] ${message}`);
 }
 
 /** Focusable elements inside root that are actually shown. */

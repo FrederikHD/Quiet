@@ -57,7 +57,7 @@ const hasHint = computed(() => !!props.hint || !!slots.hint);
 const isDisabled = computed(() => props.disabled || !!group?.value.disabled);
 const isInvalid = computed(() => status.value[0] === 'error' || !!group?.value.invalid);
 
-if (import.meta.env.DEV && props.label == null && !slots.label) {
+if (props.label == null && !slots.label) {
   warnOnce(
     'field-label',
     'Field: every field needs a label. Use labelHidden to hide it visually when the context makes it obvious.',

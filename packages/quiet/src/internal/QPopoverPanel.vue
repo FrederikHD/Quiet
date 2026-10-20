@@ -148,7 +148,7 @@ function start() {
     ro.observe(panel.value);
   }
   if (props.kind === 'tip') {
-    if (import.meta.env.DEV && panel.value?.querySelector(FOCUSABLE)) {
+    if (panel.value?.querySelector(FOCUSABLE)) {
       warnOnce(
         'tip-interactive',
         'Popover: a kind="tip" panel holds a link or control, which keyboard and screen-reader users can\'t reach. Use kind="dialog".',
