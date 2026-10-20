@@ -6,6 +6,16 @@ breaking changes, a patch version (0.x.y) never does.
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-10-20
+
+No changes to the components, their styles or their types: the package's contents are the same as 0.2.0.
+
+### Changed
+
+- The documentation site shows this released version by default, with a switch to the develop version, which shows
+  what the next release will contain.
+- Published through npm trusted publishing, without a long-lived token; with provenance as before.
+
 ## [0.2.0] - 2026-10-19
 
 ### Added
@@ -49,6 +59,7 @@ First release.
 - WCAG 2.2 AA throughout: keyboard support, focus management, screen-reader announcements, both themes checked with
   axe; layouts that adapt to their own width; print styles; server rendering.
 
-[Unreleased]: https://github.com/FrederikHD/Quiet/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/FrederikHD/Quiet/compare/v0.2.1...HEAD
+[0.2.1]: https://github.com/FrederikHD/Quiet/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/FrederikHD/Quiet/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/FrederikHD/Quiet/releases/tag/v0.1.0
