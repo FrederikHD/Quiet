@@ -123,3 +123,43 @@ test('the examples index links to each example', async ({ page }) => {
   await expect(page).toHaveURL(new RegExp(`#${hash}$`));
   await expect(page.locator(`#${hash}`)).toBeInViewport();
 });
+
+test.describe('FileUpload reordering', () => {
+  test.beforeEach(async ({ page }) => page.goto('/components/file-upload/examples'));
+  const names = (page: import('@playwright/test').Page) =>
+    page.locator('.q-upload--images').first().locator('.q-upload__name');
+
+  test('dragging a handle moves the image, and Escape puts it back', async ({ page }) => {
+    const upload = page.locator('.q-upload--images').first();
+    await expect(names(page)).toHaveText([/front/, /back/, /folded/]);
+    const from = (await upload.getByRole('button', { name: /^Move .*front/ }).boundingBox())!;
+    const to = (await upload.locator('.q-upload__item').nth(2).boundingBox())!;
+
+    await page.mouse.move(from.x + from.width / 2, from.y + from.height / 2);
+    await page.mouse.down();
+    await page.mouse.move(to.x + to.width / 2, to.y + to.height / 2, { steps: 15 });
+    await page.keyboard.press('Escape');
+    await page.mouse.up();
+    await expect(names(page)).toHaveText([/front/, /back/, /folded/]);
+
+    await page.mouse.move(from.x + from.width / 2, from.y + from.height / 2);
+    await page.mouse.down();
+    await page.mouse.move(to.x + to.width / 2, to.y + to.height / 2, { steps: 15 });
+    await page.mouse.up();
+    await expect(names(page)).toHaveText([/back/, /folded/, /front/]);
+    await expect(page.getByRole('menu')).toHaveCount(0);
+    await expect(upload.getByRole('button', { name: /^Move .*front/ })).toBeFocused();
+  });
+
+  test('the arrow keys and the handle menu move it too', async ({ page }) => {
+    const upload = page.locator('.q-upload--images').first();
+    await upload.getByRole('button', { name: /^Move .*front/ }).press('ArrowRight');
+    await expect(names(page)).toHaveText([/back/, /front/, /folded/]);
+    await expect(upload.getByRole('button', { name: /^Move .*front/ })).toBeFocused();
+
+    await upload.getByRole('button', { name: /^Move .*folded/ }).click();
+    await page.getByRole('menuitem', { name: 'Make main image' }).click();
+    await expect(names(page)).toHaveText([/folded/, /back/, /front/]);
+    await expect(upload.locator('.q-upload__meta').first()).toContainText('Main image');
+  });
+});
