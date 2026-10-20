@@ -158,6 +158,29 @@ test.describe('Collection', () => {
   });
 });
 
+test.describe('Store header on a phone', () => {
+  test('one row; the search opens full screen, searches and closes', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 800 });
+    await page.goto('/patterns/collection');
+    const screen = page.getByTestId('pattern');
+    await expect(screen.getByRole('combobox', { name: 'Search the shop' })).toBeHidden();
+
+    await screen.getByRole('button', { name: 'Search', exact: true }).click();
+    const dialog = page.getByRole('dialog', { name: 'Search' });
+    const field = dialog.getByRole('combobox', { name: 'Search the shop' });
+    await expect(field).toBeFocused();
+    await expect(dialog.getByRole('heading', { name: 'Popular searches' })).toBeVisible();
+    await field.fill('lin');
+    await expect(dialog.getByRole('option', { name: 'Linen shirt' })).toBeVisible();
+    await field.press('Enter');
+    await expect(dialog).toBeHidden();
+    await expect(page.getByText('Search for “lin”')).toBeVisible();
+
+    await screen.getByRole('button', { name: 'Menu' }).click();
+    await expect(page.getByRole('dialog', { name: 'Menu' }).getByRole('link')).toHaveText(['Women', 'Men', 'Home']);
+  });
+});
+
 test.describe('Product edit', () => {
   test('lists what is wrong on Save, then saves the fixed product', async ({ page }) => {
     await page.goto('/patterns/product-edit');
