@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Quiet explorer</title>
+    <script>
+      // GitHub Pages serves this page for every address it has no file for, such as a deep link to
+      // /components/button/playground. It loads the matching explorer (released, or develop under next/) in place, so
+      // the explorer's router sees the original address.
+      (function () {
+        var base = '__BASE__';
+        var next = location.pathname.indexOf(base + 'next/') === 0;
+        fetch(base + (next ? 'next/' : '') + 'index.html')
+          .then(function (r) {
+            return r.text();
+          })
+          .then(function (html) {
+            document.open();
+            document.write(html);
+            document.close();
+          });
+      })();
+    </script>
+  </head>
+</html>

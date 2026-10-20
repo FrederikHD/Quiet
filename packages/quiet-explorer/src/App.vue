@@ -2,8 +2,8 @@
 import { QAppShell, QNav, QSelect, type NavItem, type NavSection } from '@frederikhd/quiet';
 import { computed, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { version } from '@quiet/package.json';
 import { groups } from './catalog';
+import VersionSwitch from './VersionSwitch.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -91,6 +91,7 @@ watch(
 
 <template>
   <QAppShell brand="Quiet explorer" :toaster="!toasterPlayground">
+    <template #brand>Quiet explorer <VersionSwitch /></template>
     <template #nav><QNav :sections="sections" @navigate="navigate" /></template>
     <template #nav-footer>
       <div class="ex-settings">
@@ -115,10 +116,6 @@ watch(
             { value: 'compact', label: 'Compact' },
           ]"
         />
-        <!-- The site is deployed with each release, so it documents the version on npm. -->
-        <a class="ex-version" :href="`https://github.com/FrederikHD/Quiet/releases/tag/v${version}`">
-          @frederikhd/quiet {{ version }}
-        </a>
       </div>
     </template>
     <RouterView :key="String(route.params.slug ?? route.path)" />
