@@ -46,6 +46,8 @@ export interface TableProps<R> {
   skeletonRows?: number;
   /** Under 640px (the table's own width): scroll (default) sideways with the first column pinned, or cards. */
   mobile?: 'scroll' | 'cards';
+  /** Cards mode: the table's own width, in px, under which rows become cards. Default 640. Lower it for a table of a few columns that fits a narrow column (a variants table beside an aside). */
+  cardsBelow?: number;
   /** Scroll mode: pin the first column (with its checkbox) while the rest scrolls, when it is the primary column. Default true. */
   pinFirst?: boolean;
   /** Scrolls the body inside this height (a number in px, or a CSS length); the header row stays. */
@@ -67,6 +69,7 @@ const props = withDefaults(defineProps<TableProps<Row>>(), {
   onRowClick: undefined,
   skeletonRows: 5,
   mobile: 'scroll',
+  cardsBelow: 640,
   pinFirst: true,
   maxHeight: undefined,
   density: undefined,
@@ -218,6 +221,13 @@ const canSelectAllMatching = computed(
     listensForAllMatching(),
 );
 
+// Cards mode switches by the table's own width. Measured rather than a container query, so the width can be set;
+// a ResizeObserver reports after layout and before paint, so the switch never shows.
+const root = ref<HTMLElement | null>(null);
+const width = ref<number | null>(null);
+useResizeObserver(root, () => (width.value = root.value?.clientWidth ?? null));
+const cards = computed(() => props.mobile === 'cards' && width.value != null && width.value < props.cardsBelow);
+
 // Horizontal scroll: is there any? Then the region takes keyboard focus (to scroll) and the pinned column gets an edge.
 const scroller = ref<HTMLElement | null>(null);
 const overflowing = ref(false);
@@ -292,9 +302,11 @@ const maxHeightCss = computed(() =>
 
 <template>
   <div
+    ref="root"
     :class="[
       'q-table',
       `q-table--${mobile}`,
+      cards && 'is-cards',
       selectable && 'q-table--selectable',
       hasActions && 'q-table--actions',
       loading && 'is-loading',

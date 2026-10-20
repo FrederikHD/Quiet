@@ -334,9 +334,11 @@ const elsewhere = (label: string) => () => toast(`${label} isn't part of this pa
                 v-if="variants.length"
                 caption="Variants"
                 caption-hidden
+                mobile="cards"
+                :cards-below="420"
                 :rows="variants"
                 :columns="[
-                  { key: 'id', header: 'Variant', minWidth: 'min(9rem, 40cqi)' },
+                  { key: 'id', header: 'Variant', minWidth: '9rem' },
                   { key: 'price', header: 'Price', minWidth: '7.5rem' },
                   { key: 'stock', header: 'Stock', minWidth: '6rem' },
                 ]"
