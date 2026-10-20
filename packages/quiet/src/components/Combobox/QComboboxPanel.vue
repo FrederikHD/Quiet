@@ -54,7 +54,7 @@ defineExpose({ focus: () => search.value?.focus(), input: () => search.value?.in
         ref="search"
         :model-value="query"
         clearable
-        :clear-label="clearLabel"
+        :strings="{ clear: clearLabel }"
         :placeholder="searchPlaceholder"
         role="combobox"
         :aria-label="label"

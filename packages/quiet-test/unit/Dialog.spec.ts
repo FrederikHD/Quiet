@@ -145,7 +145,7 @@ describe('QDialog', () => {
     await flushPromises();
     expect(dialog()!.querySelector('.q-dialog__header button')?.getAttribute('aria-label')).toBe('Schließen');
     document.body.innerHTML = '';
-    mountDialog({ closeLabel: 'Fermer' });
+    mountDialog({ strings: { close: 'Fermer' } });
     await flushPromises();
     expect(dialog()!.querySelector('.q-dialog__header button')?.getAttribute('aria-label')).toBe('Fermer');
   });

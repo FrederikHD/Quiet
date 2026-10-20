@@ -4,6 +4,10 @@ import { useStrings } from '../../config';
 import { joinIds, warnOnce } from '../../utils/dom';
 import { useControlId, useFieldControl } from '../Field/context';
 
+export interface InputStrings {
+  /** The clear button's name. Default "Clear". */
+  clear?: string;
+}
 export interface InputProps {
   /** default follows the nearest data-density (40px comfortable, 32px compact). slim is a fixed 28px for filter bars and table cells (back office, desktop). large is a fixed 48px for storefront search, newsletter and checkout fields. */
   size?: 'slim' | 'default' | 'large';
@@ -19,8 +23,6 @@ export interface InputProps {
   numeric?: boolean;
   /** Shows a clear (×) button while there is a value; pressing it empties the value and emits `clear`. */
   clearable?: boolean;
-  /** Accessible name of the clear button. Default "Clear" — translate it ("Leeren"). */
-  clearLabel?: string;
   /** Greyed out and skipped by Tab. Prefer readonly when people still need to read or copy the value. */
   disabled?: boolean;
   /** Shown and copyable, never editable: order numbers, generated SKUs, API keys. */
@@ -35,6 +37,8 @@ export interface InputProps {
   modelValue?: string | number | null;
   /** Set by v-model's modifiers. */
   modelModifiers?: { trim?: true; number?: true };
+  /** Translations ("Leeren"); or once for the shop with configure({ strings: { input } }). */
+  strings?: InputStrings;
 }
 
 defineOptions({ inheritAttrs: false });
@@ -45,7 +49,7 @@ const props = withDefaults(defineProps<InputProps>(), {
   align: 'start',
   prefix: undefined,
   suffix: undefined,
-  clearLabel: undefined,
+  strings: undefined,
   id: undefined,
   modelValue: undefined,
   modelModifiers: undefined,
@@ -73,7 +77,7 @@ defineSlots<{
 const attrs = useAttrs();
 const slots = useSlots();
 const field = useFieldControl();
-const strings = useStrings('input', { clear: 'Clear' });
+const strings = useStrings<Required<InputStrings>>('input', { clear: 'Clear' }, () => props.strings);
 const input = ref<HTMLInputElement | null>(null);
 
 const controlId = useControlId(field, () => props.id);
@@ -153,13 +157,7 @@ defineExpose({
       ><slot name="prefix">{{ prefix }}</slot></span
     >
     <input ref="input" v-bind="inputAttrs" class="q-input__field" :value="model ?? ''" @input="onInput" />
-    <button
-      v-if="showClear"
-      type="button"
-      class="q-input__clear"
-      :aria-label="clearLabel || strings.clear"
-      @click="clear"
-    >
+    <button v-if="showClear" type="button" class="q-input__clear" :aria-label="strings.clear" @click="clear">
       <svg
         viewBox="0 0 20 20"
         fill="none"

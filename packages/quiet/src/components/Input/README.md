@@ -30,7 +30,7 @@ An outer box (`surface-raised`, 1px `line-strong` border, `radius-md`) holding a
 
 ## Clear button
 
-Pass `clearable` to show a × while the field has a value: search boxes, table filters, discount-code fields. Pressing it empties the value, emits `@clear` and returns focus to the field. It doesn't show while the input is disabled or read-only. Translate `clearLabel` ("Leeren"), or once for the shop with `configure({ strings: { input: { clear: 'Leeren' } } })`.
+Pass `clearable` to show a × while the field has a value: search boxes, table filters, discount-code fields. Pressing it empties the value, emits `@clear` and returns focus to the field. It doesn't show while the input is disabled or read-only. Translate its name with `:strings="{ clear: 'Leeren' }"`, or once for the shop with `configure({ strings: { input: { clear: 'Leeren' } } })`.
 
 ## States
 
@@ -50,16 +50,16 @@ A placeholder is an example, never the label: "z. B. 1049" for an order number, 
 
 - A native `<input>`: typing, selection and Tab work as usual. Clicking the padding or an affix focuses it.
 - The input is named by its Field's label and described by the Field's message and hint (`aria-describedby`, added to any you pass). `invalid`, or an error on the Field, sets `aria-invalid`; `required` sets the native `required`, and a required Field adds `aria-required`.
-- The clear button is a separate tab stop after the input, named "Clear" (`clearLabel`). Enter or Space clears and puts focus back in the input.
+- The clear button is a separate tab stop after the input, named "Clear" (`strings.clear`). Enter or Space clears and puts focus back in the input.
 - Read-only inputs stay in the tab order and their text can be selected; disabled ones are skipped.
 
 ## What you provide
 
 - A label: the Field component (preferred), or `id` with your own `<label for>`, or `aria-label` for fields that are labelled by their context (a table search above its table). The component warns in the console when there is none.
-- **Optional:** `size` (`slim` | `default` | `large`; default `default`), `prefix`, `suffix`, `align` (`start` | `end`; default `start`), `numeric`, `clearable`, `clearLabel` (default "Clear"), `invalid`, `disabled`, `readonly`, `required`, `id`, `type` (default "text"). `name`, `autocomplete`, `inputmode`, `placeholder` and other attributes go to the native input — `autocomplete` matters in checkout (`email`, `given-name`, `postal-code`, `cc-number`…).
+- **Optional:** `size` (`slim` | `default` | `large`; default `default`), `prefix`, `suffix`, `align` (`start` | `end`; default `start`), `numeric`, `clearable`, `invalid`, `disabled`, `readonly`, `required`, `id`, `type` (default "text"). `name`, `autocomplete`, `inputmode`, `placeholder` and other attributes go to the native input — `autocomplete` matters in checkout (`email`, `given-name`, `postal-code`, `cc-number`…).
 - **v-model:** `v-model` (the text; `.trim` and `.number` work).
 - **Events:** `@clear` (the clear button was pressed; the value is already empty).
 - **Slots:** `#prefix`, `#suffix`.
-- **Translations:** `clearLabel`, or `configure({ strings: { input: { clear: 'Leeren' } } })`.
+- **Translations:** `strings` — `clear` ("Clear"); or once for the shop with `configure({ strings: { input: { clear: 'Leeren' } } })`.
 
 The component ref exposes `focus()` and `input` (the `<input>`); `class` and `style` go on the outer box.

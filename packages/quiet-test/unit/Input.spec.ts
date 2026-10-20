@@ -73,7 +73,7 @@ describe('QInput', () => {
 
   it('clears, emits clear and refocuses; the clear button has a translatable name', async () => {
     const w = mount(QInput, {
-      props: { modelValue: 'abc', clearable: true, clearLabel: 'Leeren' },
+      props: { modelValue: 'abc', clearable: true, strings: { clear: 'Leeren' } },
       attrs: { 'aria-label': 'Search' },
       attachTo: document.body,
     });

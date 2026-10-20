@@ -210,7 +210,7 @@ onMounted(() => {
       aria-autocomplete="list"
       :aria-activedescendant="show && active >= 0 ? `${id}-opt-${active}` : undefined"
       clearable
-      :clear-label="strings.clear"
+      :strings="{ clear: strings.clear }"
       @update:model-value="set(String($event ?? ''))"
       @clear="open = false"
       @keydown="onKeyDown"

@@ -3,11 +3,13 @@ import type {
   AddressStrings,
   BreadcrumbsStrings,
   ComboboxStrings,
+  DialogStrings,
   DiscountCodeStrings,
   FileUploadStrings,
   FilterChipsStrings,
   FormStrings,
   GalleryStrings,
+  InputStrings,
   MetricStrings,
   NavStrings,
   NoticeStrings,
@@ -49,8 +51,8 @@ export interface QuietStrings {
   combobox?: ComboboxStrings;
   table?: TableStrings;
   pagination?: PaginationStrings;
-  input?: { clear?: string };
-  dialog?: { close?: string };
+  input?: InputStrings;
+  dialog?: DialogStrings;
   shell?: ShellStrings;
   nav?: NavStrings;
   textarea?: TextareaStrings;

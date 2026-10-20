@@ -48,6 +48,6 @@ The back-office frame: navigation on the left, the page beside it.
 ## What you provide
 
 - **Required:** the `#nav` slot (a Nav), the page in the default slot.
-- **Optional:** `brand` (the shop name), `mainId` (the id of `main`; generated when missing), `contained` (fill a parent box instead of the window), `toaster` (default `true`; `:toaster="false"` leaves it out), `toastStrings` (`dismiss`, `region` for the built-in Toaster).
+- **Optional:** `brand` (the shop name), `mainId` (the id of `main`; generated when missing), `contained` (fill a parent box instead of the window), `toaster` (default `true`; `:toaster="false"` leaves it out; translate the toasts with `configure({ strings: { toast } })`).
 - **Slots:** `#nav`, the default slot (the page), `#brand` (instead of `brand`), `#nav-footer` (account, store switcher), `#top-bar-end` (icon buttons in the top bar below 1024px).
 - **Translations:** `strings` — `menu` ("Menu", also the drawer's title without a brand), `skip` ("Skip to content") and `closeMenu` ("Close menu"). Or set them once with `configure({ strings: { shell: { menu: 'Menü', skip: 'Zum Inhalt springen', closeMenu: 'Menü schließen' } } })`. The Nav inside names its own landmark: `configure({ strings: { nav: { label: 'Hauptmenü' } } })`.

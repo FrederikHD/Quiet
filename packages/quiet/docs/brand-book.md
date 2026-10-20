@@ -102,7 +102,7 @@ Every component follows the same rules, so they look and behave alike next to ea
 
 - Call `configure({ locale: 'de-DE', strings: { form, combobox, table, pagination, shell, tabs, input: { clear }, dialog: { close } } })` once — or pass the same options to `app.use(Quiet, { … })`. Components follow later changes too.
 - Numbers then follow the locale: "1.240".
-- A component's own `strings` (or `clearLabel` / `closeLabel`) still wins.
+- A component's own `strings` still wins.
 
 **Phones.**
 
