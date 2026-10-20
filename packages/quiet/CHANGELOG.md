@@ -6,6 +6,11 @@ breaking changes, a patch version (0.x.y) never does.
 
 ## [Unreleased]
 
+### Changed
+
+- Select given `width: auto` (a sort order in a toolbar) is as wide as its longest option or placeholder, instead of
+  shrinking to its icon and chevron.
+
 ### Fixed
 
 - Components that adapt to their own width (DescriptionList, Table, Steps, Pagination, Breadcrumbs, Field, FieldGroup,

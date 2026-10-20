@@ -124,6 +124,14 @@ function optDisabled(o: SelectOption) {
   return typeof o === 'object' ? !!o.disabled : false;
 }
 
+// The longest label, laid out invisibly so that without a set width the box is as wide as its options need.
+const longest = computed(() =>
+  [
+    ...(props.placeholder != null ? [props.placeholder] : []),
+    ...(props.options ?? []).flatMap((o) => (isGroup(o) ? o.options : [o])).map((o) => String(optLabel(o))),
+  ].reduce((a, b) => (b.length > a.length ? b : a), ''),
+);
+
 defineExpose({ select, focus: () => select.value?.focus() });
 </script>
 
@@ -161,6 +169,7 @@ defineExpose({ select, focus: () => select.value?.focus() });
       </template>
       <slot v-else />
     </select>
+    <span v-if="longest" class="q-select__sizer" aria-hidden="true">{{ longest }}</span>
     <span class="q-select__chevron" aria-hidden="true"><QIcon name="chevron-down" /></span>
     <input v-if="isReadonly && name" type="hidden" :name="name" :value="model ?? ''" />
   </span>

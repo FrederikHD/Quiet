@@ -6,6 +6,16 @@ import { h, nextTick } from 'vue';
 const sel = (w: { get: (s: string) => { element: Element } }) => w.get('select').element as HTMLSelectElement;
 
 describe('QSelect', () => {
+  it('carries an invisible copy of its longest label, so width: auto fits the options', () => {
+    const w = mount(QSelect, {
+      props: { options: ['Featured', { value: 'p', label: 'Price, high to low' }], placeholder: 'Sort' },
+      attrs: { 'aria-label': 'Sort by' },
+    });
+    const sizer = w.get('.q-select__sizer');
+    expect(sizer.text()).toBe('Price, high to low');
+    expect(sizer.attributes('aria-hidden')).toBe('true');
+  });
+
   it('renders options, groups and disabled options', () => {
     const w = mount(QSelect, {
       props: {

@@ -43,6 +43,16 @@
 .q-select__prefix {
   pointer-events: none;
 }
+/* The select is laid over the box, so the box can't size to its text. This invisible copy of the longest label gives it
+   a width when none is set (width: auto, a toolbar); in a box of set width it shrinks away and changes nothing. */
+.q-select__sizer {
+  flex: 0 1 auto;
+  min-width: 0;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  white-space: nowrap;
+}
 .q-select__chevron {
   display: inline-flex;
   flex: none;
