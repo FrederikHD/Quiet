@@ -97,7 +97,7 @@ a tag deploys as that tag, so add a `v*` tag rule there if you release that way.
 
 ## Releasing
 
-Releases of `@frederikhd/quiet` are published to npm by `.github/workflows/release.yml` when a version tag is pushed.
+Releases of `@frederikhd/quiet` are published to npm by `.github/workflows/release.yml`.
 
 1. In a PR into `develop`, set the new version in `packages/quiet/package.json` (semver; before 1.0, breaking changes
    bump the minor version) and move the entries under `## [Unreleased]` in `packages/quiet/CHANGELOG.md` into a
@@ -107,10 +107,18 @@ Releases of `@frederikhd/quiet` are published to npm by `.github/workflows/relea
    commit and push the tag yourself: `git tag vx.y.z && git push origin vx.y.z`.
 
 The workflow checks that the tag, the package version and the changelog agree, runs the whole CI suite, publishes to
-npm with provenance (a version with a suffix such as `0.2.0-beta.1` goes out under the `next` tag) and creates a
-GitHub Release from the changelog section. It needs the repository secret `NPM_TOKEN` (Settings → Secrets and
-variables → Actions): an npm _granular access token_ with read and write access to packages. For the very first
-release the package doesn't exist yet, so give the token the whole `@frederikhd` scope; once it's published you can
-narrow a new token to `@frederikhd/quiet`. The scope `@frederikhd` must be your npm username, or an npm organisation
-you own. The publish job runs in the `npm` environment, so you can require an approval there before anything goes
-out.
+npm with provenance (a version with a suffix such as `0.2.0-beta.1` goes out under the `next` tag), creates a GitHub
+Release from the changelog section and deploys the explorer. The publish job runs in the `npm` environment, so you can
+require an approval there before anything goes out.
+
+### Publishing without a token
+
+The workflow publishes through npm _trusted publishing_: npm accepts the package from this repository's release
+workflow itself, so there is no npm token to store, leak or renew. It is set up once, on npmjs.com:
+
+1. Open the package's **Settings** → **Trusted Publisher** → **GitHub Actions**, and enter organisation or user
+   `FrederikHD`, repository `Quiet`, workflow filename `release.yml` and environment `npm`.
+2. Under **Publishing access**, choose "Require two-factor authentication and disallow tokens", so only the workflow
+   can publish.
+3. Delete the `NPM_TOKEN` repository secret (Settings → Secrets and variables → Actions) and revoke that token on
+   npmjs.com: nothing uses it any more.

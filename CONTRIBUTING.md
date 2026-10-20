@@ -69,7 +69,7 @@ matching image by itself. If the `visual` job fails on that PR, check out its br
 ## Releasing
 
 Releases publish `@frederikhd/quiet` to npm. The [README](README.md#releasing) has the details, including the
-`NPM_TOKEN` setup.
+one-time trusted publishing setup on npmjs.com.
 
 1. In a PR into `develop`, set the version in `packages/quiet/package.json` and turn `## [Unreleased]` in the
    changelog into `## [x.y.z] - YYYY-MM-DD`. Before 1.0, a release with breaking changes bumps the minor version
