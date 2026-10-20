@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { QFilterChips, type FilterChip } from '@frederikhd/quiet';
+import { QFilterChips, type FilterChip, type ItemKey } from '@frederikhd/quiet';
 import { describe, expect, it } from 'vitest';
 import { nextTick } from 'vue';
 
@@ -13,7 +13,7 @@ const mountChips = (props: Record<string, unknown> = {}) => {
     attachTo: document.body,
     props: {
       items: ALL,
-      onRemove: (k: string) =>
+      onRemove: (k: ItemKey) =>
         w.setProps({ items: (w.props('items') as FilterChip[]).filter((x) => x && x.key !== k) }),
       onClear: () => w.setProps({ items: [] }),
       ...props,

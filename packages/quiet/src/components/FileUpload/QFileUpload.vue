@@ -3,6 +3,7 @@ import { computed, nextTick, onBeforeUnmount, ref, useAttrs, watch } from 'vue';
 import { useStrings } from '../../config';
 import { useQuietId } from '../../composables/useQuietId';
 import QLead from '../../internal/QLead.vue';
+import type { ItemKey } from '../../types';
 import { joinIds } from '../../utils/dom';
 import QButton from '../Button/QButton.vue';
 import { useControlId, useFieldControl } from '../Field/context';
@@ -10,7 +11,7 @@ import QIcon from '../Icon/QIcon.vue';
 import { fileMatches as matches, formatSize } from './files';
 
 export interface FileUploadItem {
-  key: string;
+  key: ItemKey;
   name: string;
   /** Bytes. */
   size?: number;

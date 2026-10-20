@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, useAttrs } from 'vue';
 import QButton from '../Button/QButton.vue';
+import type { ItemKey } from '../../types';
 import QIcon from '../Icon/QIcon.vue';
 import type { IconName } from '../Icon/icons';
 import QPopover from '../Popover/QPopover.vue';
@@ -23,7 +24,7 @@ export interface MenuItem {
   /** A rule between groups (other fields ignored). */
   divider?: boolean;
   /** Stable key for the list (default: the index). */
-  key?: string;
+  key?: ItemKey;
 }
 export interface MenuProps {
   /** Names the menu and the default ⋯ button: "Actions for #10530". */

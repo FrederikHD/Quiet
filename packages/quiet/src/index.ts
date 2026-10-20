@@ -21,5 +21,6 @@ export {
 } from './config';
 export { useStickyPad } from './composables/useStickyPad';
 export { Quiet, type QuietPluginOptions } from './plugin';
+export type { ImageSource, ItemKey } from './types';
 
 export * from './components';

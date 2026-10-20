@@ -6,6 +6,21 @@ breaking changes, a patch version (0.x.y) never does.
 
 ## [Unreleased]
 
+### Added
+
+- Button `count` and `countLabel`: a number on the button (the items in a cart, unread messages), a bubble on an
+  icon-only button and a pill after a label. Screen readers hear it with the button's name ("Cart, 2 items").
+- `ImageSource` (`{ src, alt? }`) and `ItemKey` (`string | number`) types, shared by the components below.
+
+### Changed
+
+- **Breaking:** every `image` takes `{ src, alt? }`, like ProductCard and OrderSummary already did: SearchBox
+  suggestions, Combobox options, and Radio and Checkbox tiles (they were URL strings). Where the label beside it names
+  the item, the picture is decorative and `alt` is not used.
+- **Breaking (types):** the keys of items you pass in accept numbers as well as strings, like Table's row keys:
+  SearchBox suggestion `id`, OrderSummary item `id`, the `key` of Steps, Menu, DescriptionList, Nav, FilterChips (and
+  its `@remove` payload) and FileUpload items. Code that reads a key back as a string may need to widen its type.
+
 ## [0.2.1] - 2026-10-20
 
 No changes to the components, their styles or their types: the package's contents are the same as 0.2.0.

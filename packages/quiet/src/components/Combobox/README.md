@@ -21,7 +21,7 @@ Open, a panel the width of the field sits under it: a search field on top, the l
 - `label` — the name: "Linen shirt, blue, M".
 - `description` — one line in `ink-muted` under it: SKU and stock, a customer's email.
 - `meta` — right-aligned, tabular, medium weight in `ink` (the same as `meta` on Checkbox and Radio): price, tax rate, order count.
-- `image` / `swatch` — a 32px thumbnail (URL) or colour swatch.
+- `image` / `swatch` — a 32px thumbnail (`{ src }`) or colour swatch.
 - `disabled` — shown in `ink-muted` and can't be chosen: out of stock, already in the collection. Say why in the `description`.
 
 The value is the option object (or an array of them with `multiple`), so the chosen labels stay visible even when they're not in the current search results.

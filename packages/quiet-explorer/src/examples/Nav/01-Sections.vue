@@ -1,9 +1,9 @@
 <!-- The back-office navigation: icons, the current page, a count of work waiting, and a titled second section. -->
 <script setup lang="ts">
-import { QNav, type NavItem, type NavSection } from '@frederikhd/quiet';
+import { QNav, type ItemKey, type NavItem, type NavSection } from '@frederikhd/quiet';
 import { computed, ref } from 'vue';
 
-const page = ref('orders');
+const page = ref<ItemKey>('orders');
 const link = (key: string, label: string, extra: Partial<NavItem>): NavItem => ({
   key,
   label,

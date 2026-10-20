@@ -1,9 +1,9 @@
 <!-- Sub-pages show under their parent while it or one of them is current; the parent's icon turns brand. -->
 <script setup lang="ts">
-import { QNav, type NavItem } from '@frederikhd/quiet';
+import { QNav, type ItemKey, type NavItem } from '@frederikhd/quiet';
 import { computed, ref } from 'vue';
 
-const page = ref('inventory');
+const page = ref<ItemKey>('inventory');
 const link = (key: string, label: string, extra: Partial<NavItem> = {}): NavItem => ({
   key,
   label,

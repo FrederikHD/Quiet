@@ -35,7 +35,7 @@ For exactly one of several options, use Radio in a RadioGroup. For something tha
 Inside `<QCheckboxGroup layout="swatches">` (colour filters) or `layout="buttons"` (sizes), each Checkbox shows as a tile instead of a row:
 
 - `swatch` — the dot's colour, any CSS colour.
-- `image` — a fabric picture instead of a colour.
+- `image` — a fabric picture (`{ src }`) instead of a colour.
 - `soldOut` — crossed out, but still choosable, so "Notify me" can follow. Screen readers hear "sold out" after the label.
 
 Tiles use the `label` and `description` props; the slots and `meta` don't show there.

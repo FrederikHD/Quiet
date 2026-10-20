@@ -28,7 +28,7 @@ const suggestions = computed<SearchSuggestionGroup[]>(() => {
       items: prods.map((p) => ({
         label: `${p.name}, ${p.colour.toLowerCase()}`,
         description: p.type,
-        image: photo(p.colour),
+        image: { src: photo(p.colour) },
         meta: money(p.price),
       })),
     },

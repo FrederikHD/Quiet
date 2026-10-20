@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, getCurrentInstance } from 'vue';
 import { useStrings } from '../../config';
+import type { ItemKey } from '../../types';
 import QIcon from '../Icon/QIcon.vue';
 
 export interface StepItem {
@@ -9,7 +10,7 @@ export interface StepItem {
   /** Finished steps link back here. Without href they are buttons that emit `select` — when you listen to it; otherwise plain text. */
   href?: string;
   /** Stable key for the list (default: the index). */
-  key?: string;
+  key?: ItemKey;
 }
 export interface StepsProps {
   /** The steps, in order. null and false entries are skipped. */

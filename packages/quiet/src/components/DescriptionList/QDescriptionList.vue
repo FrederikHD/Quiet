@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
+import type { ItemKey } from '../../types';
 
 export interface DescriptionListItem {
   /** The label: "SKU", "Subtotal". Use the `term-<key>` slot for rich content. */
@@ -11,7 +12,7 @@ export interface DescriptionListItem {
   /** The summing item (total): a rule above, semibold. */
   emphasis?: boolean;
   /** Stable key, also the slot suffix (#description-<key>). Default: the item's index. */
-  key?: string;
+  key?: ItemKey;
 }
 export interface DescriptionListProps {
   /** The pairs: { term, description, numeric, emphasis, key }. Falsy entries are skipped, so an item can be added conditionally. */

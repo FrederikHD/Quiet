@@ -1,4 +1,5 @@
 import type { IconName } from '../Icon/icons';
+import type { ItemKey } from '../../types';
 
 export interface NavItem {
   /** The page's name. */
@@ -18,7 +19,7 @@ export interface NavItem {
   /** Force the sub-pages open (true) or closed (false); by default they show while this item or one of them is current. */
   expanded?: boolean;
   /** Stable key for the list (default: href, else the index). Handy to tell items apart in `navigate`. */
-  key?: string;
+  key?: ItemKey;
 }
 export interface NavSection {
   /** Heads the section ("Shop") and names its group for screen readers. */

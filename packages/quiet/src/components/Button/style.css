@@ -232,6 +232,42 @@ button.q-btn--ghost .q-btn__icon {
   }
 }
 
+/* Count — a bubble on the corner of an icon-only button (the cart), a pill after the label otherwise */
+.q-btn__count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border: 1px solid transparent; /* shows in forced colours, where backgrounds are dropped */
+  border-radius: var(--radius-full);
+  background: var(--brand);
+  color: var(--on-solid);
+  font: var(--text-caption);
+  font-weight: 600;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.q-btn:not(.q-btn--icon) .q-btn__count {
+  margin-inline-start: var(--ctl-gap);
+}
+.q-btn--icon .q-btn__count {
+  position: absolute;
+  top: -4px;
+  inset-inline-end: -4px;
+  pointer-events: none;
+}
+.q-btn--primary .q-btn__count {
+  background: var(--on-solid);
+  color: var(--brand);
+}
+.q-btn--danger .q-btn__count {
+  background: var(--on-solid);
+  color: var(--danger);
+}
+
 /* Disabled */
 .q-btn:disabled,
 .q-btn[aria-disabled='true'] {
@@ -239,6 +275,11 @@ button.q-btn--ghost .q-btn__icon {
   border-color: var(--line);
   color: var(--ink-muted);
   cursor: not-allowed;
+}
+.q-btn:disabled .q-btn__count,
+.q-btn[aria-disabled='true'] .q-btn__count {
+  background: var(--ink-muted);
+  color: var(--surface-raised);
 }
 .q-btn:disabled .q-btn__icon,
 .q-btn[aria-disabled='true'] .q-btn__icon {
@@ -279,7 +320,8 @@ button.q-btn--ghost .q-btn__icon {
   background: transparent;
   color: var(--ink);
 }
-.q-btn--loading .q-btn__content {
+.q-btn--loading .q-btn__content,
+.q-btn--loading .q-btn__count {
   opacity: 0;
 }
 .q-btn__spinner {

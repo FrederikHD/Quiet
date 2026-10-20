@@ -3,6 +3,38 @@ import { QButton } from '@frederikhd/quiet';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('QButton', () => {
+  describe('count', () => {
+    it('is a bubble on an icon-only button, read with its aria-label', () => {
+      const w = mount(QButton, {
+        props: { iconStart: 'cart', count: 2, countLabel: (n: number) => `${n} items` },
+        attrs: { 'aria-label': 'Cart' },
+      });
+      const b = w.get('button');
+      expect(b.attributes('aria-label')).toBe('Cart, 2 items');
+      expect(b.classes()).toContain('q-btn--icon');
+      const bubble = w.get('.q-btn__count');
+      expect(bubble.text()).toBe('2');
+      expect(bubble.attributes('aria-hidden')).toBe('true');
+      expect(w.find('.q-visually-hidden').exists()).toBe(false);
+    });
+
+    it('is a pill after a label, and screen readers hear the number with the label', () => {
+      const w = mount(QButton, { props: { count: 12 }, slots: { default: 'Notifications' } });
+      expect(w.get('.q-btn__count').text()).toBe('12');
+      expect(w.get('.q-visually-hidden').text()).toBe(', 12');
+      expect(w.get('button').attributes('aria-label')).toBeUndefined();
+    });
+
+    it('hides at 0 and shows 99+ above 99', () => {
+      const none = mount(QButton, { props: { iconStart: 'cart', count: 0 }, attrs: { 'aria-label': 'Cart' } });
+      expect(none.find('.q-btn__count').exists()).toBe(false);
+      expect(none.get('button').attributes('aria-label')).toBe('Cart');
+      const many = mount(QButton, { props: { count: 128 }, slots: { default: 'Orders' } });
+      expect(many.get('.q-btn__count').text()).toBe('99+');
+      expect(many.get('.q-visually-hidden').text()).toBe(', 128');
+    });
+  });
+
   it('renders a secondary button of type="button" by default', () => {
     const w = mount(QButton, { slots: { default: 'Save changes' } });
     const b = w.get('button');

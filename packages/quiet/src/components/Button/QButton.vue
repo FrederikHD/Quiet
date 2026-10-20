@@ -23,6 +23,10 @@ export interface ButtonProps {
   expanded?: boolean;
   /** Stretches to the container's width (product page Add to cart, mobile sheets). */
   fullWidth?: boolean;
+  /** A number on the button: the items in the cart, unread messages. A bubble on an icon-only button, a pill after the label otherwise. Hidden at 0; "99+" above 99. */
+  count?: number;
+  /** What the count means, read with the button's name: (n) => `${n} items` gives "Cart, 2 items". Default: the number. */
+  countLabel?: (count: number) => string;
   /** Renders an <a> with button styling, for navigation. */
   href?: string;
   /** Defaults to "button" so it never submits a form by accident. */
@@ -43,6 +47,8 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   pressed: undefined,
   expanded: undefined,
   href: undefined,
+  count: undefined,
+  countLabel: undefined,
 });
 
 defineSlots<{
@@ -62,6 +68,10 @@ const hasStart = () => !!props.iconStart || !!slots['icon-start'];
 const hasEnd = () => !!props.iconEnd || !!slots['icon-end'];
 const isIconOnly = () => props.iconOnly ?? (!hasLabel() && (hasStart() || hasEnd()));
 const isDisabled = computed(() => props.disabled || props.loading);
+const hasCount = computed(() => props.count != null && props.count > 0);
+const countText = computed(() => (props.count! > 99 ? '99+' : String(props.count)));
+// Read with the button's name; the bubble itself is hidden from screen readers.
+const countSpoken = computed(() => (props.countLabel ? props.countLabel(props.count!) : String(props.count)));
 const isToggle = computed(
   () => props.pressed !== undefined && (props.variant === 'secondary' || props.variant === 'ghost'),
 );
@@ -94,6 +104,9 @@ function stateAttrs() {
       );
   }
   return {
+    // With an aria-label the button's content isn't read, so the count joins the label: "Cart, 2 items".
+    'aria-label':
+      hasCount.value && attrs['aria-label'] ? `${attrs['aria-label']}, ${countSpoken.value}` : attrs['aria-label'],
     'aria-pressed': isToggle.value ? String(!!props.pressed) : undefined,
     'aria-expanded': props.expanded !== undefined ? String(props.expanded) : undefined,
     'aria-busy': props.loading ? 'true' : undefined,
@@ -131,7 +144,9 @@ function rootAttrs(): Record<string, unknown> {
       <span v-if="hasEnd()" class="q-btn__icon" aria-hidden="true">
         <slot name="icon-end"><QIcon v-if="iconEnd" :name="iconEnd" /></slot>
       </span>
+      <span v-if="hasCount && !attrs['aria-label']" class="q-visually-hidden">, {{ countSpoken }}</span>
     </span>
+    <span v-if="hasCount" class="q-btn__count" aria-hidden="true">{{ countText }}</span>
     <span v-if="loading" class="q-btn__spinner" aria-hidden="true" />
   </component>
 </template>

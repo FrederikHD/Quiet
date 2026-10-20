@@ -56,6 +56,6 @@ The `#label`, `#description` and `#meta` slots take rich content in place of the
 
 - **Required:** `value` (the group's value when this option is chosen), and `label` ("Express") or the `#label` slot.
 - **Optional:** `description`, `meta` ("9,90 €"), `disabled`, `invalid` (default from the group's `error`), `card` (default from the group's `cards` layout), `id` (on the native input; the group's `id` already lands on the chosen or first option).
-- **In a `swatches` or `buttons` group:** `swatch` (a CSS colour) or `image` (a fabric picture URL) for the dot, and `soldOut`.
+- **In a `swatches` or `buttons` group:** `swatch` (a CSS colour) or `image` (a fabric picture, `{ src }`) for the dot, and `soldOut`.
 - **Slots:** `#label`, `#description`, `#meta`, `#media` (cards: a small decorative picture before the text).
 - **Translations:** the "sold out" word, once with `configure({ strings: { choice: { soldOut: 'ausverkauft' } } })`.
