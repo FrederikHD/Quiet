@@ -10,6 +10,8 @@ breaking changes, a patch version (0.x.y) never does.
 
 - Select given `width: auto` (a sort order in a toolbar) is as wide as its longest option or placeholder, instead of
   shrinking to its icon and chevron.
+- An Input in a Table cell (stock, a variant's price) takes the column's width instead of setting it. Before, every
+  column of inputs was at least about 190px wide, the native input's default 20 characters.
 
 ### Fixed
 

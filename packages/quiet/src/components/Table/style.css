@@ -167,6 +167,11 @@
 .q-table__body .q-table__primary {
   font-weight: 500;
 }
+/* An Input in a cell (stock, price) takes the column's width instead of setting it: a native input is 20
+   characters wide by default, which would make every column of inputs at least ~190px. */
+.q-table__body .q-input__field {
+  width: 0;
+}
 .q-table__body .is-wrap {
   white-space: normal;
   min-width: 12rem;

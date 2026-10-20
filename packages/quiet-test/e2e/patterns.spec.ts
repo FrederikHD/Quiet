@@ -158,6 +158,70 @@ test.describe('Collection', () => {
   });
 });
 
+test.describe('Product edit', () => {
+  test('lists what is wrong on Save, then saves the fixed product', async ({ page }) => {
+    await page.goto('/patterns/product-edit');
+    const screen = page.getByTestId('pattern');
+    await screen.getByRole('textbox', { name: 'Title' }).fill('');
+    await screen.getByRole('textbox', { name: 'Stock of Navy / M' }).fill('lots');
+    await expect(screen.getByText('Unsaved changes')).toBeVisible();
+
+    await screen.getByRole('button', { name: 'Save' }).click();
+    const summary = screen.getByRole('region', { name: 'Please fix the following' });
+    await expect(summary.getByRole('link')).toHaveText([
+      'Enter a product title',
+      'Enter the stock of Navy / M as a whole number, like 12',
+    ]);
+    await summary.getByRole('link', { name: /stock of Navy \/ M/ }).click();
+    await expect(screen.getByRole('textbox', { name: 'Stock of Navy / M' })).toBeFocused();
+
+    await screen.getByRole('textbox', { name: 'Stock of Navy / M' }).fill('25');
+    await screen.getByRole('textbox', { name: 'Title' }).fill('Linen shirt, washed');
+    await screen.getByRole('button', { name: 'Save' }).click();
+    await expect(page.getByText('Product saved')).toBeVisible();
+    await expect(screen.getByRole('heading', { name: 'Linen shirt, washed', level: 1 })).toBeVisible();
+    await expect(screen.getByText('Unsaved changes')).toHaveCount(0);
+  });
+
+  test('a colour adds its variants to the table', async ({ page }) => {
+    await page.goto('/patterns/product-edit');
+    const screen = page.getByTestId('pattern');
+    await expect(screen.getByText('8 variants', { exact: false })).toBeVisible();
+    await screen.getByRole('checkbox', { name: /^Olive/ }).press('Space');
+    await expect(screen.getByText('12 variants', { exact: false })).toBeVisible();
+    await expect(screen.getByRole('textbox', { name: 'Stock of Olive / M' })).toHaveValue('0');
+  });
+
+  test('leaving with unsaved changes asks first, and discarding restores the saved product', async ({ page }) => {
+    await page.goto('/patterns/product-edit');
+    const screen = page.getByTestId('pattern');
+    await screen.getByRole('textbox', { name: 'Title' }).fill('Linen shirt, washed');
+
+    await screen.getByRole('link', { name: 'Products' }).first().click();
+    const confirm = page.getByRole('dialog', { name: 'Discard unsaved changes?' });
+    await confirm.getByRole('button', { name: 'Keep editing' }).click();
+    await expect(screen.getByRole('textbox', { name: 'Title' })).toHaveValue('Linen shirt, washed');
+
+    await screen.getByRole('button', { name: 'Discard' }).click();
+    await confirm.getByRole('button', { name: 'Discard changes' }).click();
+    await expect(screen.getByRole('textbox', { name: 'Title' })).toHaveValue('Linen shirt');
+    await expect(screen.getByRole('button', { name: 'Discard' })).toBeDisabled();
+  });
+
+  test('deleting is confirmed first and can be undone', async ({ page }) => {
+    await page.goto('/patterns/product-edit');
+    const screen = page.getByTestId('pattern');
+    await screen.getByRole('button', { name: 'Delete product' }).click();
+    await page
+      .getByRole('dialog', { name: 'Delete Linen shirt?' })
+      .getByRole('button', { name: 'Delete product' })
+      .click();
+    await expect(screen.getByText('Linen shirt was deleted')).toBeVisible();
+    await screen.getByRole('button', { name: 'Undo' }).click();
+    await expect(screen.getByRole('heading', { name: 'Linen shirt', level: 1 })).toBeVisible();
+  });
+});
+
 test.describe('Checkout', () => {
   test('goes through address, shipping and payment to the confirmation, asking for what is missing', async ({
     page,
