@@ -96,6 +96,10 @@
 .q-field__control--l {
   max-width: 30rem;
 }
+/* A QuantityStepper sizes itself (two fixed buttons and the number): a width meant for a text box would squeeze it. */
+.q-field__control:has(> .q-stepper) {
+  max-width: none;
+}
 
 .q-field__msg {
   display: flex;
