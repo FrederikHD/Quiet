@@ -28,7 +28,7 @@ describe('QReview', () => {
     configure({ locale: 'de-DE' });
     const t = review({ date: new Date(2026, 9, 12) }).get('time');
     expect(t.text()).toBe('12. Oktober 2026');
-    expect(t.attributes('datetime')).toMatch(/^2026-10-1[12]$/);
+    expect(t.attributes('datetime')).toBe('2026-10-12');
     expect(review({ date: 'vor 2 Wochen' }).get('time').text()).toBe('vor 2 Wochen');
   });
 

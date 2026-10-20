@@ -35,7 +35,7 @@ One customer review: the stars, a title, who wrote it and when, what they bought
 
 ## Dates
 
-Pass a `Date` and it shows in the configured locale ("12 October 2026", "12. Oktober 2026") with a `<time datetime>`. Pass a string to show your own text, such as "2 weeks ago".
+Pass a `Date` and it shows as a long date in the configured locale ("October 12, 2026" in `en`, "12 October 2026" in `en-GB`, "12. Oktober 2026" in `de-DE`), with a `<time datetime="2026-10-12">` for machines. Pass a string to show your own text, such as "2 weeks ago".
 
 ## Writing it
 
@@ -50,7 +50,7 @@ A Review is one item; the list is yours to build:
 
 - A `<ul aria-label="Reviews">` with each Review in an `li`, `space-6` apart with a `line` rule between them.
 - Beside a ReviewSummary on wide screens, under it on phones. Its bars can filter the list.
-- A Select to sort ("Most recent", "Highest rated", "Lowest rated", "Most helpful"), with "Showing 5 of 31" and a "Show more" button that moves focus to the first new review.
+- A Select to sort ("Most recent", "Highest rated", "Lowest rated", "Most helpful"), with "Showing 5 of 31" and a "Show more" button that moves focus to the first new review. Give each Review `tabindex="-1"` so it can take that focus; it stays out of the Tab order.
 - With nothing to show: "No reviews with 2 stars yet."
 
 The Product page pattern does all of this.
