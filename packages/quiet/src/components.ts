@@ -53,6 +53,7 @@ export * from './components/Gallery';
 export * from './components/OrderSummary';
 export * from './components/Rating';
 export * from './components/ReviewSummary';
+export * from './components/Review';
 
 // Overlays
 export * from './components/Popover';

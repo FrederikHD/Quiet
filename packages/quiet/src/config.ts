@@ -19,6 +19,7 @@ import type {
   QuantityStepperProps,
   RatingStrings,
   ReviewSummaryProps,
+  ReviewStrings,
   SearchBoxStrings,
   ShellStrings,
   StepsProps,
@@ -71,6 +72,7 @@ export interface QuietStrings {
   filterChips?: FilterChipsStrings;
   rating?: RatingStrings;
   reviewSummary?: ReviewSummaryProps['strings'];
+  review?: ReviewStrings;
   tag?: TagStrings;
   notice?: NoticeStrings;
   metric?: MetricProps['strings'];

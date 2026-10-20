@@ -15,11 +15,13 @@ import {
   QRadio,
   QRadioGroup,
   QRating,
+  QReview,
   QReviewSummary,
+  QSelect,
   money,
   toast,
 } from '@frederikhd/quiet';
-import { computed, ref, watch } from 'vue';
+import { computed, nextTick, reactive, ref, watch } from 'vue';
 import { photo, swatchOf } from '../fixtures/pictures';
 import StoreHeader from './StoreHeader.vue';
 
@@ -78,15 +80,93 @@ function setQuantity(line: Line, n: number) {
   else lines.value = lines.value.filter((l) => l !== line);
 }
 
-// Reviews.
-const reviews = [
-  { id: 1, stars: 5, title: 'Soft from the first wash', by: 'Anna S. · 12 Oct 2026 · Size M' },
-  { id: 2, stars: 5, title: 'Perfect for summer', by: 'Jonas W. · 3 Oct 2026 · Size L' },
-  { id: 3, stars: 4, title: 'Lovely, runs a little large', by: 'Lea F. · 28 Sep 2026 · Size S' },
-  { id: 4, stars: 3, title: 'Creases easily', by: 'Paul W. · 14 Sep 2026 · Size M' },
-];
+// Reviews: filtered by the summary's bars, sorted, 3 at a time; "Helpful" votes are kept here as a server would.
+const reviews = reactive([
+  {
+    id: 1,
+    stars: 5,
+    title: 'Soft from the first wash',
+    author: 'Anna S.',
+    date: new Date(2026, 9, 12),
+    details: ['Size M', 'Navy'],
+    helpful: 14,
+    text: 'I wear it to work and at the weekend. The linen is soft without being thin, and the navy hasn’t faded after a dozen washes.',
+  },
+  {
+    id: 2,
+    stars: 5,
+    title: 'Perfect for summer',
+    author: 'Jonas W.',
+    date: new Date(2026, 9, 3),
+    details: ['Size L', 'Sand'],
+    helpful: 6,
+    text: 'Cool on the hottest days of August. Roomy without looking baggy.',
+  },
+  {
+    id: 3,
+    stars: 4,
+    title: 'Lovely, runs a little large',
+    author: 'Lea F.',
+    date: new Date(2026, 8, 28),
+    details: ['Size S', 'Sand'],
+    helpful: 21,
+    text: 'Beautiful colour and soft linen. I usually wear a medium and the small fits well, so order a size down.',
+  },
+  {
+    id: 4,
+    stars: 3,
+    title: 'Creases easily',
+    author: 'Paul W.',
+    date: new Date(2026, 8, 14),
+    details: ['Size M', 'Sand'],
+    helpful: 9,
+    text: 'The fit is good: roomy across the shoulders, and the sleeves are long enough for my arms, which is rare. The buttons feel solid and the collar keeps its shape. But it creases the moment you sit down, and after a train ride it looks like I slept in it. I knew linen creases, but this is more than my other linen shirts. Steaming helps for an hour or so. I’ll keep it for weekends, where I mind less, but I wouldn’t buy it again for the office.',
+    reply:
+      'Thank you, Paul. Washed linen creases more than pressed linen: that’s what makes it soft. Our heavy linen shirt holds its shape better for the office.',
+  },
+  {
+    id: 5,
+    stars: 5,
+    title: 'Third one I’ve bought',
+    author: 'Mia B.',
+    date: new Date(2026, 7, 30),
+    details: ['Size S', 'Olive'],
+    helpful: 3,
+    text: 'Now in olive, navy and sand. Washes well at 30°.',
+  },
+]);
 const onlyStars = ref<number | null>(null);
-const shownReviews = computed(() => reviews.filter((r) => !onlyStars.value || r.stars === onlyStars.value));
+const reviewSort = ref('recent');
+const reviewPage = 3;
+const reviewsShown = ref(reviewPage);
+const votes = ref(new Set<number>());
+const shownReviews = computed(() =>
+  reviews
+    .filter((r) => !onlyStars.value || r.stars === onlyStars.value)
+    .sort((a, b) =>
+      reviewSort.value === 'helpful'
+        ? b.helpful - a.helpful
+        : reviewSort.value === 'high'
+          ? b.stars - a.stars
+          : reviewSort.value === 'low'
+            ? a.stars - b.stars
+            : +b.date - +a.date,
+    ),
+);
+watch([onlyStars, reviewSort], () => (reviewsShown.value = reviewPage));
+const reviewList = ref<HTMLElement | null>(null);
+async function moreReviews() {
+  const first = reviewsShown.value;
+  reviewsShown.value += reviewPage;
+  await nextTick();
+  reviewList.value?.querySelectorAll<HTMLElement>('.q-review')[first]?.focus();
+}
+function vote(id: number, on: boolean) {
+  const r = reviews.find((x) => x.id === id)!;
+  r.helpful += on ? 1 : -1;
+  if (on) votes.value.add(id);
+  else votes.value.delete(id);
+}
 
 const related = [
   { name: 'Linen trousers', colour: 'Navy', price: 79, compareAt: 99, rating: { value: 4.6, count: 18 } },
@@ -190,14 +270,46 @@ const related = [
           >
             <template #action><QButton icon-start="pencil">Write a review</QButton></template>
           </QReviewSummary>
-          <ul class="reviews__list" aria-label="Reviews">
-            <li v-for="r in shownReviews" :key="r.id" class="review">
-              <QRating :value="r.stars" :show-value="false" size="small" />
-              <strong>{{ r.title }}</strong>
-              <span class="review__by">{{ r.by }} · <span class="review__verified">Verified purchase</span></span>
-            </li>
-            <li v-if="!shownReviews.length" class="review">No reviews with {{ onlyStars }} stars yet.</li>
-          </ul>
+          <div class="reviews__main">
+            <QSelect
+              v-model="reviewSort"
+              size="slim"
+              aria-label="Sort reviews"
+              class="reviews__sort"
+              :options="[
+                { value: 'recent', label: 'Most recent' },
+                { value: 'helpful', label: 'Most helpful' },
+                { value: 'high', label: 'Highest rated' },
+                { value: 'low', label: 'Lowest rated' },
+              ]"
+            />
+            <ul ref="reviewList" class="reviews__list" aria-label="Reviews">
+              <li v-for="r in shownReviews.slice(0, reviewsShown)" :key="r.id">
+                <QReview
+                  :rating="r.stars"
+                  :title="r.title"
+                  :author="r.author"
+                  :date="r.date"
+                  verified
+                  :details="r.details"
+                  :helpful="r.helpful"
+                  :voted="votes.has(r.id)"
+                  tabindex="-1"
+                  @vote="(on) => vote(r.id, on)"
+                >
+                  <p>{{ r.text }}</p>
+                  <template v-if="r.reply" #reply>
+                    <p>{{ r.reply }}</p>
+                  </template>
+                </QReview>
+              </li>
+              <li v-if="!shownReviews.length" class="reviews__none">No reviews with {{ onlyStars }} stars yet.</li>
+            </ul>
+            <div v-if="reviewsShown < shownReviews.length" class="reviews__more">
+              <p>Showing {{ reviewsShown }} of {{ shownReviews.length }}</p>
+              <QButton @click="moreReviews">Show more reviews</QButton>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -331,26 +443,40 @@ const related = [
   gap: var(--space-8);
   align-items: start;
 }
-.reviews__list {
+.reviews__main {
   display: grid;
   gap: var(--space-4);
+  min-width: 0;
+}
+.reviews__sort {
+  width: auto;
+  justify-self: start;
+}
+.reviews__list {
+  display: grid;
   margin: 0;
   padding: 0;
   list-style: none;
 }
-.review {
-  display: grid;
-  justify-items: start;
-  gap: var(--space-1);
-  padding-bottom: var(--space-4);
+.reviews__list > li {
+  padding: var(--space-6) 0;
   border-bottom: 1px solid var(--line);
 }
-.review__by {
+.reviews__list > li:first-child {
+  padding-top: 0;
+}
+.reviews__none {
+  color: var(--ink-muted);
+}
+.reviews__more {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-3);
+}
+.reviews__more p {
+  margin: 0;
   color: var(--ink-muted);
   font: var(--text-small);
-}
-.review__verified {
-  color: var(--success);
 }
 .related {
   display: grid;
