@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, useAttrs } from 'vue';
+import { computed, ref, useAttrs, useModel } from 'vue';
 import { useFormReset } from '../../composables/useFormReset';
 import { RADIO_GROUP_KEY } from '../../internal/choice';
 import QChoiceGroupFrame from '../../internal/QChoiceGroupFrame.vue';
@@ -11,6 +11,8 @@ export interface RadioGroupProps extends ChoiceGroupProps {
   defaultValue?: string | null;
   /** Needed when there is no visible label. */
   ariaLabel?: string;
+  /** The chosen radio's value; null for none yet. */
+  modelValue?: string | null;
 }
 
 const props = withDefaults(defineProps<RadioGroupProps>(), {
@@ -30,9 +32,10 @@ const props = withDefaults(defineProps<RadioGroupProps>(), {
   id: undefined,
   defaultValue: undefined,
   ariaLabel: undefined,
+  modelValue: undefined,
 });
-/** The chosen radio's value; null for none yet. */
-const model = defineModel<string | null>();
+defineEmits<{ 'update:modelValue': [value: string | null] }>();
+const model = useModel(props, 'modelValue');
 defineSlots<{
   /** Radios, each with a `value` and a `label`. */
   default(): unknown;

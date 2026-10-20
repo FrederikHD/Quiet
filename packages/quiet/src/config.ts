@@ -1,30 +1,30 @@
 import { computed, reactive, type ComputedRef } from 'vue';
 import type {
   AddressStrings,
-  BreadcrumbsProps,
+  BreadcrumbsStrings,
   ComboboxStrings,
   DiscountCodeStrings,
   FileUploadStrings,
   FilterChipsStrings,
   FormStrings,
   GalleryStrings,
-  MetricProps,
+  MetricStrings,
   NavStrings,
   NoticeStrings,
   OrderSummaryStrings,
   PaginationStrings,
   PriceRangeStrings,
   PriceStrings,
-  ProductCardProps,
-  QuantityStepperProps,
+  ProductCardStrings,
+  QuantityStepperStrings,
   RatingStrings,
-  ReviewSummaryProps,
+  ReviewSummaryStrings,
   ReviewStrings,
   SearchBoxStrings,
   ShellStrings,
-  StepsProps,
+  StepsStrings,
   TableStrings,
-  TabsProps,
+  TabsStrings,
   TagStrings,
   TextareaStrings,
   ToasterStrings,
@@ -56,14 +56,14 @@ export interface QuietStrings {
   textarea?: TextareaStrings;
   toast?: ToasterStrings;
   upload?: FileUploadStrings;
-  tabs?: TabsProps['strings'];
+  tabs?: TabsStrings;
   price?: PriceStrings;
-  stepper?: QuantityStepperProps['strings'];
-  productCard?: ProductCardProps['strings'];
+  stepper?: QuantityStepperStrings;
+  productCard?: ProductCardStrings;
   gallery?: GalleryStrings;
-  breadcrumbs?: BreadcrumbsProps['strings'];
+  breadcrumbs?: BreadcrumbsStrings;
   choice?: { soldOut?: string };
-  steps?: StepsProps['strings'];
+  steps?: StepsStrings;
   orderSummary?: OrderSummaryStrings;
   address?: AddressStrings;
   discount?: DiscountCodeStrings;
@@ -71,11 +71,11 @@ export interface QuietStrings {
   priceRange?: PriceRangeStrings;
   filterChips?: FilterChipsStrings;
   rating?: RatingStrings;
-  reviewSummary?: ReviewSummaryProps['strings'];
+  reviewSummary?: ReviewSummaryStrings;
   review?: ReviewStrings;
   tag?: TagStrings;
   notice?: NoticeStrings;
-  metric?: MetricProps['strings'];
+  metric?: MetricStrings;
   [namespace: string]: object | undefined;
 }
 

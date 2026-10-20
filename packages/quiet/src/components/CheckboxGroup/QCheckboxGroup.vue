@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, useModel } from 'vue';
 import { useFormReset } from '../../composables/useFormReset';
 import { CHECK_GROUP_KEY } from '../../internal/choice';
 import QChoiceGroupFrame from '../../internal/QChoiceGroupFrame.vue';
@@ -10,6 +10,8 @@ export interface CheckboxGroupProps extends ChoiceGroupProps {
   defaultValue?: string[];
   /** Needed when there is no visible label. */
   ariaLabel?: string;
+  /** The ticked options' values. */
+  modelValue?: string[];
 }
 
 const props = withDefaults(defineProps<CheckboxGroupProps>(), {
@@ -29,9 +31,10 @@ const props = withDefaults(defineProps<CheckboxGroupProps>(), {
   id: undefined,
   defaultValue: undefined,
   ariaLabel: undefined,
+  modelValue: undefined,
 });
-/** The ticked options' values. */
-const model = defineModel<string[]>();
+defineEmits<{ 'update:modelValue': [value: string[]] }>();
+const model = useModel(props, 'modelValue');
 defineSlots<{
   /** Checkboxes, each with a `value` and a `label`. */
   default(): unknown;

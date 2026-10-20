@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch, useModel } from 'vue';
 import { useStrings } from '../../config';
 import QButton from '../Button/QButton.vue';
 import QDialog from '../Dialog/QDialog.vue';
@@ -37,6 +37,8 @@ export interface GalleryProps {
   defaultIndex?: number;
   /** Translations; or once for the shop with configure() under strings.gallery. */
   strings?: GalleryStrings;
+  /** The image shown (0-based). */
+  index?: number;
 }
 
 const props = withDefaults(defineProps<GalleryProps>(), {
@@ -45,9 +47,10 @@ const props = withDefaults(defineProps<GalleryProps>(), {
   thumbnails: true,
   defaultIndex: undefined,
   strings: undefined,
+  index: undefined,
 });
-/** The image shown (0-based). */
-const index = defineModel<number>('index');
+defineEmits<{ 'update:index': [value: number] }>();
+const index = useModel(props, 'index');
 if (index.value === undefined && props.defaultIndex) index.value = props.defaultIndex;
 
 const strings = useStrings<Required<GalleryStrings>>(

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, nextTick, onUpdated, ref, useAttrs, useSlots, watch } from 'vue';
+import { computed, nextTick, onUpdated, ref, useAttrs, useSlots, watch, useModel } from 'vue';
 import { useFormReset } from '../../composables/useFormReset';
 import { joinIds, warnOnce } from '../../utils/dom';
 import { useControlId, useFieldControl } from '../Field/context';
@@ -34,6 +34,7 @@ export interface SelectProps {
   id?: string;
   /** Posted with the form (also while read-only, through a hidden input). */
   name?: string;
+  modelValue?: string | null;
 }
 
 defineOptions({ inheritAttrs: false });
@@ -45,8 +46,10 @@ const props = withDefaults(defineProps<SelectProps>(), {
   prefixIcon: undefined,
   id: undefined,
   name: undefined,
+  modelValue: undefined,
 });
-const model = defineModel<string | null>();
+defineEmits<{ 'update:modelValue': [value: string | null] }>();
+const model = useModel(props, 'modelValue');
 defineSlots<{
   /** <option> and <optgroup> elements, instead of `options`. */
   default?(): unknown;

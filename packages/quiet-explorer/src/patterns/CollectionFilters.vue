@@ -42,7 +42,7 @@ const priceMeta = computed(() =>
         label="Colour"
         label-hidden
         layout="swatches"
-        @update:model-value="set('colours', $event ?? [])"
+        @update:model-value="set('colours', $event)"
       >
         <QCheckbox
           v-for="c in colours"
@@ -61,7 +61,7 @@ const priceMeta = computed(() =>
         label="Size"
         label-hidden
         layout="buttons"
-        @update:model-value="set('sizes', $event ?? [])"
+        @update:model-value="set('sizes', $event)"
       >
         <QCheckbox
           v-for="s in sizes"

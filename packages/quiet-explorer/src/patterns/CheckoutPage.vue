@@ -4,7 +4,6 @@ import {
   QAddressFields,
   QButton,
   QCheckbox,
-  QCheckboxGroup,
   QDescriptionList,
   QDiscountCode,
   QField,
@@ -235,9 +234,13 @@ const paymentLabel = { card: 'Card', paypal: 'PayPal', invoice: 'Invoice, within
                   ><QInput v-model="card.cvc" inputmode="numeric" autocomplete="cc-csc"
                 /></QField>
               </QFieldGroup>
-              <QCheckboxGroup id="co-terms" required :error="err(paymentErrors, 'co-terms')">
-                <QCheckbox v-model="terms" value="yes" label="I accept the terms and the cancellation policy" />
-              </QCheckboxGroup>
+              <QCheckbox
+                id="co-terms"
+                v-model="terms"
+                required
+                :error="err(paymentErrors, 'co-terms') ?? null"
+                label="I accept the terms and the cancellation policy"
+              />
             </template>
 
             <QFormActions align="between">

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, useSlots } from 'vue';
+import { computed, useSlots, useModel } from 'vue';
 import { money, useStrings } from '../../config';
 import { useMediaQuery } from '../../composables/useMediaQuery';
 import { useQuietId } from '../../composables/useQuietId';
@@ -36,6 +36,8 @@ export interface OrderSummaryProps {
   showQuantity?: 'auto' | 'always';
   /** Translations; or once for the shop with configure() under strings.orderSummary. */
   strings?: OrderSummaryStrings;
+  /** Folded: open or not. */
+  open?: boolean;
 }
 
 const props = withDefaults(defineProps<OrderSummaryProps>(), {
@@ -51,8 +53,8 @@ const props = withDefaults(defineProps<OrderSummaryProps>(), {
   showQuantity: 'auto',
   strings: undefined,
 });
-/** Folded: open or not. */
-const open = defineModel<boolean>('open');
+defineEmits<{ 'update:open': [value: boolean] }>();
+const open = useModel(props, 'open');
 // A boolean model reads false when unbound.
 if (props.defaultOpen && !open.value) open.value = true;
 defineSlots<{

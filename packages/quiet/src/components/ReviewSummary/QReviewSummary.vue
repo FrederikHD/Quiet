@@ -4,6 +4,12 @@ import { fmt, oneDecimal, useStrings } from '../../config';
 import QStars from '../Rating/QStars.vue';
 import { STAR_PATH, ratingDefaults, type RatingStrings } from '../Rating/stars';
 
+export interface ReviewSummaryStrings {
+  outOf?: string;
+  reviews?: (n: number) => string;
+  filter?: (stars: number, n: number) => string;
+  bars?: string;
+}
 export interface ReviewSummaryProps {
   /** The average rating, 0–5: shown large with one decimal and as stars. */
   average: number;
@@ -16,12 +22,7 @@ export interface ReviewSummaryProps {
   /** The star level being filtered on, if any. */
   active?: number | null;
   /** Translations; or once for the shop with configure() under strings.reviewSummary. filter names a filter button: "5 stars, 20 reviews". */
-  strings?: {
-    outOf?: string;
-    reviews?: (n: number) => string;
-    filter?: (stars: number, n: number) => string;
-    bars?: string;
-  };
+  strings?: ReviewSummaryStrings;
 }
 
 const props = withDefaults(defineProps<ReviewSummaryProps>(), { count: undefined, active: null, strings: undefined });

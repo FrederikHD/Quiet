@@ -12,13 +12,14 @@ export interface StepItem {
   /** Stable key for the list (default: the index). */
   key?: ItemKey;
 }
+export type StepsStrings = { label?: string; done?: string; step?: (i: number, n: number) => string };
 export interface StepsProps {
   /** The steps, in order. null and false entries are skipped. */
   steps: (StepItem | null | false)[];
   /** Index of the current step. Earlier steps show a check and link back; later ones are plain text (you can't skip ahead). */
   current: number;
   /** Translations: the landmark's name ("Checkout steps"), what a finished step is ("completed"), and the narrow counter ("Step 2 of 3"); or once with configure({ strings: { steps } }). */
-  strings?: { label?: string; done?: string; step?: (i: number, n: number) => string };
+  strings?: StepsStrings;
 }
 
 const props = withDefaults(defineProps<StepsProps>(), { strings: undefined });

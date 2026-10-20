@@ -99,7 +99,8 @@ export function quietMeta(options: { libraryRoot: string }): Plugin {
         folder: c.folder,
         file: relative(options.libraryRoot, c.file),
         props: meta.props
-          .filter((p) => !p.global && !p.name.startsWith('on'))
+          // v-model modifiers (modelModifiers) are set by `v-model.trim`, not passed by hand.
+          .filter((p) => !p.global && !p.name.startsWith('on') && !p.name.endsWith('Modifiers'))
           .map((p) => ({
             name: p.name,
             type: p.type.replace(/ \| undefined$/, ''),

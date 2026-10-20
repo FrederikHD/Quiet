@@ -10,6 +10,11 @@ import QIcon from '../Icon/QIcon.vue';
 import QPrice from '../Price/QPrice.vue';
 import QRating from '../Rating/QRating.vue';
 
+export type ProductCardStrings = {
+  quickAdd?: (name: string) => string;
+  colours?: (n: number) => string;
+  more?: (n: number) => string;
+};
 export interface ProductCardProps {
   /** The product name; the card's heading and its one link. */
   name: string;
@@ -17,8 +22,8 @@ export interface ProductCardProps {
   href: string;
   /** The product image. Leave alt empty when it only shows the product named below; a placeholder shows without one. */
   image?: ImageSource;
-  /** Shown on hover (pointer devices): the back, or the product worn. */
-  hoverImage?: { src: string };
+  /** Shown on hover (pointer devices): the back, or the product worn. Decorative, so its alt isn't read. */
+  hoverImage?: ImageSource;
   /** The price, as a number (formatted by Price). */
   price?: number;
   /** The original price; above price it shows as a sale. */
@@ -46,7 +51,7 @@ export interface ProductCardProps {
   /** The name's heading level. Default 3. */
   headingLevel?: 2 | 3 | 4 | 5 | 6;
   /** Translations; or once for the shop with configure() under strings.productCard. */
-  strings?: { quickAdd?: (name: string) => string; colours?: (n: number) => string; more?: (n: number) => string };
+  strings?: ProductCardStrings;
 }
 
 const props = withDefaults(defineProps<ProductCardProps>(), {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, useModel } from 'vue';
 import { useStrings } from '../../config';
 import { useFormReset } from '../../composables/useFormReset';
 import { useQuietId } from '../../composables/useQuietId';
@@ -30,6 +30,8 @@ export interface RatingInputProps {
   defaultValue?: number;
   /** Overrides the texts (yours, stars, words, and the Form's optional and errorPrefix), e.g. for another language. */
   strings?: RatingStrings & FormStrings;
+  /** 1–5, or 0 for none yet. */
+  modelValue?: number;
 }
 
 const props = withDefaults(defineProps<RatingInputProps>(), {
@@ -41,9 +43,10 @@ const props = withDefaults(defineProps<RatingInputProps>(), {
   markers: undefined,
   defaultValue: undefined,
   strings: undefined,
+  modelValue: undefined,
 });
-/** 1–5, or 0 for none yet. */
-const model = defineModel<number>();
+defineEmits<{ 'update:modelValue': [value: number] }>();
+const model = useModel(props, 'modelValue');
 if (model.value === undefined && props.defaultValue !== undefined) model.value = props.defaultValue;
 
 // Five stars to pick from — a radio group, so ← → and screen readers work as with any radios.
