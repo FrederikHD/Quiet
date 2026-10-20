@@ -1,14 +1,14 @@
-<!-- With filterable each bar is a toggle that shows only those reviews; press it again to show all. Levels without reviews are disabled. -->
+<!-- With filterable each bar is a toggle that shows only those reviews, listed with Review; press it again to show all. Levels without reviews are disabled. -->
 <script setup lang="ts">
-import { QRating, QReviewSummary } from '@frederikhd/quiet';
+import { QReview, QReviewSummary } from '@frederikhd/quiet';
 import { computed, ref } from 'vue';
 
 const reviews = [
-  { id: 1, stars: 5, title: 'Soft from the first wash', by: 'Anna S. · 12 Oct 2026 · Size M' },
-  { id: 2, stars: 5, title: 'Perfect for summer', by: 'Jonas W. · 3 Oct 2026 · Size L' },
-  { id: 3, stars: 4, title: 'Lovely, runs a little large', by: 'Lea F. · 28 Sep 2026 · Size S' },
-  { id: 4, stars: 3, title: 'Creases easily', by: 'Paul W. · 14 Sep 2026 · Size M' },
-  { id: 5, stars: 1, title: 'Colour faded after a month', by: 'Mia B. · 2 Sep 2026 · Size M' },
+  { id: 1, stars: 5, title: 'Soft from the first wash', author: 'Anna S.', date: '12 Oct 2026', size: 'M' },
+  { id: 2, stars: 5, title: 'Perfect for summer', author: 'Jonas W.', date: '3 Oct 2026', size: 'L' },
+  { id: 3, stars: 4, title: 'Lovely, runs a little large', author: 'Lea F.', date: '28 Sep 2026', size: 'S' },
+  { id: 4, stars: 3, title: 'Creases easily', author: 'Paul W.', date: '14 Sep 2026', size: 'M' },
+  { id: 5, stars: 1, title: 'Colour faded after a month', author: 'Mia B.', date: '2 Sep 2026', size: 'M' },
 ];
 const only = ref<number | null>(null);
 const shown = computed(() => reviews.filter((r) => !only.value || r.stars === only.value));
@@ -24,10 +24,15 @@ const shown = computed(() => reviews.filter((r) => !only.value || r.stars === on
       @filter="only = $event"
     />
     <ul class="list" aria-label="Reviews">
-      <li v-for="r in shown" :key="r.id" class="review">
-        <QRating :value="r.stars" :show-value="false" size="small" />
-        <strong>{{ r.title }}</strong>
-        <span class="by">{{ r.by }} · Verified purchase</span>
+      <li v-for="r in shown" :key="r.id">
+        <QReview
+          :rating="r.stars"
+          :title="r.title"
+          :author="r.author"
+          :date="r.date"
+          verified
+          :details="[`Size ${r.size}`]"
+        />
       </li>
     </ul>
   </div>
@@ -42,20 +47,15 @@ const shown = computed(() => reviews.filter((r) => !only.value || r.stars === on
 }
 .list {
   display: grid;
-  gap: var(--space-4);
   margin: 0;
   padding: 0;
   list-style: none;
 }
-.review {
-  display: grid;
-  justify-items: start;
-  gap: var(--space-1);
-  padding-bottom: var(--space-4);
+.list > li {
+  padding: var(--space-4) 0;
   border-bottom: 1px solid var(--line);
 }
-.by {
-  font: var(--text-small);
-  color: var(--ink-muted);
+.list > li:first-child {
+  padding-top: 0;
 }
 </style>

@@ -15,7 +15,7 @@ export interface RatingProps {
   onClick?: (event: MouseEvent) => void;
   /** Show the number ("4.6", one decimal) after the stars. Default true. */
   showValue?: boolean;
-  /** small (13px stars) in product cards and review lists, default (16px), large (20px) on the product page. */
+  /** small (13px stars) in product cards and table rows, default (16px), large (20px) on the product page. */
   size?: 'small' | 'default' | 'large';
   /** Translations; or once for the shop with configure() under strings.rating. */
   strings?: RatingStrings;

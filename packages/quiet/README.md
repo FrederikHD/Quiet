@@ -75,9 +75,9 @@ taking callback props, and rich content goes in slots.
 
 ## What's in it
 
-49 components in eight groups: foundations (Icon), actions (Button, Menu), layout and navigation (AppShell, Page, Card,
+50 components in eight groups: foundations (Icon), actions (Button, Menu), layout and navigation (AppShell, Page, Card,
 Tabs, Steps …), forms (Form, Field, Input, Select, Combobox, AddressFields, FileUpload …), data (Table, Pagination,
-DescriptionList, Metric), commerce (Price, ProductCard, Gallery, OrderSummary, Rating, ReviewSummary), overlays
+DescriptionList, Metric), commerce (Price, ProductCard, Gallery, OrderSummary, Rating, ReviewSummary, Review), overlays
 (Popover, Dialog) and feedback (Badge, Tag, Notice, Toast, EmptyState).
 
 Also exported: `configure` and `useConfig` (locale, currency and translated strings), `money` and `fmt` (formatting),

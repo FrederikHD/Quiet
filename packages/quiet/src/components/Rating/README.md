@@ -1,11 +1,11 @@
 # Rating
 
-Stars for a product's average rating, with the number and the count: ★★★★☆ 4,3 (31). On product cards, under the product title (linking to the reviews), and on each review.
+Stars for a product's average rating, with the number and the count: ★★★★☆ 4,3 (31). On product cards and under the product title, linking to the reviews. A single customer's review is a Review, which draws its own stars.
 
 ```vue
 <QRating :value="4.3" :count="31" href="#reviews" />
-<QRating :value="5" :show-value="false" size="small" />
-<!-- on a single review -->
+<QRating :value="4.6" :show-value="false" size="small" />
+<!-- stars only, in a tight row -->
 <QRating :value="4.3" :count="31" @click="tab = 'reviews'" />
 <!-- opens the reviews tab -->
 ```
@@ -16,7 +16,7 @@ Stars for a product's average rating, with the number and the count: ★★★�
 - The number, with one decimal and in semibold, then the count "(31)" in `ink-muted`. `:show-value="false"` hides the number; leave out `count` to hide the count.
 - `href` makes it a link (24px+ target); the count underlines on hover. `@click` alone makes it a link too (`href="#"`, not followed), to open the reviews tab on the same page. With `href`, `@click` is called and the link followed.
 - No reviews (`value` and `count` both 0 or missing): "No reviews yet" (as a link it invites the first one).
-- Sizes: `small` 13px stars with 12px text (cards, review lists), `default` 16px stars with 13px text, `large` 20px stars with 15px text (beside a large product title).
+- Sizes: `small` 13px stars with 12px text (product cards, table rows), `default` 16px stars with 13px text, `large` 20px stars with 15px text (beside a large product title).
 
 ## Rules
 
@@ -24,7 +24,7 @@ Stars are the one place an icon is filled. Show the count next to an average —
 
 ## Related
 
-RatingInput to give a rating, ReviewSummary for the breakdown.
+RatingInput to give a rating, ReviewSummary for the breakdown, Review for one customer's review.
 
 ## Keyboard and screen readers
 
