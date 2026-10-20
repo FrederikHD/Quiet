@@ -76,4 +76,4 @@ Releases publish `@frederikhd/quiet` to npm. The [README](README.md#releasing) h
    (0.1.0 → 0.2.0).
 2. Merge it once CI is green.
 3. Actions → **Release** → **Run workflow** on `develop`. It checks that the version and the changelog agree, runs the
-   whole CI suite, publishes to npm with provenance and creates the GitHub Release and its tag.
+   whole CI suite, publishes to npm with provenance, creates the GitHub Release and its tag, and deploys the docs site.

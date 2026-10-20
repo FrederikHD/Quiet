@@ -88,9 +88,12 @@ props, slots instead of render props, and class names shared with the original d
 
 ## Deploying the explorer
 
-`.github/workflows/pages.yml` builds the explorer and publishes it to GitHub Pages on every push to `main` and
-`develop`, or by hand from the Actions tab.
-In the repository settings, Pages → Source must be "GitHub Actions".
+`.github/workflows/pages.yml` builds the explorer and publishes it to GitHub Pages. The release workflow runs it after
+publishing, so the site documents the version on npm, which it shows in its navigation. To redeploy without a release,
+run it by hand from the Actions tab on `develop`.
+In the repository settings, Pages → Source must be "GitHub Actions". The `github-pages` environment decides which refs
+may deploy: releases started with **Run workflow** on `develop` deploy as `develop`, while a release started by pushing
+a tag deploys as that tag, so add a `v*` tag rule there if you release that way.
 
 ## Releasing
 

@@ -5,7 +5,8 @@
 # Then:
 #   1. the version must have a section in CHANGELOG.md (and match the tag, or have no tag yet);
 #   2. the full CI suite runs (types, unit, package check, browser tests);
-#   3. the package is published with provenance, and a GitHub Release is created from the changelog section.
+#   3. the package is published with provenance, and a GitHub Release is created from the changelog section;
+#   4. the explorer is deployed to GitHub Pages, so the docs match what is on npm.
 # How to release: see "Releasing" in the root README. Needs the repository secret NPM_TOKEN (an npm automation token).
 name: Release
 
@@ -82,3 +83,11 @@ jobs:
             ${{ needs.verify.outputs.prerelease == 'true' && '--prerelease' || '' }}
         env:
           GH_TOKEN: ${{ github.token }}
+
+  docs:
+    needs: publish
+    uses: ./.github/workflows/pages.yml
+    permissions:
+      contents: read
+      pages: write
+      id-token: write

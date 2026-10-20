@@ -1,10 +1,10 @@
-# Builds quiet-explorer and publishes it to GitHub Pages.
+# Builds quiet-explorer and publishes it to GitHub Pages. The release workflow calls it after publishing, so the site
+# documents the version that is on npm; run it by hand (Actions → Run workflow) to redeploy.
 # One-time setup: repository Settings → Pages → Source: "GitHub Actions".
 name: Explorer on GitHub Pages
 
 on:
-  push:
-    branches: [main, develop]
+  workflow_call:
   workflow_dispatch:
 
 permissions:
