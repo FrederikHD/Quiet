@@ -13,6 +13,8 @@
 /* Group row: FieldGroup measures itself and adds --stacked when its narrowest column would be too small
    (about 100px; 88px for stack="late" rows of short values, which also get tighter input padding). */
 .q-fgroup__controls {
+  /* A size container takes no width from its content: stretch it where a grid would shrink it to fit. */
+  justify-self: stretch;
   container-type: inline-size;
   min-width: 0;
 }

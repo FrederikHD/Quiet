@@ -4,6 +4,7 @@ import { money, useStrings } from '../../config';
 import { useMediaQuery } from '../../composables/useMediaQuery';
 import { useQuietId } from '../../composables/useQuietId';
 import QLead from '../../internal/QLead.vue';
+import { hasContent } from '../../utils/dom';
 import QDisclosure from '../Disclosure/QDisclosure.vue';
 import QOrderSummaryBody from './QOrderSummaryBody.vue';
 import type { OrderSummaryItem, OrderSummaryRow, OrderSummaryStrings } from './types';
@@ -93,9 +94,10 @@ const bodyProps = computed(() => ({
   currency: props.currency,
   showQuantity: props.showQuantity,
   strings: strings.value,
-  hasExtra: !!slots.default,
   hasNote: !!props.taxNote || !!slots['tax-note'],
 }));
+// Only when the slot renders something: a DiscountCode behind v-if leaves no empty band between rules.
+const hasExtra = () => hasContent(slots.default?.());
 </script>
 
 <template>
@@ -116,7 +118,7 @@ const bodyProps = computed(() => ({
           ><QLead icon="bag" /><span>{{ open ? strings.hide : strings.show }}</span></span
         >
       </template>
-      <QOrderSummaryBody v-bind="bodyProps">
+      <QOrderSummaryBody v-bind="bodyProps" :has-extra="hasExtra()">
         <slot />
         <template #tax-note
           ><slot name="tax-note">{{ taxNote }}</slot></template
@@ -133,7 +135,7 @@ const bodyProps = computed(() => ({
     <component :is="`h${headingLevel}`" v-if="title !== null" :id="`${id}-title`" class="q-summary__title">
       {{ title ?? strings.title }}<span class="q-summary__count">{{ strings.items(count) }}</span>
     </component>
-    <QOrderSummaryBody v-bind="bodyProps">
+    <QOrderSummaryBody v-bind="bodyProps" :has-extra="hasExtra()">
       <slot />
       <template #tax-note
         ><slot name="tax-note">{{ taxNote }}</slot></template

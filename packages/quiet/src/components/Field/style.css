@@ -1,5 +1,7 @@
 /* Field: label, control, message, hint. Each field measures its own width (container), so "auto" follows the space it has. */
 .q-field {
+  /* A size container takes no width from its content: stretch it where a grid would shrink it to fit. */
+  justify-self: stretch;
   container-type: inline-size;
   min-width: 0;
   width: 100%;

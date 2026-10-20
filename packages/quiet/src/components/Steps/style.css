@@ -3,6 +3,8 @@
    Later: outlined, ink-muted. Under 520px of its own width only the current step keeps its label, and a
    "Step 2 of 3" counter shows under the row. */
 .q-steps {
+  /* A size container takes no width from its content: stretch it where a grid would shrink it to fit. */
+  justify-self: stretch;
   container-type: inline-size;
   min-width: 0;
   font-family: var(--font-sans);

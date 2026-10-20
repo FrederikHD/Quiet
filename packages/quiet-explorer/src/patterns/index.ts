@@ -39,6 +39,30 @@ export const patterns: Pattern[] = [
     load: () => import('./ProductPage.vue'),
   },
   {
+    slug: 'checkout',
+    title: 'Checkout',
+    summary:
+      'A storefront checkout in three steps and its confirmation: addresses, delivery, payment and terms, with the order summary and a discount code beside the form.',
+    uses: [
+      'Steps',
+      'Form',
+      'FormSection',
+      'Field',
+      'FieldGroup',
+      'Input',
+      'AddressFields',
+      'Checkbox',
+      'CheckboxGroup',
+      'RadioGroup',
+      'DescriptionList',
+      'OrderSummary',
+      'DiscountCode',
+      'FormActions',
+      'Button',
+    ],
+    load: () => import('./CheckoutPage.vue'),
+  },
+  {
     slug: 'orders',
     title: 'Orders',
     summary:

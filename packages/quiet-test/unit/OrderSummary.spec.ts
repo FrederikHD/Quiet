@@ -86,6 +86,11 @@ describe('QOrderSummary', () => {
     expect(w.get('.q-summary__note a').text()).toBe('VAT');
   });
 
+  it('leaves out the slot band when the slot renders nothing (a DiscountCode behind v-if)', () => {
+    const w = summary({}, { default: () => [] });
+    expect(w.find('.q-summary__extra').exists()).toBe(false);
+  });
+
   it('drops its own heading with title null and uses a custom title and level', () => {
     const n = summary({ title: null });
     expect(n.element.tagName).toBe('DIV');
