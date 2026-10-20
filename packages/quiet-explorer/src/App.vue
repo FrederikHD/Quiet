@@ -3,6 +3,7 @@ import { QAppShell, QNav, QSelect, type NavItem, type NavSection } from '@freder
 import { computed, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { groups } from './catalog';
+import { patterns } from './patterns';
 import VersionSwitch from './VersionSwitch.vue';
 
 const route = useRoute();
@@ -29,12 +30,20 @@ const sections = computed<NavSection[]>(() => [
       },
     ],
   },
+  {
+    title: 'Patterns',
+    items: patterns.map<NavItem>((p) => ({
+      label: p.title,
+      href: router.resolve(`/patterns/${p.slug}`).href,
+      current: route.name === 'pattern' && route.params.slug === p.slug,
+    })),
+  },
   ...groups.map((g) => ({
     title: g.name,
     items: g.entries.map<NavItem>((e) => ({
       label: e.title,
       href: router.resolve(`/components/${e.slug}`).href,
-      current: route.params.slug === e.slug,
+      current: route.name === 'component' && route.params.slug === e.slug,
     })),
   })),
 ]);

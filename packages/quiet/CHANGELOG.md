@@ -21,6 +21,11 @@ breaking changes, a patch version (0.x.y) never does.
   SearchBox suggestion `id`, OrderSummary item `id`, the `key` of Steps, Menu, DescriptionList, Nav, FilterChips (and
   its `@remove` payload) and FileUpload items. Code that reads a key back as a string may need to widen its type.
 
+### Fixed
+
+- A QuantityStepper in a Field with `width="xs"` (as the guidelines suggest for quantities) was squeezed and its +
+  button stuck out. The Field no longer narrows a stepper, which sizes itself.
+
 ## [0.2.1] - 2026-10-20
 
 No changes to the components, their styles or their types: the package's contents are the same as 0.2.0.

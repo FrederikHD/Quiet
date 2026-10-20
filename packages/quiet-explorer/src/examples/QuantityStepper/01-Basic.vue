@@ -7,7 +7,7 @@ const quantity = ref(1);
 </script>
 
 <template>
-  <QField label="Quantity" label-placement="top" hint="Up to 10 per order.">
+  <QField label="Quantity" label-placement="top" width="xs" hint="Up to 10 per order.">
     <QQuantityStepper v-model="quantity" :min="1" :max="10" />
   </QField>
 </template>

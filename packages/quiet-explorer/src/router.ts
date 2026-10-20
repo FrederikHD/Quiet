@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { entries, loadDetails } from './catalog';
+import { patterns } from './patterns';
 
 export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -23,6 +24,13 @@ export const router = createRouter({
       component: () => import('./pages/ComponentPage.vue'),
       props: true,
       beforeEnter: (to) => (entries.some((e) => e.slug === to.params.slug) ? true : { name: 'not-found' }),
+    },
+    {
+      path: '/patterns/:slug',
+      name: 'pattern',
+      component: () => import('./pages/PatternPage.vue'),
+      props: true,
+      beforeEnter: (to) => (patterns.some((p) => p.slug === to.params.slug) ? true : { name: 'not-found' }),
     },
     {
       path: '/:rest(.*)*',
@@ -54,5 +62,6 @@ router.beforeResolve(async (to) => {
 
 router.afterEach((to) => {
   const entry = entries.find((e) => e.slug === to.params.slug);
-  document.title = `${entry?.title ?? (to.meta.title as string | undefined) ?? 'Explorer'} · Quiet`;
+  const pattern = to.name === 'pattern' ? patterns.find((p) => p.slug === to.params.slug) : undefined;
+  document.title = `${pattern?.title ?? entry?.title ?? (to.meta.title as string | undefined) ?? 'Explorer'} · Quiet`;
 });

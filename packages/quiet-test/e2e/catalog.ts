@@ -1,5 +1,6 @@
-// The component folders of the library, read from disk, so a new component is tested without touching this package.
-import { readdirSync } from 'node:fs';
+// The component folders of the library and the explorer's patterns, read from disk, so a new component or pattern is
+// tested without touching this package.
+import { readFileSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('../../quiet/src/components', import.meta.url));
@@ -8,5 +9,13 @@ export const components = readdirSync(root, { withFileTypes: true })
   .filter((d) => d.isDirectory())
   .map((d) => d.name)
   .sort();
+
+/** The pattern pages (/patterns/<slug>), from the slugs in the explorer's pattern list. */
+export const patterns = [
+  ...readFileSync(
+    fileURLToPath(new URL('../../quiet-explorer/src/patterns/index.ts', import.meta.url)),
+    'utf8',
+  ).matchAll(/slug: '([a-z-]+)'/g),
+].map((m) => `/patterns/${m[1]}`);
 
 export const slugOf = (folder: string) => folder.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
