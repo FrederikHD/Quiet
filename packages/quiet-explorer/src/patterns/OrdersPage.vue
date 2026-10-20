@@ -331,7 +331,7 @@ const sections = computed<NavSection[]>(() => [
             :title="null"
             :items="
               order.lines.map((l, i) => ({
-                id: String(i),
+                id: i,
                 name: l.product,
                 variant: l.variant,
                 quantity: l.quantity,

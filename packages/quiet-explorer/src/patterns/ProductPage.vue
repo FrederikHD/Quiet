@@ -50,7 +50,7 @@ const suggestions = computed(() =>
   query.value.trim()
     ? ['Linen shirt', 'Linen trousers', 'Linen shorts', 'Linen dress']
         .filter((s) => s.toLowerCase().includes(query.value.trim().toLowerCase()))
-        .map((label, i) => ({ id: String(i), label, image: photo(colours[i % colours.length]) }))
+        .map((label, i) => ({ id: i, label, image: { src: photo(colours[i % colours.length]) } }))
     : [],
 );
 
@@ -108,7 +108,7 @@ const related = [
 
 <template>
   <div class="store">
-    <!-- The store's header: Quiet has no storefront header, so this one is the store's own markup. -->
+    <!-- The store's header is the store's own markup around Quiet's SearchBox and Button. -->
     <header class="store__header">
       <a class="store__brand" href="#store">Leinen &amp; Co</a>
       <nav class="store__nav" aria-label="Shop">
@@ -125,16 +125,15 @@ const related = [
         @submit="(q) => toast(`Search for “${q}”`)"
         @select="(item) => toast(`Open ${item.label}`)"
       />
-      <span class="store__cart">
-        <QButton
-          variant="ghost"
-          icon-start="cart"
-          :aria-label="`Cart, ${cartCount} ${cartCount === 1 ? 'item' : 'items'}`"
-          :expanded="cartOpen"
-          @click="cartOpen = true"
-        />
-        <span v-if="cartCount" class="store__count" aria-hidden="true">{{ cartCount }}</span>
-      </span>
+      <QButton
+        variant="ghost"
+        icon-start="cart"
+        aria-label="Cart"
+        :count="cartCount"
+        :count-label="(n) => (n === 1 ? '1 item' : `${n} items`)"
+        :expanded="cartOpen"
+        @click="cartOpen = true"
+      />
     </header>
 
     <main class="store__main">
@@ -321,23 +320,6 @@ const related = [
   flex: 1 1 200px;
   max-width: 360px;
   margin-inline-start: auto;
-}
-.store__cart {
-  position: relative;
-}
-.store__count {
-  position: absolute;
-  top: 2px;
-  right: 0;
-  min-width: 18px;
-  padding: 0 5px;
-  border-radius: var(--radius-full);
-  background: var(--brand);
-  color: var(--on-solid);
-  font: var(--text-caption);
-  font-weight: 600;
-  text-align: center;
-  pointer-events: none;
 }
 .store__main {
   display: grid;
