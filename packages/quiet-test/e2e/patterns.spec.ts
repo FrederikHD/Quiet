@@ -32,6 +32,20 @@ test.describe('Product page', () => {
     await expect(page.getByText('We’ll email you when', { exact: false })).toBeVisible();
   });
 
+  test('reviews sort, show more with focus on the first new one, and take a Helpful vote', async ({ page }) => {
+    await page.goto('/patterns/product-page');
+    const reviews = page.getByTestId('pattern').locator('#reviews');
+    await expect(reviews.getByRole('article')).toHaveCount(3);
+    await reviews.getByRole('button', { name: 'Show more reviews' }).click();
+    await expect(reviews.getByRole('article')).toHaveCount(5);
+    await expect(reviews.getByRole('article').nth(3)).toBeFocused();
+
+    await reviews.getByRole('combobox', { name: 'Sort reviews' }).selectOption('helpful');
+    await expect(reviews.getByRole('article').first()).toHaveAccessibleName('Lovely, runs a little large');
+    await reviews.getByRole('button', { name: 'Helpful (21)' }).click();
+    await expect(reviews.getByRole('button', { name: 'Helpful (22)' })).toHaveAttribute('aria-pressed', 'true');
+  });
+
   test('a cart line stepped down to 0 leaves the cart', async ({ page }) => {
     await page.goto('/patterns/product-page');
     await page

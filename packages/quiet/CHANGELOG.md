@@ -8,6 +8,9 @@ breaking changes, a patch version (0.x.y) never does.
 
 ### Added
 
+- Review: one customer review — stars, title, author, date in the shop's locale, "Verified purchase", what they
+  bought, text that folds after five lines with "Read more", the shop's reply and a "Helpful" toggle. An `article`
+  named by its title. The Product page pattern lists them with a sort order and "Show more".
 - FileUpload reordering: each image gets a handle to drag it into a new place, move it with the arrow keys (Home and
   End to the ends), or click for a menu of moves ("Make main image", "Move earlier", …). Every move is announced. On by
   default for images, where the first is the main image; `reorderable` turns it on for files. New strings for the

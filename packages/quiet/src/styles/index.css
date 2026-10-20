@@ -50,6 +50,7 @@
 @import '../components/Rating/style.css';
 @import '../components/RatingInput/style.css';
 @import '../components/ReviewSummary/style.css';
+@import '../components/Review/style.css';
 @import '../components/EmptyState/style.css';
 @import '../components/Tag/style.css';
 @import '../components/Notice/style.css';

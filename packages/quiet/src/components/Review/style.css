@@ -1,0 +1,95 @@
+/* ---------- Review ---------- */
+.q-review {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-1);
+  min-width: 0;
+  font-family: var(--font-sans);
+  color: var(--ink);
+}
+.q-review__rating {
+  display: flex;
+}
+.q-review__title {
+  margin: var(--space-1) 0 0;
+  font: var(--text-heading);
+}
+.q-review__meta,
+.q-review__details {
+  margin: 0;
+  color: var(--ink-muted);
+  font: var(--text-small);
+}
+/* Name, date and "Verified purchase" wrap as whole items, with space rather than separators between them. */
+.q-review__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 var(--space-3);
+}
+.q-review__author {
+  color: var(--ink);
+  font-weight: 500;
+}
+.q-review__verified {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  color: var(--success);
+}
+.q-review__text {
+  max-width: 65ch;
+  margin-top: var(--space-2);
+  overflow-wrap: anywhere;
+}
+.q-review__text > :first-child {
+  margin-top: 0;
+}
+.q-review__text > :last-child {
+  margin-bottom: 0;
+}
+.q-review__text.is-folded {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--q-review-lines);
+  line-clamp: var(--q-review-lines);
+  overflow: hidden;
+}
+.q-review__more {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--brand);
+  font: inherit;
+  font-size: var(--control-text-sm);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+.q-review__more:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+.q-review__reply {
+  justify-self: stretch;
+  max-width: 65ch;
+  margin-top: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-inline-start: 2px solid var(--line-strong);
+  background: var(--surface-sunken);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  font-size: var(--control-text-sm);
+}
+.q-review__reply-title {
+  margin: 0 0 var(--space-1);
+  font-weight: 600;
+}
+.q-review__reply > :last-child {
+  margin-bottom: 0;
+}
+.q-review__foot {
+  margin-top: var(--space-2);
+}

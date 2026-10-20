@@ -31,6 +31,8 @@ export const patterns: Pattern[] = [
       'Button',
       'Disclosure',
       'ReviewSummary',
+      'Review',
+      'Select',
       'ProductCard',
       'Dialog',
       'EmptyState',

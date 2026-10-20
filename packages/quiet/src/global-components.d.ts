@@ -46,6 +46,7 @@ declare module 'vue' {
     QRating: typeof Q.QRating;
     QRatingInput: typeof Q.QRatingInput;
     QReviewSummary: typeof Q.QReviewSummary;
+    QReview: typeof Q.QReview;
     QSearchBox: typeof Q.QSearchBox;
     QSelect: typeof Q.QSelect;
     QSteps: typeof Q.QSteps;
