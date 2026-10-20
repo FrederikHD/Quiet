@@ -34,6 +34,10 @@ The shop's search field with suggestions as you type: collections and products (
 - `autofocus` focuses the field when it mounts, for a search dialog that has just opened.
 - `inline`: the list stays in the page flow — use it inside a full-screen Dialog on phones, where a floating list would be cut off by the keyboard.
 
+## On phones
+
+A search field doesn't fit a phone's header next to the brand and the cart. Put a ghost icon Button ("Search") there instead, and open a Dialog with `mobile="full"` holding an `inline` SearchBox at `size="large"`: the Dialog focuses the field, and the list stays in the flow above the keyboard. While the field is empty, show a few popular searches under it. Close the dialog on `@submit` and `@select`. The Product page and Collection patterns do this under 640px.
+
 ## Keyboard and screen readers
 
 - A search landmark (`<form role="search">`). The field is a `combobox` with a visually hidden label (`label`, default "Search") and `aria-expanded`; the list is a `listbox` with the same name.
