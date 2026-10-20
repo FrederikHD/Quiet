@@ -1,12 +1,12 @@
 # Icon
 
-A single icon from the Quiet set: 53 outline icons drawn on a 20px grid with a 1.5px round stroke, coloured by the surrounding text.
+A single icon from the Quiet set: 54 outline icons drawn on a 20px grid with a 1.5px round stroke, coloured by the surrounding text.
 
 ## The set
 
 - **Status and help:** info, help, alert-circle, alert-triangle, check-circle, check, x, plus, minus.
 - **Navigation:** chevron-down/up/left/right, chevrons-left/right (first and last page), arrow-left/right/up/down, external-link, menu, more, home.
-- **Actions:** search, zoom-in, filter, sliders, pencil, trash, copy, download, upload, refresh, eye, eye-off, grid, list.
+- **Actions:** search, zoom-in, filter, sliders, pencil, trash, copy, download, upload, refresh, eye, eye-off, grid, list, grip (a handle to drag in a new order).
 - **Commerce:** cart, bag, package, truck, tag, percent, credit-card, heart, star, image.
 - **People and time:** user, mail, lock, calendar, clock, bell.
 

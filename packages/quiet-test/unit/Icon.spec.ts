@@ -3,8 +3,8 @@ import { QIcon, iconNames } from '@frederikhd/quiet';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('QIcon', () => {
-  it('has the whole set of 53 icons', () => {
-    expect(iconNames).toHaveLength(53);
+  it('has the whole set of 54 icons', () => {
+    expect(iconNames).toHaveLength(54);
     expect(iconNames).toEqual(expect.arrayContaining(['search', 'chevron-down', 'more', 'trash', 'bell']));
   });
 

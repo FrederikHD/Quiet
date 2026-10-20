@@ -165,4 +165,90 @@ describe('QFileUpload', () => {
     expect(rules.length).toBeGreaterThan(0);
     for (const r of rules) expect(r).not.toMatch(/display:\s*none/);
   });
+  describe('reordering', () => {
+    const three = (): FileUploadItem[] => [
+      { key: 'a', name: 'front.jpg' },
+      { key: 'b', name: 'back.jpg' },
+      { key: 'c', name: 'detail.jpg' },
+    ];
+    const mountImages = () => {
+      const w = mount(QFileUpload, {
+        attachTo: document.body,
+        props: {
+          variant: 'images' as const,
+          modelValue: three(),
+          'onUpdate:modelValue': (v: FileUploadItem[]) => w.setProps({ modelValue: v }),
+        },
+      });
+      return w;
+    };
+    const names = (w: ReturnType<typeof mount>) => w.findAll('.q-upload__name').map((n) => n.text());
+
+    it('puts a handle on each image, named by its file and described by its position', () => {
+      const w = mountImages();
+      const handles = w.findAll('.q-upload__move');
+      expect(handles).toHaveLength(3);
+      expect(handles[1].attributes('aria-label')).toBe('Move back.jpg');
+      const desc = document.getElementById(handles[1].attributes('aria-describedby')!);
+      expect(desc?.textContent).toBe('Position 2 of 3. The arrow keys move it.');
+      w.unmount();
+    });
+
+    it('has no handle for files unless asked, when disabled, or with a single item', () => {
+      const files = mount(QFileUpload, { props: { multiple: true, modelValue: three() } });
+      expect(files.find('.q-upload__move').exists()).toBe(false);
+      const asked = mount(QFileUpload, { props: { multiple: true, reorderable: true, modelValue: three() } });
+      expect(asked.findAll('.q-upload__move')).toHaveLength(3);
+      const disabled = mount(QFileUpload, { props: { variant: 'images', disabled: true, modelValue: three() } });
+      expect(disabled.find('.q-upload__move').exists()).toBe(false);
+      const one = mount(QFileUpload, { props: { variant: 'images', modelValue: three().slice(0, 1) } });
+      expect(one.find('.q-upload__move').exists()).toBe(false);
+    });
+
+    it('moves with the arrow keys, Home and End, keeps focus on the handle and announces the move', async () => {
+      const w = mountImages();
+      const status = () => w.get('.q-visually-hidden[aria-live="polite"]').text();
+      await w.findAll('.q-upload__move')[0].trigger('keydown', { key: 'ArrowRight' });
+      await nextTick();
+      await nextTick();
+      expect(names(w)).toEqual(['back.jpg', 'front.jpg', 'detail.jpg']);
+      expect(document.activeElement).toBe(w.findAll('.q-upload__move')[1].element);
+      expect(status()).toBe('front.jpg moved to position 2 of 3.');
+
+      await w.findAll('.q-upload__move')[2].trigger('keydown', { key: 'Home' });
+      await nextTick();
+      await nextTick();
+      expect(names(w)).toEqual(['detail.jpg', 'back.jpg', 'front.jpg']);
+      expect(status()).toBe('detail.jpg is now the main image.');
+      expect(w.get('.q-upload__meta').text()).toBe('Main image');
+
+      await w.findAll('.q-upload__move')[0].trigger('keydown', { key: 'End' });
+      expect(names(w)).toEqual(['back.jpg', 'front.jpg', 'detail.jpg']);
+      await w.findAll('.q-upload__move')[0].trigger('keydown', { key: 'ArrowUp' });
+      expect(names(w)).toEqual(['back.jpg', 'front.jpg', 'detail.jpg']);
+      w.unmount();
+    });
+
+    it('offers the moves that make sense in its menu', async () => {
+      const w = mountImages();
+      await w.findAll('.q-upload__move')[0].trigger('click');
+      await nextTick();
+      let items = Array.from(document.querySelectorAll('[role="menuitem"]')).map((m) => m.textContent?.trim());
+      expect(items).toEqual(['Move later', 'Move to the end']);
+      document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+      await nextTick();
+
+      await w.findAll('.q-upload__move')[2].trigger('click');
+      await nextTick();
+      items = Array.from(document.querySelectorAll('[role="menuitem"]')).map((m) => m.textContent?.trim());
+      expect(items).toContain('Make main image');
+      expect(items).toContain('Move earlier');
+      Array.from(document.querySelectorAll<HTMLElement>('[role="menuitem"]'))
+        .find((m) => m.textContent?.includes('Make main image'))!
+        .click();
+      await nextTick();
+      expect(names(w)).toEqual(['detail.jpg', 'front.jpg', 'back.jpg']);
+      w.unmount();
+    });
+  });
 });

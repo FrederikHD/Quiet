@@ -51,6 +51,14 @@ export const icons = {
     ['circle', { cx: 10, cy: 10, r: 1.4, fill: 'currentColor', stroke: 'none' }],
     ['circle', { cx: 15.5, cy: 10, r: 1.4, fill: 'currentColor', stroke: 'none' }],
   ],
+  grip: [
+    ['circle', { cx: 7.5, cy: 5, r: 1.3, fill: 'currentColor', stroke: 'none' }],
+    ['circle', { cx: 12.5, cy: 5, r: 1.3, fill: 'currentColor', stroke: 'none' }],
+    ['circle', { cx: 7.5, cy: 10, r: 1.3, fill: 'currentColor', stroke: 'none' }],
+    ['circle', { cx: 12.5, cy: 10, r: 1.3, fill: 'currentColor', stroke: 'none' }],
+    ['circle', { cx: 7.5, cy: 15, r: 1.3, fill: 'currentColor', stroke: 'none' }],
+    ['circle', { cx: 12.5, cy: 15, r: 1.3, fill: 'currentColor', stroke: 'none' }],
+  ],
   home: [
     ['path', { d: 'M3.5 9L10 3.5 16.5 9v6.5a1 1 0 0 1-1 1h-11a1 1 0 0 1-1-1z' }],
     ['path', { d: 'M8 16.5V12h4v4.5' }],

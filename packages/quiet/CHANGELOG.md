@@ -6,6 +6,14 @@ breaking changes, a patch version (0.x.y) never does.
 
 ## [Unreleased]
 
+### Added
+
+- FileUpload reordering: each image gets a handle to drag it into a new place, move it with the arrow keys (Home and
+  End to the ends), or click for a menu of moves ("Make main image", "Move earlier", …). Every move is announced. On by
+  default for images, where the first is the main image; `reorderable` turns it on for files. New strings for the
+  handle, its menu and the announcements.
+- The `grip` icon, for drag handles.
+
 ## [0.4.0] - 2026-10-20
 
 ### Changed
