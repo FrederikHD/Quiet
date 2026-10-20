@@ -113,17 +113,5 @@ Releases of `@frederikhd/quiet` are published to npm by `.github/workflows/relea
 
 The workflow checks that the tag, the package version and the changelog agree, runs the whole CI suite, publishes to
 npm with provenance (a version with a suffix such as `0.2.0-beta.1` goes out under the `next` tag), creates a GitHub
-Release from the changelog section and deploys the explorer. The publish job runs in the `npm` environment, so you can
-require an approval there before anything goes out.
-
-### Publishing without a token
-
-The workflow publishes through npm _trusted publishing_: npm accepts the package from this repository's release
-workflow itself, so there is no npm token to store, leak or renew. It is set up once, on npmjs.com:
-
-1. Open the package's **Settings** → **Trusted Publisher** → **GitHub Actions**, and enter organisation or user
-   `FrederikHD`, repository `Quiet`, workflow filename `release.yml` and environment `npm`.
-2. Under **Publishing access**, choose "Require two-factor authentication and disallow tokens", so only the workflow
-   can publish.
-3. Delete the `NPM_TOKEN` repository secret (Settings → Secrets and variables → Actions) and revoke that token on
-   npmjs.com: nothing uses it any more.
+Release from the changelog section and deploys the explorer. It publishes through npm trusted publishing, so there is
+no npm token to keep.
