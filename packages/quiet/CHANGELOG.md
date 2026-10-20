@@ -25,7 +25,8 @@ breaking changes, a patch version (0.x.y) never does.
 
 - Development warnings (a field without a label, a radio outside a RadioGroup …) go through Vue's own `warn`. They
   show in development as before, now with the component they came from, and reach `app.config.warnHandler` if the
-  app sets one; Vue's production build turns them off. The package no longer reads `process.env`.
+  app sets one; Vue's production build turns them off. The package no longer reads `process.env`. Tests that spy on
+  `console.warn` now see "[Vue warn]: [Quiet] …" followed by the component trace.
 - The published `dist/quiet.js` is no longer minified, so it reads like the source. Apps minify it when they build.
 
 ## [0.4.0] - 2026-10-20

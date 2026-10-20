@@ -23,7 +23,7 @@ export interface ReviewProps {
   author: string;
   /** A short headline: "Soft from the first wash". Without one, the review is named "Review by Anna S.". */
   title?: string;
-  /** When it was written: a Date (shown in the configured locale, "12 October 2026") or your own text. */
+  /** When it was written: a Date (a long date in the configured locale: "October 12, 2026" in en) or your own text. */
   date?: Date | string;
   /** Bought from the shop: shows "Verified purchase". */
   verified?: boolean;
@@ -84,7 +84,13 @@ const dateText = computed(() => {
   if (d == null || typeof d === 'string') return d;
   return new Intl.DateTimeFormat(config.locale, { dateStyle: 'long' }).format(d);
 });
-const datetime = computed(() => (props.date instanceof Date ? props.date.toISOString().slice(0, 10) : undefined));
+// The local calendar day, as shown: toISOString() would give the UTC day, a day early east of Greenwich at midnight.
+const datetime = computed(() => {
+  const d = props.date;
+  if (!(d instanceof Date)) return undefined;
+  const pad = (n: number) => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+});
 
 // Long text folds to `lines` lines; "Read more" shows only when there is more to read.
 const text = ref<HTMLElement | null>(null);

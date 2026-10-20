@@ -99,9 +99,9 @@ The `#row-actions="{ row }"` slot holds slim ghost icon Buttons for the last col
 ## Phones
 
 - **`mobile="scroll"`** (default): the table scrolls sideways, and the first column (with its checkbox) stays pinned, with an edge once scrolled. `pinFirst: false` turns the pinning off; it only applies when the primary column is the first. Under 640px the pinned column is as wide as its content, up to 40%, and long names wrap. For long names (products), give the column a `minWidth` such as `'min(11rem, 40cqi)'` so they don't wrap onto many lines.
-- **`mobile="cards"`:** under 640px each row becomes a card. The checkbox, name and actions sit on top, then "Label value" lines. The header disappears; "Select all" and a "Sort by" menu sit above the cards. Use it for orders and anything people work through on a phone.
+- **`mobile="cards"`:** under 640px (or `cardsBelow`, below) each row becomes a card. The checkbox, name and actions sit on top, then "Label value" lines. The header disappears; "Select all" and a "Sort by" menu sit above the cards. Use it for orders and anything people work through on a phone.
 - **Both** measure the table's own width, not the screen's.
-- **`cardsBelow`** (cards mode, default 640) moves the switch. A table of three or four columns fits far less than 640px: in a narrow column beside a side panel, a variants table with price and stock inputs reads better as a table, so give it `:cards-below="420"` and it turns into cards only on a phone. Leave the default for wide tables of many columns.
+- **`cardsBelow`** (cards mode, default 640) moves the switch. A table of three or four columns fits far less than 640px: in a narrow column beside a side panel, a variants table with price and stock inputs reads better as a table, so give it `:cards-below="420"` and it turns into cards only on a phone. Leave the default for wide tables of many columns. The switch is measured in the browser, so with server rendering a phone sees the table until the page hydrates.
 - **`maxHeight`** (a number in px, or a CSS length) scrolls the body inside that height; the header row stays on top.
 
 ## Density

@@ -21,7 +21,7 @@ With images the order matters: the first is the main image, shown in lists and o
 - **The arrow keys** on the handle move it one place earlier or later; Home makes it the first, End the last.
 - **Click or tap the handle** for a menu: "Make main image", "Move earlier", "Move later", "Move to the end", showing only the moves that make sense. Dragging is never the only way (WCAG 2.5.7).
 
-Files have no handle by default; set `reorderable` when their order means something (a slideshow, documents read in turn). `:reorderable="false"` takes it off images. With one item, or disabled, there's nothing to move and no handle.
+Files have no handle by default; set `reorderable` when their order means something (a slideshow, documents read in turn). In a file list the handle starts the row, and the menu's first move is "Move to the start". `:reorderable="false"` takes it off images. With one item, or disabled, there's nothing to move and no handle.
 
 ## Checks
 
