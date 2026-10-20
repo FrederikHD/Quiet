@@ -33,7 +33,7 @@ The stars of Rating.
 
 ## What you provide
 
-The counts per level, the filtering and the review list itself (stars with Rating `small`, title, text, name · date · size bought, "Verified purchase").
+The counts per level, the filtering and the review list itself: a `<ul>` of Review components (see Review for sorting and "Show more").
 
 - **Required:** `average` (0–5), `distribution` (`{ 5: 20, 4: 7, 3: 2, 2: 1, 1: 1 }`).
 - **Optional:** `count` (default: the sum of `distribution`), `filterable`, `active` (the level being filtered on; default null).
