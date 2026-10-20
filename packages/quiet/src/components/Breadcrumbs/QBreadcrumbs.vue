@@ -10,11 +10,12 @@ export interface BreadcrumbItem {
   /** Its URL. Leave it out on the last item, the current page. */
   href?: string;
 }
+export type BreadcrumbsStrings = { label?: string };
 export interface BreadcrumbsProps {
   /** From the top down; the current page last, without href. */
   items: (BreadcrumbItem | null | false)[];
   /** Translations: { label: "Breadcrumb" }, the landmark's name; or once with configure({ strings: { breadcrumbs } }). An aria-label on QBreadcrumbs wins. */
-  strings?: { label?: string };
+  strings?: BreadcrumbsStrings;
 }
 
 const props = withDefaults(defineProps<BreadcrumbsProps>(), { strings: undefined });

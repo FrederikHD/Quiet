@@ -74,7 +74,6 @@ export const patterns: Pattern[] = [
       'Input',
       'AddressFields',
       'Checkbox',
-      'CheckboxGroup',
       'RadioGroup',
       'DescriptionList',
       'OrderSummary',

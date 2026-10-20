@@ -11,6 +11,7 @@ export interface MetricChange {
   /** What it's compared with: "on yesterday". */
   label?: string;
 }
+export type MetricStrings = { up?: string; down?: string; same?: string };
 export interface MetricProps {
   /** What the number is: "Sales". The `label` slot can replace its content. */
   label: string;
@@ -23,7 +24,7 @@ export interface MetricProps {
   /** default: 28/32 figure; small: 20/28, for side columns and dense dashboards. */
   size?: 'small' | 'default';
   /** Translations of the words read out before the change ("up", "down", "no change"). */
-  strings?: { up?: string; down?: string; same?: string };
+  strings?: MetricStrings;
 }
 
 const props = withDefaults(defineProps<MetricProps>(), {

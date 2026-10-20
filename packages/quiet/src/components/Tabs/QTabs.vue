@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref, useSlots, watch } from 'vue';
+import { computed, onBeforeUnmount, onMounted, ref, useSlots, watch, useModel } from 'vue';
 import { fmt, useStrings } from '../../config';
 import { useQuietId } from '../../composables/useQuietId';
 import QIcon from '../Icon/QIcon.vue';
@@ -21,6 +21,7 @@ export interface TabItem {
   /** Can't be chosen; arrow keys skip it. */
   disabled?: boolean;
 }
+export type TabsStrings = { hasErrors?: string };
 export interface TabsProps {
   /** Names the tab row for screen readers: "Order", "Settings sections". */
   label: string;
@@ -39,7 +40,9 @@ export interface TabsProps {
   /** Default true: the panel is a Tab stop, so it can be scrolled and read. Set false when the panel starts with a focusable control. */
   panelFocusable?: boolean;
   /** Translations: { hasErrors: "has errors" }, read after a tab whose panel holds an invalid field; or once with configure({ strings: { tabs } }). */
-  strings?: { hasErrors?: string };
+  strings?: TabsStrings;
+  /** The chosen tab's value. With link tabs, null means this page is none of the sections. */
+  modelValue?: string | null;
 }
 
 const props = withDefaults(defineProps<TabsProps>(), {
@@ -49,10 +52,12 @@ const props = withDefaults(defineProps<TabsProps>(), {
   activation: 'auto',
   panelFocusable: true,
   strings: undefined,
+  modelValue: undefined,
 });
-/** The chosen tab's value. With link tabs, null means this page is none of the sections. */
-const model = defineModel<string | null>();
+const model = useModel(props, 'modelValue');
 const emit = defineEmits<{
+  /** The chosen tab's value. With link tabs, null means this page is none of the sections. */
+  'update:modelValue': [value: string | null];
   /** A link tab was clicked (for client-side routing). */ navigate: [tab: TabItem, event: MouseEvent];
 }>();
 defineSlots<{

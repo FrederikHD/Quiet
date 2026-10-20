@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { computed, ref, useAttrs } from 'vue';
+import { computed, ref, useAttrs, useModel } from 'vue';
 import { useStrings } from '../../config';
 import { useFormReset } from '../../composables/useFormReset';
 import { joinIds, warnOnce } from '../../utils/dom';
 import { useControlId, useFieldControl } from '../Field/context';
 import QIcon from '../Icon/QIcon.vue';
 
+export type QuantityStepperStrings = { decrease?: string; increase?: string };
 export interface QuantityStepperProps {
   /** Default 1; 0 for cart lines (removing the line is up to you). */
   min?: number;
@@ -24,7 +25,9 @@ export interface QuantityStepperProps {
   /** Inside a Field the Field's id wins. */
   id?: string;
   /** Names of the − and + buttons. Defaults "Decrease quantity", "Increase quantity". */
-  strings?: { decrease?: string; increase?: string };
+  strings?: QuantityStepperStrings;
+  /** The number; only updated when it changes. */
+  modelValue?: number;
 }
 
 defineOptions({ inheritAttrs: false });
@@ -36,9 +39,10 @@ const props = withDefaults(defineProps<QuantityStepperProps>(), {
   size: 'default',
   id: undefined,
   strings: undefined,
+  modelValue: undefined,
 });
-/** The number; only updated when it changes. */
-const model = defineModel<number>();
+defineEmits<{ 'update:modelValue': [value: number] }>();
+const model = useModel(props, 'modelValue');
 
 const attrs = useAttrs();
 const field = useFieldControl();

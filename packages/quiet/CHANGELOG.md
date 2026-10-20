@@ -6,6 +6,22 @@ breaking changes, a patch version (0.x.y) never does.
 
 ## [Unreleased]
 
+### Added
+
+- Checkbox `required` and `error`, for a single checkbox in a form ("I accept the terms"): the message shows under
+  it, lined up with the label, describes the box and links from the Form's error summary through its `id`. A
+  one-checkbox CheckboxGroup is no longer needed.
+- Named types for every `strings` prop that had an inline one: `BreadcrumbsStrings`, `MetricStrings`,
+  `ProductCardStrings`, `QuantityStepperStrings`, `ReviewSummaryStrings`, `StepsStrings` and `TabsStrings`.
+
+### Fixed
+
+- Every `v-model` event is typed with exactly its value. CheckboxGroup, RadioGroup, Select, Combobox, Input,
+  Textarea, QuantityStepper, RatingInput, Tabs, Gallery (`index`), OrderSummary (`open`) and Table (`sort`,
+  `selected`) declared theirs with `| undefined`, so `@update:model-value="x = $event"` needed `?? []` or a cast.
+- ProductCard `hoverImage` takes `{ src, alt? }` like every other image (its `alt` isn't read: it's decorative).
+- Popover `panelClass` is typed like `class` instead of `unknown`.
+
 ## [0.5.0] - 2026-10-20
 
 ### Added

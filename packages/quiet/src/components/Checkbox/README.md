@@ -6,7 +6,20 @@ One yes/no choice: a box people tick. It's the building block of CheckboxGroup a
 
 - **Checkbox** is the control itself: the box, its label and an optional description.
 - **CheckboxGroup** is a form field that holds several checkboxes. It adds the field parts: the question label, help, hint and error messages, and label placement. Use it for any set of options ("Notify the customer by: Email, Text message").
-- A **single checkbox in a form** ("I accept the terms", "Track inventory") also goes in a CheckboxGroup, but without a `label`. The group gives it the hint, the error message and the error-summary link. On its own, a Checkbox has no message slot.
+- A **single checkbox in a form** ("I accept the terms", "Track inventory") stands on its own. `required` marks it as one that must be ticked, and `error` shows the message under it, lined up with the label's text:
+
+```vue
+<QCheckbox
+  id="terms"
+  v-model="terms"
+  required
+  :error="tried && !terms ? 'Accept the terms to place your order' : null"
+  label="I accept the terms and the cancellation policy"
+/>
+```
+
+Bind `error` from the start, `null` while there's nothing wrong: the message area is then on the page before the first error, so screen readers announce it when it appears. Give it an `id` and use the same id in the Form's `errors`, so the error summary links to the box.
+
 - **Without a group:** "Select all" and filter toggles in a toolbar. Table rows get theirs from Table.
 
 For exactly one of several options, use Radio in a RadioGroup. For something that takes effect immediately, use a switch (not built yet).
@@ -25,7 +38,7 @@ For exactly one of several options, use Radio in a RadioGroup. For something tha
 
 - **Unchecked / checked:** `v-model` (a boolean).
 - **Indeterminate:** `indeterminate` shows a dash, meaning some but not all of the items it controls are ticked. Use it for "Select all" over a list or table rows. Clicking it ticks everything. Keep its `v-model` false alongside it.
-- **Invalid:** `invalid` gives a red border until the box is ticked. Inside a CheckboxGroup, the group's `error` sets this for you and adds the message.
+- **Invalid:** `invalid` gives a red border until the box is ticked. `error` does the same and adds the message; inside a CheckboxGroup, the group's `error` does it for you.
 - **Disabled:** the box takes the disabled look of every control (`surface-sunken` fill, `line` border; ticked, a `line-strong` fill), the label `ink-muted`. Say why nearby.
 - **Focus:** a 2px `brand` ring, 2px outside the box, from the keyboard only.
 - **Card:** `card` turns the row into a bordered tile; ticked, it gets a `brand` border and `brand-tint`. Inside `<CheckboxGroup layout="cards">` this is set for you.
@@ -48,7 +61,7 @@ Use `<Table selectable>`: it adds the checkbox column, "Select all" with the ind
 
 - It's a native checkbox, so Space toggles it, Tab moves on, and clicking anywhere on the row works.
 - It's announced as "checkbox, checked/not checked/mixed". The whole row is its `<label>`, so its name is the label followed by the description and meta.
-- `invalid` (or the group's error) sets `aria-invalid`. Inside a CheckboxGroup it is also described by the group's message and hint; a lone Checkbox wrapped in a Field gets the Field's id, description, `aria-required` and disabled state.
+- `invalid`, `error` or the group's error set `aria-invalid`. On its own, `error`'s message describes the box, and `required` sets `aria-required` and the native `required`; while the Form's error summary shows, the message isn't announced a second time, as with a Field. Inside a CheckboxGroup the box is described by the group's message and hint; a lone Checkbox wrapped in a Field gets the Field's id, description, `aria-required` and disabled state.
 - The focus ring shows only for keyboard focus.
 
 ## Writing it
@@ -60,6 +73,7 @@ Use `<Table selectable>`: it adds the checkbox column, "Select all" with the ind
 
 - **Required:** `label` (or the `#label` slot, or `aria-label`).
 - **Optional:** `description`, `meta`, `indeterminate`, `invalid`, `disabled`, `labelHidden`, `card`, `name` (inside a CheckboxGroup the group's name is used), `id`, and any native input attribute.
+- **On its own:** `required` (must be ticked), `error` (the message under it; `null` for none).
 - **Inside a CheckboxGroup:** `value` (identifies the option in the group's array); with `layout="swatches"` or `"buttons"` also `swatch`, `image`, `soldOut`.
 - **v-model:** `v-model` (a boolean, on its own; inside a CheckboxGroup the group holds the value).
 - **Slots:** `#label`, `#description`, `#meta`.

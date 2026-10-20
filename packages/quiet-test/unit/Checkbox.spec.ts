@@ -114,4 +114,36 @@ describe('QCheckbox', () => {
     expect(input.attributes('aria-invalid')).toBe('true');
     expect(input.attributes('aria-required')).toBe('true');
   });
+  it('on its own takes required and an error, with the message under it describing the box', async () => {
+    const w = mount(QCheckbox, {
+      props: { id: 'terms', label: 'I accept the terms', required: true, error: null, class: 'x' },
+    });
+    const input = w.get('input');
+    expect(input.attributes('aria-required')).toBe('true');
+    expect(input.attributes('required')).toBeDefined();
+    expect(input.attributes('aria-invalid')).toBeUndefined();
+    // The message area is there before the first error, so the error is announced when it appears.
+    expect(w.classes()).toContain('q-check');
+    expect(w.classes()).toContain('x');
+    expect(w.get('.q-field__live').attributes('aria-live')).toBe('polite');
+    expect(w.find('.q-field__msg').exists()).toBe(false);
+
+    await w.setProps({ error: 'Accept the terms to place your order' });
+    const msg = w.get('.q-field__msg--error');
+    expect(msg.text()).toContain('Accept the terms to place your order');
+    expect(input.attributes('aria-invalid')).toBe('true');
+    expect(input.attributes('aria-describedby')).toContain(msg.attributes('id'));
+    expect(input.attributes('id')).toBe('terms');
+  });
+
+  it('without error keeps the plain row, and inside a group ignores its own required', () => {
+    const plain = mount(QCheckbox, { props: { label: 'x', class: 'y' } });
+    expect(plain.element.tagName).toBe('LABEL');
+    expect(plain.classes()).toContain('y');
+    const g = mount(QCheckboxGroup, {
+      props: { label: 'Notify' },
+      slots: { default: () => h(QCheckbox, { value: 'a', label: 'A', required: true }) },
+    });
+    expect(g.get('input').attributes('required')).toBeUndefined();
+  });
 });

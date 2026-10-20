@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { computed, nextTick, ref, useAttrs, useSlots } from 'vue';
+import { computed, h, nextTick, ref, useAttrs, useSlots, type FunctionalComponent } from 'vue';
+import { useQuietId } from '../../composables/useQuietId';
 import { useCheckGroup } from '../../internal/choice';
 import QChoiceRow from '../../internal/QChoiceRow.vue';
 import QChoiceTile from '../../internal/QChoiceTile.vue';
+import QFieldMessage from '../../internal/QFieldMessage.vue';
 import type { ImageSource } from '../../types';
 import { joinIds, warnOnce } from '../../utils/dom';
-import { useControlId, useFieldControl } from '../Field/context';
+import { useControlId, useFieldControl, useFieldSetup, type FieldCommonProps } from '../Field/context';
 
 export interface CheckboxProps {
   /** The option's name. Clicking it toggles the box. (Or the `label` slot.) */
@@ -34,8 +36,12 @@ export interface CheckboxProps {
   disabled?: boolean;
   /** Posted with the form; inside a CheckboxGroup the group's name is used. */
   name?: string;
-  /** Id of the native checkbox. Inside a Field the Field's id wins. */
+  /** Id of the native checkbox. Inside a Field the Field's id wins. Give it one to link it from the Form's error summary. */
   id?: string;
+  /** On its own: it must be ticked ("I accept the terms"). Screen readers hear "required". */
+  required?: boolean;
+  /** On its own: the message under it ("Accept the terms to place your order"); it also turns the box red. Pass null for none. */
+  error?: string | null;
 }
 
 defineOptions({ inheritAttrs: false });
@@ -50,6 +56,7 @@ const props = withDefaults(defineProps<CheckboxProps>(), {
   card: undefined,
   name: undefined,
   id: undefined,
+  error: undefined,
 });
 /** Ticked or not (on its own; inside a CheckboxGroup the group holds the value). */
 const checked = defineModel<boolean>({ default: false });
@@ -75,7 +82,17 @@ if (props.label == null && !slots.label && !attrs['aria-label']) {
 }
 
 const isDisabled = computed(() => props.disabled || !!group?.value.disabled || !!field?.value.disabled);
-const isInvalid = computed(() => props.invalid || !!group?.value.invalid || !!field?.value.invalid);
+const isInvalid = computed(() => props.invalid || !!props.error || !!group?.value.invalid || !!field?.value.invalid);
+
+// On its own with `error` bound (even to null), the checkbox carries a message under it, like a Field. The
+// message can't sit inside the row: the row is a <label>, so it would join the checkbox's name.
+const withMessage = computed(() => !group && !field && props.error !== undefined);
+const fieldSetup = useFieldSetup(props as unknown as FieldCommonProps);
+const msgId = useQuietId('q-check-msg-');
+const Wrap: FunctionalComponent = (_, { slots: s }) =>
+  withMessage.value
+    ? h('div', { class: ['q-check', attrs.class], style: attrs.style as never }, s.default?.())
+    : s.default?.()[0]; // just the row: a single root, as before
 const managed = computed(() => Array.isArray(group?.value.value));
 const isChecked = computed(() =>
   managed.value ? (group!.value.value as string[]).includes(props.value ?? '') : checked.value,
@@ -107,11 +124,15 @@ const inputAttrs = computed<Record<string, unknown>>(() => {
     indeterminate: props.indeterminate,
     disabled: isDisabled.value,
     'aria-invalid': isInvalid.value ? 'true' : undefined,
-    'aria-required': rest['aria-required'] ?? (g?.requiredSingle || field?.value.required ? 'true' : undefined),
+    required: !g && props.required ? true : undefined,
+    'aria-required':
+      rest['aria-required'] ??
+      (g?.requiredSingle || field?.value.required || (!g && props.required) ? 'true' : undefined),
     'aria-describedby': joinIds(
       rest['aria-describedby'] as string | undefined,
       g?.describedBy,
       field?.value.describedBy,
+      withMessage.value && props.error && msgId,
     ),
     onChange,
   };
@@ -136,24 +157,33 @@ defineExpose({ input, focus: () => input.value?.focus() });
   >
     <template #input><input ref="input" v-bind="inputAttrs" /></template>
   </QChoiceTile>
-  <QChoiceRow
-    v-else
-    :class="attrs.class"
-    :style="attrs.style as any"
-    kind="checkbox"
-    :card="card ?? !!group?.card"
-    :disabled="isDisabled"
-    :invalid="isInvalid"
-    :label-hidden="labelHidden"
-    :label="label"
-    :description="description"
-    :meta="meta"
-    :has-description="!!description || !!slots.description"
-    :has-meta="meta != null || !!slots.meta"
-  >
-    <template #input><input ref="input" v-bind="inputAttrs" /></template>
-    <template v-if="slots.label" #label><slot name="label" /></template>
-    <template v-if="slots.description" #description><slot name="description" /></template>
-    <template v-if="slots.meta" #meta><slot name="meta" /></template>
-  </QChoiceRow>
+  <Wrap v-else>
+    <QChoiceRow
+      :class="withMessage ? undefined : attrs.class"
+      :style="withMessage ? undefined : (attrs.style as any)"
+      kind="checkbox"
+      :card="card ?? !!group?.card"
+      :disabled="isDisabled"
+      :invalid="isInvalid"
+      :label-hidden="labelHidden"
+      :label="label"
+      :description="description"
+      :meta="meta"
+      :has-description="!!description || !!slots.description"
+      :has-meta="meta != null || !!slots.meta"
+    >
+      <template #input><input ref="input" v-bind="inputAttrs" /></template>
+      <template v-if="slots.label" #label><slot name="label" /></template>
+      <template v-if="slots.description" #description><slot name="description" /></template>
+      <template v-if="slots.meta" #meta><slot name="meta" /></template>
+    </QChoiceRow>
+    <QFieldMessage
+      v-if="withMessage"
+      :id="msgId"
+      :status="error ? 'error' : null"
+      :message="error"
+      :strings="fieldSetup.strings.value"
+      :quiet="fieldSetup.summaryShown.value"
+    />
+  </Wrap>
 </template>

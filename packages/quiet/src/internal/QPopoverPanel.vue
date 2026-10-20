@@ -2,7 +2,7 @@
 // The floating panel behind Popover, Menu and Combobox: teleported to <body>, placed below (or above) its anchor,
 // flipped when there is no room, kept inside the viewport, and closed by Escape (topmost layer only), a click
 // outside, or focus moving away. Tab order behaves as if the panel sat right after its trigger.
-import { computed, nextTick, onBeforeUnmount, ref, watch } from 'vue';
+import { computed, nextTick, onBeforeUnmount, ref, watch, type HTMLAttributes, type StyleValue } from 'vue';
 import { FOCUSABLE, cssLength, visibleFocusables, warnOnce } from '../utils/dom';
 import { isTopLayer, popLayer, pushLayer } from '../utils/overlay';
 
@@ -25,8 +25,8 @@ const props = defineProps<{
   fitHeight?: boolean;
   flush?: boolean;
   initialFocus?: HTMLElement | null;
-  panelClass?: unknown;
-  panelStyle?: unknown;
+  panelClass?: HTMLAttributes['class'];
+  panelStyle?: StyleValue;
   /** Other attributes for the panel (data-*, aria-*) — what the consumer set on the Popover. */
   panelAttrs?: Record<string, unknown>;
 }>();

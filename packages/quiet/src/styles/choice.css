@@ -27,6 +27,17 @@
   --q-choice-lh: 20px;
   gap: var(--space-2);
 }
+/* A lone Checkbox with `error`: the message sits under the row, lined up with the label's text. */
+.q-check {
+  display: grid;
+  min-width: 0;
+}
+.q-check > .q-field__live {
+  padding-inline-start: calc(18px + var(--space-3));
+}
+[data-density='compact'] .q-check > .q-field__live {
+  padding-inline-start: calc(16px + var(--space-2));
+}
 .q-choice__control {
   position: relative;
   display: inline-flex;

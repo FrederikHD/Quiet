@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, useAttrs, watch } from 'vue';
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, useAttrs, watch, useModel } from 'vue';
 import { fmt, useStrings } from '../../config';
 import { useFormReset } from '../../composables/useFormReset';
 import { useQuietId } from '../../composables/useQuietId';
@@ -37,6 +37,7 @@ export interface TextareaProps {
   id?: string;
   /** The counter's words: count(n, max) "114 / 500" and left(n) "8 characters left". */
   strings?: TextareaStrings;
+  modelValue?: string | null;
 }
 
 defineOptions({ inheritAttrs: false });
@@ -49,8 +50,10 @@ const props = withDefaults(defineProps<TextareaProps>(), {
   size: 'default',
   id: undefined,
   strings: undefined,
+  modelValue: undefined,
 });
-const model = defineModel<string | null>();
+defineEmits<{ 'update:modelValue': [value: string | null] }>();
+const model = useModel(props, 'modelValue');
 
 const attrs = useAttrs();
 const field = useFieldControl();

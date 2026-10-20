@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="Row extends Record<string, any>">
-import { computed, getCurrentInstance, ref, useSlots } from 'vue';
+import { computed, getCurrentInstance, ref, useSlots, useModel } from 'vue';
 import { fmt, useStrings } from '../../config';
 import { useQuietId } from '../../composables/useQuietId';
 import { useResizeObserver } from '../../composables/useResizeObserver';
@@ -56,6 +56,10 @@ export interface TableProps<R> {
   density?: 'comfortable' | 'compact';
   /** Translations; or once for the shop with configure(). */
   strings?: TableStrings;
+  /** The sort shown (and applied, unless manualSort). */
+  sort?: TableSort | null;
+  /** Selected row keys. */
+  selected?: RowKey[];
 }
 
 const props = withDefaults(defineProps<TableProps<Row>>(), {
@@ -74,11 +78,17 @@ const props = withDefaults(defineProps<TableProps<Row>>(), {
   maxHeight: undefined,
   density: undefined,
   strings: undefined,
+  sort: undefined,
+  selected: undefined,
 });
-/** The sort shown (and applied, unless manualSort). */
-const sortModel = defineModel<TableSort | null>('sort');
-/** Selected row keys. */
-const selectedModel = defineModel<RowKey[]>('selected');
+defineEmits<{
+  /** The sort shown (and applied, unless manualSort). */
+  'update:sort': [value: TableSort | null];
+  /** Selected row keys. */
+  'update:selected': [value: RowKey[]];
+}>();
+const sortModel = useModel(props, 'sort');
+const selectedModel = useModel(props, 'selected');
 /** "Select all 1,240": every row matching the query is selected, not just this page. */
 const allMatching = defineModel<boolean>('allMatching', { default: false });
 
@@ -108,8 +118,8 @@ defineSlots<
 // Uncontrolled: start from defaultSort / defaultSelected.
 if (sortModel.value === undefined && props.defaultSort) sortModel.value = { ...props.defaultSort };
 if (selectedModel.value === undefined && props.defaultSelected) selectedModel.value = [...props.defaultSelected];
-const sort = computed({ get: () => sortModel.value ?? null, set: (v) => (sortModel.value = v) });
-const selected = computed({ get: () => selectedModel.value ?? [], set: (v) => (selectedModel.value = v) });
+const sortState = computed({ get: () => sortModel.value ?? null, set: (v) => (sortModel.value = v) });
+const picked = computed({ get: () => selectedModel.value ?? [], set: (v) => (selectedModel.value = v) });
 
 provideNoField();
 const slots = useSlots();
@@ -151,11 +161,11 @@ const rowLabel = (row: Row) =>
 // Sorting: the table sorts the rows itself unless manualSort. Empty values stay last either way.
 function toggleSort(c: TableColumn<Row>) {
   const first = c.sortFirst ?? (c.numeric ? 'desc' : 'asc');
-  const direction = sort.value?.key === c.key ? (sort.value.direction === 'asc' ? 'desc' : 'asc') : first;
-  sort.value = { key: c.key, direction };
+  const direction = sortState.value?.key === c.key ? (sortState.value.direction === 'asc' ? 'desc' : 'asc') : first;
+  sortState.value = { key: c.key, direction };
 }
 const shown = computed(() => {
-  const s = sort.value;
+  const s = sortState.value;
   const sc = s && !props.manualSort ? columns.value.find((c) => c.key === s.key) : undefined;
   if (!s || !sc) return props.rows;
   const mul = s.direction === 'desc' ? -1 : 1;
@@ -176,31 +186,29 @@ const pageKeys = computed(() => shown.value.map(keyOf));
 const selectableKeys = computed(() =>
   pageKeys.value.filter((_k, i) => !props.isRowSelectable || props.isRowSelectable(shown.value[i])),
 );
-const selOnPage = computed(() => selectableKeys.value.filter((k) => selected.value.includes(k)).length);
+const selOnPage = computed(() => selectableKeys.value.filter((k) => picked.value.includes(k)).length);
 const allOnPage = computed(() => selectableKeys.value.length > 0 && selOnPage.value === selectableKeys.value.length);
 const someOnPage = computed(() => selOnPage.value > 0 && !allOnPage.value);
 function toggleAll(on: boolean) {
-  if (on) selected.value = [...selected.value, ...selectableKeys.value.filter((k) => !selected.value.includes(k))];
+  if (on) picked.value = [...picked.value, ...selectableKeys.value.filter((k) => !picked.value.includes(k))];
   else {
-    selected.value = selected.value.filter((k) => !selectableKeys.value.includes(k));
+    picked.value = picked.value.filter((k) => !selectableKeys.value.includes(k));
     allMatching.value = false;
   }
 }
 function toggleRow(k: RowKey, on: boolean) {
   if (on) {
-    if (!selected.value.includes(k)) selected.value = [...selected.value, k];
+    if (!picked.value.includes(k)) picked.value = [...picked.value, k];
   } else {
-    selected.value = selected.value.filter((x) => x !== k);
+    picked.value = picked.value.filter((x) => x !== k);
     allMatching.value = false;
   }
 }
 function clearSelection() {
-  selected.value = [];
+  picked.value = [];
   allMatching.value = false;
 }
-const count = computed(() =>
-  allMatching.value && props.totalCount != null ? props.totalCount : selected.value.length,
-);
+const count = computed(() => (allMatching.value && props.totalCount != null ? props.totalCount : picked.value.length));
 const selectionText = computed(() =>
   !count.value
     ? ''
@@ -293,7 +301,7 @@ const sortOptions = computed(() =>
 );
 function onMobileSort(v: string | null | undefined) {
   const [key, direction] = String(v ?? '').split(':');
-  if (key) sort.value = { key, direction: direction === 'desc' ? 'desc' : 'asc' };
+  if (key) sortState.value = { key, direction: direction === 'desc' ? 'desc' : 'asc' };
 }
 const maxHeightCss = computed(() =>
   props.maxHeight == null ? undefined : typeof props.maxHeight === 'number' ? `${props.maxHeight}px` : props.maxHeight,
@@ -333,7 +341,7 @@ const maxHeightCss = computed(() =>
           :aria-label="strings.sortBy"
           :placeholder="strings.sortBy"
           class="q-table__mobilesort"
-          :model-value="sort ? `${sort.key}:${sort.direction}` : ''"
+          :model-value="sortState ? `${sortState.key}:${sortState.direction}` : ''"
           :options="sortOptions"
           @update:model-value="onMobileSort"
         />
@@ -350,7 +358,7 @@ const maxHeightCss = computed(() =>
           {{ strings.selectAllMatching(totalCount!) }}
         </QButton>
         <div class="q-table__bulk-actions">
-          <slot name="bulk-actions" :selected="selected" :all-matching="allMatching" />
+          <slot name="bulk-actions" :selected="picked" :all-matching="allMatching" />
           <QButton size="slim" variant="ghost" @click="clearSelection">{{ strings.clearSelection }}</QButton>
         </div>
       </div>
@@ -393,12 +401,14 @@ const maxHeightCss = computed(() =>
                 :key="c.key"
                 role="columnheader"
                 scope="col"
-                :aria-sort="sort?.key === c.key ? (sort.direction === 'asc' ? 'ascending' : 'descending') : undefined"
+                :aria-sort="
+                  sortState?.key === c.key ? (sortState.direction === 'asc' ? 'ascending' : 'descending') : undefined
+                "
                 :class="[
                   'q-table__th',
                   alignClass(c),
                   c.sortable && 'is-sortable',
-                  sort?.key === c.key && 'is-sorted',
+                  sortState?.key === c.key && 'is-sorted',
                   pin && ci === 0 && 'is-pinned is-pinned-last',
                 ]"
                 :style="c.width || c.minWidth ? { width: c.width, minWidth: c.minWidth } : undefined"
@@ -408,7 +418,9 @@ const maxHeightCss = computed(() =>
                     ><slot :name="`header-${c.key}`">{{ c.header }}</slot></span
                   >
                   <span class="q-table__sort-icon" aria-hidden="true">
-                    <QIcon :name="sort?.key === c.key && sort.direction === 'asc' ? 'chevron-up' : 'chevron-down'" />
+                    <QIcon
+                      :name="sortState?.key === c.key && sortState.direction === 'asc' ? 'chevron-up' : 'chevron-down'"
+                    />
                   </span>
                 </button>
                 <slot v-else :name="`header-${c.key}`">{{ c.header }}</slot>
@@ -446,7 +458,7 @@ const maxHeightCss = computed(() =>
               role="row"
               :class="[
                 'q-table__row',
-                (allMatching || selected.includes(pageKeys[i])) && 'is-selected',
+                (allMatching || picked.includes(pageKeys[i])) && 'is-selected',
                 clickable && 'is-clickable',
               ]"
               @click="onRowAreaClick"
@@ -455,7 +467,7 @@ const maxHeightCss = computed(() =>
                 <QCheckbox
                   :label="strings.selectRow(rowLabel(row))"
                   label-hidden
-                  :model-value="allMatching || selected.includes(pageKeys[i])"
+                  :model-value="allMatching || picked.includes(pageKeys[i])"
                   :disabled="!!isRowSelectable && !isRowSelectable(row)"
                   @update:model-value="toggleRow(pageKeys[i], $event)"
                 />

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, onUpdated, ref, useAttrs, watch, watchEffect } from 'vue';
+import { computed, onMounted, onUpdated, ref, useAttrs, watch, watchEffect, type HTMLAttributes } from 'vue';
 import { useQuietId } from '../../composables/useQuietId';
 import QPopoverPanel from '../../internal/QPopoverPanel.vue';
 import { warnOnce } from '../../utils/dom';
@@ -25,7 +25,7 @@ export interface PopoverProps {
   /** No padding inside the panel (lists that reach the edges). */
   flush?: boolean;
   /** Class for the floating panel; a `class` or `style` set on the Popover goes there too. */
-  panelClass?: unknown;
+  panelClass?: HTMLAttributes['class'];
 }
 
 defineOptions({ inheritAttrs: false });

@@ -56,6 +56,6 @@ Price, Badge, Rating, Button (quick add) and Icon (placeholder).
 ## What you provide
 
 - **Required:** `name`, `href` (the product page).
-- **Optional:** `image` (`{ src, alt? }`), `hoverImage` (`{ src }`), `price` (a number), `compareAt`, `priceFrom`, `currency`, `rating` (`{ value, count }`), `badges` (`[{ label, tone }]`), `swatches` (`[{ label, color }]`), `maxSwatches` (default 5), `vendor`, `soldOut`, `quickAdd`, `aspect` (`portrait` | `square`; default `portrait`), `headingLevel` (2–6; default 3).
+- **Optional:** `image` (`{ src, alt? }`), `hoverImage` (`{ src, alt? }`; decorative, so its `alt` isn't read), `price` (a number), `compareAt`, `priceFrom`, `currency`, `rating` (`{ value, count }`), `badges` (`[{ label, tone }]`), `swatches` (`[{ label, color }]`), `maxSwatches` (default 5), `vendor`, `soldOut`, `quickAdd`, `aspect` (`portrait` | `square`; default `portrait`), `headingLevel` (2–6; default 3).
 - **Events:** `@navigate(event)` (the link was clicked), `@quick-add` (the + button was pressed).
 - **Translations:** `strings`, or once for the shop with `configure({ strings: { productCard: … } })`: `quickAdd(name)` ("Add Linen shirt to cart"), `colours(n)` ("4 colours"), `more(n)` ("+2").

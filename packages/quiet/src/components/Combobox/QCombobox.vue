@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, nextTick, ref, useAttrs, watch } from 'vue';
+import { computed, nextTick, ref, useAttrs, watch, useModel } from 'vue';
 import { fmt, useStrings } from '../../config';
 import { useFormReset } from '../../composables/useFormReset';
 import { useQuietId } from '../../composables/useQuietId';
@@ -58,6 +58,8 @@ export interface ComboboxProps {
   id?: string;
   /** Translations of the built-in words: status line, Clear, Done, "Remove …", "+N more". */
   strings?: ComboboxStrings;
+  /** The chosen option object (single) or an array of them (multiple) — objects, so labels survive fetched results. */
+  modelValue?: ComboboxOption | ComboboxOption[] | null;
 }
 
 defineOptions({ inheritAttrs: false });
@@ -76,9 +78,10 @@ const props = withDefaults(defineProps<ComboboxProps>(), {
   dialog: 'auto',
   id: undefined,
   strings: undefined,
+  modelValue: undefined,
 });
-/** The chosen option object (single) or an array of them (multiple) — objects, so labels survive fetched results. */
-const model = defineModel<ComboboxOption | ComboboxOption[] | null>();
+defineEmits<{ 'update:modelValue': [value: ComboboxOption | ComboboxOption[] | null] }>();
+const model = useModel(props, 'modelValue');
 
 const attrs = useAttrs();
 const field = useFieldControl();

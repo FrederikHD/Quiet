@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, useAttrs, useSlots } from 'vue';
+import { computed, ref, useAttrs, useSlots, useModel } from 'vue';
 import { useStrings } from '../../config';
 import { joinIds, warnOnce } from '../../utils/dom';
 import { useControlId, useFieldControl } from '../Field/context';
@@ -31,6 +31,10 @@ export interface InputProps {
   id?: string;
   /** Native input type. Prefer "text" with inputmode="decimal" or "numeric" over "number". */
   type?: string;
+  /** The text; `.trim` and `.number` work. */
+  modelValue?: string | number | null;
+  /** Set by v-model's modifiers. */
+  modelModifiers?: { trim?: true; number?: true };
 }
 
 defineOptions({ inheritAttrs: false });
@@ -43,8 +47,10 @@ const props = withDefaults(defineProps<InputProps>(), {
   suffix: undefined,
   clearLabel: undefined,
   id: undefined,
+  modelValue: undefined,
+  modelModifiers: undefined,
 });
-const [model, modifiers] = defineModel<string | number | null>({
+const [model, modifiers] = useModel(props, 'modelValue', {
   set(v) {
     if (modifiers.trim && typeof v === 'string') return v.trim();
     if (modifiers.number && typeof v === 'string' && v !== '' && !Number.isNaN(Number(v))) return Number(v);
@@ -52,6 +58,8 @@ const [model, modifiers] = defineModel<string | number | null>({
   },
 });
 const emit = defineEmits<{
+  /** The text, after the .trim and .number modifiers. */
+  'update:modelValue': [value: string | number | null];
   /** The clear button was pressed (the value is already empty). */
   clear: [];
 }>();
