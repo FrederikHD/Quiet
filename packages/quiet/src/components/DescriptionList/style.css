@@ -1,6 +1,8 @@
 /* ---------- DescriptionList ---------- */
 /* columns: term beside value from 480px of width (stacked below); inline: term left, value right (totals); stacked: term above value. */
 .q-dl {
+  /* A size container takes no width from its content: stretch it where a grid would shrink it to fit. */
+  justify-self: stretch;
   container-type: inline-size;
   display: grid;
   gap: var(--space-3);

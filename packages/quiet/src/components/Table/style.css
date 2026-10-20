@@ -1,6 +1,8 @@
 /* ---------- Table ---------- */
 /* Back-office lists. The root measures its width (container) so phones can switch to cards; the frame draws the card. */
 .q-table {
+  /* A size container takes no width from its content: stretch it where a grid would shrink it to fit. */
+  justify-self: stretch;
   container-type: inline-size;
   min-width: 0;
   font-family: var(--font-sans);

@@ -103,3 +103,54 @@ test.describe('Orders', () => {
     await expect(screen.getByRole('tab', { name: /Unfulfilled/ })).toContainText('10');
   });
 });
+
+test.describe('Checkout', () => {
+  test('goes through address, shipping and payment to the confirmation, asking for what is missing', async ({
+    page,
+  }) => {
+    await page.goto('/patterns/checkout');
+    const screen = page.getByTestId('pattern');
+
+    await screen.getByRole('button', { name: 'Continue to shipping' }).click();
+    await expect(screen.getByText('Enter your street and house number').first()).toBeVisible();
+    await screen.getByLabel('Street and house number').fill('Torstraße 115');
+    await screen.getByLabel('Postcode').fill('10119');
+    await screen.getByLabel('City').fill('Berlin');
+    await screen.getByRole('button', { name: 'Continue to shipping' }).click();
+
+    await expect(screen.getByRole('heading', { name: 'Shipping', level: 2 })).toBeFocused();
+    await screen.getByRole('button', { name: 'Continue to payment' }).click();
+    await expect(screen.getByText('Choose a delivery method').first()).toBeVisible();
+    await screen.getByText('Express', { exact: true }).click();
+    await screen.getByRole('button', { name: 'Continue to payment' }).click();
+
+    await expect(screen.getByRole('heading', { name: 'Payment', level: 2 })).toBeFocused();
+    const buy = screen.getByRole('button', { name: 'Buy now · 147,90 €' });
+    await screen.getByText('Invoice', { exact: true }).click();
+    await buy.click();
+    await expect(screen.getByText('Accept the terms to place your order').first()).toBeVisible();
+    await screen.getByText('I accept the terms and the cancellation policy').click();
+    await buy.click();
+
+    await expect(screen.getByRole('heading', { name: 'Thank you, Anna' })).toBeFocused();
+    await expect(screen.getByText('Express, next working day')).toBeVisible();
+    await expect(screen.getByText('Invoice, within 14 days')).toBeVisible();
+  });
+
+  test('a discount code lowers the total, and a finished step leads back', async ({ page }) => {
+    await page.goto('/patterns/checkout');
+    const screen = page.getByTestId('pattern');
+    await screen.getByRole('button', { name: 'Add a discount code' }).click();
+    await screen.getByLabel('Discount code').fill('LINEN10');
+    await screen.getByRole('button', { name: 'Apply' }).click();
+    await expect(screen.getByText('124,20 €').first()).toBeVisible();
+
+    await screen.getByLabel('Street and house number').fill('Torstraße 115');
+    await screen.getByLabel('Postcode').fill('10119');
+    await screen.getByLabel('City').fill('Berlin');
+    await screen.getByRole('button', { name: 'Continue to shipping' }).click();
+    await screen.getByRole('button', { name: /Address/ }).click();
+    await expect(screen.getByRole('heading', { name: 'Address', level: 2, exact: true })).toBeFocused();
+    await expect(screen.getByLabel('City')).toHaveValue('Berlin');
+  });
+});

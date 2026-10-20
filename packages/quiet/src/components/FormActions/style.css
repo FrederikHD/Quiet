@@ -1,5 +1,7 @@
 /* Actions */
 .q-factions {
+  /* A size container takes no width from its content: stretch it where a grid would shrink it to fit. */
+  justify-self: stretch;
   container-type: inline-size;
   min-width: 0;
 }

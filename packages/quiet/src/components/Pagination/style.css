@@ -2,6 +2,8 @@
 /* One line at every width: it measures itself (container) and drops the extras as space runs out —
    the "Rows per page" and "Page" words first, then first/last, and numbered pages fall back to "4 / 25". */
 .q-pager {
+  /* A size container takes no width from its content: stretch it where a grid would shrink it to fit. */
+  justify-self: stretch;
   container-type: inline-size;
   width: 100%;
   min-width: 0;

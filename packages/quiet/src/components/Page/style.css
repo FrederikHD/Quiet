@@ -1,6 +1,8 @@
 /* ---------- Page ---------- */
 /* Content width: default 1200px, narrow 720px (forms, settings), full. Gutters space-8, space-4 on phones. */
 .q-page {
+  /* A size container takes no width from its content: stretch it where a grid would shrink it to fit. */
+  justify-self: stretch;
   container-type: inline-size;
   min-width: 0;
   color: var(--ink);

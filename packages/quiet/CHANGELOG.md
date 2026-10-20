@@ -6,6 +6,13 @@ breaking changes, a patch version (0.x.y) never does.
 
 ## [Unreleased]
 
+### Fixed
+
+- Components that adapt to their own width (DescriptionList, Table, Steps, Pagination, Breadcrumbs, Field, FieldGroup,
+  FormSection, FormActions, Page) collapsed to a sliver in a grid that aligns its items to the start: a size container
+  takes no width from its content. They now stretch across the column there.
+- OrderSummary left an empty band between two rules when its slot rendered nothing (a DiscountCode behind `v-if`).
+
 ## [0.3.0] - 2026-10-20
 
 ### Added
