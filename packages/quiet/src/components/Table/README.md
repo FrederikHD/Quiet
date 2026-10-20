@@ -101,6 +101,7 @@ The `#row-actions="{ row }"` slot holds slim ghost icon Buttons for the last col
 - **`mobile="scroll"`** (default): the table scrolls sideways, and the first column (with its checkbox) stays pinned, with an edge once scrolled. `pinFirst: false` turns the pinning off; it only applies when the primary column is the first. Under 640px the pinned column is as wide as its content, up to 40%, and long names wrap. For long names (products), give the column a `minWidth` such as `'min(11rem, 40cqi)'` so they don't wrap onto many lines.
 - **`mobile="cards"`:** under 640px each row becomes a card. The checkbox, name and actions sit on top, then "Label value" lines. The header disappears; "Select all" and a "Sort by" menu sit above the cards. Use it for orders and anything people work through on a phone.
 - **Both** measure the table's own width, not the screen's.
+- **`cardsBelow`** (cards mode, default 640) moves the switch. A table of three or four columns fits far less than 640px: in a narrow column beside a side panel, a variants table with price and stock inputs reads better as a table, so give it `:cards-below="420"` and it turns into cards only on a phone. Leave the default for wide tables of many columns.
 - **`maxHeight`** (a number in px, or a CSS length) scrolls the body inside that height; the header row stays on top.
 
 ## Density
@@ -123,7 +124,7 @@ Show up to 100 rows at a time and page through the rest with Pagination. At that
 ## What you provide
 
 - **Required:** `caption` ("Orders"), `columns`, `rows`.
-- **Optional:** `captionHidden` (a heading above already says it), `rowKey` (a field name or a function; default "id"), `rowLabel(row)` (names the row in its checkbox), `defaultSort`, `manualSort` (the rows arrive sorted), `selectable`, `defaultSelected`, `isRowSelectable(row)`, `totalCount` (all matching rows, for "Select all 1,240"), `rowHref(row)`, `loading`, `skeletonRows` (default 5), `mobile` (`scroll` | `cards`; default `scroll`), `pinFirst` (default true), `maxHeight`, `density` (`comfortable` | `compact`; default: the nearest `data-density`).
+- **Optional:** `captionHidden` (a heading above already says it), `rowKey` (a field name or a function; default "id"), `rowLabel(row)` (names the row in its checkbox), `defaultSort`, `manualSort` (the rows arrive sorted), `selectable`, `defaultSelected`, `isRowSelectable(row)`, `totalCount` (all matching rows, for "Select all 1,240"), `rowHref(row)`, `loading`, `skeletonRows` (default 5), `mobile` (`scroll` | `cards`; default `scroll`), `cardsBelow` (px, default 640), `pinFirst` (default true), `maxHeight`, `density` (`comfortable` | `compact`; default: the nearest `data-density`).
 - **v-model:** `v-model:sort` (`{ key, direction }` or null), `v-model:selected` (row keys), `v-model:all-matching` (default false).
 - **Events:** `@row-click(row, event)` (makes rows clickable), `@update:sort`, `@update:selected`, `@update:all-matching`.
 - **Slots:** `#caption`, `#toolbar`, `#footer`, `#empty`, `#cell-<key>="{ row, index, value }"`, `#header-<key>`, `#row-actions="{ row, index }"`, `#bulk-actions="{ selected, allMatching }"`.

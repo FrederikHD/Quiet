@@ -13,6 +13,10 @@ breaking changes, a patch version (0.x.y) never does.
   default for images, where the first is the main image; `reorderable` turns it on for files. New strings for the
   handle, its menu and the announcements.
 - The `grip` icon, for drag handles.
+- Table `cardsBelow`: the table's own width under which `mobile="cards"` turns rows into cards (default 640, as
+  before). A table of a few columns in a narrow column, such as a variants table beside a side panel, can stay a
+  table until it's on a phone. The switch is now measured with a ResizeObserver instead of a container query; with
+  server rendering, cards appear once the page hydrates.
 
 ### Changed
 

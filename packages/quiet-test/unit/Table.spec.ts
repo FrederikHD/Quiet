@@ -1,7 +1,7 @@
 import { enableAutoUnmount, mount } from '@vue/test-utils';
 import { QTable, configure, type TableColumn } from '@frederikhd/quiet';
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
-import { h } from 'vue';
+import { h, nextTick } from 'vue';
 
 enableAutoUnmount(afterEach);
 beforeAll(() => configure({ locale: 'en-US' }));
@@ -183,6 +183,22 @@ describe('QTable', () => {
     expect(sel.attributes('aria-label')).toBe('Sort by');
     await sel.setValue('total:desc');
     expect(c.emitted('update:sort')!.at(-1)).toEqual([{ key: 'total', direction: 'desc' }]);
+  });
+
+  it('turns rows into cards under cardsBelow, measured on the table itself', async () => {
+    const at = async (width: number, props: Record<string, unknown>) => {
+      const spy = vi.spyOn(HTMLElement.prototype, 'clientWidth', 'get').mockReturnValue(width);
+      const w = table(props);
+      await nextTick();
+      await nextTick();
+      spy.mockRestore();
+      return w.classes().includes('is-cards');
+    };
+    expect(await at(600, { mobile: 'cards' })).toBe(true);
+    expect(await at(700, { mobile: 'cards' })).toBe(false);
+    expect(await at(600, { mobile: 'cards', cardsBelow: 420 })).toBe(false);
+    expect(await at(400, { mobile: 'cards', cardsBelow: 420 })).toBe(true);
+    expect(await at(300, { mobile: 'scroll' })).toBe(false);
   });
 
   it('applies density, maxHeight, toolbar and footer', () => {
