@@ -108,7 +108,7 @@ defineExpose({ focus: () => search.value?.focus(), input: () => search.value?.in
           aria-hidden="true"
           :style="o.swatch ? { background: o.swatch } : undefined"
         >
-          <img v-if="o.image" :src="o.image" alt="" />
+          <img v-if="o.image" :src="o.image.src" alt="" />
         </span>
         <span class="q-combo__text">
           <span class="q-combo__label">{{ o.label ?? o.value }}</span>

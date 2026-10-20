@@ -19,7 +19,7 @@ const emit = defineEmits<{ choose: []; hover: [] }>();
     @click="emit('choose')"
     @mousemove="!active && emit('hover')"
   >
-    <img v-if="option.image" class="q-search__img" :src="option.image" alt="" aria-hidden="true" />
+    <img v-if="option.image" class="q-search__img" :src="option.image.src" alt="" aria-hidden="true" />
     <QLead v-else-if="option.icon" :icon="option.icon" />
     <span class="q-search__text">
       <span class="q-search__label">{{ option.label }}</span>

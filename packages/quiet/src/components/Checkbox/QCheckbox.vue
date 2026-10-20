@@ -3,6 +3,7 @@ import { computed, nextTick, ref, useAttrs, useSlots } from 'vue';
 import { useCheckGroup } from '../../internal/choice';
 import QChoiceRow from '../../internal/QChoiceRow.vue';
 import QChoiceTile from '../../internal/QChoiceTile.vue';
+import type { ImageSource } from '../../types';
 import { joinIds, warnOnce } from '../../utils/dom';
 import { useControlId, useFieldControl } from '../Field/context';
 
@@ -17,8 +18,8 @@ export interface CheckboxProps {
   value?: string;
   /** swatches layout (filters): the dot's colour. */
   swatch?: string;
-  /** swatches layout: a fabric picture instead of a colour. */
-  image?: string;
+  /** swatches layout: a fabric picture instead of a colour. (decorative: the label names it). */
+  image?: ImageSource;
   /** swatches / buttons layouts: crossed out but still choosable; screen readers hear "sold out". */
   soldOut?: boolean;
   /** Keeps the label for screen readers only — table rows ("Select order #10421"). */
@@ -128,7 +129,7 @@ defineExpose({ input, focus: () => input.value?.focus() });
     :label="label"
     :description="description"
     :swatch="swatch"
-    :image="image"
+    :image="image?.src"
     :sold-out="soldOut"
     :disabled="isDisabled"
     :invalid="isInvalid"

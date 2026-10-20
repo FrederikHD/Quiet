@@ -1,3 +1,5 @@
+import type { ImageSource } from '../../types';
+
 export interface ComboboxOption {
   value: string;
   label: string;
@@ -5,8 +7,8 @@ export interface ComboboxOption {
   description?: string;
   /** Right-aligned, tabular: price, rate, count. */
   meta?: string;
-  /** A 32px thumbnail (image URL) or swatch colour (any CSS colour). */
-  image?: string;
+  /** A 32px thumbnail (decorative: the label names it). */
+  image?: ImageSource;
   /** A colour swatch instead of an image (any CSS colour). */
   swatch?: string;
   /** Shown in ink-muted and can't be chosen; say why in the description. */

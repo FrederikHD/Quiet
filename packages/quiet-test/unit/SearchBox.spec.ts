@@ -5,7 +5,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 enableAutoUnmount(afterEach);
 
 const flat: SearchSuggestion[] = [
-  { id: 'ls', label: 'Linen shirt', description: 'Shirts', image: 'data:image/png;base64,', meta: '59,00 €' },
+  { id: 'ls', label: 'Linen shirt', description: 'Shirts', image: { src: 'data:image/png;base64,' }, meta: '59,00 €' },
   { id: 'lt', label: 'Linen trousers' },
 ];
 const groups = [

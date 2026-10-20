@@ -8,7 +8,13 @@ The shop's search field with suggestions as you type: collections and products (
   :suggestions="[
     {
       label: 'Products',
-      items: hits.map((p) => ({ id: p.id, label: p.name, image: p.thumb, meta: money(p.price), description: p.type })),
+      items: hits.map((p) => ({
+        id: p.id,
+        label: p.name,
+        image: { src: p.thumb },
+        meta: money(p.price),
+        description: p.type,
+      })),
     },
   ]"
   @select="go"
@@ -18,7 +24,7 @@ The shop's search field with suggestions as you type: collections and products (
 
 ## Behaviour
 
-- The list opens when the field has text and focus, and there is something to show. Each row has a picture (`image`) or an icon (`icon`), the `label`, an optional `description` line and `meta` (a price) on the right. Pass a flat list, or groups `[{ label: 'Products', items: [...] }]`.
+- The list opens when the field has text and focus, and there is something to show. Each row has a picture (`image: { src }`) or an icon (`icon`), the `label`, an optional `description` line and `meta` (a price) on the right. Pass a flat list, or groups `[{ label: 'Products', items: [...] }]`.
 - "Search for “…”" is always the last option while there is text (`:search-option="false"` leaves it out). It, Enter without a highlighted suggestion, and submitting the form emit `@submit(query)` with the trimmed text; an empty field never submits.
 - Choosing a suggestion emits `@select(item)` with your item as you passed it, and closes the list.
 - Groups get a small heading ("Collections", "Products"), with a rule between groups.

@@ -1,3 +1,5 @@
+import type { ItemKey } from '../../types';
+
 export interface TableColumn<Row = Record<string, unknown>> {
   /** Field name in the row; also the sort key and the slot name (#cell-<key>, #header-<key>). */
   key: string;
@@ -51,7 +53,8 @@ export interface TableStrings {
   sortOption?: (header: string, direction: 'asc' | 'desc') => string;
 }
 
-export type RowKey = string | number;
+/** Same as ItemKey; kept under its own name for tables. */
+export type RowKey = ItemKey;
 
 /** Empty values last; dates and numbers by value; text naturally ("Item 2" before "Item 10"). */
 export function compareValues(a: unknown, b: unknown): number {

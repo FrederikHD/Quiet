@@ -9,12 +9,13 @@ import {
   QNav,
   QPage,
   QTable,
+  type ItemKey,
   type NavItem,
   type NavSection,
 } from '@frederikhd/quiet';
 import { computed, ref } from 'vue';
 
-const page = ref('home');
+const page = ref<ItemKey>('home');
 const link = (key: string, label: string, extra: Partial<NavItem> = {}): NavItem => ({
   key,
   label,

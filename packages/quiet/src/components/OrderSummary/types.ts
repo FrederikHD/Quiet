@@ -1,6 +1,8 @@
+import type { ImageSource, ItemKey } from '../../types';
+
 export interface OrderSummaryItem {
   /** Stable key for the line. */
-  id?: string;
+  id?: ItemKey;
   /** The product name. */
   name: string;
   /** "Navy · M" */
@@ -12,7 +14,7 @@ export interface OrderSummaryItem {
   /** The line's original total; above price it shows as a sale. */
   compareAt?: number;
   /** The product image; a placeholder shows without one. */
-  image?: { src: string; alt?: string };
+  image?: ImageSource;
   /** Links the name to the product page. */
   href?: string;
 }

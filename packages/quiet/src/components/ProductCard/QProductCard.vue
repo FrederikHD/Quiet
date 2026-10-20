@@ -2,6 +2,7 @@
 import { computed } from 'vue';
 import { useStrings } from '../../config';
 import { useQuietId } from '../../composables/useQuietId';
+import type { ImageSource } from '../../types';
 import { warnOnce } from '../../utils/dom';
 import QBadge, { type BadgeTone } from '../Badge/QBadge.vue';
 import QButton from '../Button/QButton.vue';
@@ -15,7 +16,7 @@ export interface ProductCardProps {
   /** The product page. The name links there and the whole card is clickable. */
   href: string;
   /** The product image. Leave alt empty when it only shows the product named below; a placeholder shows without one. */
-  image?: { src: string; alt?: string };
+  image?: ImageSource;
   /** Shown on hover (pointer devices): the back, or the product worn. */
   hoverImage?: { src: string };
   /** The price, as a number (formatted by Price). */

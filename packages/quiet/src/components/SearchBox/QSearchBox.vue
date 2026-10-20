@@ -7,17 +7,18 @@ import { provideNoField } from '../Field/context';
 import type { IconName } from '../Icon/icons';
 import QInput from '../Input/QInput.vue';
 import QIcon from '../Icon/QIcon.vue';
+import type { ImageSource, ItemKey } from '../../types';
 import QSearchOption from './QSearchOption.vue';
 
 export interface SearchSuggestion {
   /** Stable id for the list (default: the label). */
-  id?: string;
+  id?: ItemKey;
   /** What the row says: the product's or the page's name. */
   label: string;
   /** A second, muted line: the category, the colour. */
   description?: string;
-  /** A product picture (URL). */
-  image?: string;
+  /** A product picture (decorative: the label names it). */
+  image?: ImageSource;
   /** An icon instead of a picture (pages, categories). */
   icon?: IconName;
   /** Right side: a price. */

@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { computed, nextTick, ref } from 'vue';
 import { useStrings } from '../../config';
+import type { ItemKey } from '../../types';
 import QTag from '../Tag/QTag.vue';
 
 export interface FilterChip {
-  key: string;
+  key: ItemKey;
   label: string;
   /** A colour dot before the label. */
   swatch?: string;
@@ -35,7 +36,7 @@ const props = withDefaults(defineProps<FilterChipsProps>(), {
 });
 const emit = defineEmits<{
   /** A chip was pressed: drop that filter. */
-  remove: [key: string];
+  remove: [key: ItemKey];
   /** Clear all was pressed. */
   clear: [];
 }>();
@@ -61,7 +62,7 @@ async function refocus(i: number) {
     r
   ).focus();
 }
-function remove(key: string, i: number) {
+function remove(key: ItemKey, i: number) {
   emit('remove', key);
   void refocus(i);
 }

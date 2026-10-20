@@ -3,6 +3,7 @@ import { computed, ref, useAttrs, useSlots } from 'vue';
 import { useRadioGroup } from '../../internal/choice';
 import QChoiceRow from '../../internal/QChoiceRow.vue';
 import QChoiceTile from '../../internal/QChoiceTile.vue';
+import type { ImageSource } from '../../types';
 import { joinIds, warnOnce } from '../../utils/dom';
 
 export interface RadioProps {
@@ -16,8 +17,8 @@ export interface RadioProps {
   meta?: string;
   /** swatches layout: the dot's colour (any CSS colour). */
   swatch?: string;
-  /** swatches layout: a fabric picture for the dot instead of a colour. */
-  image?: string;
+  /** swatches layout: a fabric picture for the dot instead of a colour. (decorative: the label names it). */
+  image?: ImageSource;
   /** swatches / buttons layouts: crossed out but still choosable, read as "XL, sold out". */
   soldOut?: boolean;
   /** Marks this option invalid; the RadioGroup's error does this for every option. */
@@ -95,7 +96,7 @@ defineExpose({ input, focus: () => input.value?.focus() });
     :label="label"
     :description="description"
     :swatch="swatch"
-    :image="image"
+    :image="image?.src"
     :sold-out="soldOut"
     :disabled="isDisabled"
     :invalid="isInvalid"
