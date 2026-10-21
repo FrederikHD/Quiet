@@ -26,8 +26,8 @@ const count = (key: string) => orders.filter(filters[key]).length;
     class="tabs"
     :tabs="[
       { value: 'all', label: 'All' },
-      { value: 'open', label: 'Unfulfilled', count: count('open'), countLabel: 'orders to fulfil' },
-      { value: 'unpaid', label: 'Unpaid', count: count('unpaid'), countLabel: 'unpaid orders' },
+      { value: 'open', label: 'Unfulfilled', count: count('open'), countLabel: `${count('open')} to fulfil` },
+      { value: 'unpaid', label: 'Unpaid', count: count('unpaid'), countLabel: `${count('unpaid')} unpaid` },
     ]"
   >
     <ul class="list">

@@ -47,7 +47,8 @@ const products: Product[] = Array.from({ length: 40 }, (_, i) => {
   const edition = editions[Math.floor(i / kinds.length) % editions.length];
   return {
     id: i + 1,
-    name: `${edition}${edition ? kind.toLowerCase() : kind}`.replace(/^./, (c) => c.toUpperCase()),
+    // "Relaxed linen T-shirt": only the kind's first letter drops its capital after an edition.
+    name: edition ? `${edition}${kind.replace(/^./, (c) => c.toLowerCase())}` : kind,
     price: base + (i % 3) * 10,
     compareAt: i % 7 === 3 ? base + 40 : undefined,
     colours: palette.filter((_, c) => (i + c) % 4 === 0 || c === i % palette.length).slice(0, 3),
@@ -65,30 +66,62 @@ const priceBounds: [number, number] = [
 // Filters and sort live in the URL, so a filtered list can be shared and the Back button restores it.
 const route = useRoute();
 const router = useRouter();
+// A URL can say anything, so what it says is checked: prices are kept within the bounds (and swapped when the
+// minimum is above the maximum), and an unknown sort is the default one.
+const sorts = ['featured', 'newest', 'price-asc', 'price-desc'];
 const list = (v: unknown) => (typeof v === 'string' && v ? v.split(',') : []);
+const clamp = (v: unknown, fallback: number) => {
+  const n = Number(v);
+  return v == null || v === '' || !Number.isFinite(n)
+    ? fallback
+    : Math.min(priceBounds[1], Math.max(priceBounds[0], n));
+};
+function filtersOf(query: typeof route.query): Filters {
+  const min = clamp(query.min, priceBounds[0]);
+  const max = clamp(query.max, priceBounds[1]);
+  return {
+    colours: list(query.colour),
+    sizes: list(query.size),
+    price: [Math.min(min, max), Math.max(min, max)],
+    inStock: query.stock === '1',
+  };
+}
+const sortOf = (query: typeof route.query) =>
+  typeof query.sort === 'string' && sorts.includes(query.sort) ? query.sort : 'featured';
+// The page reads its own copy, updated at once, and the URL follows. (The router updates the URL a moment later, so
+// reading it straight from the URL would leave the chips one step behind while focus moves on after a removal.)
+const state = ref({ filters: filtersOf(route.query), sort: sortOf(route.query) });
+watch(
+  () => route.query,
+  (query) => (state.value = { filters: filtersOf(query), sort: sortOf(query) }),
+);
+function toUrl() {
+  const { filters: f, sort: s } = state.value;
+  return router.replace({
+    query: {
+      ...route.query,
+      colour: f.colours.join(',') || undefined,
+      size: f.sizes.join(',') || undefined,
+      min: f.price[0] !== priceBounds[0] ? String(f.price[0]) : undefined,
+      max: f.price[1] !== priceBounds[1] ? String(f.price[1]) : undefined,
+      stock: f.inStock ? '1' : undefined,
+      sort: s !== 'featured' ? s : undefined,
+    },
+  });
+}
 const filters = computed<Filters>({
-  get: () => ({
-    colours: list(route.query.colour),
-    sizes: list(route.query.size),
-    price: [Number(route.query.min) || priceBounds[0], Number(route.query.max) || priceBounds[1]] as [number, number],
-    inStock: route.query.stock === '1',
-  }),
-  set: (f: Filters) =>
-    void router.replace({
-      query: {
-        ...route.query,
-        colour: f.colours.join(',') || undefined,
-        size: f.sizes.join(',') || undefined,
-        min: f.price[0] !== priceBounds[0] ? String(f.price[0]) : undefined,
-        max: f.price[1] !== priceBounds[1] ? String(f.price[1]) : undefined,
-        stock: f.inStock ? '1' : undefined,
-      },
-    }),
+  get: () => state.value.filters,
+  set: (f: Filters) => {
+    state.value = { ...state.value, filters: f };
+    void toUrl();
+  },
 });
 const sort = computed({
-  get: () => (typeof route.query.sort === 'string' ? route.query.sort : 'featured'),
-  set: (s: string | null) =>
-    void router.replace({ query: { ...route.query, sort: s && s !== 'featured' ? s : undefined } }),
+  get: () => state.value.sort,
+  set: (s: string | null) => {
+    state.value = { ...state.value, sort: s && sorts.includes(s) ? s : 'featured' };
+    void toUrl();
+  },
 });
 
 const matches = (p: Product, f: Filters, skip?: keyof Filters) =>
@@ -139,6 +172,13 @@ function removeChip(key: ItemKey) {
 function clearAll() {
   filters.value = { colours: [], sizes: [], price: [...priceBounds], inStock: false };
 }
+// "Clear filters" in the empty result goes away with it: focus moves to the products that came back.
+const resultsRegion = ref<HTMLElement | null>(null);
+async function clearFromEmpty() {
+  clearAll();
+  await nextTick();
+  resultsRegion.value?.focus();
+}
 
 // 12 at a time; "Show more" moves focus to the first new product.
 const page = 12;
@@ -174,7 +214,7 @@ const cart = ref(1);
           <CollectionFilters v-model="filters" :counts="counts" :price-bounds="priceBounds" />
         </aside>
 
-        <section class="collection__results" aria-label="Products">
+        <section ref="resultsRegion" class="collection__results" aria-label="Products" tabindex="-1">
           <div class="collection__bar">
             <QButton class="collection__filterbtn" icon-start="filter" :expanded="sheetOpen" @click="sheetOpen = true">
               Filter{{ activeCount ? ` (${activeCount})` : '' }}
@@ -196,11 +236,12 @@ const cart = ref(1);
               ]"
             />
           </div>
-          <QFilterChips v-if="activeCount" :items="chips" @remove="removeChip" @clear="clearAll" />
+          <!-- Always mounted, so it can move focus on after its last chip or Clear all: to the products. -->
+          <QFilterChips :items="chips" :empty-focus="resultsRegion" @remove="removeChip" @clear="clearAll" />
 
           <QEmptyState v-if="!results.length" icon="filter" title="No products match these filters" role="status">
             Try removing a filter or two.
-            <template #actions><QButton @click="clearAll">Clear filters</QButton></template>
+            <template #actions><QButton @click="clearFromEmpty">Clear filters</QButton></template>
           </QEmptyState>
           <template v-else>
             <ul ref="grid" class="collection__grid">
@@ -273,6 +314,10 @@ const cart = ref(1);
   display: grid;
   align-content: start;
   gap: var(--space-4);
+}
+/* With no filters in use the chip row stays mounted (for focus) but takes no room, gap included. */
+.collection__results > .q-fchips.is-empty {
+  margin-top: calc(-1 * var(--space-4));
 }
 .collection__bar {
   display: flex;

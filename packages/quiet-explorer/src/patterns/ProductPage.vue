@@ -74,10 +74,18 @@ function submit() {
     action: { label: 'View cart', onClick: () => (cartOpen.value = true) },
   });
 }
-// A line stepped down to 0 leaves the cart.
-function setQuantity(line: Line, n: number) {
-  if (n > 0) line.quantity = n;
-  else lines.value = lines.value.filter((l) => l !== line);
+// A line stepped down to 0 leaves the cart. Focus moves to the quantity of the line that took its place (or the one
+// before), and to the "Your cart is empty" message once the cart is empty, rather than falling back to the page.
+async function setQuantity(line: Line, n: number) {
+  if (n > 0) {
+    line.quantity = n;
+    return;
+  }
+  const i = lines.value.indexOf(line);
+  lines.value = lines.value.filter((l) => l !== line);
+  await nextTick();
+  const left = document.querySelectorAll<HTMLElement>('.cart__line input');
+  (left.length ? left[Math.min(i, left.length - 1)] : document.querySelector<HTMLElement>('.cart__empty'))?.focus();
 }
 
 // Reviews: filtered by the summary's bars, sorted, 3 at a time; "Helpful" votes are kept here as a server would.
@@ -134,7 +142,36 @@ const reviews = reactive([
     helpful: 3,
     text: 'Now in olive, navy and sand. Washes well at 30°.',
   },
+  {
+    id: 6,
+    stars: 2,
+    title: 'Colour not as shown',
+    author: 'Felix H.',
+    date: new Date(2026, 7, 21),
+    details: ['Size L', 'Rust'],
+    helpful: 5,
+    text: 'The rust is browner than in the pictures. The shirt itself is well made, but it isn’t the colour I wanted.',
+    reply: 'Sorry, Felix. We’ve taken new pictures of the rust shirt in daylight, and the return is free.',
+  },
+  {
+    id: 7,
+    stars: 1,
+    title: 'Shrank in the wash',
+    author: 'Emma S.',
+    date: new Date(2026, 7, 9),
+    details: ['Size M', 'Navy'],
+    helpful: 2,
+    text: 'Washed it at 60° by mistake and it came out a size smaller. My fault, but a warning on the label would help.',
+  },
 ]);
+// The summary's bars cover every review, of which the newest are written out above; the average comes from the bars.
+const distribution = { 5: 20, 4: 7, 3: 2, 2: 1, 1: 1 };
+const reviewCount = Object.values(distribution).reduce((n, c) => n + c, 0);
+const average =
+  Math.round((Object.entries(distribution).reduce((n, [s, c]) => n + Number(s) * c, 0) / reviewCount) * 10) / 10;
+function writeReview() {
+  toast('Opens the review form');
+}
 const onlyStars = ref<number | null>(null);
 const reviewSort = ref('recent');
 const reviewPage = 3;
@@ -198,7 +235,7 @@ const related = [
             <div class="product__head">
               <p class="product__vendor">Leinenweberei Rhön</p>
               <h2 class="product__title">{{ name }}</h2>
-              <QRating :value="4.3" :count="31" href="#reviews" />
+              <QRating :value="average" :count="reviewCount" href="#reviews" />
             </div>
             <QPrice :amount="price" size="large" tax-note />
 
@@ -262,13 +299,13 @@ const related = [
         <h2 id="reviews-title" class="section__title">Reviews</h2>
         <div class="reviews">
           <QReviewSummary
-            :average="4.3"
-            :distribution="{ 5: 20, 4: 7, 3: 2, 2: 1, 1: 1 }"
+            :average="average"
+            :distribution="distribution"
             filterable
             :active="onlyStars"
             @filter="onlyStars = $event"
           >
-            <template #action><QButton icon-start="pencil">Write a review</QButton></template>
+            <template #action><QButton icon-start="pencil" @click="writeReview">Write a review</QButton></template>
           </QReviewSummary>
           <div class="reviews__main">
             <QSelect
@@ -332,7 +369,7 @@ const related = [
     </main>
 
     <QDialog v-model:open="cartOpen" placement="end" :title="`Cart (${cartCount})`">
-      <QEmptyState v-if="!lines.length" title="Your cart is empty" icon="cart">
+      <QEmptyState v-if="!lines.length" class="cart__empty" title="Your cart is empty" icon="cart" tabindex="-1">
         Find something you like and it will wait here.
       </QEmptyState>
       <ul v-else class="cart">

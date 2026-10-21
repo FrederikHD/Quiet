@@ -1,4 +1,4 @@
-<!-- A long page name ends in "…" instead of pushing the trail onto a second line. -->
+<!-- A long trail wraps onto a second line; a page name too long for a whole line of its own ends in "…". -->
 <script setup lang="ts">
 import { QBreadcrumbs } from '@frederikhd/quiet';
 </script>

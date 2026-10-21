@@ -1,6 +1,17 @@
-<!-- A product edit page: back link, status badge, record actions, and a side column for what people check rather than edit. -->
+<!-- A product edit page: back link, status badge, record actions, and a side column for what people check rather than edit. One Form holds both columns through PageColumns. -->
 <script setup lang="ts">
-import { QBadge, QButton, QCard, QField, QFieldGroup, QForm, QInput, QPage, QSelect } from '@frederikhd/quiet';
+import {
+  QBadge,
+  QButton,
+  QCard,
+  QField,
+  QFieldGroup,
+  QForm,
+  QInput,
+  QPage,
+  QPageColumns,
+  QSelect,
+} from '@frederikhd/quiet';
 import { reactive } from 'vue';
 
 const v = reactive({
@@ -24,25 +35,31 @@ const v = reactive({
         <QButton icon-start="copy">Duplicate</QButton>
         <QButton icon-start="external-link">Preview</QButton>
       </template>
-      <QCard title="Details">
-        <QForm label-placement="top">
-          <QField label="Title" required><QInput v-model="v.title" /></QField>
-          <QFieldGroup :columns="[1, 1]">
-            <QField label="Price"><QInput v-model="v.price" suffix="€" align="end" numeric /></QField>
-            <QField label="Compare-at price"><QInput v-model="v.compare" suffix="€" align="end" numeric /></QField>
-          </QFieldGroup>
-        </QForm>
-      </QCard>
-      <template #aside>
-        <QCard title="Status">
-          <QField label="Status" label-hidden hint="Visible in the online store."
-            ><QSelect v-model="v.status" :options="['Active', 'Draft', 'Archived']"
-          /></QField>
-        </QCard>
-        <QCard title="Organisation">
-          <QField label="Vendor"><QInput v-model="v.vendor" /></QField>
-        </QCard>
-      </template>
+      <QForm label-placement="top">
+        <QPageColumns>
+          <QCard title="Details">
+            <QField label="Title" required><QInput v-model="v.title" /></QField>
+            <QFieldGroup :columns="[1, 1]">
+              <QField label="Price in EUR"
+                ><QInput v-model="v.price" suffix="€" align="end" numeric inputmode="decimal"
+              /></QField>
+              <QField label="Compare-at price in EUR"
+                ><QInput v-model="v.compare" suffix="€" align="end" numeric inputmode="decimal"
+              /></QField>
+            </QFieldGroup>
+          </QCard>
+          <template #aside>
+            <QCard title="Status">
+              <QField label="Status" label-hidden hint="Visible in the online store."
+                ><QSelect v-model="v.status" :options="['Active', 'Draft', 'Archived']"
+              /></QField>
+            </QCard>
+            <QCard title="Organisation">
+              <QField label="Vendor"><QInput v-model="v.vendor" /></QField>
+            </QCard>
+          </template>
+        </QPageColumns>
+      </QForm>
     </QPage>
   </div>
 </template>

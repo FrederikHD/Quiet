@@ -8,8 +8,12 @@ export default defineStory({
   props: { title: 'Pricing', description: 'Prices include VAT.', layout: 'stack', headingLevel: 2 },
   slots: {
     default: () => [
-      h(QField, { label: 'Price' }, () => h(QInput, { suffix: '€', numeric: true, align: 'end' })),
-      h(QField, { label: 'Cost per item' }, () => h(QInput, { suffix: '€', numeric: true, align: 'end' })),
+      h(QField, { label: 'Price in EUR' }, () =>
+        h(QInput, { suffix: '€', numeric: true, align: 'end', inputmode: 'decimal' }),
+      ),
+      h(QField, { label: 'Cost per item in EUR' }, () =>
+        h(QInput, { suffix: '€', numeric: true, align: 'end', inputmode: 'decimal' }),
+      ),
     ],
   },
   layout: 'block',

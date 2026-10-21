@@ -13,7 +13,10 @@ export default defineStory({
   },
   slots: {
     default: () => h(QCard, { title: 'Details' }, () => 'Content'),
-    actions: () => h(QButton, { variant: 'primary' }, () => 'Save'),
+    actions: () => [
+      h(QButton, { iconStart: 'copy' }, () => 'Duplicate'),
+      h(QButton, { iconStart: 'external-link' }, () => 'Preview'),
+    ],
   },
   layout: 'block',
 });

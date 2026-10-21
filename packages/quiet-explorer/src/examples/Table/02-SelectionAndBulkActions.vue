@@ -12,7 +12,8 @@ const orders = [
 const selected = ref<RowKey[]>([10499]);
 const log = ref('');
 function fulfil() {
-  log.value = `Marked ${selected.value.length} orders as fulfilled.`;
+  const n = selected.value.length;
+  log.value = `Marked ${n} ${n === 1 ? 'order' : 'orders'} as fulfilled.`;
   selected.value = [];
 }
 </script>

@@ -28,7 +28,7 @@ import {
   type FormError,
   type NavSection,
 } from '@frederikhd/quiet';
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { photo, swatchOf } from '../fixtures/pictures';
 
 const colours = ['Navy', 'Sand', 'Olive', 'Rust', 'Natural'];
@@ -176,6 +176,8 @@ function discard() {
   const go = leaving.value?.go;
   leaving.value = null;
   go?.();
+  // The Discard button that opened the dialog is disabled now (nothing left to discard): focus the heading.
+  focusTitle();
 }
 // …and so does closing the tab or reloading.
 const onUnload = (e: BeforeUnloadEvent) => {
@@ -186,6 +188,16 @@ onBeforeUnmount(() => window.removeEventListener('beforeunload', onUnload));
 
 const deleting = ref(false);
 const deleted = ref(false);
+// Deleting (and its Undo) swaps the whole page: focus the new page's heading instead of losing focus to the page.
+const frame = ref<HTMLElement | null>(null);
+async function focusTitle() {
+  await nextTick();
+  const h1 = frame.value?.querySelector<HTMLElement>('.q-page__title');
+  if (!h1) return;
+  h1.tabIndex = -1;
+  h1.focus();
+}
+watch(deleted, focusTitle);
 function remove() {
   deleting.value = false;
   deleted.value = true;
@@ -206,7 +218,7 @@ const elsewhere = (label: string) => () => toast(`${label} isn't part of this pa
 </script>
 
 <template>
-  <div class="frame">
+  <div ref="frame" class="frame">
     <QAppShell brand="Leinen & Co" contained :toaster="false">
       <template #nav>
         <QNav

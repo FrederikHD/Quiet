@@ -7,7 +7,7 @@ const items: NavItem[] = [
   { label: 'Orders', href: '#orders', icon: 'bag', badge: 12, badgeLabel: '12 to fulfil', current: true },
   { label: 'Products', href: '#products', icon: 'package' },
   { label: 'Customers', href: '#customers', icon: 'user' },
-  { label: 'Discounts', href: '#discounts', icon: 'percent', badge: 2, badgeLabel: '2 ending this week' },
+  { label: 'Discounts', href: '#discounts', icon: 'percent' },
 ];
 </script>
 

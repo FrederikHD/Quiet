@@ -4,7 +4,15 @@ import { QReview, QSelect } from '@frederikhd/quiet';
 import { computed, reactive, ref } from 'vue';
 
 const reviews = reactive([
-  { id: 1, rating: 5, title: 'Perfect for summer', author: 'Jonas W.', date: new Date(2026, 9, 3), helpful: 8 },
+  {
+    id: 1,
+    rating: 5,
+    title: 'Perfect for summer',
+    author: 'Jonas W.',
+    date: new Date(2026, 9, 3),
+    helpful: 8,
+    text: 'Cool on hot days and still smart enough for the office.',
+  },
   {
     id: 2,
     rating: 4,
@@ -12,8 +20,17 @@ const reviews = reactive([
     author: 'Lea F.',
     date: new Date(2026, 8, 28),
     helpful: 12,
+    text: 'Soft from the first wash. I usually wear M and S fits me well.',
   },
-  { id: 3, rating: 2, title: 'Too sheer in white', author: 'Mia B.', date: new Date(2026, 8, 2), helpful: 4 },
+  {
+    id: 3,
+    rating: 2,
+    title: 'Too sheer in white',
+    author: 'Mia B.',
+    date: new Date(2026, 8, 2),
+    helpful: 4,
+    text: 'Nice fabric, but you need something under it. I sent it back for the blue one.',
+  },
 ]);
 const sort = ref('recent');
 const shown = computed(() =>
@@ -54,7 +71,8 @@ function vote(id: number, on: boolean) {
           :helpful="r.helpful"
           :voted="votes.has(r.id)"
           @vote="(on) => vote(r.id, on)"
-        />
+          >{{ r.text }}</QReview
+        >
       </li>
     </ul>
   </div>

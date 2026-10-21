@@ -26,6 +26,9 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
+          # next/ is always develop, also when the release workflow calls this from a tag push (whose checkout would
+          # otherwise be the tag). The root is built from the latest release tag either way.
+          ref: develop
           fetch-depth: 0 # the release tags: the root is built from the latest one
       - uses: actions/setup-node@v7
         with:

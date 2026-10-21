@@ -17,7 +17,7 @@ const some = computed(() => selected.value.length > 0 && !all.value);
       :indeterminate="some"
       @update:model-value="selected = $event ? [...stores] : []"
     />
-    <QCheckboxGroup v-model="selected" class="indent" aria-label="Stores">
+    <QCheckboxGroup v-model="selected" class="indent" aria-label="Stores" label-placement="top">
       <QCheckbox v-for="store in stores" :key="store" :value="store" :label="store" />
     </QCheckboxGroup>
   </div>

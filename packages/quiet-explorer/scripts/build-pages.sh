@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 # Builds the GitHub Pages site into ./site (run from the repository root): the explorer of the latest release at the
-# root, and the explorer of the current checkout (develop) under next/. Usage: build-pages.sh <base path>, e.g. /Quiet/.
+# root, and the explorer of the current checkout under next/ (the Pages workflow checks out develop, also when the
+# release workflow calls it from a tag). Usage: build-pages.sh <base path>, e.g. /Quiet/.
 set -euo pipefail
 base="${1:?base path, e.g. /Quiet/}"
 tag="$(git tag --list 'v*' --sort=-v:refname | grep -v -- - | head -n 1)" # the latest stable release
+# Both builds label the version switch's "released" option with it.
+export VITE_RELEASED_VERSION="${tag#v}"
 rm -rf site && mkdir -p site
 
 echo "Develop → ${base}next/"

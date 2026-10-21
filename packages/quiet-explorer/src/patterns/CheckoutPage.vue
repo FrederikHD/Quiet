@@ -18,6 +18,7 @@ import {
   QRadioGroup,
   QSteps,
   money,
+  toast,
   validateAddress,
   type Address,
   type FormError,
@@ -90,10 +91,27 @@ const shippingCost = computed(() =>
 const payment = ref<'card' | 'paypal' | 'invoice' | null>(null);
 const card = ref({ number: '', expiry: '', cvc: '' });
 const terms = ref(false);
+// MM/YY, this month or later.
+const expiryError = (v: string) => {
+  const m = v.trim().match(/^(\d{1,2})\s*\/\s*(\d{2})$/);
+  if (!v.trim()) return 'Enter the expiry date';
+  if (!m || +m[1] < 1 || +m[1] > 12) return 'Enter the expiry date as MM/YY, like 08/28';
+  const now = new Date();
+  const yy = now.getFullYear() % 100;
+  return +m[2] < yy || (+m[2] === yy && +m[1] < now.getMonth() + 1) ? 'This card has expired' : null;
+};
+const cvcError = (v: string) =>
+  !v.trim() ? 'Enter the security code' : /^\d{3,4}$/.test(v.trim()) ? null : 'Enter the 3 or 4 digits on the back';
 const paymentErrors = computed<FormError[]>(() => [
   ...(!payment.value ? [{ id: 'co-pay', message: 'Choose how to pay' }] : []),
   ...(payment.value === 'card' && card.value.number.replace(/\s/g, '').length < 12
     ? [{ id: 'co-card', message: 'Enter the card number' }]
+    : []),
+  ...(payment.value === 'card' && expiryError(card.value.expiry)
+    ? [{ id: 'co-expiry', message: expiryError(card.value.expiry)! }]
+    : []),
+  ...(payment.value === 'card' && cvcError(card.value.cvc)
+    ? [{ id: 'co-cvc', message: cvcError(card.value.cvc)! }]
     : []),
   ...(!terms.value ? [{ id: 'co-terms', message: 'Accept the terms to place your order' }] : []),
 ]);
@@ -227,10 +245,10 @@ const paymentLabel = { card: 'Card', paypal: 'PayPal', invoice: 'Invoice, within
                 <QField id="co-card" label="Card number" required :error="err(paymentErrors, 'co-card')">
                   <QInput v-model="card.number" inputmode="numeric" autocomplete="cc-number" />
                 </QField>
-                <QField label="Expiry" hint="MM/YY" required
+                <QField id="co-expiry" label="Expiry" hint="MM/YY" required :error="err(paymentErrors, 'co-expiry')"
                   ><QInput v-model="card.expiry" autocomplete="cc-exp"
                 /></QField>
-                <QField label="Security code" required
+                <QField id="co-cvc" label="Security code" required :error="err(paymentErrors, 'co-cvc')"
                   ><QInput v-model="card.cvc" inputmode="numeric" autocomplete="cc-csc"
                 /></QField>
               </QFieldGroup>
@@ -274,7 +292,9 @@ const paymentLabel = { card: 'Card', paypal: 'PayPal', invoice: 'Invoice, within
               { term: 'Payment', description: payment ? paymentLabel[payment] : '' },
             ]"
           />
-          <QButton variant="primary" size="large" @click="go(0)">Continue shopping</QButton>
+          <QButton variant="primary" size="large" @click="toast('The shop isn’t part of this pattern')"
+            >Continue shopping</QButton
+          >
         </section>
       </main>
 
