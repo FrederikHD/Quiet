@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { QButton, QCard, QDescriptionList, QEmptyState, QQuantityStepper, money } from '@frederikhd/quiet';
+import { QButton, QEmptyState, QOrderSummary, QQuantityStepper, money } from '@frederikhd/quiet';
 import { photo } from '~/data/pictures';
 import { productBySlug } from '~/data/products';
 import type { CartLine } from '~/composables/useCart';
@@ -63,31 +63,22 @@ async function setQuantity(line: CartLine, n: number) {
         </ul>
 
         <aside class="columns__side">
-          <QCard>
-            <QDescriptionList
-              layout="inline"
-              :items="[
-                { key: 'subtotal', term: t.subtotal, description: money(subtotal), numeric: true },
-                {
-                  key: 'shipping',
-                  term: t.shipping,
-                  description: shipping ? money(shipping) : t.shippingFree,
-                  numeric: true,
-                },
-                { key: 'total', term: t.total, description: money(subtotal + shipping), numeric: true, emphasis: true },
-              ]"
-            />
-            <p class="cart__note">{{ t.taxNote }}</p>
-            <QButton
-              variant="primary"
-              size="large"
-              full-width
-              :href="href('/checkout')"
-              @click="link(href('/checkout'))($event)"
-            >
-              {{ t.checkout }}
-            </QButton>
-          </QCard>
+          <QOrderSummary
+            :items="[]"
+            :subtotal="subtotal"
+            :totals="[{ label: t.shipping, amount: shipping, free: !shipping }]"
+            :total="subtotal + shipping"
+            :tax-note="t.taxNote"
+          />
+          <QButton
+            variant="primary"
+            size="large"
+            full-width
+            :href="href('/checkout')"
+            @click="link(href('/checkout'))($event)"
+          >
+            {{ t.checkout }}
+          </QButton>
         </aside>
       </div>
     </ClientOnly>
