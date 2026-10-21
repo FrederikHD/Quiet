@@ -10,6 +10,10 @@ npm install @frederikhd/quiet@latest
 
 Type-checking your templates (see [Getting started](getting-started.md)) finds most of these for you.
 
+## 0.6 → 1.0
+
+No breaking changes. The release candidate is on npm under the `next` tag: `npm install @frederikhd/quiet@next`.
+
 ## 0.5 → 0.6
 
 **Label props moved into `strings`.** Every built-in word is now translated the same way.

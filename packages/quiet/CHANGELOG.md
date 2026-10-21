@@ -6,12 +6,20 @@ breaking changes, a patch version (0.x.y) never does.
 
 ## [Unreleased]
 
+## [1.0.0-rc.1] - 2026-10-21
+
+The release candidate for 1.0.0, published under npm's `next` tag (`npm install @frederikhd/quiet@next`). The API is
+what 1.0.0 will have: until then, only fixes. No breaking changes since 0.6.0.
+
 ### Added
 
 - Guides on the documentation site, for adopting Quiet in an app: Getting started (Vite and Nuxt), Translations (with
   every built-in phrase in German, checked against the types), Theming (dark mode, density, your own brand colour),
   Forms (validation, the error summary, server errors), Accessibility (what Quiet does and what stays with the app) and
-  Upgrading (every breaking change since 0.1). The README links to them. No changes to the components.
+  Upgrading (every breaking change since 0.1). The README links to them.
+- An example shop built with Nuxt in English and German, installed from npm like an adopter's app, at
+  https://frederikhd.github.io/Quiet/example/. CI builds it with every change to the library and checks it in a
+  browser.
 
 ### Fixed
 
@@ -208,7 +216,8 @@ First release.
 - WCAG 2.2 AA throughout: keyboard support, focus management, screen-reader announcements, both themes checked with
   axe; layouts that adapt to their own width; print styles; server rendering.
 
-[Unreleased]: https://github.com/FrederikHD/Quiet/compare/v0.6.0...HEAD
+[Unreleased]: https://github.com/FrederikHD/Quiet/compare/v1.0.0-rc.1...HEAD
+[1.0.0-rc.1]: https://github.com/FrederikHD/Quiet/compare/v0.6.0...v1.0.0-rc.1
 [0.6.0]: https://github.com/FrederikHD/Quiet/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/FrederikHD/Quiet/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/FrederikHD/Quiet/compare/v0.3.0...v0.4.0
