@@ -44,7 +44,7 @@ A search field doesn't fit a phone's header next to the brand and the cart. Put 
 - Focus stays in the field. ↓ opens the list, or moves down; ↑ moves up; both wrap round. The highlighted row is announced through `aria-activedescendant` and `aria-selected`.
 - Enter opens the highlighted suggestion, or searches when none is highlighted. Escape closes the list; Escape again empties the field. Tab closes the list and moves on.
 - Group headings are hidden as text but name their `role="group"`, so screen readers say which group a suggestion is in.
-- The number of suggestions ("3 suggestions", "No suggestions") is announced politely as it changes; "Search for “…”" isn't counted.
+- The number of suggestions ("3 suggestions", "No suggestions") is announced politely as it changes; "Search for “…”" isn't counted. A box that never gets suggestions announces nothing: "No suggestions" is only said once there have been some.
 - Pictures and icons are hidden from screen readers; the label names each row.
 
 ## Not for

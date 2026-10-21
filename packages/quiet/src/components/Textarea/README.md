@@ -26,7 +26,7 @@ The same as Input. Focus thickens the border to 2px `brand` (or `danger` while i
 
 - A native `<textarea>`: Enter adds a line, Tab moves on. Read-only textareas stay in the tab order; disabled ones are skipped.
 - Named by its Field's label and described by the Field's message and hint, then the counter. `invalid` (or a Field error) sets `aria-invalid`; `required` sets the native `required`, and a required Field adds `aria-required`.
-- The counter is silent while there is room. Near the limit it becomes a polite live region, so "8 characters left" is read out as people type.
+- The counter is silent while there is room. Near the limit a hidden polite live region (always on the page, empty until then) reads "8 characters left" as people type; the visible counter describes the field but isn't live.
 - A form reset empties `v-model` along with the textarea.
 
 ## What you provide

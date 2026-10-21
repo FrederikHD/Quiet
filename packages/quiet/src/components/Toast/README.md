@@ -32,7 +32,7 @@ Call `toast()` from anywhere. A `QToaster` shows the toasts. AppShell includes o
 ## Timing
 
 - Toasts close themselves after 5 seconds, or 8 with an action or as an error.
-- They pause while the pointer is over them or one has focus, and get at least one more second when they resume.
+- They pause while the pointer is over them or one has focus, and only resume when neither is true (the mouse leaving doesn't restart a toast that still has focus); they get at least one more second when they resume.
 - `duration: 0` keeps a toast until it's dismissed. Use it for errors people must read.
 - `toast.dismiss(id)` (also exported as `dismissToast`) closes one early.
 - Pressing the action runs its `onClick` and closes the toast.
@@ -42,7 +42,7 @@ Call `toast()` from anywhere. A `QToaster` shows the toasts. AppShell includes o
 - **No focus moves:** a toast never takes focus, so people can keep working.
 - **Announcements:** toasts are read out politely, in a `status` region; errors are read immediately, in an `alert` region. Both regions exist before the first toast, so it's announced too. The toaster is a region named "Notifications"; icons are hidden.
 - **Inside dialogs:** a dialog doesn't make the toaster inert, so a toast shown while a dialog is open is still read.
-- **Undo by keyboard:** the toaster sits at the end of the page, so Tab reaches the action and the close button (named "Dismiss") after the page's other controls. After Undo or × by keyboard, focus goes back to where it was before it entered the toaster.
+- **Undo by keyboard:** the toaster sits at the end of the page, so Tab reaches the action and the close button (named "Dismiss") after the page's other controls. After Undo or × by keyboard, focus goes back to where it was before it entered the toaster (else to the next toast's first button, else the page's `main`).
 
 ## Writing it
 

@@ -61,7 +61,7 @@ The panel never gets taller than the screen minus 32px; the header and footer st
 
 ## Keyboard and screen readers
 
-- **Opening** moves focus inside: to `initial-focus` if given, else the first control in the body, else the first footer button (so a confirmation starts on Cancel), else the dialog itself.
+- **Opening** moves focus inside: to `initial-focus` if given, else the first control in the body that Tab would reach (shown, not `tabindex="-1"`, not inside `aria-hidden`; in a radio group, its checked radio), else the first footer button (so a confirmation starts on Cancel), else the dialog itself.
 - **Tab and Shift+Tab** wrap round inside the dialog. The page behind is made inert: it can't be scrolled, clicked or reached by keyboard or screen reader.
 - **Escape** closes it, unless it isn't dismissible or another layer sits on top.
 - **Closing** returns focus to the element that opened it. If that element is gone (the dialog deleted its table row), focus goes to the same control in the next row, else the previous one, else the nearest control around it, else the page's `main`.

@@ -70,7 +70,7 @@ Keep CheckboxGroup for real sets of options.
 
 ## Keyboard and screen readers
 
-- The group is a `group` named by its label (or `ariaLabel`): "group, Notify the customer by".
+- The group is a `group` named by its label (or `ariaLabel`): "group, Notify the customer by". Without a `label`, `ariaLabel` or `aria-labelledby` it has no group role, since an unnamed group tells screen readers nothing.
 - Each option is a native checkbox: Tab moves from box to box, Space ticks and unticks.
 - The hint and the message are tied to every checkbox, so they are read with each one. The message is a polite live region, announced when it appears; it stays quiet while the Form's error summary is showing.
 - A required group around a single checkbox marks that checkbox `aria-required`.

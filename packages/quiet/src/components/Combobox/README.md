@@ -39,14 +39,14 @@ Always visible under the list, and read out by screen readers as it changes:
 - All results shown — "16 results".
 - Nothing found — "No matches for “xyz”".
 - Waiting — "Searching…" with a spinner; the previous results stay, dimmed.
-- Failed — "Couldn't load the results." in `danger` with a Try again button.
+- Failed — "Couldn't load the results." in `danger` with a Try again button; pressing it moves focus back to the search field.
 
 Translate every phrase with `strings` (German: "Zeige 50 von 1.240. Für mehr Ergebnisse suchen.", "Keine Treffer für „xyz“", "Suche läuft …", "Erneut versuchen", "Fertig", "Entfernen: …"). Or set it once for the whole shop with `configure({ strings: { combobox: { … } } })`.
 
 ## Keyboard and screen readers
 
 - The closed box is a button named by its label and current value ("Product, Linen shirt, blue, M"); with `multiple`, "3 selected: …".
-- The closed box opens with Enter, Space, ↓ or ↑ — or by typing, which opens it and starts the search with that letter.
+- The closed box opens with Enter, Space, ↓ or ↑ — or by typing, which opens it and starts the search with that letter. A box partly out of view scrolls into view first. If the page scrolls it away while the list is open, the list closes and focus goes back to the box.
 - Opening moves focus to the search field. ↑ ↓ move through the options (disabled ones are skipped; they wrap at the ends), Enter chooses, Escape closes and returns focus to the box. In the dropdown, Tab closes it and moves on to the next field; in the phone Dialog, Tab moves to Done.
 - Single: choosing closes the panel. Multiple: the panel stays open so people can pick several; Escape, a click outside, Tab (in the dropdown) or Done (in the phone Dialog) closes it.
 - Inside a Dialog, the first Escape closes the list and the second the dialog.

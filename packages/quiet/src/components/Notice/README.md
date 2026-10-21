@@ -43,4 +43,4 @@ Write a short title that says what's going on, one sentence of what to do, and a
 - **Optional:** `tone` (`info` | `success` | `warning` | `danger`, default `info`), `title`, `dismissible`, `icon`, `role` (`status` | `alert`; none by default).
 - **Events:** `@dismiss` (the × was pressed).
 - **Slots:** the default slot (the text), `#title` (in place of `title`), `#actions`.
-- **Translations:** `strings` — `dismiss` ("Dismiss") and `prefix` (`{ warning: 'Warning:', danger: 'Error:' }`); or once for the shop with `configure({ strings: { notice: … } })`.
+- **Translations:** `strings` — `dismiss` ("Dismiss") and `prefix` (`{ warning: 'Warning:', danger: 'Error:' }`, merged per tone, so `{ prefix: { warning: 'Achtung:' } }` keeps the danger prefix); or once for the shop with `configure({ strings: { notice: … } })`.
