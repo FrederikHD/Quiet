@@ -8,7 +8,7 @@
 #   3. the package is published with provenance, and a GitHub Release is created from the changelog section;
 #   4. the explorer is deployed to GitHub Pages, so the docs match what is on npm.
 # How to release: see "Releasing" in the root README. Publishing uses npm trusted publishing (OIDC): no token, npm
-# accepts this workflow because the package names it as its trusted publisher (set up on npmjs.com, see the README).
+# accepts this workflow because the package names it as its trusted publisher on npmjs.com.
 name: Release
 
 on:

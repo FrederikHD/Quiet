@@ -4,7 +4,7 @@ The head of a product's reviews: the average large, the stars, the count, and on
 
 ```vue
 <QReviewSummary
-  :average="4.3"
+  :average="4.4"
   :distribution="{ 5: 20, 4: 7, 3: 2, 2: 1, 1: 1 }"
   filterable
   :active="only"
@@ -23,8 +23,8 @@ The head of a product's reviews: the average large, the stars, the count, and on
 
 ## Keyboard and screen readers
 
-- The average is read as "4,3 out of 5"; the stars are hidden.
-- The bars are a list named "Reviews by rating". The visible level, bar and count are hidden; each row is read as "20 reviews — 5 stars".
+- The average is read as "4.4 out of 5" (the number follows the locale: "4,4" with `de-DE`); the stars are hidden.
+- The bars are a list named "Reviews by rating". The visible level, bar and count are hidden; each row is read as "5 stars, 20 reviews", with or without `filterable`.
 - With `filterable`, each row is a toggle button named by its (visually hidden) content, "5 stars, 20 reviews", with `aria-pressed` while active. Tab moves through the enabled rows; Enter or Space presses one. Levels without reviews are disabled.
 
 ## Built from
@@ -39,4 +39,4 @@ The counts per level, the filtering and the review list itself: a `<ul>` of Revi
 - **Optional:** `count` (default: the sum of `distribution`), `filterable`, `active` (the level being filtered on; default null).
 - **Events:** `@filter(stars)` (the level pressed, or null to show all again).
 - **Slots:** `#action` (under the bars: a "Write a review" Button).
-- **Translations:** `strings`, or once for the shop with `configure({ strings: { reviewSummary: … } })`: `outOf` ("out of 5"), `reviews(n)` ("31 reviews"), `filter(stars, n)` ("5 stars, 20 reviews"), `bars` ("Reviews by rating").
+- **Translations:** `strings`, or once for the shop with `configure({ strings: { reviewSummary: … } })`: `outOf` ("out of 5"), `reviews(n)` ("31 reviews"), `filter(stars, n)` ("5 stars, 20 reviews": the name of each row), `bars` ("Reviews by rating"). The level on its own ("5 stars") comes from the rating namespace's `stars(n)`, `configure({ strings: { rating: { stars } } })`, shared with Rating and RatingInput.

@@ -117,7 +117,7 @@ Show up to 100 rows at a time and page through the rest with Pagination. At that
 - It's a real `<table>` named by its caption. Each row's primary cell is its row header, so screen readers read the row's name with every cell. The table keeps its table roles in phone cards too.
 - **Tab** reaches, in order: the toolbar, the select-all checkbox, each sortable header (a button: Enter or Space sorts), then per row its checkbox, the primary link or button, any links or buttons in cells, and the row actions.
 - The sorted header has `aria-sort` ("ascending" / "descending").
-- When the table is wider than its frame, the scroll area becomes a focusable region named by the caption, so the arrow keys scroll it. A focused cell is kept clear of the pinned column and the sticky header.
+- When the table is wider than its frame, or taller than `maxHeight`, the scroll area becomes a focusable region named by the caption, so the arrow keys scroll it. A focused cell is kept clear of the pinned column and the sticky header.
 - A status region announces the selection ("3 selected", "All 1,240 selected") and "Loading…" while `loading`. Skeleton rows are hidden from screen readers.
 - The actions column's header is "Actions", visually hidden.
 

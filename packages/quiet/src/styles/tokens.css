@@ -57,10 +57,10 @@
 }
 :root {
   --space-1: 4px; /* Icon-to-label gaps, badge padding, tight inline spacing. */
-  --space-2: 8px; /* Gaps inside controls; between label and input; table cell vertical padding. */
-  --space-3: 12px; /* Table cell horizontal padding; gaps in back-office toolbars and filter bars. */
-  --space-4: 16px; /* Card padding, gaps between form fields, product-grid gap on mobile, mobile page gutter. */
-  --space-6: 24px; /* Back-office panel padding; product-grid gap on desktop. */
+  --space-2: 8px; /* Gaps inside controls; between label and input; table cell vertical padding in compact. */
+  --space-3: 12px; /* Table cell padding: vertical in comfortable, horizontal in compact; gap between form fields in compact; gaps in back-office toolbars and filter bars. */
+  --space-4: 16px; /* Table cell horizontal padding in comfortable; card and panel padding in compact; gap between form fields in comfortable; product-grid gap on mobile; mobile page gutter. */
+  --space-6: 24px; /* Card and panel padding in comfortable; product-grid gap on desktop. */
   --space-8: 32px; /* Between sections in the back office; desktop page gutter. */
   --space-16: 64px; /* Between storefront sections (hero, collections, featured products). */
   --radius-sm: 4px; /* Checkboxes, tags, table thumbnails. */

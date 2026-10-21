@@ -33,7 +33,7 @@ Triggers an action in place; use `secondary` by default and `primary` for the si
 - **Menu open:** set `expanded` on a button that opens a menu or popover (it sets `aria-expanded`); it holds its hover look while open, and secondary also gets an `ink` border. Also pass `aria-haspopup="menu"` and `aria-controls`. Add a chevron as `iconEnd`: Bulk actions ▾, Export ▾.
 - **Focus:** 2px `brand` outline, 2px offset, keyboard focus only.
 - **Disabled:** `surface-sunken` fill, `line` border and `ink-muted` text — the same as every disabled control (ghost stays transparent). Prefer explaining why nearby over leaving a disabled button unexplained.
-- **Loading:** set `loading` while an action is in flight. The label hides but keeps the width, a spinner shows, and the button is disabled with `aria-busy`. Keep the label — "Saving" reads better to screen readers than nothing.
+- **Loading:** set `loading` while an action is in flight. The label hides but keeps the width, a spinner shows, and the button is `aria-disabled` with `aria-busy`: it can't be pressed again, but it keeps focus. Keep the label — "Saving" reads better to screen readers than nothing.
 
 ## Writing it
 
@@ -45,7 +45,7 @@ Verb first, sentence case, two or three words: "Add to cart", "Save changes", "R
 
 - An icon-only button needs an `aria-label`; the component warns in the console when it's missing.
 - The button sets `aria-pressed` when `pressed` is used and `aria-expanded` when `expanded` is used; pass `aria-haspopup` and `aria-controls` yourself.
-- A loading button keeps its label for screen readers (it is only hidden visually), sets `aria-busy="true"` and is disabled, so it can't be clicked twice.
+- A loading button keeps its label for screen readers (it is only hidden visually), sets `aria-busy="true"` and `aria-disabled="true"`, so it can't be clicked twice. It isn't natively disabled, so a button pressed by keyboard keeps focus while it loads and Tab carries on from it.
 - The icons are `aria-hidden`; the label or `aria-label` names the button.
 - A disabled link-button (`href` + `disabled`) gets `role="link"`, `aria-disabled="true"` and `tabindex="-1"`: it can't be focused or followed and is still announced as a dimmed link.
 - Hover colours apply only on devices that can hover, so a tapped button on a phone never stays highlighted.

@@ -42,7 +42,7 @@ Call `toast()` from anywhere. A `QToaster` shows the toasts. AppShell includes o
 - **No focus moves:** a toast never takes focus, so people can keep working.
 - **Announcements:** toasts are read out politely, in a `status` region; errors are read immediately, in an `alert` region. Both regions exist before the first toast, so it's announced too. The toaster is a region named "Notifications"; icons are hidden.
 - **Inside dialogs:** a dialog doesn't make the toaster inert, so a toast shown while a dialog is open is still read.
-- **Undo by keyboard:** the toaster sits at the end of the page, so Tab reaches the action and the close button (named "Dismiss") after the page's other controls.
+- **Undo by keyboard:** the toaster sits at the end of the page, so Tab reaches the action and the close button (named "Dismiss") after the page's other controls. After Undo or × by keyboard, focus goes back to where it was before it entered the toaster.
 
 ## Writing it
 

@@ -25,13 +25,19 @@ It is to Checkbox what Field is to Input. You put `<QCheckbox>`es inside, and th
 
 ## A single checkbox
 
-"I accept the terms" or "Track inventory" is a CheckboxGroup **without a label** around one Checkbox. It keeps the hint, the error message and the summary link. With labels beside, it lines up with the other controls. If the group is `required`, the checkbox itself is marked required for screen readers.
+"I accept the terms" or "Track inventory" is a Checkbox on its own, not a group. `required` marks it as one that must be ticked, `error` shows the message under it, and an `id` links it from the Form's error summary (see Checkbox):
 
 ```vue
-<QCheckboxGroup id="terms" required :error="tried && !terms ? 'Accept the terms to place your order' : null">
-  <QCheckbox v-model="terms" value="yes" label="I accept the terms and the cancellation policy" />
-</QCheckboxGroup>
+<QCheckbox
+  id="terms"
+  v-model="terms"
+  required
+  :error="tried && !terms ? 'Accept the terms to place your order' : null"
+  label="I accept the terms and the cancellation policy"
+/>
 ```
+
+Keep CheckboxGroup for real sets of options.
 
 ## Layouts (`layout`)
 

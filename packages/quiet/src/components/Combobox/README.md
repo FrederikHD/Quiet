@@ -47,8 +47,8 @@ Translate every phrase with `strings` (German: "Zeige 50 von 1.240. Für mehr Er
 
 - The closed box is a button named by its label and current value ("Product, Linen shirt, blue, M"); with `multiple`, "3 selected: …".
 - The closed box opens with Enter, Space, ↓ or ↑ — or by typing, which opens it and starts the search with that letter.
-- Opening moves focus to the search field. ↑ ↓ move through the options (disabled ones are skipped; they wrap at the ends), Enter chooses, Escape closes and returns focus to the box, Tab moves on to the next field.
-- Single: choosing closes the panel. Multiple: the panel stays open so people can pick several; Escape, Done (in the phone Dialog), a click outside or Tab closes it.
+- Opening moves focus to the search field. ↑ ↓ move through the options (disabled ones are skipped; they wrap at the ends), Enter chooses, Escape closes and returns focus to the box. In the dropdown, Tab closes it and moves on to the next field; in the phone Dialog, Tab moves to Done.
+- Single: choosing closes the panel. Multiple: the panel stays open so people can pick several; Escape, a click outside, Tab (in the dropdown) or Done (in the phone Dialog) closes it.
 - Inside a Dialog, the first Escape closes the list and the second the dialog.
 - The search field is a combobox with a listbox (`aria-activedescendant`), the standard pattern screen readers know; with `multiple` the listbox is multi-selectable. Chosen options are marked selected, disabled ones unavailable.
 - The status line is a `role="status"` region and also describes the search field.

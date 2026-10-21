@@ -8,7 +8,7 @@ The back-office frame: navigation on the left, the page beside it.
 ## Anatomy
 
 1. **Skip link:** the first thing on the page. It's hidden until focused, and jumps straight to the content.
-2. **Brand:** the shop name (`brand`) in 17/24 semibold, at the top of the column, in the top bar and as the drawer's title. No logo yet — plain type, as in the brand book; the `#brand` slot takes richer content.
+2. **Brand:** the shop name (`brand`) in 17/24 semibold, at the top of the column, in the top bar and as the drawer's title. No logo yet — plain type, as in the brand book; the `#brand` slot takes richer content in the column and the top bar. The drawer's title is always the `brand` text, or "Menu" without it, so set `brand` even when you use the slot.
 3. **Navigation:** a Nav, in the `#nav` slot.
 4. **Nav footer:** the account and the store switcher (`#nav-footer`), pinned under the navigation. It's in the drawer too.
 5. **Main:** the page — usually a Page — in the default slot. It's the `main` landmark, and the skip link's target.

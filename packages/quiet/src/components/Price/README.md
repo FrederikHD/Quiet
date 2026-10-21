@@ -15,7 +15,7 @@ Shows an amount of money the same way everywhere — in product cards, on the pr
 
 - **Regular:** the amount in `price` (17/24 semibold), `ink`. Prices are never `brand`.
 - **On sale** (`compareAt` above `amount`): the new price in `sale`, the original after it in `small` `ink-muted`, struck through. `showSaving` adds a `sale` badge ("−25%").
-- **Sizes:** `small` (15/22) in cards, lists and the cart; `default` (17/24); `large` (`price-lg`, 28/32) on the product page.
+- **Sizes:** `small` (15/22) on product cards and cart lines; `default` (17/24) in lists and most other places; `large` (`price-lg`, 28/32) on the product page.
 - **`from`:** "from 29,00 €" when the variants have different prices.
 - **`unitPrice`:** the price per unit, required in Germany for goods sold by quantity, weight or volume ("4,98 € / 100 ml").
 - **`taxNote`:** "incl. VAT, plus shipping" under the price — `true` for the configured text, or your own text. For a link to the shipping costs, use the `#tax-note` slot:

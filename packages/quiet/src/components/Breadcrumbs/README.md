@@ -9,7 +9,7 @@ Shows where a page sits in the shop: Home › Women › Shirts › Linen shirt. 
 ## Behaviour
 
 - Each item is a link except the last, which is the current page (`aria-current="page"`) when it has no `href`. `null` and `false` items are skipped, so `cond && { … }` leaves one out.
-- `chevron-right` separators (16px), 13/18 type: links in `ink-muted`, the current page in `ink`. Long names end in "…"; the row wraps when it doesn't fit.
+- `chevron-right` separators (16px), 13/18 type: links in `ink-muted`, the current page in `ink`. The row wraps when it doesn't fit, so a long name first moves to a line of its own, and ends in "…" only when it is wider than the whole row.
 - **Narrow** (under 480px of its own width): only the parent, as "← Shirts" — on a phone that is the step people want, and the page title already names the current page.
 - It's a `nav` landmark named "Breadcrumb" (translate with `strings.label`, or once for the shop with `configure({ strings: { breadcrumbs: { label: 'Navigationspfad' } } })`).
 - Each click on a link emits `@navigate(item, event)`. For a client-side router, listen to it and call `event.preventDefault()`.

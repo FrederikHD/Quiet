@@ -17,7 +17,7 @@ The shop's search field with suggestions as you type: collections and products (
       })),
     },
   ]"
-  @select="go"
+  @select="(item) => go(`/products/${item.id}`)"
   @submit="(query) => go(`/search?q=${encodeURIComponent(query)}`)"
 />
 ```
@@ -57,7 +57,7 @@ Input (with its search icon and clear button), Icon.
 
 ## What you provide
 
-- **Optional:** `suggestions` (`{ id?, label, description?, image?, icon?, meta? }`, flat or in groups `{ label?, items }`; keep it to about eight, matched to the current text — leave it empty to search without suggestions), `searchOption` (default `true`), `inline`, `size` (`default` | `large`, default `default`), `label` (the hidden field name: "Search products"), `placeholder` (default "Search"), `autofocus`.
+- **Optional:** `suggestions` (`{ id?, label, description?, image?, icon?, meta? }`, flat or in groups `{ label?, items }`; keep it to about eight, matched to the current text — leave it empty to search without suggestions: while there is text the list then shows just the "Search for “…”" option, so Enter or a click searches), `searchOption` (default `true`), `inline`, `size` (`default` | `large`, default `default`), `label` (the hidden field name: "Search products"), `placeholder` (default "Search"), `autofocus`.
 - **v-model:** `v-model` (the text in the field).
 - **Events:** `@submit(query)` (Enter, the "Search for “…”" option or a form submit), `@select(item)` (a suggestion was chosen).
 - **Translations:** `strings` — `label` ("Search"), `placeholder` ("Search"), `clear` ("Clear search"), `searchFor` (`(q) => "Search for “q”"`), `count` (`(n) => "3 suggestions"`; "1 suggestion", "No suggestions"). Or set them once with `configure({ strings: { search: … } })`.

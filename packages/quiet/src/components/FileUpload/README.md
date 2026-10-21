@@ -10,7 +10,7 @@ Adds files by choosing them or dropping them onto the field. Use it for product 
 
 ## Variants
 
-- **Files** (default): a dashed drop zone with a slim "Choose files" button, then a list of the added files with their size and a remove ×. `:multiple="false"` makes it one file ("Choose a file"); a new file replaces the old one.
+- **Files** (default): a dashed drop zone with a slim "Choose a file" button, then the added file with its size and a remove ×. It takes one file by default; a new file replaces the old one. Set `multiple` for several ("Choose files"), shown as a list.
 - **`variant="images"`:** square thumbnails in a grid, then the drop zone with "Add images". The first image is marked "Main image": the one shown in lists and on cards. Images accept JPG, PNG, WebP and GIF unless you set `accept`.
 
 ## Order
