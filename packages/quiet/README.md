@@ -80,15 +80,18 @@ Tabs, Steps …), forms (Form, Field, Input, Select, Combobox, AddressFields, Fi
 DescriptionList, Metric), commerce (Price, ProductCard, Gallery, OrderSummary, Rating, ReviewSummary, Review), overlays
 (Popover, Dialog) and feedback (Badge, Tag, Notice, Toast, EmptyState).
 
-Also exported: `configure` and `useConfig` (locale, currency and translated strings), `money` and `fmt` (formatting),
-`toast` (notifications), `validateAddress`, `iconNames` and every prop and item type.
+Also exported: `QPageColumns` (Page's two columns inside a Form) and `QToaster` (where toasts show); `configure` and
+`useConfig` (locale, currency and translated strings); `money`, `fmt`, `currencySymbol` and `formatSize` (formatting);
+`toast` and `dismissToast` (notifications); `validateAddress`, `addressCountries` and `addressFormats` (addresses);
+`useFieldControl` (wires your own control into a Field); `useStickyPad` (for your own sticky bars); `icons` and
+`iconNames`; and every prop and item type.
 
 ## Translations
 
 Every built-in word can be translated once for the whole app, or per component with its `strings` prop:
 
 ```ts
-app.use(Quiet, { locale: 'de-DE', strings: { form: { optional: '(optional)' }, dialog: { close: 'Schließen' } } });
+app.use(Quiet, { locale: 'de-DE', strings: { form: { optional: 'freiwillig' }, dialog: { close: 'Schließen' } } });
 ```
 
 ## Tokens

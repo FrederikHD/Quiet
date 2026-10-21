@@ -7,7 +7,7 @@ Wraps one control with its label, an optional help tip, a visible hint and an er
 1. **Label** — `label` style, `ink`. Always present; `labelHidden` hides it visually only, for a search box whose purpose is obvious.
 2. **Marker** — asterisk or "(optional)", set by the Form's `markers` or the Field's own.
 3. **Help** — `help` puts a `help` icon after the label that opens a Popover tip. For background ("What is a SKU?"), never for something people need in order to answer. The button is 24px with a 16px `brand` icon (`brand-hover` on hover, `brand-tint` behind it while the tip is open) on every screen, with an invisible 40px touch area, so it never makes the label row taller; a long label wraps its own text and the icon stays on the line beside it.
-4. **Control** — exactly one control in the default slot: Input, Textarea, Select, Combobox or QuantityStepper, or a native control. Sets of checkboxes or radios use CheckboxGroup or RadioGroup instead, which are fields themselves.
+4. **Control** — exactly one control in the default slot: Input, Textarea, Select, Combobox, QuantityStepper or FileUpload, or a native control. Sets of checkboxes or radios use CheckboxGroup or RadioGroup instead, which are fields themselves.
 5. **Message** — `error`, `warning` or `success`, with its icon, under the control. Only one shows; error wins.
 6. **Hint** — `hint`, `ink-muted`, under the message: the format, a limit, where the value appears. Visible, so nobody has to open anything to find it.
 
@@ -42,7 +42,7 @@ Fields in a row share their row lines: labels line up at the bottom and controls
 
 ## Width
 
-`width` limits the control to the length of the expected answer — `xs` (6rem) quantity or house number, `s` (10rem) price or postcode, `m` (20rem) name or SKU, `l` (30rem) email or URL. A field the length of its answer is quicker to fill in; leave long text full width.
+`width` limits the control to the length of the expected answer — `xs` (6rem) quantity or house number, `s` (10rem) price or postcode, `m` (20rem) name or SKU, `l` (30rem) email or URL. A field the length of its answer is quicker to fill in; leave long text full width. `width` doesn't apply to QuantityStepper, which sizes itself.
 
 ## Keyboard and screen readers
 

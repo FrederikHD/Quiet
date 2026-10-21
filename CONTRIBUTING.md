@@ -6,7 +6,7 @@ component.
 
 ## Setup
 
-You need Node 22 and npm. Docker is needed only for the screenshot tests.
+You need npm and Node 22, the version CI runs on. The root `package.json` allows Node 20 or later, but only 22 is tested. Docker is needed only for the screenshot tests.
 
 ```sh
 npm install
@@ -68,8 +68,8 @@ matching image by itself. If the `visual` job fails on that PR, check out its br
 
 ## Releasing
 
-Releases publish `@frederikhd/quiet` to npm. The [README](README.md#releasing) has the details, including the
-one-time trusted publishing setup on npmjs.com.
+Releases publish `@frederikhd/quiet` to npm through npm trusted publishing, so there is no npm token. The
+[README](README.md#releasing) has the details.
 
 1. In a PR into `develop`, set the version in `packages/quiet/package.json` and turn `## [Unreleased]` in the
    changelog into `## [x.y.z] - YYYY-MM-DD`. Before 1.0, a release with breaking changes bumps the minor version

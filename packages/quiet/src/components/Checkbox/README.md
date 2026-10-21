@@ -77,5 +77,6 @@ Use `<Table selectable>`: it adds the checkbox column, "Select all" with the ind
 - **Inside a CheckboxGroup:** `value` (identifies the option in the group's array); with `layout="swatches"` or `"buttons"` also `swatch`, `image`, `soldOut`.
 - **v-model:** `v-model` (a boolean, on its own; inside a CheckboxGroup the group holds the value).
 - **Slots:** `#label`, `#description`, `#meta`.
+- **Translations:** the "sold out" word for tiles, once with `configure({ strings: { choice: { soldOut: 'ausverkauft' } } })`.
 
 The component ref exposes `focus()` and `input` (the `<input>`); `class` and `style` go on the row.

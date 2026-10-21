@@ -31,7 +31,7 @@ Every component sizes itself from the density variables in Quiet's stylesheet (`
 | `--ctl-gap` icon-to-label gap        | `space-2` 8           | `space-1` 4           |
 | `--row-h` table row                  | `row-comfortable` 56  | `row-dense` 40        |
 | `--cell-pad-x` / `--cell-pad-y`      | `space-4` / `space-3` | `space-3` / `space-2` |
-| `--cell-text` table text             | 15                    | 13 (`table-text`)     |
+| `--cell-text` table text             | `control-text-md` 15  | `control-text-sm` 13  |
 | `--field-gap` between form fields    | `space-4` 16          | `space-3` 12          |
 | `--panel-pad` card and panel padding | `space-6` 24          | `space-4` 16          |
 | `--stack-gap` between stacked items  | `space-4` 16          | `space-2` 8           |
@@ -53,9 +53,9 @@ Every component follows the same rules, so they look and behave alike next to ea
 - **`slim`** is a fixed 28px, desktop only (it grows back to the density size under 640px). Use it for filter bars, table toolbars, rows and pagination.
 - **`large`** is a fixed 48px, for the storefront.
 - The same three sizes apply to Button, Input, Select and Combobox. Checkbox and Radio rows, table rows and list options follow the density.
-- Controls also take `size` as `slim · default · large` (QuantityStepper and SearchBox: `default · large`). Things you read rather than operate — Price, Rating, Metric, EmptyState — size as `small · default · large` instead, because they're type sizes, not control heights.
+- Controls also take `size` as `slim · default · large` (QuantityStepper and SearchBox: `default · large`). Things you read rather than operate size by type instead of control height: Price and Rating as `small · default · large`, Metric and EmptyState as `default · small`.
 
-**Common props.** Every component takes `class` and `style` (on its outer element). Every component with built-in words takes `strings` for them, which can also be set once for the whole shop with `configure({ strings })`. Headings inside a component are `h2`–`h6` via `headingLevel`. A field-like component takes `label`, `labelHidden`, `required`, `hint`, `error`, `disabled` and `id`, and holds its value in `v-model`. Things that open take `v-model:open` (Dialog also emits `@close`).
+**Common props.** Every component takes `class` and `style` (on its outer element). Every component with built-in words takes `strings` for them, which can also be set once for the whole shop with `configure({ strings })`. Headings inside a component are `h2`–`h6` via `headingLevel`; EmptyState also allows `1`, for an empty state that is the whole page (a 404). A field-like component takes `label`, `labelHidden`, `required`, `hint`, `error`, `disabled` and `id`, and holds its value in `v-model`. Things that open take `v-model:open` (Dialog also emits `@close`).
 
 **Built from each other.** Bigger components are made of the smaller ones, never re-drawn: a search box is an Input, a folded order summary a Disclosure, a price filter two Fields, every removable chip a Tag. Each component's page lists what it's built from.
 
@@ -91,7 +91,7 @@ Every component follows the same rules, so they look and behave alike next to ea
 **Props.**
 
 - **Values:** `v-model` everywhere — Input, Select and Textarea hold a string, Checkbox a boolean, CheckboxGroup an array, RadioGroup and Combobox the chosen value. Leave `v-model` out and the component keeps its own state (start it with `defaultValue` where offered). Other values have named models: `v-model:sort`, `v-model:selected`, `v-model:page`, `v-model:open`.
-- **Errors:** controls take `invalid`; fields and groups take `error` / `warning` / `success` and pass it on to their controls.
+- **Errors:** controls take `invalid`; fields and groups take `error` / `warning` / `success` and pass it on to their controls. A Checkbox on its own ("I accept the terms") takes `error` and `required` itself, like a field.
 - **Hidden labels:** `labelHidden` (Field, groups, Checkbox) and `captionHidden` (Table) keep the label for screen readers only.
 - **Disabled and read-only:** `disabled` and `readonly` on a field or group reach every control inside.
 - **Ids:** a field's `id` lands on its control, and a group's on its first option or control. Error-summary links use it.
@@ -111,7 +111,7 @@ Every component follows the same rules, so they look and behave alike next to ea
   - Field puts labels beside at 400 / 520px.
   - FieldGroup stacks by measuring its own width.
   - FormActions stacks under 480px; a sticky bar stays one row.
-  - Table switches to cards under 640px (`cardsBelow` moves it for a table of a few columns).
+  - Table, with `mobile="cards"`, switches to cards under 640px of its own width (`cardsBelow` moves it for a table of a few columns); otherwise it scrolls sideways.
   - Pagination drops its extras step by step under 560, 460, 400 and 280px.
   - Tabs scroll sideways when they don't fit, never wrap.
   - Page puts its side column beside the main one from 900px.
@@ -194,7 +194,7 @@ The Badge component: pill (`radius-full`), `label` type, tint background with th
 
 - **Layout:** `surface` ground, `space-16` between sections, max content width 1280px. Pages: Home (hero on `surface-sunken`, collection tiles, best rated, new in, customer quotes, perks), collections, search results, product pages, checkout, confirmation, information pages (720px reading width, FAQs as Disclosures) and a not-found page (EmptyState with a way back).
 - **Product cards:** image on `surface-sunken` at `radius-md` (4:5 portrait or 1:1, consistent per catalogue), then name in `body`, price in `price`. No border; the image is the card.
-- **Prices:** regular price in `price` `ink`. On sale: the new price in `sale`, the original after it in `small` `ink-muted` struck through. A Sale badge is a `sale` pill with white text.
+- **Prices:** regular price in `price` `ink`. On sale: the new price in `sale`, the original after it in `small` `ink-muted` struck through. A Sale badge is a `sale` pill with `on-solid` text.
 - **Product page:** price in `price-lg`; Add to cart is a full-width `brand` button at `control-lg`.
 - **Ratings:** stars in `rating`, the number and review count in `small` `ink`.
 - **Mobile:** every tap target at least `control-lg` (48px); cart opens as a sheet on `overlay`.

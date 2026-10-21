@@ -6,7 +6,7 @@ A panel that groups related content on a page: a form section ("Details", "Inven
 
 - **Surface:** `surface-raised`, a `line` border, `radius-lg`, padded by `--panel-pad` (24px, 16px compact and on phones).
 - **Title** (optional, `title` or the `#title` slot): `heading` type (17/24 semibold) as an `h2` (`headingLevel` to change it). It names the card for screen readers.
-- **Description** (optional, `description` or the `#description` slot): one line in 13px `ink-muted` under the title.
+- **Description** (optional, `description` or the `#description` slot): one line in 13px `ink-muted` under the title, or on its own when there is no title.
 - **Actions** (optional, `#actions`): slim ghost Buttons or a link on the right, lined up with the title: "Edit", "Adjust", "View all".
 - **Body:** the content, with `--field-gap` (16px, 12px compact) between direct children.
 - **Footer** (optional, `#footer`): a `line` rule above, for the card's own buttons ("Save note").
