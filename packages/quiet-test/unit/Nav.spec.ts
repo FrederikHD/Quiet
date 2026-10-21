@@ -125,3 +125,11 @@ describe('QNav', () => {
     configure({ strings: { nav: { label: 'Main' } } });
   });
 });
+
+describe('QNav (audit fixes)', () => {
+  it('reads the count inside the label, with no stray space', () => {
+    const w = mount(QNav, { props: { sections: sections('home') } });
+    const label = w.get('a[href="#orders"] .q-nav__label');
+    expect(label.element.textContent).toBe('Orders, 12 to fulfil');
+  });
+});

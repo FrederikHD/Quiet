@@ -165,3 +165,16 @@ describe('QCheckboxGroup', () => {
     expect(w.get('.q-choicegroup').classes()).toContain('q-field--side');
   });
 });
+
+describe('QCheckboxGroup (audit fixes)', () => {
+  it('has no group role without a name', () => {
+    const lone = mount(QCheckboxGroup, {
+      slots: { default: () => [h(QCheckbox, { value: 'tos', label: 'I agree' })] },
+    });
+    expect(lone.attributes('role')).toBeUndefined();
+    const named = mount(QCheckboxGroup, { props: { ariaLabel: 'Channels' }, slots: { default: options } });
+    expect(named.attributes('role')).toBe('group');
+    const byId = mount(QCheckboxGroup, { attrs: { 'aria-labelledby': 'h' }, slots: { default: options } });
+    expect(byId.attributes('role')).toBe('group');
+  });
+});

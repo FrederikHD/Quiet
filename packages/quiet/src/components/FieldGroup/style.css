@@ -42,6 +42,20 @@
   .q-fgroup__row > .q-field > .q-field__layout > .q-field__labelcol {
     align-self: end;
   }
+  /* A part with its label hidden: the control still sits on the controls' line. */
+  .q-fgroup__row > .q-field--label-hidden > .q-field__layout > .q-field__controlcol {
+    grid-row: 2;
+  }
+  /* Every part's label hidden: no label line, and no gap kept for it. */
+  .q-fgroup__row:not(:has(> .q-field:not(.q-field--label-hidden))) > .q-field {
+    grid-row: span 1;
+  }
+  .q-fgroup__row:not(:has(> .q-field:not(.q-field--label-hidden)))
+    > .q-field
+    > .q-field__layout
+    > .q-field__controlcol {
+    grid-row: auto;
+  }
 }
 /* Connected: the parts join into one control — no gap, one shared 1px border between parts, only the outer corners rounded.
    The hovered, focused or invalid part is drawn on top so its border and ring are never hidden. Stacked rows come apart. */

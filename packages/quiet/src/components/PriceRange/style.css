@@ -48,6 +48,10 @@
   -webkit-appearance: none;
   appearance: none;
 }
+/* Both handles in one spot in the right half: the lower one on top, so it can be dragged away. */
+.q-range__thumb.is-top {
+  z-index: 1;
+}
 .q-range__thumb::-webkit-slider-runnable-track {
   background: none;
   border: 0;

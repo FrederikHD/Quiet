@@ -69,8 +69,12 @@ const isReadonly = computed(() => props.readonly || !!field?.value.readOnly);
 const isInvalid = computed(
   () => props.invalid || !!field?.value.invalid || attrs['aria-invalid'] === true || attrs['aria-invalid'] === 'true',
 );
+// The largest value on the step grid (min + n × step) that max allows: 9 for min 1, step 2, max 10.
+const top = computed(() =>
+  props.max >= props.min ? props.min + Math.floor((props.max - props.min) / props.step) * props.step : props.min,
+);
 const canDown = computed(() => !isDisabled.value && !isReadonly.value && value.value > props.min);
-const canUp = computed(() => !isDisabled.value && !isReadonly.value && value.value < props.max);
+const canUp = computed(() => !isDisabled.value && !isReadonly.value && value.value < top.value);
 
 if (!controlId.value && !attrs['aria-label'] && !attrs['aria-labelledby']) {
   warnOnce('stepper-label', 'QuantityStepper: wrap it in a Field, or pass aria-label ("Quantity of Linen shirt").');
@@ -79,7 +83,7 @@ if (!controlId.value && !attrs['aria-label'] && !attrs['aria-labelledby']) {
 function clamp(n: number) {
   if (Number.isNaN(n)) return value.value;
   const snapped = Math.round((n - props.min) / props.step) * props.step + props.min;
-  return Math.min(props.max, Math.max(props.min, snapped));
+  return Math.min(top.value, Math.max(props.min, snapped));
 }
 function commit(n: number) {
   const next = clamp(n);
@@ -93,7 +97,7 @@ function bump(d: number) {
 function onKeyDown(e: KeyboardEvent) {
   if (e.defaultPrevented || isReadonly.value || isDisabled.value) return;
   const base = draft.value ? parseInt(draft.value, 10) : value.value;
-  const { step, min, max } = props;
+  const { step, min } = props;
   const to =
     e.key === 'ArrowUp'
       ? base + step
@@ -106,7 +110,7 @@ function onKeyDown(e: KeyboardEvent) {
             : e.key === 'Home'
               ? min
               : e.key === 'End'
-                ? max
+                ? top.value
                 : null;
   if (to != null) {
     e.preventDefault();

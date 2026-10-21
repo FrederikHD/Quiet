@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { currencySymbol, money, useStrings } from '../../config';
+import { currencySymbol, money, useConfig, useStrings } from '../../config';
 import { useQuietId } from '../../composables/useQuietId';
 import QField from '../Field/QField.vue';
 import QFieldGroup from '../FieldGroup/QFieldGroup.vue';
@@ -70,11 +70,28 @@ function commitSlide() {
   moved = false;
   emit('commit', [lo.value, hi.value]);
 }
+// A typed price in the shop's locale: "1.000,50" in de-DE, "1,000.50" in en-US. The locale's group separator
+// counts as one only before three digits; otherwise ("42,4" typed in en) it is taken as the decimal point.
+const config = useConfig();
+function parseLocal(raw: string) {
+  const parts = new Intl.NumberFormat(config.locale).formatToParts(11111.1);
+  const group = parts.find((p) => p.type === 'group')?.value ?? '';
+  const decimal = parts.find((p) => p.type === 'decimal')?.value ?? '.';
+  let t = raw.trim();
+  if (group) {
+    const esc = group.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    t = t
+      .replace(new RegExp(`${esc}(?=\\d{3}(?!\\d))`, 'g'), '')
+      .split(group)
+      .join('.');
+  }
+  return parseFloat(t.split(decimal).join('.'));
+}
 function commitField(which: 0 | 1) {
   const raw = draft.value[which];
   draft.value = which === 0 ? [null, draft.value[1]] : [draft.value[0], null];
   if (raw == null) return;
-  let n = parseFloat(raw.replace(',', '.'));
+  let n = parseLocal(raw);
   if (Number.isNaN(n)) return;
   n = Math.round(n / props.step) * props.step;
   if (which === 0) emitValue(Math.max(props.min, Math.min(n, hi.value)), hi.value, true);
@@ -89,11 +106,20 @@ function onDraft(which: 0 | 1, v: unknown) {
 // moves nothing doesn't refilter.
 let moved = false;
 function onSlide(which: 0 | 1, e: Event) {
+  const input = e.target as HTMLInputElement;
+  const n = +input.value;
+  const v = which === 0 ? Math.min(n, hi.value) : Math.max(n, lo.value);
+  // Pushed against the other handle: stay there (the native input would pass it).
+  if (v !== n) input.value = String(v);
+  // Nothing changed (an arrow key against the other handle): no update and no second commit.
+  if (v === (which === 0 ? lo.value : hi.value)) return;
   moved = true;
-  const n = +(e.target as HTMLInputElement).value;
-  if (which === 0) emitValue(Math.min(n, hi.value), hi.value);
-  else emitValue(lo.value, Math.max(n, lo.value));
+  if (which === 0) emitValue(v, hi.value);
+  else emitValue(lo.value, v);
 }
+// Both handles in one spot: the one on top is the one that can move away. In the right half that's the lower one
+// (at the max end the upper one can't go anywhere).
+const lowerOnTop = computed(() => lo.value === hi.value && pct(lo.value) > 50);
 const fieldValue = (which: 0 | 1) => draft.value[which] ?? String(which === 0 ? lo.value : hi.value);
 </script>
 
@@ -112,7 +138,7 @@ const fieldValue = (which: 0 | 1) => draft.value[which] ?? String(which === 0 ? 
         v-for="which in [0, 1] as const"
         :key="which"
         type="range"
-        class="q-range__thumb"
+        :class="['q-range__thumb', which === 0 && lowerOnTop && 'is-top']"
         :min="min"
         :max="max"
         :step="step"

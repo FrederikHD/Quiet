@@ -133,3 +133,14 @@ describe('QSelect', () => {
     w.unmount();
   });
 });
+
+describe('QSelect (audit fixes)', () => {
+  it('sizes to the longest <option> given in the default slot', async () => {
+    const w = mount(QSelect, {
+      attrs: { 'aria-label': 'Size' },
+      slots: { default: () => [h('option', { value: 's' }, 'Small'), h('option', { value: 'xl' }, 'Extra large')] },
+    });
+    await nextTick();
+    expect(w.get('.q-select__sizer').text()).toBe('Extra large');
+  });
+});

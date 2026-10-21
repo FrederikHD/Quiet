@@ -1,6 +1,7 @@
 /* RatingInput: five 28px stars in 40px targets (32px in 48px on phones), hover previews, the word for the level beside them. */
 .q-rinput__row {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0;
   margin-left: -6px;
@@ -12,6 +13,7 @@
   justify-content: center;
   width: 40px;
   height: 40px;
+  flex: none;
   cursor: pointer;
   color: var(--line-strong);
 }
@@ -72,6 +74,12 @@
   .q-rinput__star svg {
     width: 32px;
     height: 32px;
+  }
+  /* Five 48px targets fill a phone: the word goes on its own line under the stars. */
+  .q-rinput__word {
+    flex-basis: 100%;
+    min-width: 0;
+    margin-left: 6px;
   }
 }
 @media (forced-colors: active) {

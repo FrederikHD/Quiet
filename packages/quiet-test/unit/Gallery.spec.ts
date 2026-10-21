@@ -1,6 +1,6 @@
 import { enableAutoUnmount, flushPromises, mount } from '@vue/test-utils';
 import { QGallery } from '@frederikhd/quiet';
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 enableAutoUnmount(afterEach);
 const images = [0, 1, 2].map((i) => ({ src: `s${i}.jpg`, alt: `Linen shirt, view ${i + 1}`, thumb: `t${i}.jpg` }));
@@ -93,5 +93,38 @@ describe('QGallery', () => {
     const w = gallery({ index: 2 });
     await w.setProps({ images: images.map((im) => ({ ...im, src: `x${im.src}` })) } as never);
     expect(w.emitted('update:index')!.at(-1)).toEqual([0]);
+  });
+});
+
+describe('QGallery (audit fixes)', () => {
+  it('scrolls the track when v-model:index is set from outside', async () => {
+    const spy = vi.spyOn(HTMLElement.prototype, 'clientWidth', 'get').mockReturnValue(300);
+    const scrolls: unknown[] = [];
+    const orig = HTMLElement.prototype.scrollTo;
+    HTMLElement.prototype.scrollTo = function (o?: unknown) {
+      scrolls.push(o);
+    } as typeof HTMLElement.prototype.scrollTo;
+    try {
+      const w = gallery({ index: 0 });
+      await w.setProps({ index: 2 } as never);
+      expect(scrolls.at(-1)).toMatchObject({ left: 600 });
+    } finally {
+      HTMLElement.prototype.scrollTo = orig;
+      spy.mockRestore();
+    }
+  });
+
+  it('keeps the square aspect on the empty placeholder', () => {
+    const w = gallery({ images: [], aspect: 'square' });
+    expect(w.classes()).toContain('q-gallery--square');
+  });
+
+  it('hands focus to the other arrow when the focused one reaches the end', async () => {
+    const w = gallery({ index: 1 });
+    const next = w.get<HTMLButtonElement>('.q-gallery__nav--next');
+    next.element.focus();
+    await next.trigger('click');
+    expect(next.attributes('disabled')).toBeDefined();
+    expect(document.activeElement).toBe(w.get('.q-gallery__nav--prev').element);
   });
 });

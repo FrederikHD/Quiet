@@ -171,13 +171,12 @@ defineExpose({ textarea: el, focus: () => el.value?.focus() });
       @input="model = ($event.target as HTMLTextAreaElement).value"
       @focus="grow"
     />
-    <span
-      v-if="hasCount"
-      :id="counterId"
-      :class="['q-textarea__count', near && 'is-near']"
-      :aria-live="near ? 'polite' : 'off'"
-    >
+    <span v-if="hasCount" :id="counterId" :class="['q-textarea__count', near && 'is-near']">
       {{ near ? strings.left(Math.max(0, left)) : strings.count(length, maxlength!) }}
     </span>
+    <!-- Always live (a region that turns live in the same update as its text may not be read): empty until near the limit. -->
+    <span v-if="hasCount" class="q-visually-hidden q-textarea__live" aria-live="polite">{{
+      near ? strings.left(Math.max(0, left)) : ''
+    }}</span>
   </span>
 </template>

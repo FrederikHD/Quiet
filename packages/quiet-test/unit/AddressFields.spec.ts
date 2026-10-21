@@ -142,3 +142,26 @@ describe('validateAddress', () => {
     expect(r).toEqual({ errors: {}, list: [], valid: true });
   });
 });
+
+describe('QAddressFields (audit fixes)', () => {
+  it('needs at least six digits in a phone number', () => {
+    const base = {
+      country: 'DE',
+      firstName: 'A',
+      lastName: 'B',
+      line1: 'Hauptstr. 1',
+      city: 'Berlin',
+      postalCode: '10115',
+    };
+    expect(validateAddress({ ...base, phone: '------' }).errors.phone).toBeDefined();
+    expect(validateAddress({ ...base, phone: '(  ) / -' }).errors.phone).toBeDefined();
+    expect(validateAddress({ ...base, phone: '+49 30 123456' }).errors.phone).toBeUndefined();
+  });
+
+  it('shows "Choose a country" in an empty country select by default', () => {
+    const w = mount(QAddressFields, { props: { modelValue: {} } });
+    expect(w.get('select option[value=""]').text()).toBe('Choose a country');
+    const own = mount(QAddressFields, { props: { modelValue: {}, countryPlaceholder: 'Land wählen' } });
+    expect(own.get('select option[value=""]').text()).toBe('Land wählen');
+  });
+});

@@ -28,7 +28,7 @@ export interface AddressFieldsProps {
   fields?: AddressFieldOptions;
   /** The countries you deliver to. Default: the 13 countries in addressCountries. */
   countries?: { value: string; label: string }[];
-  /** Shown in the country select while none is chosen, e.g. "Choose a country". No default. */
+  /** Shown in the country select while none is chosen. Default "Choose a country" (strings.chooseCountry). */
   countryPlaceholder?: string;
   /** Hint under the phone field. Default "Only used if the courier needs to reach you"; null for none. */
   phoneHint?: string | null;
@@ -95,7 +95,7 @@ function part(key: AddressFieldKey, width?: 'xs' | 's' | 'm' | 'l') {
     disabled: props.disabled,
     autocompletePrefix: autocompletePrefix.value,
     countries: props.countries,
-    countryPlaceholder: props.countryPlaceholder,
+    countryPlaceholder: props.countryPlaceholder ?? strings.value.chooseCountry,
     onChange: set,
   };
 }

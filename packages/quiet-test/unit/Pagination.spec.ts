@@ -146,3 +146,58 @@ describe('QPagination', () => {
     expect(w.get('.q-pager__next').attributes('aria-label')).toBe('Nächste Seite');
   });
 });
+
+describe('QPagination (audit fixes)', () => {
+  it('leaves modified clicks on links to the browser', async () => {
+    const w = pager({ page: 2, hrefFor: (n: number) => `?page=${n}` });
+    const next = w.get('a.q-pager__next');
+    for (const mod of [{ ctrlKey: true }, { metaKey: true }, { shiftKey: true }, { altKey: true }, { button: 1 }]) {
+      const e = new MouseEvent('click', { bubbles: true, cancelable: true, ...mod });
+      next.element.dispatchEvent(e);
+      expect(e.defaultPrevented).toBe(false);
+    }
+    expect(w.emitted('update:page')).toBeUndefined();
+    await next.trigger('click');
+    expect(w.emitted('update:page')![0]).toEqual([3]);
+  });
+
+  it('keeps the first visible row when the page size changes, and writes the page back', async () => {
+    const w = pager({ page: 3, pageSize: 50, pageSizeOptions: [25, 50, 100] });
+    await w.get('select').setValue('100');
+    expect(w.emitted('update:pageSize')!.at(-1)).toEqual([100]);
+    // Rows 101–150 were shown: 101 is on page 2 of 100.
+    expect(w.emitted('update:page')!.at(-1)).toEqual([2]);
+    const end = pager({ page: 25, pageSize: 50, pageSizeOptions: [25, 50, 100] });
+    await end.get('select').setValue('100');
+    expect(end.emitted('update:page')!.at(-1)).toEqual([13]);
+  });
+
+  it('keeps the focused control focusable while disabled (simple variant)', async () => {
+    const w = pager({ page: 2 });
+    const next = w.get<HTMLButtonElement>('.q-pager__next');
+    next.element.focus();
+    await w.setProps({ disabled: true });
+    expect(next.attributes('disabled')).toBeUndefined();
+    expect(next.attributes('aria-disabled')).toBe('true');
+    expect(w.get('.q-pager__prev').attributes('disabled')).toBeDefined();
+    expect(document.activeElement).toBe(next.element);
+    await next.trigger('click');
+    expect(w.emitted('update:page')).toBeUndefined();
+    await w.setProps({ disabled: false });
+    expect(next.attributes('aria-disabled')).toBeUndefined();
+    expect(next.attributes('disabled')).toBeUndefined();
+  });
+
+  it('finds a focusable control when the page changes while loading', async () => {
+    const w = pager({ variant: 'compact', page: 24 });
+    const next = w.get<HTMLButtonElement>('.q-pager__next');
+    next.element.focus();
+    await next.trigger('click');
+    await w.setProps({ disabled: true });
+    await nextTick();
+    await nextTick();
+    await nextTick();
+    expect(document.activeElement).toBe(w.get('.q-pager__prev').element);
+    expect(w.get('.q-pager__prev').attributes('aria-disabled')).toBe('true');
+  });
+});

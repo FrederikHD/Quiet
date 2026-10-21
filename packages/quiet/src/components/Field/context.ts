@@ -1,7 +1,7 @@
 // How Form, Field, FieldGroup and the choice groups talk to what is inside them.
 //
 //   Form ── FORM_KEY ──▶ every Field / group (label placement, markers, strings, whether the summary shows)
-//   FieldGroup ── GROUP_KEY ──▶ its Fields (the group's message ids, invalid and disabled)
+//   FieldGroup ── GROUP_KEY ──▶ its Fields (the group's message ids, invalid, disabled and required)
 //   Field ── FIELD_CONTROL_KEY ──▶ its one control (id, aria-describedby, required, disabled, invalid …)
 //
 // Controls read FIELD_CONTROL_KEY through useFieldControl(); a component that renders controls of its own
@@ -49,6 +49,8 @@ export interface GroupContext {
   describedBy?: string;
   invalid: boolean;
   disabled: boolean;
+  /** The group is required: every control in it gets aria-required. */
+  required?: boolean;
 }
 export const GROUP_KEY: InjectionKey<ComputedRef<GroupContext> | null> = Symbol('quiet-field-group');
 

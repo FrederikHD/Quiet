@@ -28,11 +28,16 @@ const expanded = computed(() => !!kids.value && (props.item.expanded ?? within(p
       @click="emit('navigate', item, $event)"
     >
       <span v-if="depth === 0 && item.icon" class="q-nav__icon" aria-hidden="true"><QIcon :name="item.icon" /></span>
-      <span class="q-nav__label">{{ item.label }}</span>
-      <template v-if="item.badge != null">
-        <span class="q-nav__badge" :aria-hidden="item.badgeLabel ? 'true' : undefined">{{ item.badge }}</span>
-        <span v-if="item.badgeLabel" class="q-visually-hidden">, {{ item.badgeLabel }}</span>
-      </template>
+      <!-- The spoken count sits inside the label: as a flex item of its own, browsers read "Orders , 12 to fulfil". -->
+      <span class="q-nav__label"
+        >{{ item.label
+        }}<span v-if="item.badge != null && item.badgeLabel" class="q-visually-hidden"
+          >, {{ item.badgeLabel }}</span
+        ></span
+      >
+      <span v-if="item.badge != null" class="q-nav__badge" :aria-hidden="item.badgeLabel ? 'true' : undefined">{{
+        item.badge
+      }}</span>
     </component>
     <ul v-if="expanded" class="q-nav__list q-nav__list--sub">
       <QNavItem

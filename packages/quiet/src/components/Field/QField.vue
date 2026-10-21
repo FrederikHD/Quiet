@@ -68,7 +68,8 @@ const control = computed<FieldControlContext>(() => ({
   id: controlId.value,
   // The field's own message and hint first, then the group's (read with every field of the group).
   describedBy: joinIds(status.value[0] && msgId.value, hasHint.value && hintId.value, group?.value.describedBy),
-  required: props.required,
+  // A required group makes its parts required too (aria-required), though only the group shows the marker.
+  required: props.required || !!group?.value.required,
   disabled: isDisabled.value,
   readOnly: props.readonly,
   invalid: isInvalid.value,

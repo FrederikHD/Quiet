@@ -188,7 +188,8 @@ export function validateAddress(
     else if (val && p.key === 'postalCode' && fmt.postal && !fmt.postal.test(val))
       msg = strings.badPostal(label, fmt.example);
     else if (val && p.key === 'line1' && fmt.number && !/\d/.test(val)) msg = strings.noNumber;
-    else if (val && p.key === 'phone' && !/^\+?[\d\s()/-]{6,}$/.test(val)) msg = strings.badPhone;
+    else if (val && p.key === 'phone' && !(/^\+?[\d\s()/-]{6,}$/.test(val) && /(\d\D*){6}/.test(val)))
+      msg = strings.badPhone;
     if (msg) {
       errors[p.key] = msg;
       list.push({ id: `${prefix}-${p.key}`, message: msg });

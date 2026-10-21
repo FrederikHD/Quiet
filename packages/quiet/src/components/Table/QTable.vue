@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="Row extends Record<string, any>">
-import { computed, getCurrentInstance, ref, useSlots, useModel } from 'vue';
+import { computed, getCurrentInstance, nextTick, ref, useSlots, useModel, watch } from 'vue';
 import { fmt, useStrings } from '../../config';
 import { useQuietId } from '../../composables/useQuietId';
 import { useResizeObserver } from '../../composables/useResizeObserver';
@@ -236,7 +236,7 @@ const width = ref<number | null>(null);
 useResizeObserver(root, () => (width.value = root.value?.clientWidth ?? null));
 const cards = computed(() => props.mobile === 'cards' && width.value != null && width.value < props.cardsBelow);
 
-// Horizontal scroll: is there any? Then the region takes keyboard focus (to scroll) and the pinned column gets an edge.
+// Scroll: is there any? Then the region takes keyboard focus (to scroll) and the pinned column gets an edge.
 const scroller = ref<HTMLElement | null>(null);
 const overflowing = ref(false);
 const scrolled = ref(false);
@@ -245,7 +245,8 @@ useResizeObserver(
   () => {
     const el = scroller.value;
     if (!el) return;
-    overflowing.value = el.scrollWidth > el.clientWidth + 1;
+    // Either way: a maxHeight table that only scrolls up and down needs the keyboard too.
+    overflowing.value = el.scrollWidth > el.clientWidth + 1 || el.scrollHeight > el.clientHeight + 1;
     scrolled.value = el.scrollLeft > 0;
     // Keep a focused cell clear of the pinned column and of the sticky header row.
     let w = 0;
@@ -303,6 +304,16 @@ function onMobileSort(v: string | null | undefined) {
   const [key, direction] = String(v ?? '').split(':');
   if (key) sortState.value = { key, direction: direction === 'desc' ? 'desc' : 'asc' };
 }
+// The bulk bar goes away with the last selected row ("Clear selection", or an action that clears): if focus was
+// in it, move it to select all rather than losing it to the page.
+const bulk = ref<HTMLElement | null>(null);
+watch(count, (n) => {
+  if (n || !bulk.value?.contains(document.activeElement)) return;
+  nextTick(() => {
+    const sel = cards.value ? '.q-table__mobilebar input[type="checkbox"]' : '.q-table__head .q-table__select input';
+    root.value?.querySelector<HTMLElement>(sel)?.focus();
+  });
+});
 const maxHeightCss = computed(() =>
   props.maxHeight == null ? undefined : typeof props.maxHeight === 'number' ? `${props.maxHeight}px` : props.maxHeight,
 );
@@ -340,13 +351,14 @@ const maxHeightCss = computed(() =>
           size="slim"
           :aria-label="strings.sortBy"
           :placeholder="strings.sortBy"
+          :required="!!sortState"
           class="q-table__mobilesort"
           :model-value="sortState ? `${sortState.key}:${sortState.direction}` : ''"
           :options="sortOptions"
           @update:model-value="onMobileSort"
         />
       </div>
-      <div v-if="selectable && count" class="q-table__bulk">
+      <div v-if="selectable && count" ref="bulk" class="q-table__bulk">
         <span class="q-table__bulk-count">{{ selectionText }}</span>
         <QButton
           v-if="canSelectAllMatching"
