@@ -21,6 +21,15 @@ updates:
       build-and-test:
         patterns: ['*']
         update-types: [minor, patch]
+  - package-ecosystem: npm
+    # The example shop has its own lockfile (it installs the library from npm, like an adopter's app).
+    directory: /examples/shop
+    schedule:
+      interval: weekly
+    groups:
+      example:
+        patterns: ['*']
+        update-types: [minor, patch]
   - package-ecosystem: github-actions
     directory: /
     schedule:

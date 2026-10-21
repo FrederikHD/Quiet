@@ -6,11 +6,13 @@
     <script>
       // GitHub Pages serves this page for every address it has no file for, such as a deep link to
       // /components/button/playground. It loads the matching explorer (released, or develop under next/) in place, so
-      // the explorer's router sees the original address.
+      // the explorer's router sees the original address. Under example/, the example shop shows its own "not found".
       (function () {
         var base = '__BASE__';
-        var next = location.pathname.indexOf(base + 'next/') === 0;
-        fetch(base + (next ? 'next/' : '') + 'index.html')
+        var under = function (dir) {
+          return location.pathname.indexOf(base + dir) === 0;
+        };
+        fetch(base + (under('example/') ? 'example/404.html' : under('next/') ? 'next/index.html' : 'index.html'))
           .then(function (r) {
             return r.text();
           })

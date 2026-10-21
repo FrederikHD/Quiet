@@ -1,6 +1,6 @@
 # Lint, formatting, type-checks, unit tests, the package check (the packed tarball installed into a fresh app) and the
 # Playwright suite (e2e, keyboard, accessibility, responsive) on every push and PR, in Chromium, Firefox and WebKit
-# (Safari's engine), plus the screenshot comparison. The release workflow runs it too, before publishing.
+# (Safari's engine), plus the screenshot comparison and the example shop. The release workflow runs it too, before publishing.
 name: CI
 
 on:
@@ -77,6 +77,25 @@ jobs:
       - uses: actions/checkout@v7
       - id: version
         run: echo "version=$(node -p "require('./package-lock.json').packages['node_modules/@playwright/test'].version")" >> "$GITHUB_OUTPUT"
+
+  example:
+    # The example shop (examples/shop) as an adopter's Nuxt app: this checkout of the library packed and installed in
+    # place of the npm version, every page prerendered in English and German, then checked in Chromium (axe in both
+    # themes, no hydration mismatch or console error, a purchase in German).
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            examples/shop/package-lock.json
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+        working-directory: packages/quiet-test
+      - run: npm run test:example
 
   visual:
     # Every example, light and dark, compared with the baselines in packages/quiet-test/e2e/__screenshots__. It runs in

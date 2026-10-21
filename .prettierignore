@@ -6,3 +6,5 @@ test-results
 packages/quiet/src/styles/tokens.css
 **/__screenshots__
 /site
+.nuxt
+.output
