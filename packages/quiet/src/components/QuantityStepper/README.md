@@ -10,7 +10,7 @@ A number of items: − [ 2 ] +. Used on the product page and in the cart, and an
 
 ## Behaviour
 
-- **One control, one Tab stop:** the field is a spinbutton. ↑ ↓ change it by `step`, PageUp / PageDown by ten steps, Home / End jump to `min` / `max`.
+- **One control, one Tab stop:** the field is a spinbutton. ↑ ↓ change it by `step`, PageUp / PageDown by ten steps, Home / End jump to `min` / `max` (to the highest step at or below `max` when `max` isn't on the step grid: 9 for min 1, step 2, max 10).
 - **Typing:** people can type a number. It's kept as typed and settled on Enter or when they leave the field: snapped to `step` and kept within `min`–`max`. Letters are ignored.
 - **− and +:** for pointer and touch; they're skipped by Tab (the keyboard has the arrows) and turn grey at the limits.
 - **`v-model` holds the number**, updated only when the value actually changes.

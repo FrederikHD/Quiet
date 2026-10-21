@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { QIcon, QInput, QPage, iconNames, toast } from '@frederikhd/quiet';
+import { QEmptyState, QIcon, QInput, QPage, iconNames, toast } from '@frederikhd/quiet';
 import { computed, ref } from 'vue';
 
 const query = ref('');
@@ -22,7 +22,10 @@ async function copy(name: string) {
     <QInput v-model="query" aria-label="Filter icons" placeholder="Filter icons" clearable class="ex-icon-filter">
       <template #prefix><QIcon name="search" /></template>
     </QInput>
-    <ul class="ex-icons">
+    <QEmptyState v-if="!shown.length" size="small" title="No icons match" role="status">
+      No icon name contains “{{ query.trim() }}”. Try a shorter word.
+    </QEmptyState>
+    <ul v-else class="ex-icons">
       <li v-for="name in shown" :key="name">
         <button type="button" class="ex-icon" :aria-label="`Copy ${name}`" @click="copy(name)">
           <QIcon :name="name" size="lg" />

@@ -12,6 +12,14 @@ function apply(side: 'top' | 'bottom') {
   else root.style.removeProperty(`--q-sticky-${side}`);
 }
 
+// A bar inside a scrolling box (a form in an overflow: auto panel) covers that box's edge, not the page's.
+function scrollParent(node: HTMLElement): HTMLElement | null {
+  for (let p = node.parentElement; p && p !== document.body && p !== document.documentElement; p = p.parentElement) {
+    if (/(auto|scroll|overlay)/.test(getComputedStyle(p).overflowY)) return p;
+  }
+  return null;
+}
+
 /** For your own sticky bars, too: `useStickyPad(barRef, 'bottom')`. */
 export function useStickyPad(
   el: Ref<HTMLElement | null | undefined>,
@@ -26,13 +34,25 @@ export function useStickyPad(
       cleanup = null;
       if (!node || !on || typeof window === 'undefined') return;
       pads[side].push(node);
-      apply(side);
-      const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(() => apply(side)) : null;
+      const box = scrollParent(node);
+      const prop = `scroll-padding-${side}`;
+      const prev = box?.style.getPropertyValue(prop) ?? '';
+      const restore = () => (prev ? box?.style.setProperty(prop, prev) : box?.style.removeProperty(prop));
+      const update = () => {
+        apply(side);
+        const h = node.getBoundingClientRect().height;
+        if (!box) return;
+        if (h) box.style.setProperty(prop, `${Math.ceil(h) + 8}px`);
+        else restore();
+      };
+      update();
+      const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(update) : null;
       ro?.observe(node);
       cleanup = () => {
         ro?.disconnect();
         pads[side] = pads[side].filter((x) => x !== node);
         apply(side);
+        restore();
       };
     },
     { immediate: true, flush: 'post' },

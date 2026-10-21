@@ -26,11 +26,11 @@ function remove(code: string) {
 ## Behaviour
 
 - `collapsible` starts as a quiet "Add a discount code" button with a tag icon; it opens the field and puts the cursor in it. While codes are applied the field stays open.
-- **Apply** (or Enter in the field) calls your `apply(code)` function. Return nothing if it worked, or the message to show ("“SUMMR” isn't a valid code") — directly or from a promise; Apply shows its spinner while it waits. A rejected promise shows its error's message.
-- A rejected code shows the message under the field in `danger`, keeps the text so it can be corrected, and puts focus back in the field. Typing clears the message. An accepted one clears the field and is announced ("Discount LINEN10 applied").
+- **Apply** (or Enter in the field) calls your `apply(code)` function. Return nothing if it worked, or the message to show ("“SUMMR” isn't a valid code") — directly or from a promise; Apply shows its spinner while it waits and keeps focus, ignoring presses. A rejected promise shows its error's message.
+- A rejected code shows the message under the field in `danger`, keeps the text so it can be corrected, and puts focus back in the field. Typing clears the message. An accepted one clears the field, puts focus back in it, and is announced with the code as it appears in `applied` ("Discount LINEN10 applied", whatever case was typed).
 - Applied codes are Tags: tag icon, the code, what it does ("−10 %"), × — the whole tag is the button, named with all of its text ("Remove discount LINEN10 −10 %"). Pressing it emits `@remove`; you take the code out of `applied`. Focus goes back to the field, and "Discount LINEN10 removed" is announced.
 - It is **not a form** of its own: it usually sits inside the checkout's form, so Enter applies the code instead of submitting the page.
-- Empty field + Apply: "Enter a discount code". A code that's already applied is quietly ignored.
+- Empty field + Apply: "Enter a discount code", and focus goes to the field. A code that's already applied is quietly ignored.
 
 ## Keyboard and screen readers
 

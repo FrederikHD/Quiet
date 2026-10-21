@@ -113,6 +113,21 @@ watch(at, (i) => {
   if (b.offsetLeft < row.scrollLeft || b.offsetLeft + b.offsetWidth > row.scrollLeft + row.clientWidth)
     row.scrollLeft = b.offsetLeft - 8;
 });
+// v-model:index set from outside: bring that image onto the stage too.
+watch(at, (i) => {
+  const t = track.value;
+  if (!t?.clientWidth || Math.abs(t.scrollLeft - i * t.clientWidth) < 4) return;
+  const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  t.scrollTo?.({ left: i * t.clientWidth, behavior: reduce ? 'auto' : 'smooth' });
+});
+// An arrow that reaches the end is disabled (and hidden on the stage); if it had focus, hand focus to the other arrow.
+function step(d: 1 | -1, e: MouseEvent) {
+  go(at.value + d, true);
+  const btn = (e.target as Element | null)?.closest('button');
+  if (!btn || document.activeElement !== btn || (d < 0 ? at.value > 0 : at.value < n.value - 1)) return;
+  const other = Array.from(btn.parentElement?.children ?? []).find((el) => el !== btn && el.tagName === 'BUTTON');
+  (other as HTMLElement | undefined)?.focus();
+}
 function onKeyDown(e: KeyboardEvent) {
   const to =
     e.key === 'ArrowRight'
@@ -132,7 +147,7 @@ const current = computed(() => images.value[at.value]);
 </script>
 
 <template>
-  <div v-if="!n" class="q-gallery">
+  <div v-if="!n" :class="['q-gallery', aspect === 'square' && 'q-gallery--square']">
     <div class="q-gallery__stage q-gallery__empty"><QIcon name="image" size="lg" /></div>
   </div>
   <div v-else :class="['q-gallery', aspect === 'square' && 'q-gallery--square']">
@@ -174,14 +189,14 @@ const current = computed(() => images.value[at.value]);
           icon-start="chevron-left"
           :aria-label="strings.previous"
           :disabled="at === 0"
-          @click="go(at - 1, true)"
+          @click="step(-1, $event)"
         />
         <QButton
           class="q-gallery__nav q-gallery__nav--next"
           icon-start="chevron-right"
           :aria-label="strings.next"
           :disabled="at === n - 1"
-          @click="go(at + 1, true)"
+          @click="step(1, $event)"
         />
         <span class="q-gallery__counter" aria-hidden="true">{{ strings.counter(at + 1, n) }}</span>
       </template>
@@ -216,14 +231,14 @@ const current = computed(() => images.value[at.value]);
             icon-start="chevron-left"
             :aria-label="strings.previous"
             :disabled="at === 0"
-            @click="go(at - 1, true)"
+            @click="step(-1, $event)"
           />
           <span class="q-gallery__bigcount">{{ strings.counter(at + 1, n) }}</span>
           <QButton
             icon-start="chevron-right"
             :aria-label="strings.next"
             :disabled="at === n - 1"
-            @click="go(at + 1, true)"
+            @click="step(1, $event)"
           />
         </div>
         <!-- While the dialog is open the rest of the page is inert, so the announcement has to come from in here. -->

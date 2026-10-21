@@ -65,6 +65,19 @@ describe('QSearchBox', () => {
     expect(w.get('[aria-live="polite"]').text()).toBe('2 suggestions');
   });
 
+  it('announces nothing when it never had suggestions, only "Search for …" shows', async () => {
+    const w = box({ suggestions: [] });
+    await typeIn(w, 'lin');
+    await w.setProps({ modelValue: 'lin' });
+    expect(opts()).toHaveLength(1);
+    expect(w.get('[aria-live="polite"]').text()).toBe('');
+    // Once suggestions have come, running out of them is news.
+    await w.setProps({ suggestions: flat });
+    expect(w.get('[aria-live="polite"]').text()).toBe('2 suggestions');
+    await w.setProps({ suggestions: [] });
+    expect(w.get('[aria-live="polite"]').text()).toBe('No suggestions');
+  });
+
   it('stays closed while the query is blank', async () => {
     const w = box();
     await typeIn(w, '   ');

@@ -1,4 +1,4 @@
-<!-- One file only: the button says "Choose a file", and a new file replaces the old one. -->
+<!-- The files variant takes one file by default: the button says "Choose a file", and a new file replaces the old one. -->
 <script setup lang="ts">
 import { QField, QFileUpload, type FileUploadItem } from '@frederikhd/quiet';
 import { ref } from 'vue';
@@ -8,12 +8,6 @@ const file = ref<FileUploadItem[]>([]);
 
 <template>
   <QField label="Price list" label-placement="top" hint="One CSV file, up to 2 MB.">
-    <QFileUpload
-      v-model="file"
-      :multiple="false"
-      accept=".csv,text/csv"
-      accept-label="a CSV file"
-      :max-size="2 * 1048576"
-    />
+    <QFileUpload v-model="file" accept=".csv,text/csv" accept-label="a CSV file" :max-size="2 * 1048576" />
   </QField>
 </template>

@@ -11,7 +11,7 @@ One option in a set where exactly one can be chosen. A Radio always sits inside 
 ## Anatomy
 
 - **Circle:** 18px (16px compact), 1px `line-strong` border on `surface-raised`.
-- **Chosen:** `brand` fill with a white centre.
+- **Chosen:** `brand` fill with a `surface-raised` centre.
 - **Label:** the control text size, 12px to the right (8px compact).
 - **`description`** (optional): 13/18, `ink-muted`.
 - **`meta`** (optional): right-aligned and tabular, usually the price ("Free", "9,90 €").
@@ -32,8 +32,8 @@ Native radios:
 
 - Tab enters the set on the chosen option, or the first one, and leaves it in one step.
 - ↑ ↓ ← → move and choose, skipping disabled options.
-- In a row or card, the label and the description together name the option; the group's hint and message are tied to it as its description. Each option is read as "Express, Next working day, radio button, 2 of 3".
-- `meta` is part of the clickable row but not of the name, so put anything a screen-reader user needs to decide into the label or the description.
+- In a row or card, the whole row is the `<label>`, so the label, the description and `meta` together name the option; the group's hint and message are tied to it as its description. Each option is read as "Express, Next working day, 9,90 €, radio button, 2 of 3".
+- Keep `meta` short (a price, a count): it is read as part of every option's name.
 - A swatch or size tile is read as "XL, sold out" (plus its description); its dot or face is hidden from screen readers.
 - `media` pictures are hidden from screen readers.
 

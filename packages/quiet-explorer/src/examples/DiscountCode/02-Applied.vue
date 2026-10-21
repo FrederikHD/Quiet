@@ -1,4 +1,4 @@
-<!-- A code already in use from the cart: the field stays open for a second one, and the tag removes it. -->
+<!-- A code already in use from the cart: the tag removes it, and a second code is refused. -->
 <script setup lang="ts">
 import { QDiscountCode } from '@frederikhd/quiet';
 import { ref } from 'vue';

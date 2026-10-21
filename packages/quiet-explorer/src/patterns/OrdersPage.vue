@@ -19,8 +19,10 @@ import {
   QPagination,
   QTable,
   QTabs,
+  addressCountries,
   money,
   toast,
+  useConfig,
   validateAddress,
   type Address,
   type BadgeTone,
@@ -29,7 +31,7 @@ import {
   type RowKey,
   type TableSort,
 } from '@frederikhd/quiet';
-import { computed, ref } from 'vue';
+import { computed, nextTick, ref, watch } from 'vue';
 import { photo } from '../fixtures/pictures';
 
 // 64 orders, filtered, sorted and paged here as a server would.
@@ -88,8 +90,41 @@ const orders = ref<Order[]>(
 const totalOf = (o: Order) => o.lines.reduce((n, l) => n + l.price, 0) + shippingOf(o);
 const shippingOf = (o: Order) => (o.lines.reduce((n, l) => n + l.price, 0) >= 50 ? 0 : 4.9);
 const nameOf = (o: Order) => `${o.address.firstName} ${o.address.lastName}`;
+// Dates in the same locale as the money: the one configured for Quiet.
+const config = useConfig();
 const when = (d: Date) =>
-  `${d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}, ${d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}`;
+  `${d.toLocaleDateString(config.locale, { day: 'numeric', month: 'short' })}, ${d.toLocaleTimeString(config.locale, { hour: '2-digit', minute: '2-digit' })}`;
+// The address as it goes on a parcel, with the country spelled out.
+const addressLines = (a: Address) =>
+  [
+    [a.firstName, a.lastName].filter(Boolean).join(' '),
+    a.company,
+    a.line1,
+    a.line2,
+    a.country === 'US'
+      ? `${a.city ?? ''}, ${a.state ?? ''} ${a.postalCode ?? ''}`.trim()
+      : a.country === 'GB'
+        ? [a.city, a.postalCode].filter(Boolean).join('\n')
+        : [a.postalCode, a.city].filter(Boolean).join(' '),
+    addressCountries.find((c) => c.value === a.country)?.label ?? a.country,
+  ]
+    .flatMap((l) => (l ? l.split('\n') : []))
+    .filter(Boolean);
+
+// When what had focus disappears (a page swaps, a button is v-if'd away), focus goes somewhere sensible
+// instead of falling back to the page: the new page's heading, or the control named.
+const frame = ref<HTMLElement | null>(null);
+async function focusOn(selector: string) {
+  await nextTick();
+  frame.value?.querySelector<HTMLElement>(selector)?.focus();
+}
+async function focusTitle() {
+  await nextTick();
+  const h1 = frame.value?.querySelector<HTMLElement>('.q-page__title');
+  if (!h1) return;
+  h1.tabIndex = -1;
+  h1.focus();
+}
 const tone: Record<Payment | Fulfilment, BadgeTone> = {
   Paid: 'success',
   Pending: 'warning',
@@ -135,15 +170,29 @@ function resetList() {
 const chosen = () => (allMatching.value ? hits.value : orders.value.filter((o) => selected.value.includes(o.id)));
 function fulfil(list: Order[]) {
   const was = list.filter((o) => o.fulfilment === 'Unfulfilled');
+  // Nothing to do: say so, without an Undo, and leave the selection (and focus) where it is.
+  if (!was.length) {
+    toast(list.length === 1 ? `Order #${list[0].id} is already fulfilled` : 'These orders are already fulfilled');
+    return;
+  }
   was.forEach((o) => (o.fulfilment = 'Fulfilled'));
   toast(was.length === 1 ? `Order #${was[0].id} marked as fulfilled` : `${was.length} orders marked as fulfilled`, {
-    action: { label: 'Undo', onClick: () => was.forEach((o) => (o.fulfilment = 'Unfulfilled')) },
+    action: {
+      label: 'Undo',
+      // Toast returns focus to where it was when Undo is pressed.
+      onClick: () => was.forEach((o) => (o.fulfilment = 'Unfulfilled')),
+    },
   });
-  resetList();
+  // The button pressed goes away: on an order, its own button; in the list, the bulk bar with the selection,
+  // where Table moves focus to "Select all" itself.
+  if (order.value) focusOn('button[aria-label^="More actions"]');
+  else resetList();
 }
 
 // One order.
 const openId = ref<number | null>(null);
+// Opening an order or going back to the list swaps the page: focus its heading.
+watch(openId, focusTitle);
 const order = computed(() => orders.value.find((o) => o.id === openId.value) ?? null);
 const orderMenu = computed<MenuItem[]>(() => [
   { label: 'Print packing slip', icon: 'download', onSelect: () => toast('Packing slip ready to print') },
@@ -159,6 +208,8 @@ const orderMenu = computed<MenuItem[]>(() => [
 ]);
 // Destructive, so it is confirmed first.
 const refunding = ref(false);
+// The dialog opened from a menu item that is gone once the menu closes: hand focus back to the menu's button.
+watch(refunding, (open) => !open && focusOn('button[aria-label^="More actions"]'));
 function refund() {
   refunding.value = false;
   order.value!.payment = 'Refunded';
@@ -204,7 +255,7 @@ const sections = computed<NavSection[]>(() => [
 </script>
 
 <template>
-  <div class="frame">
+  <div ref="frame" class="frame">
     <QAppShell brand="Leinen & Co" contained :toaster="false">
       <template #nav>
         <QNav
@@ -261,6 +312,7 @@ const sections = computed<NavSection[]>(() => [
                 format: (o) => money(totalOf(o)),
               },
             ]"
+            @update:all-matching="(on) => on && focusOn('[data-bulk=fulfil]')"
             @update:sort="page = 1"
             @row-click="(o) => (openId = o.id)"
           >
@@ -284,7 +336,7 @@ const sections = computed<NavSection[]>(() => [
               ><QBadge :tone="tone[row.fulfilment]">{{ row.fulfilment }}</QBadge></template
             >
             <template #bulk-actions>
-              <QButton size="slim" @click="fulfil(chosen())">Mark as fulfilled</QButton>
+              <QButton size="slim" data-bulk="fulfil" @click="fulfil(chosen())">Mark as fulfilled</QButton>
             </template>
             <template #empty>
               <QEmptyState title="No orders match" size="small" role="status">Try another search or view.</QEmptyState>
@@ -371,8 +423,7 @@ const sections = computed<NavSection[]>(() => [
               />
             </template>
             <p class="text">
-              {{ nameOf(order) }}<br />{{ order.address.line1 }}<br />{{ order.address.postalCode }}
-              {{ order.address.city }}<br />Germany
+              <template v-for="(line, i) in addressLines(order.address)" :key="i"><br v-if="i" />{{ line }}</template>
             </p>
           </QCard>
         </template>

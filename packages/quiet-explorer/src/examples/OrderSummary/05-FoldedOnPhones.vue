@@ -7,7 +7,7 @@ import { photo } from '../../fixtures/pictures';
 <template>
   <div class="panel">
     <QOrderSummary
-      collapsible
+      collapsible="auto"
       :items="[{ name: 'Linen shirt', variant: 'Blue · M', quantity: 2, price: 118, image: { src: photo('Blue') } }]"
       :totals="[{ label: 'Shipping', amount: null, note: 'Chosen in the next step' }]"
       :total="118"

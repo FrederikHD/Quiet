@@ -37,7 +37,7 @@ test.describe('Product page', () => {
     const reviews = page.getByTestId('pattern').locator('#reviews');
     await expect(reviews.getByRole('article')).toHaveCount(3);
     await reviews.getByRole('button', { name: 'Show more reviews' }).click();
-    await expect(reviews.getByRole('article')).toHaveCount(5);
+    await expect(reviews.getByRole('article')).toHaveCount(6);
     await expect(reviews.getByRole('article').nth(3)).toBeFocused();
 
     await reviews.getByRole('combobox', { name: 'Sort reviews' }).selectOption('helpful');
@@ -55,7 +55,20 @@ test.describe('Product page', () => {
     const drawer = page.getByRole('dialog', { name: 'Cart (1)' });
     await drawer.getByRole('spinbutton', { name: 'Quantity of Linen shirt, Sand, M' }).fill('0');
     await drawer.getByRole('spinbutton').press('Enter');
-    await expect(page.getByRole('dialog', { name: 'Cart (0)' }).getByText('Your cart is empty')).toBeVisible();
+    const empty = page.getByRole('dialog', { name: 'Cart (0)' }).locator('.cart__empty');
+    await expect(empty).toContainText('Your cart is empty');
+    // The stepper that had focus is gone: focus moves to the message rather than falling back to the page.
+    await expect(empty).toBeFocused();
+  });
+
+  test('the review summary filters to reviews that exist for each level it counts', async ({ page }) => {
+    await page.goto('/patterns/product-page');
+    const reviews = page.getByTestId('pattern').locator('#reviews');
+    for (const stars of [1, 2]) {
+      await reviews.getByRole('button', { name: new RegExp(`^${stars} star`) }).click();
+      await expect(reviews.getByRole('article')).toHaveCount(1);
+      await reviews.getByRole('button', { name: new RegExp(`^${stars} star`) }).click();
+    }
   });
 });
 
@@ -64,14 +77,16 @@ test.describe('Orders', () => {
     await page.goto('/patterns/orders');
     const screen = page.getByTestId('pattern');
     await screen.getByRole('row', { name: /#10564/ }).click();
-    await expect(screen.getByRole('heading', { name: '#10564', level: 1 })).toBeVisible();
+    // Each page swap moves focus to the new page's heading.
+    await expect(screen.getByRole('heading', { name: '#10564', level: 1 })).toBeFocused();
 
     await screen.getByRole('button', { name: 'Mark as fulfilled' }).click();
     await expect(page.getByText('Order #10564 marked as fulfilled')).toBeVisible();
     await expect(screen.getByRole('button', { name: 'Mark as fulfilled' })).toHaveCount(0);
+    await expect(screen.getByRole('button', { name: 'More actions for #10564' })).toBeFocused();
 
     await screen.getByRole('link', { name: 'Orders' }).first().click();
-    await expect(screen.getByRole('heading', { name: 'Orders', level: 1 })).toBeVisible();
+    await expect(screen.getByRole('heading', { name: 'Orders', level: 1 })).toBeFocused();
     await expect(screen.getByRole('tab', { name: /Unfulfilled/ })).toContainText('11');
   });
 
@@ -84,6 +99,8 @@ test.describe('Orders', () => {
     const confirm = page.getByRole('dialog', { name: 'Refund order #10564?' });
     await confirm.getByRole('button', { name: 'Cancel' }).click();
     await expect(screen.getByText('Paid', { exact: true })).toBeVisible();
+    // The menu item that opened it is gone: focus goes back to the menu's button.
+    await expect(screen.getByRole('button', { name: 'More actions for #10564' })).toBeFocused();
 
     await screen.getByRole('button', { name: 'More actions for #10564' }).click();
     await page.getByRole('menuitem', { name: 'Refund' }).click();
@@ -115,6 +132,18 @@ test.describe('Orders', () => {
     await screen.getByRole('button', { name: 'Mark as fulfilled' }).click();
     await expect(page.getByText('2 orders marked as fulfilled')).toBeVisible();
     await expect(screen.getByRole('tab', { name: /Unfulfilled/ })).toContainText('10');
+    // The bulk bar went with the selection: Table puts focus on "Select all".
+    await expect(screen.getByRole('checkbox', { name: 'Select all rows on this page' })).toBeFocused();
+  });
+
+  test('bulk "Mark as fulfilled" on fulfilled orders says so, without an Undo', async ({ page }) => {
+    await page.goto('/patterns/orders');
+    const screen = page.getByTestId('pattern');
+    await screen.getByRole('checkbox', { name: 'Select order #10558' }).check();
+    await screen.getByRole('button', { name: 'Mark as fulfilled' }).click();
+    const toast = page.locator('.q-toast', { hasText: 'Order #10558 is already fulfilled' });
+    await expect(toast).toBeVisible();
+    await expect(toast.getByRole('button', { name: 'Undo' })).toHaveCount(0);
   });
 });
 
@@ -137,6 +166,15 @@ test.describe('Collection', () => {
     await screen.getByRole('button', { name: 'Remove filter: Navy' }).click();
     await expect(count).toHaveText('40 products');
     await expect(page).not.toHaveURL(/colour=/);
+    // The last chip is gone: focus moves to the products, not to the page.
+    await expect(screen.getByRole('region', { name: 'Products' })).toBeFocused();
+  });
+
+  test('prices and sort from the URL are checked', async ({ page }) => {
+    await page.goto('/patterns/collection?min=900&max=5&sort=cheapest');
+    const screen = page.getByTestId('pattern');
+    await expect(screen.getByRole('status').filter({ hasText: 'products' })).toHaveText('40 products');
+    await expect(screen.getByRole('combobox', { name: 'Sort by' })).toHaveValue('featured');
   });
 
   test('"Show more" adds the next 12 and moves focus to the first of them', async ({ page }) => {
@@ -154,6 +192,7 @@ test.describe('Collection', () => {
     await expect(screen.getByText('No products match these filters')).toBeVisible();
     await screen.getByRole('button', { name: 'Clear filters' }).click();
     await expect(screen.getByRole('status').filter({ hasText: 'products' })).toHaveText('40 products');
+    await expect(screen.getByRole('region', { name: 'Products' })).toBeFocused();
   });
 
   test('on a phone the filters open in a sheet that says how many products it will show', async ({ page }) => {
@@ -243,6 +282,7 @@ test.describe('Product edit', () => {
     await confirm.getByRole('button', { name: 'Discard changes' }).click();
     await expect(screen.getByRole('textbox', { name: 'Title' })).toHaveValue('Linen shirt');
     await expect(screen.getByRole('button', { name: 'Discard' })).toBeDisabled();
+    await expect(screen.getByRole('heading', { name: 'Linen shirt', level: 1 })).toBeFocused();
   });
 
   test('deleting is confirmed first and can be undone', async ({ page }) => {
@@ -254,8 +294,9 @@ test.describe('Product edit', () => {
       .getByRole('button', { name: 'Delete product' })
       .click();
     await expect(screen.getByText('Linen shirt was deleted')).toBeVisible();
+    await expect(screen.getByRole('heading', { name: 'Products', level: 1 })).toBeFocused();
     await screen.getByRole('button', { name: 'Undo' }).click();
-    await expect(screen.getByRole('heading', { name: 'Linen shirt', level: 1 })).toBeVisible();
+    await expect(screen.getByRole('heading', { name: 'Linen shirt', level: 1 })).toBeFocused();
   });
 });
 

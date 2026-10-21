@@ -19,7 +19,8 @@ breaking changes, a patch version (0.x.y) never does.
 
 - Checkbox `required` and `error`, for a single checkbox in a form ("I accept the terms"): the message shows under
   it, lined up with the label, describes the box and links from the Form's error summary through its `id`. A
-  one-checkbox CheckboxGroup is no longer needed.
+  one-checkbox CheckboxGroup is no longer needed. With `error` bound (even to `null`), the checkbox and its message sit in a
+  `div.q-check`, which then takes the `class` and `style` you pass; without it the markup is unchanged.
 - Named types for every `strings` prop that had an inline one: `BreadcrumbsStrings`, `MetricStrings`,
   `ProductCardStrings`, `QuantityStepperStrings`, `ReviewSummaryStrings`, `StepsStrings` and `TabsStrings`.
 
@@ -30,6 +31,42 @@ breaking changes, a patch version (0.x.y) never does.
   `selected`) declared theirs with `| undefined`, so `@update:model-value="x = $event"` needed `?? []` or a cast.
 - ProductCard `hoverImage` takes `{ src, alt? }` like every other image (its `alt` isn't read: it's decorative).
 - Popover `panelClass` is typed like `class` instead of `unknown`.
+
+From a full audit of every component, example and pattern:
+
+- **Focus no longer drops to the page** when the control that had it goes away or becomes unusable:
+  - a loading Button stays focusable (`aria-disabled`, presses ignored), and so do DiscountCode's Apply and the
+    focused control of a `disabled` Pagination;
+  - Toast returns focus after Undo or ×, and stays paused while it has focus even when the mouse leaves;
+  - Table moves focus to "Select all" when the bulk bar closes;
+  - Gallery moves focus to the other arrow when the focused one reaches the end;
+  - Combobox's "Try again" focuses the search field;
+  - a Popover, Menu or Combobox that closes because its trigger scrolled away returns focus to the trigger;
+  - DiscountCode returns focus to the field after a code is applied;
+  - FilterChips refocuses after an app updates its items asynchronously.
+- Dialog opens on the first control Tab would reach, and on the checked radio of a radio group.
+- A Popover tip closes when focus leaves the page.
+- Gallery shows the image set through `v-model:index`, and its empty placeholder follows `aspect="square"`.
+- Pagination: Ctrl/Cmd, Shift, Alt and middle clicks on page links open a new tab; a new page size keeps the first
+  row in view and updates `v-model:page`.
+- Table: the phone "Sort by" can't be set back to its placeholder; a table that only scrolls vertically (`maxHeight`)
+  is a focusable scroll region.
+- Select with `<option>` children sizes itself with `width: auto`.
+- PriceRange: two handles at the top end can be dragged apart; `@commit` only fires for a change; typed prices are read
+  in the configured locale ("1.000,50").
+- ProductCard: a click on a badge opens the product.
+- RatingInput fits a phone: full-size star targets, the word on its own line.
+- QuantityStepper keeps to the step grid when `max` isn't on it.
+- FieldGroup's `required` makes every control in it announced as required; parts with hidden labels leave no gap.
+- FormActions `sticky` keeps focused fields clear of the bar inside a scrolling box, not only the page.
+- Textarea announces "8 characters left" from a live region that is always on the page.
+- Notice merges `strings.prefix` per tone.
+- SearchBox doesn't announce "No suggestions" when it never had any.
+- ReviewSummary rows all read "5 stars, 20 reviews".
+- AddressFields: a phone needs at least 6 digits; `countryPlaceholder` defaults to "Choose a country".
+- Small fixes: a slim Input's icon grows with it on phones; Nav's badge name has no stray space; an icon-only full-width
+  Button fills the width; the AppShell drawer shows the first link's focus ring; Card shows a description without a
+  title; an unlabelled CheckboxGroup has no empty group role.
 
 ## [0.5.0] - 2026-10-20
 

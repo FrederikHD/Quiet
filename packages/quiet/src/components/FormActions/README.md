@@ -36,8 +36,9 @@ The row of buttons that ends a form: secondary actions first, the primary action
 
 `sticky` keeps the bar at the bottom of the scroll area on a `surface` background with a `line` rule above — long back-office edit screens, so Save is always in reach.
 
+- **Edge to edge:** the bar has a negative side margin of `space-4` (16px) and `space-4` padding, so its background and rule reach the edges of a parent with `space-4` side padding. In a parent with other padding, the bar falls short of or overhangs the edges.
 - **Keep it to Cancel and Save.** A sticky bar is always on screen, so it holds the actions you need all the time. Put Delete at the end of the form in its own non-sticky FormActions (`align="start"`), away from Save.
-- **Focus stays visible:** while the bar is sticky, its height (plus 8px) becomes the page's bottom scroll padding, so the browser scrolls a focused field clear of the bar.
+- **Focus stays visible:** while the bar is sticky, its height (plus 8px) becomes the bottom scroll padding of the page, or of the scrolling box it's in, so the browser scrolls a focused field clear of the bar.
 
 ## Small widths
 

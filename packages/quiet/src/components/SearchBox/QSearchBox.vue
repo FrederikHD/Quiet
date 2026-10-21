@@ -111,6 +111,17 @@ const submitOption = computed<Option | null>(() =>
 );
 const options = computed<Option[]>(() => (submitOption.value ? [...flat.value, submitOption.value] : flat.value));
 const show = computed(() => open.value && !!q.value && options.value.length > 0);
+// "No suggestions" only means something once suggestions have come: a box that never gets any (just the
+// "Search for" option) announces nothing.
+const hadSuggestions = ref(false);
+watch(
+  () => flat.value.length > 0,
+  (has) => has && (hadSuggestions.value = true),
+  { immediate: true },
+);
+const said = computed(() =>
+  show.value && (flat.value.length || hadSuggestions.value) ? strings.value.count(flat.value.length) : '',
+);
 // Index of each suggestion across groups.
 const indexOf = (g: number, i: number) => groups.value.slice(0, g).reduce((a, x) => a + (x.items?.length ?? 0), 0) + i;
 
@@ -270,6 +281,6 @@ onMounted(() => {
         </li>
       </ul>
     </div>
-    <span class="q-visually-hidden" aria-live="polite">{{ show ? strings.count(flat.length) : '' }}</span>
+    <span class="q-visually-hidden" aria-live="polite">{{ said }}</span>
   </form>
 </template>

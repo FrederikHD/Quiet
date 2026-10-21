@@ -41,13 +41,13 @@ function submit(e: SubmitEvent) {
   - missing parts: "Enter your city";
   - a postcode in the wrong shape for its country: "Enter a valid postcode, like 10115";
   - no house number where addresses need one (DE, AT, CH, NL, BE, LU, DK, PL): "Add the house number";
-  - a phone that isn't at least 6 digits, spaces, `+`, `(`, `)`, `/` or `-`: "Enter a phone number with digits only, + and spaces".
+  - a phone that isn't made of digits, spaces, `+`, `(`, `)`, `/` or `-`, or has fewer than 6 digits: "Enter a phone number with digits only, + and spaces".
     Pass it the same `fields` as the component, and `strings` if you translate the messages. `errors` goes back into the component; `list` goes to the Form's error summary (the ids are `${idPrefix}-${key}`).
 - `v-model` holds the whole address; `@change` also tells you which part changed: `(nextAddress, changedKey)`.
 
 ## Countries
 
-Germany, Austria, Switzerland, the Netherlands, Belgium, Luxembourg, France, Italy, Spain, Denmark, Poland, the UK and the US by default. Pass `countries` to limit or extend the list; a country without a known format gets the European layout and no postcode or house-number check. The country is always required; `countryPlaceholder` ("Choose a country") shows in the select until one is chosen.
+Germany, Austria, Switzerland, the Netherlands, Belgium, Luxembourg, France, Italy, Spain, Denmark, Poland, the UK and the US by default. Pass `countries` to limit or extend the list; a country without a known format gets the European layout and no postcode or house-number check. The country is always required; `countryPlaceholder` (default "Choose a country", from `strings.chooseCountry`) shows in the select until one is chosen.
 
 ## Not for
 

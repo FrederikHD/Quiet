@@ -60,6 +60,8 @@
   flex-wrap: wrap;
   gap: var(--space-1);
   max-width: calc(100% - 2 * var(--space-2));
+  /* Above the stretched link, but a click on a badge still opens the product. */
+  pointer-events: none;
 }
 .q-pcard__badges .q-badge--neutral {
   background: var(--surface-raised);

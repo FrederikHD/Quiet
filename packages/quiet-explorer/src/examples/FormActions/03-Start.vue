@@ -19,7 +19,7 @@ const done = ref(false);
 
 <style scoped>
 .signup {
-  max-width: 400px;
+  max-width: 520px;
 }
 .done {
   margin: 0;

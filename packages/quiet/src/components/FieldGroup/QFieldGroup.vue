@@ -63,6 +63,7 @@ const ctx = computed<GroupContext>(() => ({
   describedBy: joinIds(status.value[0] && msgId.value, hasHint.value && hintId.value),
   invalid: status.value[0] === 'error',
   disabled: !!props.disabled,
+  required: !!props.required,
 }));
 provide(GROUP_KEY, ctx);
 

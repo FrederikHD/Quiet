@@ -30,7 +30,7 @@ Icon (20px) · title (semibold; `title` or the `#title` slot) · text (13px) · 
 
 ## Keyboard and screen readers
 
-The icon is hidden from screen readers; the hidden "Warning:" / "Error:" prefix goes before the title, or before the text when there's no title. The × is a button named "Dismiss". A Notice is part of the page, not announced on its own. When it appears in response to something (after saving), it must be read out: pass `role="status"` (or `"alert"` for danger) to a notice that stays rendered while its text changes, or put the spot where it appears in a `role="status"` element that is on the page before the notice is (screen readers only announce changes inside a live region that already exists).
+The icon is hidden from screen readers; the hidden "Warning:" / "Error:" prefix goes before the title, or before the text when there's no title. The × is a button named "Dismiss". A Notice is part of the page, not announced on its own. When it appears in response to something (after saving), it must be read out: pass `role="status"` (or `"alert"` for danger) to a notice that stays rendered while its text changes, or put the spot where it appears in a `role="status"` element that is on the page before the notice is (screen readers only announce changes inside a live region that already exists). When you remove a notice after `@dismiss`, its × goes with it, so move focus to a sensible next element yourself — the heading or content the notice sat above.
 
 ## Built from
 
@@ -43,4 +43,4 @@ Write a short title that says what's going on, one sentence of what to do, and a
 - **Optional:** `tone` (`info` | `success` | `warning` | `danger`, default `info`), `title`, `dismissible`, `icon`, `role` (`status` | `alert`; none by default).
 - **Events:** `@dismiss` (the × was pressed).
 - **Slots:** the default slot (the text), `#title` (in place of `title`), `#actions`.
-- **Translations:** `strings` — `dismiss` ("Dismiss") and `prefix` (`{ warning: 'Warning:', danger: 'Error:' }`); or once for the shop with `configure({ strings: { notice: … } })`.
+- **Translations:** `strings` — `dismiss` ("Dismiss") and `prefix` (`{ warning: 'Warning:', danger: 'Error:' }`, merged per tone, so `{ prefix: { warning: 'Achtung:' } }` keeps the danger prefix); or once for the shop with `configure({ strings: { notice: … } })`.

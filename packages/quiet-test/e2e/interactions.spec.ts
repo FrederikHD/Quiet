@@ -27,6 +27,20 @@ test.describe('Dialog', () => {
   });
 });
 
+test('Tag: after Clear all, focus moves to the empty message', async ({ page }) => {
+  await page.goto('/components/tag/examples');
+  const example = page.getByTestId('example').first();
+  await example.getByRole('button', { name: 'Clear all' }).click();
+  await expect(example.getByText('No filters', { exact: true })).toBeFocused();
+});
+
+test('Steps: choosing a done step moves focus to its heading', async ({ page }) => {
+  await page.goto('/components/steps/examples');
+  const example = page.getByTestId('example').first();
+  await example.getByRole('button', { name: /Address/ }).click();
+  await expect(example.getByRole('heading', { name: 'Address' })).toBeFocused();
+});
+
 test('Menu: arrow keys move between items, Enter chooses', async ({ page }) => {
   await page.goto('/components/menu/examples');
   await page.getByRole('button', { name: 'Actions for Linen shirt, blue' }).click();

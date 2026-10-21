@@ -1,4 +1,4 @@
-<!-- Small in cards and the cart, default in lists, large on the product page. -->
+<!-- Small on product cards and cart lines, default in lists, large on the product page. -->
 <script setup lang="ts">
 import { QPrice } from '@frederikhd/quiet';
 </script>

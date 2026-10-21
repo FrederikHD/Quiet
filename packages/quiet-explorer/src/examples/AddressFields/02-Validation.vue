@@ -1,4 +1,4 @@
-<!-- validateAddress checks missing parts, the postcode's shape and the house number. Press Continue empty. -->
+<!-- validateAddress checks missing parts, the postcode's shape and the house number. Press Continue: this address has no house number, a postcode a digit short and empty required fields. -->
 <script setup lang="ts">
 import {
   QAddressFields,

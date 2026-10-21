@@ -5,10 +5,12 @@ Moves through a long list a page at a time. It usually sits in a Table's `#foote
 ## Variants (`variant`)
 
 - **`simple`** (default): the range "1–50 of 1,240", then previous and next. Use it for back-office lists that people filter more than browse.
-- **`pages`**: numbered pages with gaps, ‹ 1 … 4 5 **6** 7 8 … 25 ›. It always shows the first and last page, plus `siblings` (default 1) either side of the current one. Use it for storefront category pages, and lists where people come back to "page 6".
+- **`pages`**: numbered pages with gaps, ‹ 1 … 5 **6** 7 … 25 ›. It always shows the first and last page, plus `siblings` (default 1) either side of the current one. Use it for storefront category pages, and lists where people come back to "page 6".
 - **`compact`**: ‹ 6 / 25 ›. Use it in narrow places: side panels and dialogs.
 
 `pages` and `compact` need a `total`. Without one, Pagination is always `simple`.
+
+With `total` 0 the range reads "0–0 of 0". When there are no rows, hide the Pagination and show an EmptyState instead.
 
 ```vue
 <QPagination v-model:page="page" v-model:page-size="pageSize" :total="1240" :page-size-options="[25, 50, 100]" />
@@ -25,17 +27,17 @@ Moves through a long list a page at a time. It usually sits in a Table's `#foote
 
 ## Options
 
-| Prop                                    | What it does                                                                                                                                                                                                                 |
-| --------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `showFirstLast`                         | Adds « and » buttons for the first and last page. Useful with long lists. Needs `total`.                                                                                                                                     |
-| `jumpToPage`                            | Shows the page number as a small field — "Page [6] of 25". Needs `total`. Enter or leaving the field goes there. Numbers out of range snap to the first or last page, and an empty field restores the current page.          |
-| `showRange`                             | `false` hides "1–50 of 1,240". The storefront usually hides it.                                                                                                                                                              |
-| `pageSizeOptions` + `v-model:page-size` | Rows-per-page select, e.g. `[25, 50, 100]`. The page size defaults to 50; bind it even without the select when your pages hold a different number. `:show-page-size="false"` hides the select again.                         |
-| `align`                                 | `end` (default), `start`, `center` (storefront), or `between` (range on the left, controls on the right).                                                                                                                    |
-| `size`                                  | `slim` (default; back office), `default`, `large` (storefront). The same sizes as Button.                                                                                                                                    |
-| `disabled`                              | Disables the controls while a page loads, and sets `aria-busy`. The current page number stays enabled, so focus isn't lost.                                                                                                  |
-| `hrefFor(page)`                         | Renders the controls as links (`?page=6`), so pages can be bookmarked, opened in a new tab and crawled. Clicks also update `v-model:page`; to route on the client, prevent the link's default and let your router take over. |
-| `hasNext`                               | For cursor-based APIs without a total: leave out `total` and say whether there is a next page. The range then reads "51–100". With a `total` it overrides the one worked out from it.                                        |
+| Prop                                    | What it does                                                                                                                                                                                                                                                                                                                            |
+| --------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `showFirstLast`                         | Adds « and » buttons for the first and last page. Useful with long lists. Needs `total`.                                                                                                                                                                                                                                                |
+| `jumpToPage`                            | Shows the page number as a small field — "Page [6] of 25". Needs `total`. Enter or leaving the field goes there. Numbers out of range snap to the first or last page, and an empty field restores the current page.                                                                                                                     |
+| `showRange`                             | `false` hides "1–50 of 1,240". The storefront usually hides it.                                                                                                                                                                                                                                                                         |
+| `pageSizeOptions` + `v-model:page-size` | Rows-per-page select, e.g. `[25, 50, 100]`. The page size defaults to 50; bind it even without the select when your pages hold a different number. `:show-page-size="false"` hides the select again. Changing the page size keeps the current first row in view: the page changes to the one that holds it, and `v-model:page` updates. |
+| `align`                                 | `end` (default), `start`, `center` (storefront), or `between` (range on the left, controls on the right).                                                                                                                                                                                                                               |
+| `size`                                  | `slim` (default; back office), `default`, `large` (storefront). The same sizes as Button.                                                                                                                                                                                                                                               |
+| `disabled`                              | Disables the controls while a page loads, and sets `aria-busy`. The current page number and the control that had focus stay focusable (`aria-disabled`), so focus isn't lost in any variant.                                                                                                                                            |
+| `hrefFor(page)`                         | Renders the controls as links (`?page=6`), so pages can be bookmarked, opened in a new tab and crawled. Clicks also update `v-model:page`; Ctrl/Cmd, Shift, Alt and middle clicks are left to the browser (a new tab) and don't. To route on the client, prevent the link's default and let your router take over.                      |
+| `hasNext`                               | For cursor-based APIs without a total: leave out `total` and say whether there is a next page. The range then reads "51–100". With a `total` it overrides the one worked out from it.                                                                                                                                                   |
 
 ## Narrow widths
 
@@ -49,7 +51,7 @@ The bar keeps to one line by measuring its own width:
 ## Keyboard and screen readers
 
 - It's a `nav` landmark named "Pagination". The controls are buttons (links with `hrefFor`), each named: "First page", "Previous page", "Page 6", "Next page", "Last page". The current page has `aria-current="page"`. Controls that can't be used (Previous on page 1) are disabled.
-- Tab moves through the controls; Enter or Space activates one. In the jump field, Enter goes to the page typed; so does leaving the field.
+- Tab moves through the controls; Enter or Space activates a button, Enter a link (with `hrefFor`). In the jump field, Enter goes to the page typed; so does leaving the field.
 - The rows-per-page select and the jump field are labelled "Rows per page" and "Page", also when those words are hidden on narrow bars. The range and "6 / 25" are hidden from screen readers; the announcement below says the same.
 - Each page change is announced: the range, or "Page 6 of 25" when the range is hidden.
 - Focus never falls off the page. Pressing Next on the last page, or a number that scrolls out of the list, moves focus to the current page or the nearest control that still works.

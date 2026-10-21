@@ -1,4 +1,4 @@
-<!-- multiple picks several values; they show as tags in the box, and the panel stays open until Done. -->
+<!-- multiple picks several values; they show as tags in the box, and the panel stays open while you pick (Escape, a click outside or Tab closes it; Done on phones). -->
 <script setup lang="ts">
 import { QCombobox, QField, type ComboboxOption } from '@frederikhd/quiet';
 import { ref } from 'vue';

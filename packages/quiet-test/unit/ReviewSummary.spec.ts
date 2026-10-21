@@ -19,7 +19,7 @@ describe('QReviewSummary', () => {
     expect(rows).toHaveLength(5);
     expect(rows[0].get('.q-rsum__bar > span').attributes('style')).toContain('width: 100%');
     expect(rows[1].get('.q-rsum__bar > span').attributes('style')).toContain('width: 35%');
-    expect(rows[0].get('.q-visually-hidden').text()).toBe('20 reviews — 5 stars');
+    expect(rows[0].get('.q-visually-hidden').text()).toBe('5 stars, 20 reviews');
     expect(w.find('button').exists()).toBe(false);
   });
 
@@ -67,7 +67,7 @@ describe('QReviewSummary', () => {
     configure({ strings: { rating: { stars: (n: number) => `${n} Sterne` } } });
     try {
       const w = mount(QReviewSummary, { props: { average: 4.3, distribution } });
-      expect(w.findAll('li')[0].get('.q-visually-hidden').text()).toBe('20 reviews — 5 Sterne');
+      expect(w.findAll('li')[0].get('.q-visually-hidden').text()).toBe('5 Sterne, 20 reviews');
     } finally {
       configure({ strings: { rating: { stars: (n: number) => `${n} ${n === 1 ? 'star' : 'stars'}` } } });
     }

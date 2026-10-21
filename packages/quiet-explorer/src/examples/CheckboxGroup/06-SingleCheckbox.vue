@@ -1,4 +1,4 @@
-<!-- One checkbox in a group without a label: it keeps the hint and lines up with the fields around it. -->
+<!-- One checkbox in a group without a label: it keeps the hint and lines up with the fields around it. A lone checkbox that must be ticked needs no group: Checkbox has its own required and error. -->
 <script setup lang="ts">
 import { QCheckbox, QCheckboxGroup, QField, QForm, QInput } from '@frederikhd/quiet';
 import { ref } from 'vue';

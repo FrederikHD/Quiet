@@ -122,3 +122,17 @@ describe('QQuantityStepper', () => {
     w.unmount();
   });
 });
+
+describe('QQuantityStepper (audit fixes)', () => {
+  it('keeps values on the step grid when max is off it', async () => {
+    const w = mk({ modelValue: 3, min: 1, step: 2, max: 10 });
+    await w.get('input').trigger('keydown', { key: 'End' });
+    expect(w.emitted('update:modelValue')!.at(-1)).toEqual([9]);
+    const typed = mk({ modelValue: 3, min: 1, step: 2, max: 10 });
+    await typed.get('input').setValue('10');
+    await typed.get('input').trigger('blur');
+    expect(typed.emitted('update:modelValue')!.at(-1)).toEqual([9]);
+    const top = mk({ modelValue: 9, min: 1, step: 2, max: 10 });
+    expect(top.findAll('button').at(-1)!.attributes('disabled')).toBeDefined();
+  });
+});

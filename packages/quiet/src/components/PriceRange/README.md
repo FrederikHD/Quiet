@@ -9,7 +9,7 @@ From–to filter for prices: a two-handle slider and two fields that say the exa
 ## Behaviour
 
 - The slider is two native range inputs on one track ("Minimum price", "Maximum price", read as "30,00 €"), so arrow keys, Page Up/Down, Home/End, touch and screen readers work like any slider. The handles can't cross.
-- The fields take typed amounts (comma or point) and commit on Enter or when you leave them, rounded to `step` and kept inside the range.
+- The fields take typed amounts in the configured locale ("1.000,50" in German; comma or point for the decimals) and commit on Enter or when you leave them, rounded to `step` and kept inside the range.
 - `v-model` follows every move (update what the fields show); `@commit` fires once when a moved handle is let go (pointer up, or the key released) or a typed price is committed — filter then, not on every pixel. Tabbing to a handle or clicking it without moving it doesn't commit.
 - Currency symbol from `currency`, or from `configure({ locale, currency })`: "30 €" in German, "€30" in English. It shows inside the fields; the handles' spoken value is the formatted amount.
 - `labelHidden` hides the "Price" label but keeps it as the group's name, for a filter panel whose heading already says "Price".

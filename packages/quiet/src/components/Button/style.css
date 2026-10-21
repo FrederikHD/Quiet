@@ -231,6 +231,12 @@ button.q-btn--ghost .q-btn__icon {
     padding: 0;
   }
 }
+/* Full width wins over the square icon-only width (in every size) */
+.q-btn--icon.q-btn--full,
+.q-btn--icon.q-btn--full.q-btn--slim,
+.q-btn--icon.q-btn--full.q-btn--large {
+  width: 100%;
+}
 
 /* Count — a bubble on the corner of an icon-only button (the cart), a pill after the label otherwise */
 .q-btn__count {
@@ -293,7 +299,8 @@ button.q-btn--ghost .q-btn__icon {
 
 /* Loading — keeps the variant's look, hides the label, shows a spinner */
 .q-btn--loading,
-.q-btn--loading:disabled {
+.q-btn--loading:disabled,
+.q-btn--loading[aria-disabled='true'] {
   cursor: progress;
 }
 .q-btn--loading.q-btn--primary {

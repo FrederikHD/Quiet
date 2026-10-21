@@ -9,13 +9,11 @@ import MarkdownView from './MarkdownView.vue';
   <QPage title="Quiet" subtitle="A calm, neutral-first design system for commerce — in Vue.">
     <QCard title="Get started" :heading-level="2">
       <ol class="ex-steps">
+        <li>Install the package: <code>npm install @frederikhd/quiet</code>.</li>
         <li>
-          Add the <code>quiet</code> package — it isn't on npm yet; in this repo it is the
-          <code>packages/quiet</code> workspace.
-        </li>
-        <li>
-          <code>import '@frederikhd/quiet/style.css'</code> and <code>app.use(Quiet, { locale: 'de-DE' })</code> — or
-          import components one by one: <code>import { QButton } from '@frederikhd/quiet'</code>.
+          <code>import { Quiet } from '@frederikhd/quiet'</code>, <code>import '@frederikhd/quiet/style.css'</code> and
+          <code>app.use(Quiet, { locale: 'de-DE' })</code> — or import components one by one:
+          <code>import { QButton } from '@frederikhd/quiet'</code>.
         </li>
         <li>
           Load Inter from Google Fonts, set <code>data-theme</code> and <code>data-density</code> on

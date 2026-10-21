@@ -26,13 +26,16 @@ describe('QTextarea', () => {
     });
     const count = w.get('.q-textarea__count');
     expect(count.text()).toBe('3 / 100');
-    expect(count.attributes('aria-live')).toBe('off');
+    const live = w.get('.q-textarea__live');
+    expect(count.attributes('aria-live')).toBeUndefined();
+    expect(live.attributes('aria-live')).toBe('polite');
+    expect(live.text()).toBe('');
     expect(w.get('textarea').attributes('maxlength')).toBe('100');
     expect(w.get('textarea').attributes('aria-describedby')).toBe(count.attributes('id'));
     await w.setProps({ modelValue: 'x'.repeat(91) });
     expect(count.text()).toBe('9 characters left');
     expect(count.classes()).toContain('is-near');
-    expect(count.attributes('aria-live')).toBe('polite');
+    expect(live.text()).toBe('9 characters left');
     await w.setProps({ modelValue: 'x'.repeat(99) });
     expect(count.text()).toBe('1 character left');
   });

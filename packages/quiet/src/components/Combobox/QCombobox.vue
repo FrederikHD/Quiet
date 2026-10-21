@@ -234,6 +234,9 @@ function setOpen(next: boolean) {
   if (next) {
     inDialog.value = props.dialog === 'always' || (props.dialog !== 'never' && window.innerWidth < 640);
     dialogLabel.value = labelText() || (attrs['aria-label'] as string) || strings.value.searchPlaceholder;
+    // Opened from the keyboard while the field is scrolled off-screen: bring it into view first, or the dropdown
+    // would close at once for having nothing to point at.
+    if (!inDialog.value && !open.value) box.value?.scrollIntoView?.({ block: 'nearest', behavior: 'instant' });
   }
   open.value = next;
   if (!next) query.value = '';

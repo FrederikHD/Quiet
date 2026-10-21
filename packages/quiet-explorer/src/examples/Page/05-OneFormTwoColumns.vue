@@ -30,7 +30,9 @@ function save() {
             <QField id="product-title" label="Title" required :error="errors?.[0]?.message">
               <QInput v-model="v.title" placeholder="e.g. Linen shirt, blue" />
             </QField>
-            <QField label="Price"><QInput v-model="v.price" suffix="€" align="end" numeric /></QField>
+            <QField label="Price in EUR"
+              ><QInput v-model="v.price" suffix="€" align="end" numeric inputmode="decimal"
+            /></QField>
           </QCard>
           <template #aside>
             <QCard title="Status">

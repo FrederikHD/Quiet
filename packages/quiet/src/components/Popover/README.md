@@ -10,7 +10,7 @@ A small panel anchored to a trigger, opened by click or tap: short help text (`k
 ## Behaviour
 
 - Opens on **click or tap**, never on hover — hover doesn't exist on touch screens and hover-only help can't be reached by keyboard.
-- Closes on Escape, a click outside, pressing the trigger again, or focus moving elsewhere. It also closes when its trigger scrolls out of view. Inside a Dialog it sits above the dialog, and Escape closes it before the dialog.
+- Closes on Escape, a click outside, pressing the trigger again, or focus moving elsewhere (Tab out of the page included; switching to another app leaves it open). It also closes when its trigger scrolls out of view, and if focus was in the panel it goes back to the trigger. Inside a Dialog it sits above the dialog, and Escape closes it before the dialog.
 - Sits below the trigger, `space-2` (8px) away; flips above when there's no room and stays 8px inside the viewport. Use `placement="top"` to prefer above and `align` (`start` by default, `center`, `end`) to line up with the trigger.
 - Renders at the end of the page, so it is never clipped by a table, card or scroll container, and follows its trigger on scroll and resize. A `class` or `style` set on the Popover goes to this panel, as does `panel-class`.
 - `width` fixes the panel's width (a number in px, or any CSS length). Without it the panel is as wide as its content, up to 320px. Fields and groups (Field, CheckboxGroup, RadioGroup, FieldGroup) measure their own width and so have none to give, so a panel holding one takes the full 320px; pass `width` for a narrower one. `flush` removes the panel's padding, for lists that reach the edges.

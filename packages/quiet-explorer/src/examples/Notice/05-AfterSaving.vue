@@ -26,7 +26,8 @@ const saved = ref(false);
 .stack > [role='status'] {
   justify-self: stretch;
 }
+/* Empty, the region stays in the page (so it is announced when it fills) but takes no room in the grid. */
 .stack > [role='status']:empty {
-  display: none;
+  margin-bottom: calc(-1 * var(--space-3));
 }
 </style>

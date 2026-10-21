@@ -17,7 +17,7 @@ The shop's search field with suggestions as you type: collections and products (
       })),
     },
   ]"
-  @select="go"
+  @select="(item) => go(`/products/${item.id}`)"
   @submit="(query) => go(`/search?q=${encodeURIComponent(query)}`)"
 />
 ```
@@ -44,7 +44,7 @@ A search field doesn't fit a phone's header next to the brand and the cart. Put 
 - Focus stays in the field. ↓ opens the list, or moves down; ↑ moves up; both wrap round. The highlighted row is announced through `aria-activedescendant` and `aria-selected`.
 - Enter opens the highlighted suggestion, or searches when none is highlighted. Escape closes the list; Escape again empties the field. Tab closes the list and moves on.
 - Group headings are hidden as text but name their `role="group"`, so screen readers say which group a suggestion is in.
-- The number of suggestions ("3 suggestions", "No suggestions") is announced politely as it changes; "Search for “…”" isn't counted.
+- The number of suggestions ("3 suggestions", "No suggestions") is announced politely as it changes; "Search for “…”" isn't counted. A box that never gets suggestions announces nothing: "No suggestions" is only said once there have been some.
 - Pictures and icons are hidden from screen readers; the label names each row.
 
 ## Not for
@@ -57,7 +57,7 @@ Input (with its search icon and clear button), Icon.
 
 ## What you provide
 
-- **Optional:** `suggestions` (`{ id?, label, description?, image?, icon?, meta? }`, flat or in groups `{ label?, items }`; keep it to about eight, matched to the current text — leave it empty to search without suggestions), `searchOption` (default `true`), `inline`, `size` (`default` | `large`, default `default`), `label` (the hidden field name: "Search products"), `placeholder` (default "Search"), `autofocus`.
+- **Optional:** `suggestions` (`{ id?, label, description?, image?, icon?, meta? }`, flat or in groups `{ label?, items }`; keep it to about eight, matched to the current text — leave it empty to search without suggestions: while there is text the list then shows just the "Search for “…”" option, so Enter or a click searches), `searchOption` (default `true`), `inline`, `size` (`default` | `large`, default `default`), `label` (the hidden field name: "Search products"), `placeholder` (default "Search"), `autofocus`.
 - **v-model:** `v-model` (the text in the field).
 - **Events:** `@submit(query)` (Enter, the "Search for “…”" option or a form submit), `@select(item)` (a suggestion was chosen).
 - **Translations:** `strings` — `label` ("Search"), `placeholder` ("Search"), `clear` ("Clear search"), `searchFor` (`(q) => "Search for “q”"`), `count` (`(n) => "3 suggestions"`; "1 suggestion", "No suggestions"). Or set them once with `configure({ strings: { search: … } })`.

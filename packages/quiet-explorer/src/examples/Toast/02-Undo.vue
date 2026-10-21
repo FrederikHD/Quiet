@@ -14,7 +14,7 @@ function archive() {
 <template>
   <div class="row">
     <QButton :disabled="active === 0" @click="archive">Archive product</QButton>
-    <span class="count">{{ active }} active products</span>
+    <span class="count">{{ active }} active {{ active === 1 ? 'product' : 'products' }}</span>
   </div>
 </template>
 

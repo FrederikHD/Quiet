@@ -38,6 +38,7 @@ Three to five steps that build on each other. Keep the labels to one word. Decid
 - A `nav` named "Checkout steps" with an ordered list; the current step has `aria-current="step"`.
 - Finished steps are read as "Address (completed)" and are ordinary links or buttons: Tab reaches them, Enter follows them. The current and later steps are plain text, not Tab stops.
 - The markers (numbers and checks) are hidden from screen readers.
+- After `@select`, the chosen step becomes current and its button turns into plain text, so focus would be lost. Move focus yourself to that step's heading or first field.
 
 ## Built from
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, nextTick, ref } from 'vue';
+import { computed, nextTick, onBeforeUnmount, ref, watch } from 'vue';
 import { useStrings } from '../../config';
 import type { ItemKey } from '../../types';
 import QTag from '../Tag/QTag.vue';
@@ -50,10 +50,33 @@ const root = ref<HTMLElement | null>(null);
 const items = computed(() => props.items.filter((x): x is FilterChip => !!x));
 
 // After a removal focus moves to the next chip, then to Clear all, then to the list itself — never lost.
-async function refocus(i: number) {
+// Apps that update the filters later (router.replace, a fetch) are waited for: until the chip is gone.
+let cancel: (() => void) | null = null;
+onBeforeUnmount(() => cancel?.());
+async function refocus(i: number, gone: () => boolean) {
+  cancel?.();
+  cancel = null;
   await nextTick();
+  if (!gone()) {
+    await new Promise<void>((resolve) => {
+      const stop = watch(
+        items,
+        () => {
+          if (!gone()) return;
+          stop();
+          cancel = null;
+          resolve();
+        },
+        { flush: 'post' },
+      );
+      cancel = stop;
+    });
+  }
   const r = root.value;
   if (!r) return;
+  // Meanwhile focus went somewhere else on purpose: leave it there.
+  const a = document.activeElement;
+  if (a && a !== document.body && !r.contains(a)) return;
   const chips = r.querySelectorAll<HTMLElement>('.q-tag');
   (
     chips[Math.min(i, chips.length - 1)] ??
@@ -64,11 +87,11 @@ async function refocus(i: number) {
 }
 function remove(key: ItemKey, i: number) {
   emit('remove', key);
-  void refocus(i);
+  void refocus(i, () => !items.value.some((x) => x.key === key));
 }
 function clear() {
   emit('clear');
-  void refocus(0);
+  void refocus(0, () => !items.value.length);
 }
 </script>
 
