@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Builds the GitHub Pages site into ./site (run from the repository root): the explorer of the latest release at the
-# root, and the explorer of the current checkout under next/ (the Pages workflow checks out develop, also when the
-# release workflow calls it from a tag). Usage: build-pages.sh <base path>, e.g. /Quiet/.
+# root, the explorer of the current checkout under next/ (the Pages workflow checks out develop, also when the
+# release workflow calls it from a tag), and the example shop under example/, built with the current checkout. Usage: build-pages.sh <base path>, e.g. /Quiet/.
 set -euo pipefail
 base="${1:?base path, e.g. /Quiet/}"
 tag="$(git tag --list 'v*' --sort=-v:refname | grep -v -- - | head -n 1)" # the latest stable release
@@ -19,5 +19,8 @@ git worktree add --detach "$tmp" "$tag"
 (cd "$tmp" && npm ci --no-audit --no-fund && EXPLORER_BASE="$base" VITE_EXPLORER_CHANNEL=release npm run build -w quiet-explorer)
 cp -r "$tmp/packages/quiet-explorer/dist/." site/
 git worktree remove --force "$tmp"
+
+echo "Example shop → ${base}example/"
+npm run test:example -w quiet-test -- --build-only --base "${base}example/" --out site/example
 
 sed "s|__BASE__|${base}|" packages/quiet-explorer/scripts/pages-404.html > site/404.html
