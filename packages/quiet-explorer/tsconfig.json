@@ -2,6 +2,8 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "types": ["vite/client", "node"],
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
     "paths": {
       "@frederikhd/quiet": ["../quiet/src/index.ts"],
       "@quiet/*": ["../quiet/*"]
