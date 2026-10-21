@@ -207,6 +207,8 @@ async function check(url) {
       });
       await step('switch to English on the same page', async () => {
         await page.goto(`${url}/de/products/linen-shirt`);
+        // Settled first: leaving mid-prefetch makes Nuxt log the cut-off payload fetch (NUXT_E7002) as an error.
+        await page.waitForLoadState('networkidle');
         await page.getByRole('link', { name: 'English' }).click();
         await page.waitForURL('**/en/products/linen-shirt');
         await page.getByRole('heading', { name: 'Linen shirt', level: 1 }).waitFor({ timeout: 2000 });
