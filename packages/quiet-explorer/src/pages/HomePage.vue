@@ -20,6 +20,10 @@ import MarkdownView from './MarkdownView.vue';
           <code>&lt;html&gt;</code>.
         </li>
       </ol>
+      <p>
+        The <RouterLink to="/guides/getting-started">Getting started</RouterLink> guide covers Nuxt, type-checking and
+        the page setup; the other guides cover translations, theming, forms, accessibility and upgrading.
+      </p>
       <p class="ex-muted">
         {{ groups.reduce((n, g) => n + g.entries.length, 0) }} components in {{ groups.length }} groups. Pick one from
         the navigation.
