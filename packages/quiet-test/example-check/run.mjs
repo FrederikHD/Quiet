@@ -3,6 +3,7 @@
 // English and German), then opens the pages in Chromium: axe in both themes, no console errors (a hydration
 // mismatch is one), the language of each page, and buying a shirt in German from the product page to the order.
 //   npm run test:example                       build and check
+//   npm run test:example -- --from-npm         check the shop with the version from its package.json, as published
 //   npm run test:example -- --build-only --out site/example --base /Quiet/example/   build for GitHub Pages
 import { execFileSync } from 'node:child_process';
 import { cpSync, mkdtempSync, readFileSync, readdirSync, rmSync, statSync } from 'node:fs';
@@ -17,6 +18,7 @@ const { values: opts } = parseArgs({
     base: { type: 'string', default: '/Quiet/example/' },
     out: { type: 'string' },
     'build-only': { type: 'boolean', default: false },
+    'from-npm': { type: 'boolean', default: false },
   },
 });
 const root = fileURLToPath(new URL('../../../', import.meta.url));
@@ -31,17 +33,24 @@ const run = (cmd, args, cwd, env = {}) =>
 const work = mkdtempSync(join(tmpdir(), 'quiet-example-check-'));
 let server;
 try {
-  console.log('\n› Building and packing @frederikhd/quiet');
-  run('npm', ['run', 'build', '-w', '@frederikhd/quiet'], root);
-  run('npm', ['pack', '-w', '@frederikhd/quiet', '--pack-destination', work], root);
-  const tarball = join(
-    work,
-    readdirSync(work).find((f) => f.endsWith('.tgz')),
-  );
+  if (opts['from-npm']) {
+    console.log('\n› Installing the shop, with @frederikhd/quiet from npm');
+    run('npm', ['ci'], shop);
+  } else {
+    console.log('\n› Building and packing @frederikhd/quiet');
+    run('npm', ['run', 'build', '-w', '@frederikhd/quiet'], root);
+    run('npm', ['pack', '-w', '@frederikhd/quiet', '--pack-destination', work], root);
+    const tarball = join(
+      work,
+      readdirSync(work).find((f) => f.endsWith('.tgz')),
+    );
 
-  console.log('\n› Installing the shop, with this checkout of the library in place of the npm version');
-  run('npm', ['ci'], shop);
-  run('npm', ['install', '--no-save', tarball], shop);
+    console.log('\n› Installing the shop, with this checkout of the library in place of the npm version');
+    run('npm', ['ci'], shop);
+    run('npm', ['install', '--no-save', tarball], shop);
+  }
+  const installed = JSON.parse(readFileSync(join(shop, 'node_modules/@frederikhd/quiet/package.json'), 'utf8'));
+  console.log(`  @frederikhd/quiet ${installed.version}`);
 
   console.log('\n› Type-checking the shop');
   run('npx', ['nuxt', 'typecheck'], shop);
