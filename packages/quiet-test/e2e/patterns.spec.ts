@@ -132,7 +132,8 @@ test.describe('Orders', () => {
     await screen.getByRole('button', { name: 'Mark as fulfilled' }).click();
     await expect(page.getByText('2 orders marked as fulfilled')).toBeVisible();
     await expect(screen.getByRole('tab', { name: /Unfulfilled/ })).toContainText('10');
-    await expect(screen.getByRole('heading', { name: 'Orders', level: 1 })).toBeFocused();
+    // The bulk bar went with the selection: Table puts focus on "Select all".
+    await expect(screen.getByRole('checkbox', { name: 'Select all rows on this page' })).toBeFocused();
   });
 
   test('bulk "Mark as fulfilled" on fulfilled orders says so, without an Undo', async ({ page }) => {

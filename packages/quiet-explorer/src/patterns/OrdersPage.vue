@@ -179,18 +179,14 @@ function fulfil(list: Order[]) {
   toast(was.length === 1 ? `Order #${was[0].id} marked as fulfilled` : `${was.length} orders marked as fulfilled`, {
     action: {
       label: 'Undo',
-      onClick: () => {
-        was.forEach((o) => (o.fulfilment = 'Unfulfilled'));
-        focusTitle();
-      },
+      // Toast returns focus to where it was when Undo is pressed.
+      onClick: () => was.forEach((o) => (o.fulfilment = 'Unfulfilled')),
     },
   });
-  // The button pressed goes away (the bulk bar with the selection, or the order's own button).
+  // The button pressed goes away: on an order, its own button; in the list, the bulk bar with the selection,
+  // where Table moves focus to "Select all" itself.
   if (order.value) focusOn('button[aria-label^="More actions"]');
-  else {
-    resetList();
-    focusTitle();
-  }
+  else resetList();
 }
 
 // One order.
