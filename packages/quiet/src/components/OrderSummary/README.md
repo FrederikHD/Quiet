@@ -46,7 +46,7 @@ Price for each line, DescriptionList for the totals, Disclosure when folded, Ico
 
 All amounts are numbers in the shop currency (`configure({ currency })`); compute totals, tax and discounts in your app — this only shows them.
 
-- **Required:** `items` (`[{ id?, name, variant?, quantity?, price, compareAt?, image?, href? }]`; `price` is the line's total), `total`.
+- **Required:** `items` (`[{ id?, name, variant?, quantity?, price, compareAt?, image?, href? }]`; `price` is the line's total; `[]` shows the totals alone, beside a cart that lists its own lines), `total`.
 - **Optional:** `totals` (rows between Subtotal and Total: `[{ label, detail?, amount?, note?, free? }]`), `subtotal` (default: the sum of the lines), `taxNote`, `currency`, `collapsible` (`true` | `false` | `'auto'`; default false), `collapseBelow` (px of viewport; default 900), `defaultOpen`, `title` (default "Order summary"; `null` for none), `headingLevel` (2–6; default 2), `showQuantity` (`auto` | `always`; default `auto`).
 - **v-model:** `v-model:open` (folded: open or not).
 - **Events:** `@update:open(open)`.

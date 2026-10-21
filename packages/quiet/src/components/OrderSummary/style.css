@@ -125,6 +125,11 @@ a.q-summary__name:focus-visible {
   padding-top: var(--space-4);
   border-top: 1px solid var(--line);
 }
+/* Without lines (a summary of totals only, beside an editable cart), nothing above needs a rule to separate it. */
+.q-summary__body > :first-child {
+  padding-top: 0;
+  border-top: 0;
+}
 .q-summary__term {
   display: inline-flex;
   flex-wrap: wrap;

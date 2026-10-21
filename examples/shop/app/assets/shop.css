@@ -194,13 +194,9 @@
   gap: var(--space-2);
   justify-items: start;
 }
-.cart__variant,
-.cart__note {
+.cart__variant {
   color: var(--ink-muted);
   font: var(--text-small);
-}
-.cart__note {
-  margin: var(--space-3) 0 var(--space-4);
 }
 .cart__price {
   font: var(--text-price);

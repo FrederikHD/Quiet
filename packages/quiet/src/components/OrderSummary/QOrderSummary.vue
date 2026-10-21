@@ -135,7 +135,7 @@ const hasExtra = () => hasContent(slots.default?.());
     :aria-labelledby="title === null ? undefined : `${id}-title`"
   >
     <component :is="`h${headingLevel}`" v-if="title !== null" :id="`${id}-title`" class="q-summary__title">
-      {{ title ?? strings.title }}<span class="q-summary__count">{{ strings.items(count) }}</span>
+      {{ title ?? strings.title }}<span v-if="count" class="q-summary__count">{{ strings.items(count) }}</span>
     </component>
     <QOrderSummaryBody v-bind="bodyProps" :has-extra="hasExtra()">
       <slot />
