@@ -13,6 +13,13 @@ breaking changes, a patch version (0.x.y) never does.
   Forms (validation, the error summary, server errors), Accessibility (what Quiet does and what stays with the app) and
   Upgrading (every breaking change since 0.1). The README links to them. No changes to the components.
 
+### Fixed
+
+- Server rendering in several languages: each app that installs the plugin keeps its own locale, currency and
+  translations on the server, so two requests rendering at the same time no longer take each other's language. Nuxt
+  creates an app per request, so `nuxtApp.vueApp.use(Quiet, { locale })` with the request's language is enough. In
+  the browser nothing changes: `configure()` and `money()` keep working anywhere, with the one shared setting.
+
 ## [0.6.0] - 2026-10-21
 
 ### Added

@@ -71,7 +71,20 @@ export default defineNuxtConfig({
 
 Components render on the server; anything that needs the browser (measuring, focus, observers) runs after mount. Ids come from Vue's `useId`, so they match between the server and the browser.
 
-The locale, currency and translations are shared by the whole app. On a server that renders one shop in one language, set them once in the plugin. If a server renders several languages, keep one language per server process for now: `configure` changes the setting for every request the process is handling.
+On the server, every app gets its own locale, currency and translations from the options you pass to `app.use(Quiet, …)`. Nuxt creates an app for each request, so a shop in several languages passes each request's language there, and requests rendering at the same time never mix. Take the language from something the browser sees too, such as the URL, so the page hydrates in the same language it was rendered in:
+
+```ts
+// plugins/quiet.ts: /de/… in German, everything else in English
+import { Quiet } from '@frederikhd/quiet';
+import { de } from '~/locales/de'; // your copy of the German strings from the Translations guide
+
+export default defineNuxtPlugin((nuxtApp) => {
+  const german = useRoute().path.startsWith('/de');
+  nuxtApp.vueApp.use(Quiet, { locale: german ? 'de-DE' : 'en-GB', strings: german ? de : {} });
+});
+```
+
+Each app starts from what `configure()` set outside any component, so shop-wide defaults can still be set once at start-up. While a component renders, `money()` and `fmt()` follow its app; elsewhere on the server (a server route, code after an `await` in `setup`) they use those shared defaults. In the browser there is one app, and `configure({ locale })` switches its language.
 
 ## The page
 

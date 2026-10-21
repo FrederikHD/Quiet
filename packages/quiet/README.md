@@ -110,7 +110,9 @@ The design tokens are available as CSS custom properties (`var(--brand)`, `var(-
 
 ## Server rendering
 
-Components render on the server (Nuxt, `vue/server-renderer`); browser-only work runs after mount.
+Components render on the server (Nuxt, `vue/server-renderer`); browser-only work runs after mount. On the server, each
+app keeps its own locale, currency and translations from `app.use(Quiet, …)`, so requests in different languages
+rendering at the same time never mix.
 
 ## Licence
 

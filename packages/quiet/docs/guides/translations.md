@@ -26,7 +26,7 @@ app.use(Quiet, {
 - `currency` (an ISO code, default `EUR`) is what `QPrice` and `money()` show. A Price can still take its own `currency`.
 - The same formatting is yours to use: `fmt(1240)`, `money(79)` and `currencySymbol()` follow what is configured.
 
-Both can change while the app runs: `configure({ locale: 'en-GB' })` and every component follows.
+Both can change while the app runs: `configure({ locale: 'en-GB' })` and every component follows. On a server, each app (each request, in Nuxt) has its own settings: see [Getting started](getting-started.md).
 
 ## Phrases that take values
 
