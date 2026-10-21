@@ -120,6 +120,15 @@ describe('QOrderSummary', () => {
     expect(w.get('button.q-disc__btn').text()).toContain('Zuklappen');
   });
 
+  it('shows the totals alone without items: no empty list, no "0 items"', () => {
+    const w = summary({ items: [], subtotal: 118, totals: [{ label: 'Shipping', amount: 4.9 }], total: 122.9 });
+    expect(w.find('.q-summary__lines').exists()).toBe(false);
+    expect(w.find('ul').exists()).toBe(false);
+    expect(w.get('h2.q-summary__title').text()).toBe('Order summary');
+    expect(w.get('.q-summary__totals').text()).toContain('€118.00');
+    expect(w.get('.q-summary__totals').text()).toContain('€122.90');
+  });
+
   it('does not fold with collapsible="auto" on a wide screen', () => {
     expect(summary({ collapsible: 'auto' }).classes()).not.toContain('q-summary--folds');
   });

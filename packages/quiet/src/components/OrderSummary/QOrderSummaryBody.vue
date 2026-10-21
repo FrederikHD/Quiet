@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// The lines, the extra (a DiscountCode) and the totals — the same folded or not.
+// The lines, the extra (a DiscountCode) and the totals — the same folded or not. No items: no list, the totals alone.
 import { computed } from 'vue';
 import { money } from '../../config';
 import QDescriptionList, { type DescriptionListItem } from '../DescriptionList/QDescriptionList.vue';
@@ -35,7 +35,7 @@ const dlItems = computed<DescriptionListItem[]>(() => [
 
 <template>
   <div :id="id" class="q-summary__body">
-    <ul class="q-summary__lines">
+    <ul v-if="items.length" class="q-summary__lines">
       <li v-for="(it, i) in items" :key="it.id ?? i" class="q-summary__line">
         <span class="q-summary__media">
           <img v-if="it.image?.src" :src="it.image.src" :alt="it.image.alt ?? ''" loading="lazy" decoding="async" />

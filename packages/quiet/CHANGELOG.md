@@ -19,6 +19,8 @@ breaking changes, a patch version (0.x.y) never does.
   translations on the server, so two requests rendering at the same time no longer take each other's language. Nuxt
   creates an app per request, so `nuxtApp.vueApp.use(Quiet, { locale })` with the request's language is enough. In
   the browser nothing changes: `configure()` and `money()` keep working anywhere, with the one shared setting.
+- OrderSummary without items (the totals beside a cart that lists its own lines) shows the totals alone: no empty list,
+  no "0 items" beside the title, and no rule above the subtotal.
 
 ## [0.6.0] - 2026-10-21
 
