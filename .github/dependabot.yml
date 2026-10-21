@@ -26,6 +26,10 @@ updates:
     directory: /examples/shop
     schedule:
       interval: weekly
+    ignore:
+      # As for the root: TypeScript majors wait until vue-tsc (nuxt typecheck) supports them.
+      - dependency-name: typescript
+        update-types: ['version-update:semver-major']
     groups:
       example:
         patterns: ['*']
