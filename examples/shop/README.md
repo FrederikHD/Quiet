@@ -26,3 +26,4 @@ npm run generate   # every page as static HTML in .output/public
 From the repository root, `npm run test:example` builds and packs the library from this checkout, installs it here in
 place of the npm version, type-checks the shop, prerenders every page and opens them in Chromium: axe in both themes,
 no console errors (a hydration mismatch is one), the language of each page, phone widths, and a purchase in German.
+`npm run test:example -- --from-npm` runs the same checks on the version in `package.json`, exactly as published.
