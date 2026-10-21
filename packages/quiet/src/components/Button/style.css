@@ -231,6 +231,12 @@ button.q-btn--ghost .q-btn__icon {
     padding: 0;
   }
 }
+/* Full width wins over the square icon-only width (in every size) */
+.q-btn--icon.q-btn--full,
+.q-btn--icon.q-btn--full.q-btn--slim,
+.q-btn--icon.q-btn--full.q-btn--large {
+  width: 100%;
+}
 
 /* Count — a bubble on the corner of an icon-only button (the cart), a pill after the label otherwise */
 .q-btn__count {

@@ -80,3 +80,23 @@ describe('QNotice', () => {
     expect(own.get('.q-notice__dismiss').attributes('aria-label')).toBe('Ausblenden');
   });
 });
+
+describe('QNotice (audit fixes)', () => {
+  it('merges a partial prefix with the others', () => {
+    configure({ strings: { notice: { prefix: { warning: 'Achtung:' } } } });
+    const warn = mount(QNotice, { props: { tone: 'warning' }, slots: { default: 'x' } });
+    expect(warn.get('.q-visually-hidden').text()).toBe('Achtung:');
+    const err = mount(QNotice, { props: { tone: 'danger' }, slots: { default: 'x' } });
+    expect(err.get('.q-visually-hidden').text()).toBe('Error:');
+    const own = mount(QNotice, {
+      props: { tone: 'danger', strings: { prefix: { danger: 'Fehler:' } } },
+      slots: { default: 'x' },
+    });
+    expect(own.get('.q-visually-hidden').text()).toBe('Fehler:');
+    const ownWarn = mount(QNotice, {
+      props: { tone: 'warning', strings: { prefix: { danger: 'Fehler:' } } },
+      slots: { default: 'x' },
+    });
+    expect(ownWarn.get('.q-visually-hidden').text()).toBe('Achtung:');
+  });
+});

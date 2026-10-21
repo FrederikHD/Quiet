@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, useSlots } from 'vue';
-import { useStrings } from '../../config';
+import { useConfig, useStrings } from '../../config';
 import QButton from '../Button/QButton.vue';
 import QIcon from '../Icon/QIcon.vue';
 import type { IconName } from '../Icon/icons';
@@ -53,14 +53,20 @@ const ICONS: Record<NoticeTone, IconName> = {
   warning: 'alert-triangle',
   danger: 'alert-circle',
 };
-const strings = useStrings<NoticeStrings>(
-  'notice',
-  { dismiss: 'Dismiss', prefix: { info: '', success: '', warning: 'Warning:', danger: 'Error:' } },
-  () => props.strings,
-);
+const PREFIX: Record<NoticeTone, string> = { info: '', success: '', warning: 'Warning:', danger: 'Error:' };
+const strings = useStrings<NoticeStrings>('notice', { dismiss: 'Dismiss', prefix: PREFIX }, () => props.strings);
+// The prefixes merge one by one, so { prefix: { warning: 'Achtung:' } } keeps the other tones' prefixes.
+const config = useConfig();
 const tone = computed<NoticeTone>(() => (props.tone in ICONS ? props.tone : 'info'));
 const hasTitle = () => !!props.title || !!slots.title;
-const prefix = computed(() => strings.value.prefix?.[tone.value]);
+const prefix = computed(
+  () =>
+    ({
+      ...PREFIX,
+      ...(config.strings.notice as NoticeStrings | undefined)?.prefix,
+      ...props.strings?.prefix,
+    })[tone.value],
+);
 </script>
 
 <template>

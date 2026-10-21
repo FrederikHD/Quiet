@@ -34,7 +34,7 @@ const titled = computed(() => props.title != null || !!slots.title);
 
 <template>
   <section :class="['q-card', flush && 'q-card--flush']" :aria-labelledby="titled ? `${id}-title` : undefined">
-    <div v-if="titled || slots.actions" class="q-card__header">
+    <div v-if="titled || description || slots.description || slots.actions" class="q-card__header">
       <div class="q-card__titles">
         <component :is="`h${headingLevel}`" v-if="titled" :id="`${id}-title`" class="q-card__title">
           <slot name="title">{{ title }}</slot>

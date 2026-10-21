@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { QButton, QFormActions } from '@frederikhd/quiet';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { h } from 'vue';
 
 describe('QFormActions', () => {
@@ -31,5 +31,21 @@ describe('QFormActions', () => {
     const w = mount(QFormActions, { attrs: { class: 'extra', 'data-test': 'x' } });
     expect(w.classes()).toContain('extra');
     expect(w.attributes('data-test')).toBe('x');
+  });
+});
+
+describe('QFormActions (audit fixes)', () => {
+  it('pads the scrolling box it sits in, and takes the padding away again', async () => {
+    const box = document.createElement('div');
+    box.style.overflowY = 'auto';
+    document.body.append(box);
+    const w = mount(QFormActions, { attachTo: box, props: { sticky: true } });
+    const spy = vi.spyOn(w.element, 'getBoundingClientRect').mockReturnValue({ height: 56 } as DOMRect);
+    await w.setProps({ sticky: false });
+    await w.setProps({ sticky: true });
+    expect(box.style.scrollPaddingBottom).toBe('64px');
+    spy.mockRestore();
+    w.unmount();
+    expect(box.style.scrollPaddingBottom).toBe('');
   });
 });

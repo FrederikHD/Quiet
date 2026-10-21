@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { QPriceRange } from '@frederikhd/quiet';
+import { QPriceRange, configure } from '@frederikhd/quiet';
 import { describe, expect, it } from 'vitest';
 
 type Range = [number, number];
@@ -108,5 +108,41 @@ describe('QPriceRange', () => {
   it('disables sliders and fields', () => {
     const w = mountRange({ disabled: true });
     for (const i of w.findAll('input')) expect(i.attributes('disabled')).toBeDefined();
+  });
+});
+
+describe('QPriceRange (audit fixes)', () => {
+  it("doesn't commit again when a handle can't move", async () => {
+    const w = mountRange({ modelValue: [90, 90] });
+    const lower = w.findAll('input[type="range"]')[0];
+    await lower.setValue('95');
+    await lower.trigger('keyup');
+    expect(w.emitted('commit')).toBeUndefined();
+    expect((lower.element as HTMLInputElement).value).toBe('90');
+  });
+
+  it('puts the lower handle on top when both sit at the max end', async () => {
+    const w = mountRange({ modelValue: [115, 115] });
+    const [lower, upper] = w.findAll('input[type="range"]');
+    expect(lower.classes()).toContain('is-top');
+    expect(upper.classes()).not.toContain('is-top');
+    await w.setProps({ modelValue: [20, 20] });
+    expect(lower.classes()).not.toContain('is-top');
+  });
+
+  it("reads typed prices in the shop's locale", async () => {
+    configure({ locale: 'de-DE' });
+    try {
+      const w = mountRange({ min: 0, max: 5000, step: 1, modelValue: [0, 5000] });
+      const [from, to] = w.findAll('.q-range__fields input');
+      await from.setValue('1.000');
+      await from.trigger('blur');
+      expect(w.emitted('commit')!.at(-1)).toEqual([[1000, 5000]]);
+      await to.setValue('2.500,40');
+      await to.trigger('blur');
+      expect(w.emitted('commit')!.at(-1)).toEqual([[1000, 2500]]);
+    } finally {
+      configure({ locale: 'en' });
+    }
   });
 });

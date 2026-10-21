@@ -91,3 +91,20 @@ describe('QFilterChips', () => {
     w.unmount();
   });
 });
+
+describe('QFilterChips (audit fixes)', () => {
+  it('waits for items that update later before moving focus', async () => {
+    const w = mount(QFilterChips, { attachTo: document.body, props: { items: ALL } });
+    const chip = w.findAll<HTMLButtonElement>('.q-tag')[0];
+    chip.element.focus();
+    await chip.trigger('click');
+    await nextTick();
+    await nextTick();
+    // The app hasn't updated yet: focus stays where it was.
+    expect(document.activeElement).toBe(chip.element);
+    await w.setProps({ items: ALL.slice(1) });
+    await nextTick();
+    expect(document.activeElement?.textContent).toContain('Size M');
+    w.unmount();
+  });
+});

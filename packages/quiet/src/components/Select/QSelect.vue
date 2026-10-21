@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, nextTick, onUpdated, ref, useAttrs, useSlots, watch, useModel } from 'vue';
+import { computed, nextTick, onMounted, onUpdated, ref, useAttrs, useSlots, watch, useModel } from 'vue';
 import { useFormReset } from '../../composables/useFormReset';
 import { joinIds, warnOnce } from '../../utils/dom';
 import { useControlId, useFieldControl } from '../Field/context';
@@ -127,11 +127,24 @@ function optDisabled(o: SelectOption) {
   return typeof o === 'object' ? !!o.disabled : false;
 }
 
+// <option> children in the default slot: read their texts once rendered.
+const slotLabels = ref<string[]>([]);
+function measure() {
+  const el = select.value;
+  if (props.options || !el) return;
+  const labels = Array.from(el.options, (o) => o.text.trim());
+  if (labels.join('\n') !== slotLabels.value.join('\n')) slotLabels.value = labels;
+}
+onMounted(measure);
+onUpdated(measure);
+
 // The longest label, laid out invisibly so that without a set width the box is as wide as its options need.
 const longest = computed(() =>
   [
     ...(props.placeholder != null ? [props.placeholder] : []),
-    ...(props.options ?? []).flatMap((o) => (isGroup(o) ? o.options : [o])).map((o) => String(optLabel(o))),
+    ...(props.options
+      ? props.options.flatMap((o) => (isGroup(o) ? o.options : [o])).map((o) => String(optLabel(o)))
+      : slotLabels.value),
   ].reduce((a, b) => (b.length > a.length ? b : a), ''),
 );
 

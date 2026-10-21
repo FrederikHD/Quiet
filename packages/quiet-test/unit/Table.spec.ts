@@ -214,3 +214,39 @@ describe('QTable', () => {
     expect(w.get('.q-table__bulk-count').text()).toBe('1 ausgewählt');
   });
 });
+
+describe('QTable (audit fixes)', () => {
+  it('moves focus to select all when the bulk bar goes away', async () => {
+    const w = table({ selectable: true, defaultSelected: [3] });
+    const clear = w.findAll<HTMLButtonElement>('.q-table__bulk button').at(-1)!;
+    clear.element.focus();
+    await clear.trigger('click');
+    await nextTick();
+    expect(w.find('.q-table__bulk').exists()).toBe(false);
+    expect(document.activeElement).toBe(w.get('thead input[type="checkbox"]').element);
+  });
+
+  it('hides the "Sort by" placeholder once a sort is set', async () => {
+    const w = table({ mobile: 'cards' });
+    const opt = () => w.get('.q-table__mobilesort option[value=""]');
+    expect(opt().attributes('hidden')).toBeUndefined();
+    await w.findAll('.q-table__sort')[1].trigger('click');
+    expect(opt().attributes('hidden')).toBeDefined();
+    expect(opt().attributes('disabled')).toBeDefined();
+  });
+
+  it('makes a maxHeight table that only scrolls vertically a focusable region', async () => {
+    const sh = vi.spyOn(HTMLElement.prototype, 'scrollHeight', 'get').mockReturnValue(800);
+    const ch = vi.spyOn(HTMLElement.prototype, 'clientHeight', 'get').mockReturnValue(300);
+    try {
+      const w = table({ maxHeight: 300 });
+      await nextTick();
+      const s = w.get('.q-table__scroll');
+      expect(s.attributes('tabindex')).toBe('0');
+      expect(s.attributes('role')).toBe('region');
+    } finally {
+      sh.mockRestore();
+      ch.mockRestore();
+    }
+  });
+});

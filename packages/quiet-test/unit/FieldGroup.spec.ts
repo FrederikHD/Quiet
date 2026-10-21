@@ -114,3 +114,12 @@ describe('QFieldGroup', () => {
     expect(w.findAll('.q-fgroup__row > .q-field').every((f) => f.classes().includes('q-field--top'))).toBe(true);
   });
 });
+
+describe('QFieldGroup (audit fixes)', () => {
+  it('passes required down to its controls as aria-required', () => {
+    const w = mount(QFieldGroup, { props: { label: 'Name', required: true }, slots: { default: two } });
+    for (const i of w.findAll('input')) expect(i.attributes('aria-required')).toBe('true');
+    const opt = mount(QFieldGroup, { props: { label: 'Name' }, slots: { default: two } });
+    for (const i of opt.findAll('input')) expect(i.attributes('aria-required')).toBeUndefined();
+  });
+});

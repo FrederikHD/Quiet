@@ -1,13 +1,14 @@
 <script setup lang="ts">
 // The markup of CheckboxGroup and RadioGroup: the question, its marker, help and chosen names, the options, the
 // message and the hint.
+import { useAttrs } from 'vue';
 import type { FormStrings, LabelPlacement, Markers } from '../components/Field/context';
 import QFieldHelp from './QFieldHelp.vue';
 import QFieldMarker from './QFieldMarker.vue';
 import QFieldMessage from './QFieldMessage.vue';
 import type { ChoiceLayout } from './useChoiceGroup';
 
-defineProps<{
+const props = defineProps<{
   kind: 'checkbox' | 'radio';
   layout: ChoiceLayout;
   placement: LabelPlacement;
@@ -30,6 +31,9 @@ defineProps<{
   hintId: string;
   msgId: string;
 }>();
+// An unnamed group adds nothing for screen readers (a lone checkbox without a question): no group role then.
+const attrs = useAttrs();
+const named = () => props.label != null || !!props.ariaLabel || !!attrs['aria-labelledby'];
 </script>
 
 <template>
@@ -43,7 +47,7 @@ defineProps<{
       label == null && 'q-fgroup--unlabelled',
       disabled && 'q-field--disabled',
     ]"
-    :role="kind === 'radio' ? 'radiogroup' : 'group'"
+    :role="kind === 'radio' ? 'radiogroup' : named() ? 'group' : undefined"
     :aria-labelledby="label != null ? labelId : undefined"
     :aria-label="label == null ? ariaLabel : undefined"
     :aria-required="kind === 'radio' && required ? 'true' : undefined"

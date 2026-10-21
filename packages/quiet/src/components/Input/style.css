@@ -203,7 +203,8 @@
     gap: var(--ctl-gap);
   }
   .q-input--slim .q-input__affix > svg,
-  .q-input--slim .q-input__clear {
+  .q-input--slim .q-input__clear,
+  .q-input.q-input--slim .q-input__affix:has(> .q-icon) {
     width: var(--ctl-icon);
     height: var(--ctl-icon);
   }

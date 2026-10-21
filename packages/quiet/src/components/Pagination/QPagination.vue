@@ -147,25 +147,69 @@ function go(p: number) {
   const next = Math.max(1, pages.value ? Math.min(p, pages.value) : p);
   if (next !== current.value) page.value = next;
 }
-function nav(p: number) {
-  if (props.disabled) return;
+function nav(p: number, e?: MouseEvent) {
+  if (props.disabled) {
+    e?.preventDefault();
+    return;
+  }
+  // With hrefFor, let the browser open a new tab or window (Ctrl/Cmd/Shift/Alt or middle click).
+  if (props.hrefFor && e && (e.button !== 0 || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey)) return;
   moved = true;
   go(p);
 }
+// While disabled (loading), the control that had focus stays focusable (aria-disabled instead of disabled),
+// so focus isn't lost in the variants without a current page number.
+type Ctrl = 'first' | 'prev' | 'next' | 'last';
+const held = ref<Ctrl | null>(null);
+const keyOf = (el: Element | null): Ctrl | null => {
+  if (!el || !root.value?.contains(el)) return null;
+  return (['first', 'prev', 'next', 'last'] as const).find((k) => el.classList.contains(`q-pager__${k}`)) ?? null;
+};
+const off = (key: Ctrl, enabled: boolean) => !enabled || (props.disabled && held.value !== key);
+const soft = (key: Ctrl) => (props.disabled && held.value === key ? 'true' : undefined);
+const visible = (el: HTMLElement) => (el.checkVisibility ? el.checkVisibility() : true);
+function pick(r: HTMLElement) {
+  const first = (sel: string) => Array.from(r.querySelectorAll<HTMLElement>(sel)).find(visible);
+  return (
+    first('[aria-current="page"]') ??
+    first('.q-pager__controls button:not([disabled]), .q-pager__controls a[href]:not([tabindex="-1"])')
+  );
+}
 // The button pressed may disappear or turn disabled on the new page (Next on the last page): keep focus inside,
-// on the current page or the nearest enabled control.
-watch(current, async () => {
+// on the current page or the nearest enabled control that can be seen.
+async function rescue() {
   if (!moved) return;
-  moved = false;
   await nextTick();
+  if (!props.disabled) moved = false;
   const r = root.value;
-  const a = document.activeElement as HTMLButtonElement | null;
-  if (!r || (a && r.contains(a) && !a.disabled)) return;
-  const next =
-    r.querySelector<HTMLElement>('[aria-current="page"]') ??
-    r.querySelector<HTMLElement>('.q-pager__controls button:not([disabled]), .q-pager__controls a[href]');
+  const a = document.activeElement as HTMLElement | null;
+  if (!r || (a && a !== document.body && !(r.contains(a) && a.matches(':disabled, [tabindex="-1"]')))) return;
+  let next = pick(r);
+  if (!next && props.disabled) {
+    held.value = hasPrev.value ? 'prev' : hasNextPage.value ? 'next' : null;
+    await nextTick();
+    next = pick(r);
+  }
   next?.focus();
-});
+}
+watch(current, rescue);
+watch(
+  () => props.disabled,
+  (d) => {
+    held.value = d ? keyOf(document.activeElement) : null;
+    if (!d) rescue();
+  },
+);
+
+// A new page size keeps the first row that was shown on screen.
+function setSize(n: number) {
+  const first = (current.value - 1) * perPage.value;
+  pageSizeModel.value = n;
+  const size = n || 50;
+  const last = props.total != null ? Math.max(1, Math.ceil(props.total / size)) : Infinity;
+  const next = Math.max(1, Math.min(Math.floor(first / size) + 1, last));
+  if (next !== page.value) page.value = next;
+}
 
 // Jump to a page: the page number as a small field (Enter or leaving the field goes there).
 const draft = ref(String(current.value));
@@ -187,8 +231,9 @@ const jumpId = useQuietId('q-pager-jump-');
 const sizeId = useQuietId('q-pager-size-');
 const showJump = computed(() => props.jumpToPage && pages.value != null);
 const showSize = computed(() => props.showPageSize && !!props.pageSizeOptions?.length);
-const href = (p: number, enabled = true) =>
-  props.hrefFor && enabled && !props.disabled ? props.hrefFor(p) : undefined;
+// A control that stays focusable while disabled keeps its href, so it isn't swapped for a button.
+const href = (p: number, enabled = true, keep = false) =>
+  props.hrefFor && enabled && (!props.disabled || keep) ? props.hrefFor(p) : undefined;
 </script>
 
 <template>
@@ -208,7 +253,7 @@ const href = (p: number, enabled = true) =>
             :model-value="String(perPage)"
             :options="pageSizeOptions!.map(String)"
             :disabled="disabled"
-            @update:model-value="pageSizeModel = Number($event)"
+            @update:model-value="setSize(Number($event))"
           />
         </span>
         <span v-if="showRange" class="q-pager__range" aria-hidden="true">{{ rangeText }}</span>
@@ -220,18 +265,20 @@ const href = (p: number, enabled = true) =>
           class="q-pager__first"
           icon-start="chevrons-left"
           :aria-label="strings.first"
-          :disabled="disabled || !hasPrev"
-          :href="href(1, hasPrev)"
-          @click="nav(1)"
+          :disabled="off('first', hasPrev)"
+          :aria-disabled="soft('first')"
+          :href="href(1, hasPrev, held === 'first')"
+          @click="nav(1, $event)"
         />
         <QButton
           :size="props.size"
           class="q-pager__prev"
           icon-start="chevron-left"
           :aria-label="strings.previous"
-          :disabled="disabled || !hasPrev"
-          :href="href(current - 1, hasPrev)"
-          @click="nav(current - 1)"
+          :disabled="off('prev', hasPrev)"
+          :aria-disabled="soft('prev')"
+          :href="href(current - 1, hasPrev, held === 'prev')"
+          @click="nav(current - 1, $event)"
         />
 
         <template v-if="variant === 'pages'">
@@ -246,8 +293,8 @@ const href = (p: number, enabled = true) =>
                 :aria-current="it === current ? 'page' : undefined"
                 :aria-label="strings.page(it)"
                 :disabled="disabled && it !== current"
-                :href="href(it)"
-                @click="it !== current && nav(it)"
+                :href="href(it, true, it === current)"
+                @click="it !== current && nav(it, $event)"
               >
                 {{ fmt(it) }}
               </QButton>
@@ -283,9 +330,10 @@ const href = (p: number, enabled = true) =>
           class="q-pager__next"
           icon-start="chevron-right"
           :aria-label="strings.next"
-          :disabled="disabled || !hasNextPage"
-          :href="href(current + 1, hasNextPage)"
-          @click="nav(current + 1)"
+          :disabled="off('next', hasNextPage)"
+          :aria-disabled="soft('next')"
+          :href="href(current + 1, hasNextPage, held === 'next')"
+          @click="nav(current + 1, $event)"
         />
         <QButton
           v-if="firstLast"
@@ -293,9 +341,10 @@ const href = (p: number, enabled = true) =>
           class="q-pager__last"
           icon-start="chevrons-right"
           :aria-label="strings.last"
-          :disabled="disabled || !hasNextPage"
-          :href="href(pages!, hasNextPage)"
-          @click="nav(pages!)"
+          :disabled="off('last', hasNextPage)"
+          :aria-disabled="soft('last')"
+          :href="href(pages!, hasNextPage, held === 'last')"
+          @click="nav(pages!, $event)"
         />
       </div>
     </div>

@@ -83,11 +83,12 @@
   overflow-y: auto;
 }
 /* In the drawer the list keeps its full height and the whole drawer scrolls (short landscape phones), so the footer
-   comes after the last item instead of sitting on top of it. */
+   comes after the last item instead of sitting on top of it. Room at the top for the first link's focus ring
+   (2px + 2px offset), which the scrolling drawer would otherwise clip. */
 .q-shell__drawer .q-shell__nav {
   flex: 1 0 auto;
   overflow: visible;
-  padding-top: 0;
+  padding-top: var(--space-1);
 }
 @media (max-width: 1023px) {
   .q-shell {

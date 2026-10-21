@@ -47,3 +47,13 @@ describe('QCard', () => {
     expect(mount(QCard, { props: { flush: true } }).classes()).toContain('q-card--flush');
   });
 });
+
+describe('QCard (audit fixes)', () => {
+  it('shows a description without a title', () => {
+    const w = mount(QCard, { props: { description: 'Last 30 days' }, slots: { default: 'x' } });
+    expect(w.get('.q-card__desc').text()).toBe('Last 30 days');
+    expect(w.find('.q-card__title').exists()).toBe(false);
+    const slotted = mount(QCard, { slots: { description: 'See all', default: 'x' } });
+    expect(slotted.get('.q-card__desc').text()).toBe('See all');
+  });
+});
