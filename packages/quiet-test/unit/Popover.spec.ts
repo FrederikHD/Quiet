@@ -194,6 +194,37 @@ describe('QPopover', () => {
     w.unmount();
   });
 
+  it('kind="tip" closes when focus leaves the document, but not when the window loses focus', async () => {
+    const w = mountPopover({ kind: 'tip', content: 'Help' });
+    const t = w.get('button').element as HTMLButtonElement;
+    t.focus();
+    await w.get('button').trigger('click');
+    await settle();
+    // Another app takes focus: the trigger keeps it here, so the tip stays.
+    t.dispatchEvent(new FocusEvent('focusout', { bubbles: true, relatedTarget: null }));
+    await settle();
+    expect(panel()).not.toBeNull();
+    // Tab past the end of the page: focus leaves for the browser, nothing gets it here.
+    t.blur();
+    await settle();
+    expect(panel()).toBeNull();
+    w.unmount();
+  });
+
+  it('gives focus back to the trigger when the page scrolls it away with focus inside', async () => {
+    const w = mountPopover({}, () => h('button', { class: 'inside' }, 'Paid'));
+    const t = w.get('button').element as HTMLButtonElement;
+    await w.get('button').trigger('click');
+    await settle();
+    expect(document.activeElement?.className).toBe('inside');
+    t.getBoundingClientRect = () => ({ top: -200, bottom: -160, left: 0, right: 80, width: 80, height: 40 }) as DOMRect;
+    window.dispatchEvent(new Event('scroll'));
+    await settle();
+    expect(panel()).toBeNull();
+    expect(document.activeElement).toBe(t);
+    w.unmount();
+  });
+
   it('kind="menu" sets aria-haspopup="menu" and gives the panel no dialog role', async () => {
     const w = mountPopover({ kind: 'menu' }, () =>
       h('div', { role: 'menu' }, h('button', { role: 'menuitem' }, 'Edit')),

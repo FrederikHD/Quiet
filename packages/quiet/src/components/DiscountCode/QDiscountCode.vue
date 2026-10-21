@@ -72,10 +72,16 @@ const busy = ref(false);
 const open = ref(!props.collapsible);
 const said = ref('');
 const input = ref<InstanceType<typeof QInput> | null>(null);
+const root = ref<HTMLElement | null>(null);
 let alive = true;
 onBeforeUnmount(() => (alive = false));
 
-function done(msg: string | null | undefined | void, c: string) {
+// Back to the field for the next code — unless focus has moved elsewhere on the page meanwhile.
+function refocus() {
+  const a = document.activeElement;
+  if (!a || a === document.body || root.value?.contains(a)) input.value?.focus();
+}
+async function done(msg: string | null | undefined | void, c: string, before: string[]) {
   if (!alive) return;
   busy.value = false;
   if (msg) {
@@ -85,13 +91,20 @@ function done(msg: string | null | undefined | void, c: string) {
   }
   error.value = null;
   code.value = '';
-  said.value = strings.value.applied(c);
+  // Announce the code as the shop shows it ("LINEN10", not "linen10" as typed), once `applied` has caught up.
+  await nextTick();
+  if (!alive) return;
+  const added = props.applied.filter((a) => !before.includes(a.code));
+  const shown = added.find((a) => a.code.toLowerCase() === c.toLowerCase()) ?? (added.length === 1 ? added[0] : null);
+  said.value = strings.value.applied(shown?.code ?? c);
+  refocus();
 }
 // Not a <form>: it lives inside the checkout's form, so Enter applies the code instead of submitting the page.
 function submit() {
   const c = code.value.trim();
   if (!c) {
     error.value = strings.value.empty;
+    input.value?.focus();
     return;
   }
   // A code that's already applied is quietly ignored.
@@ -100,14 +113,15 @@ function submit() {
     error.value = null;
     return;
   }
+  const before = props.applied.map((a) => a.code);
   const r = props.apply(c);
   if (r && typeof (r as Promise<unknown>).then === 'function') {
     busy.value = true;
     (r as Promise<string | null | undefined | void>).then(
-      (m) => done(m, c),
-      (e: unknown) => done((e as Error)?.message ?? String(e), c),
+      (m) => done(m, c, before),
+      (e: unknown) => done((e as Error)?.message ?? String(e), c, before),
     );
-  } else done(r as string | null | undefined, c);
+  } else void done(r as string | null | undefined, c, before);
 }
 // After removing, focus goes back to the field.
 async function remove(a: AppliedCode) {
@@ -134,7 +148,7 @@ function onInput(v: string | number | null | undefined) {
 </script>
 
 <template>
-  <div class="q-discount">
+  <div ref="root" class="q-discount">
     <div v-if="open || applied.length" class="q-discount__field">
       <label class="q-field__label" :for="id">{{ label ?? strings.label }}</label>
       <div class="q-discount__row">

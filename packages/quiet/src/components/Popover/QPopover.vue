@@ -86,7 +86,17 @@ function onTriggerClick(e: MouseEvent) {
 function onTriggerFocusOut(e: FocusEvent) {
   if (props.kind !== 'tip' || !open.value) return;
   const next = e.relatedTarget as Node | null;
-  if (next && !document.getElementById(panelId)?.contains(next)) open.value = false;
+  if (next) {
+    if (!document.getElementById(panelId)?.contains(next)) open.value = false;
+    return;
+  }
+  // No next element: focus left the document (Tab past the end, activeElement becomes <body>) or the window lost
+  // focus (another app, activeElement stays on the trigger, so the tip stays). Check once focus has settled.
+  setTimeout(() => {
+    if (!open.value) return;
+    const a = document.activeElement;
+    if (!a || !(trigger.value?.contains(a) || document.getElementById(panelId)?.contains(a))) open.value = false;
+  }, 0);
 }
 function onClose(returnFocus: boolean) {
   open.value = false;

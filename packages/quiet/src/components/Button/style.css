@@ -293,7 +293,8 @@ button.q-btn--ghost .q-btn__icon {
 
 /* Loading — keeps the variant's look, hides the label, shows a spinner */
 .q-btn--loading,
-.q-btn--loading:disabled {
+.q-btn--loading:disabled,
+.q-btn--loading[aria-disabled='true'] {
   cursor: progress;
 }
 .q-btn--loading.q-btn--primary {

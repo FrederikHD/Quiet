@@ -132,6 +132,24 @@ function onKeyDown(e: KeyboardEvent) {
   }
 }
 
+// The first control Tab would reach: shown, not tabindex="-1" (FileUpload's file input) and not hidden from
+// screen readers. A radio group is one Tab stop at its checked radio.
+function firstTabbable(root: HTMLElement | null, selector: string): HTMLElement | null {
+  for (const el of Array.from(root?.querySelectorAll<HTMLElement>(selector) ?? [])) {
+    if (el.getAttribute('tabindex') === '-1' || el.closest('[aria-hidden="true"]') || !el.getClientRects().length)
+      continue;
+    if (el instanceof HTMLInputElement && el.type === 'hidden') continue;
+    if (el instanceof HTMLInputElement && el.type === 'radio' && el.name && !el.checked) {
+      const checked = Array.from(root?.querySelectorAll<HTMLInputElement>('input[type="radio"]:checked') ?? []).find(
+        (r) => r.name === el.name,
+      );
+      if (checked && !checked.disabled) return checked;
+    }
+    return el;
+  }
+  return null;
+}
+
 function activate() {
   if (active) return;
   active = true;
@@ -148,9 +166,9 @@ function activate() {
     .join(', ');
   const target =
     props.initialFocus ??
-    p?.querySelector<HTMLElement>(inBody) ??
+    firstTabbable(p, inBody) ??
     // Nothing to fill in (a confirmation): the first footer button — Cancel, the safe choice.
-    p?.querySelector<HTMLElement>(inFooter) ??
+    firstTabbable(p, inFooter) ??
     p;
   target?.focus({ preventScroll: true });
   document.addEventListener('keydown', onKeyDown);

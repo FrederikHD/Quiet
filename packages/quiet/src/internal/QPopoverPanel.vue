@@ -65,7 +65,11 @@ function reposition() {
   const vh = window.innerHeight;
   // The trigger scrolled out of view: the panel has nothing to point at any more.
   if (placed && (tr.bottom < 0 || tr.top > vh || tr.right < 0 || tr.left > vw)) {
+    // Focus was inside: it would fall to the page as the panel goes, so it returns to the trigger (without
+    // scrolling the page back to it).
+    const inside = !!p.contains(document.activeElement);
     close();
+    if (inside) props.trigger?.focus({ preventScroll: true });
     return;
   }
   let want: 'top' | 'bottom' = props.placement === 'top' ? 'top' : 'bottom';

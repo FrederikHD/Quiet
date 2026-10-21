@@ -43,7 +43,8 @@ const strings = useStrings(
   },
   () => props.strings,
 );
-// "5 stars" for the plain rows comes from the shared rating namespace, so configure({ strings: { rating: { stars } } }) translates it.
+// The plain rows read like the filter buttons, "5 stars, 20 reviews": "5 stars" comes from the shared rating
+// namespace (configure({ strings: { rating: { stars } } }) translates it) and "20 reviews" from `reviews`.
 const ratingStrings = useStrings<Required<RatingStrings>>('rating', ratingDefaults());
 const LEVELS = [5, 4, 3, 2, 1] as const;
 const of = (k: 1 | 2 | 3 | 4 | 5) => props.distribution[k] ?? 0;
@@ -86,7 +87,7 @@ const most = computed(() => Math.max(1, ...LEVELS.map(of)));
           ></span>
           <span class="q-rsum__bar" aria-hidden="true"><span :style="{ width: `${(of(k) / most) * 100}%` }" /></span>
           <span class="q-rsum__n" aria-hidden="true">{{ fmt(of(k)) }}</span>
-          <span class="q-visually-hidden">{{ strings.reviews(of(k)) }} — {{ ratingStrings.stars(k) }}</span>
+          <span class="q-visually-hidden">{{ `${ratingStrings.stars(k)}, ${strings.reviews(of(k))}` }}</span>
         </span>
       </li>
     </ul>

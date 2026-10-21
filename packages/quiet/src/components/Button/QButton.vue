@@ -9,7 +9,7 @@ export interface ButtonProps {
   variant?: 'primary' | 'secondary' | 'ghost' | 'danger' | 'danger-outline';
   /** default follows the nearest data-density (40px comfortable, 32px compact). slim is a fixed 28px for in-cell and filter-bar actions (back office, desktop; grows to default below 640px). large is a fixed 48px for storefront primary actions and mobile. */
   size?: 'slim' | 'default' | 'large';
-  /** Shows a spinner, keeps the button's width, disables it and sets aria-busy. */
+  /** Shows a spinner, keeps the button's width, ignores presses (aria-disabled, so focus stays on it) and sets aria-busy. */
   loading?: boolean;
   /** Icon before the label (or use the `icon-start` slot). */
   iconStart?: IconName;
@@ -114,6 +114,11 @@ function stateAttrs() {
 // One element: <a> for navigation (href), <button> otherwise.
 function rootAttrs(): Record<string, unknown> {
   const state = stateAttrs();
+  if (props.href == null && props.loading && !props.disabled) {
+    // Loading: not natively disabled, so keyboard focus stays on the button; presses (and form submits) are ignored.
+    const { onClick: _ignored, ...rest } = attrs;
+    return { ...rest, ...state, type: props.type, 'aria-disabled': 'true', onClick: ignore };
+  }
   if (props.href == null) return { ...attrs, ...state, type: props.type, disabled: isDisabled.value };
   if (!isDisabled.value) return { ...attrs, ...state, href: props.href };
   // A disabled link can't be focused or followed, and is still announced as a dimmed link.
@@ -124,11 +129,12 @@ function rootAttrs(): Record<string, unknown> {
     role: 'link',
     'aria-disabled': 'true',
     tabindex: -1,
-    onClick: (e: MouseEvent) => {
-      e.preventDefault();
-      e.stopPropagation();
-    },
+    onClick: ignore,
   };
+}
+function ignore(e: MouseEvent) {
+  e.preventDefault();
+  e.stopPropagation();
 }
 </script>
 

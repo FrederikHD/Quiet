@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils';
 import { QButton } from '@frederikhd/quiet';
 import { describe, expect, it, vi } from 'vitest';
+import { defineComponent, h, nextTick, ref } from 'vue';
 
 describe('QButton', () => {
   describe('count', () => {
@@ -62,10 +63,44 @@ describe('QButton', () => {
   it('shows a spinner, disables itself and announces busy while loading', async () => {
     const w = mount(QButton, { props: { loading: true }, slots: { default: 'Saving' } });
     const b = w.get('button');
-    expect(b.attributes('disabled')).toBeDefined();
+    // aria-disabled, not native disabled: a natively disabled button would drop keyboard focus to <body>.
+    expect(b.attributes('disabled')).toBeUndefined();
+    expect(b.attributes('aria-disabled')).toBe('true');
     expect(b.attributes('aria-busy')).toBe('true');
     expect(w.find('.q-btn__spinner').exists()).toBe(true);
     expect(b.text()).toBe('Saving');
+  });
+
+  it('keeps focus while loading and ignores presses and form submits', async () => {
+    const loading = ref(false);
+    const onClick = vi.fn();
+    const onSubmit = vi.fn((e: Event) => e.preventDefault());
+    const w = mount(
+      defineComponent({
+        setup: () => () =>
+          h('form', { onSubmit }, [h(QButton, { type: 'submit', loading: loading.value, onClick }, () => 'Save')]),
+      }),
+      { attachTo: document.body },
+    );
+    const b = w.get('button').element as HTMLButtonElement;
+    b.focus();
+    loading.value = true;
+    await nextTick();
+    expect(document.activeElement).toBe(b);
+    b.click();
+    expect(onClick).not.toHaveBeenCalled();
+    expect(onSubmit).not.toHaveBeenCalled();
+    loading.value = false;
+    await nextTick();
+    b.click();
+    expect(onClick).toHaveBeenCalledOnce();
+    expect(onSubmit).toHaveBeenCalledOnce();
+    w.unmount();
+  });
+
+  it('is natively disabled when disabled, even while loading', () => {
+    const w = mount(QButton, { props: { loading: true, disabled: true }, slots: { default: 'Save' } });
+    expect(w.get('button').attributes('disabled')).toBeDefined();
   });
 
   it('becomes a toggle with aria-pressed on secondary and ghost', () => {

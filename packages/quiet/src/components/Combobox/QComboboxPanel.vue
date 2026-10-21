@@ -44,6 +44,12 @@ watch(
   },
 );
 
+// "Try again" goes away as the retry starts, so focus moves to the search field instead of falling to the page.
+function retry() {
+  search.value?.focus();
+  emit('retry');
+}
+
 defineExpose({ focus: () => search.value?.focus(), input: () => search.value?.input ?? null });
 </script>
 
@@ -128,9 +134,7 @@ defineExpose({ focus: () => search.value?.focus(), input: () => search.value?.in
     <div :class="['q-combo__footer', result.status === 'error' && 'is-error']">
       <span v-if="result.status === 'loading'" class="q-combo__spinner" aria-hidden="true" />
       <span :id="statusId" role="status" class="q-combo__status">{{ statusText }}</span>
-      <QButton v-if="result.status === 'error'" size="slim" variant="ghost" @click="emit('retry')">{{
-        retryLabel
-      }}</QButton>
+      <QButton v-if="result.status === 'error'" size="slim" variant="ghost" @click="retry">{{ retryLabel }}</QButton>
     </div>
   </div>
 </template>

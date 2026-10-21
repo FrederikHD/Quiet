@@ -61,6 +61,36 @@ describe('QDialog', () => {
     expect(document.activeElement?.className).toBe('first');
   });
 
+  it('skips tabindex="-1" and aria-hidden controls, and lands on the checked radio of a group', async () => {
+    mountDialog(
+      {},
+      {
+        default: () => [
+          h('input', { type: 'file', tabindex: -1, class: 'file' }),
+          h('div', { 'aria-hidden': 'true' }, [h('input', { class: 'hidden' })]),
+          h('input', { type: 'radio', name: 'ship', value: 'std', class: 'std' }),
+          h('input', { type: 'radio', name: 'ship', value: 'exp', class: 'exp', checked: true }),
+        ],
+      },
+    );
+    await flushPromises();
+    expect(document.activeElement?.className).toBe('exp');
+  });
+
+  it('focuses the first radio of a group with none checked', async () => {
+    mountDialog(
+      {},
+      {
+        default: () => [
+          h('input', { type: 'radio', name: 'ship', class: 'std' }),
+          h('input', { type: 'radio', name: 'ship', class: 'exp' }),
+        ],
+      },
+    );
+    await flushPromises();
+    expect(document.activeElement?.className).toBe('std');
+  });
+
   it('focuses the first footer button when the body has no controls (Cancel)', async () => {
     mountDialog(
       {},

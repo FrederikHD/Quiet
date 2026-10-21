@@ -110,6 +110,61 @@ describe('QToaster and toast()', () => {
     w.unmount();
   });
 
+  it('stays paused while focused after the mouse leaves', async () => {
+    const w = mountToaster();
+    toast('Product saved');
+    await flushPromises();
+    const el = toasts()[0];
+    el.dispatchEvent(new MouseEvent('mouseenter'));
+    el.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
+    el.dispatchEvent(new MouseEvent('mouseleave'));
+    vi.advanceTimersByTime(10000);
+    await flushPromises();
+    expect(toasts()).toHaveLength(1);
+    // Focus moving between its own buttons keeps it paused too.
+    const close = el.querySelector('button')!;
+    el.dispatchEvent(new FocusEvent('focusout', { bubbles: true, relatedTarget: close }));
+    vi.advanceTimersByTime(10000);
+    await flushPromises();
+    expect(toasts()).toHaveLength(1);
+    w.unmount();
+  });
+
+  it('hands focus back to where it came from when a focused toast closes', async () => {
+    const w = mountToaster();
+    const opener = document.createElement('button');
+    document.body.appendChild(opener);
+    toast('Archived 1 product', { action: { label: 'Undo', onClick: () => {} } });
+    await flushPromises();
+    opener.focus();
+    const undo = document.querySelector<HTMLButtonElement>('.q-toast__action')!;
+    undo.focus();
+    undo.click();
+    await flushPromises();
+    expect(toasts()).toHaveLength(0);
+    expect(document.activeElement).toBe(opener);
+    w.unmount();
+  });
+
+  it('falls back to the next toast, then the main content', async () => {
+    const w = mountToaster();
+    const main = document.createElement('main');
+    document.body.appendChild(main);
+    toast('First', { duration: 0 });
+    toast('Second', { duration: 0 });
+    await flushPromises();
+    const [first, second] = toasts();
+    first.querySelector<HTMLButtonElement>('.q-toast__close')!.focus();
+    first.querySelector<HTMLButtonElement>('.q-toast__close')!.click();
+    await flushPromises();
+    expect(document.activeElement).toBe(second.querySelector('.q-toast__close'));
+    second.querySelector<HTMLButtonElement>('.q-toast__close')!.click();
+    await flushPromises();
+    expect(document.activeElement).toBe(main);
+    expect(main.getAttribute('tabindex')).toBe('-1');
+    w.unmount();
+  });
+
   it('runs the action and closes; the × closes too', async () => {
     const w = mountToaster();
     const undo = vi.fn();

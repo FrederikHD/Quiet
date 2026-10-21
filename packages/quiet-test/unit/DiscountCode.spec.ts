@@ -25,7 +25,7 @@ describe('QDiscountCode', () => {
     await input.setValue(' linen10 ');
     const e = new KeyboardEvent('keydown', { key: 'Enter', cancelable: true });
     input.element.dispatchEvent(e);
-    await nextTick();
+    await flush();
     expect(e.defaultPrevented).toBe(true);
     expect(apply).toHaveBeenCalledWith('linen10');
     expect((input.element as HTMLInputElement).value).toBe('');
@@ -34,8 +34,10 @@ describe('QDiscountCode', () => {
 
   it('asks for a code when empty', async () => {
     const apply = vi.fn();
-    const w = mount(QDiscountCode, { props: { apply } });
+    const w = mount(QDiscountCode, { attachTo: document.body, props: { apply } });
+    (w.get('.q-btn').element as HTMLElement).focus();
     await w.get('.q-btn').trigger('click');
+    expect(document.activeElement).toBe(w.get('input').element);
     expect(apply).not.toHaveBeenCalled();
     expect(w.get('.q-field__msg--error').text()).toContain('Enter a discount code');
     expect(w.get('input').attributes('aria-invalid')).toBe('true');
@@ -59,6 +61,30 @@ describe('QDiscountCode', () => {
     // Typing clears the message.
     await w.get('input').setValue('NOPE2');
     expect(w.find('.q-field__msg--error').exists()).toBe(false);
+    w.unmount();
+  });
+
+  it('keeps focus on Apply while busy, then returns it to the field and announces the code as applied', async () => {
+    let resolve!: () => void;
+    const w = mount(QDiscountCode, {
+      attachTo: document.body,
+      props: {
+        apply: (c: string) =>
+          new Promise<void>((r) => (resolve = r)).then(() => {
+            void w.setProps({ applied: [{ code: c.toUpperCase() }] });
+          }),
+      },
+    });
+    await w.get('input').setValue('linen10');
+    const btn = w.get('.q-btn').element as HTMLButtonElement;
+    btn.focus();
+    await w.get('.q-btn').trigger('click');
+    expect(btn.getAttribute('aria-disabled')).toBe('true');
+    expect(document.activeElement).toBe(btn);
+    resolve();
+    await flush();
+    expect(document.activeElement).toBe(w.get('input').element);
+    expect(w.get('[aria-live="polite"].q-visually-hidden').text()).toBe('Discount LINEN10 applied');
     w.unmount();
   });
 

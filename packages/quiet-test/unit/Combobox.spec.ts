@@ -202,10 +202,36 @@ describe('QCombobox', () => {
     const retry = document.querySelector<HTMLButtonElement>('.q-combo__footer button')!;
     expect(retry.textContent).toContain('Try again');
     fail = false;
+    retry.focus();
     retry.click();
+    // "Try again" goes away while it loads: focus moves to the search field instead of falling to the page.
+    expect(document.activeElement).toBe(search());
     await vi.runAllTimersAsync();
     expect(searchFn).toHaveBeenCalledTimes(4);
     vi.useRealTimers();
+  });
+
+  it('scrolls the field into view before opening from the keyboard', async () => {
+    const w = inField();
+    const spy = vi.spyOn(Element.prototype, 'scrollIntoView');
+    await key(trigger(w).element, 'ArrowDown');
+    expect(spy).toHaveBeenCalledWith(expect.objectContaining({ block: 'nearest' }));
+    expect(spy.mock.contexts[0]).toBe(w.get('.q-combo').element);
+    spy.mockRestore();
+  });
+
+  it('gives focus back to the field when the page scrolls it away with focus inside', async () => {
+    const w = inField();
+    await open(w);
+    expect(document.activeElement).toBe(search());
+    const box = w.get('.q-combo').element as HTMLElement;
+    box.getBoundingClientRect = () =>
+      ({ top: -200, bottom: -160, left: 0, right: 300, width: 300, height: 40 }) as DOMRect;
+    window.dispatchEvent(new Event('scroll'));
+    await new Promise((r) => requestAnimationFrame(() => r(null)));
+    await flushPromises();
+    expect(trigger(w).attributes('aria-expanded')).toBe('false');
+    expect(document.activeElement).toBe(trigger(w).element);
   });
 
   it('does not open when disabled or read-only', async () => {

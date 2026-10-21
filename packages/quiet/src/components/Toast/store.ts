@@ -1,5 +1,5 @@
 // toast('Product saved') from anywhere; a Toaster (AppShell has one) shows it top-centre.
-import { reactive } from 'vue';
+import { reactive, type InjectionKey } from 'vue';
 
 export interface ToastAction {
   /** The button's text, usually "Undo". */
@@ -40,3 +40,6 @@ export function dismissToast(id: number): void {
   toastState.list = toastState.list.filter((t) => t.id !== id);
 }
 toast.dismiss = dismissToast;
+
+/** From the Toaster to its toasts: call before a toast goes, so focus inside it isn't dropped on the page. */
+export const toastHandBackKey: InjectionKey<(toastEl: HTMLElement) => void> = Symbol('quiet-toast-hand-back');
