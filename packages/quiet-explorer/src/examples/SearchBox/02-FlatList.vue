@@ -9,6 +9,7 @@ const ORDERS = [
   { id: '#10528', customer: 'Lea Fischer', total: '94,16 €' },
 ];
 const q = ref('');
+const chose = ref('');
 const suggestions = computed<SearchSuggestion[]>(() => {
   const t = q.value.trim().toLowerCase();
   return t
@@ -30,12 +31,23 @@ const suggestions = computed<SearchSuggestion[]>(() => {
       placeholder="Order number or customer"
       :suggestions="suggestions"
       :search-option="false"
+      @select="(item) => (chose = `Opened ${item.label}`)"
+      @submit="(query) => (chose = `Searched for “${query}”`)"
     />
+    <p class="log" role="status">{{ chose }}</p>
   </div>
 </template>
 
 <style scoped>
 .box {
+  display: grid;
+  gap: var(--space-3);
   max-width: 360px;
+}
+.log {
+  margin: 0;
+  min-height: 18px;
+  font: var(--text-small);
+  color: var(--ink-muted);
 }
 </style>

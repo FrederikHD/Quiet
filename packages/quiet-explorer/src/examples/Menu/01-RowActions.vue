@@ -8,7 +8,7 @@ const pick = (what: string) => () => (chose.value = what);
 const items: MenuItem[] = [
   { label: 'Edit', icon: 'pencil', onSelect: pick('Edit') },
   { label: 'Duplicate', icon: 'copy', onSelect: pick('Duplicate') },
-  { label: 'View in shop', icon: 'external-link', onSelect: pick('View in shop') },
+  { label: 'View in shop', icon: 'external-link', href: '#linen-shirt-blue' },
   { divider: true },
   { label: 'Archive', icon: 'package', description: 'Hidden, kept in reports', onSelect: pick('Archive') },
   { label: 'Delete', icon: 'trash', danger: true, onSelect: pick('Delete') },

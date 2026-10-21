@@ -1,6 +1,15 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHistory, type RouteLocationNormalized } from 'vue-router';
 import { entries, loadDetails } from './catalog';
 import { patterns } from './patterns';
+
+// An unknown component, tab or pattern shows the not-found page at the address that was asked for (the URL stays).
+const notFound = (to: RouteLocationNormalized) => ({
+  name: 'not-found',
+  params: { rest: to.path.slice(1).split('/') },
+  query: to.query,
+  hash: to.hash,
+});
+const tabs = ['api', 'examples', 'playground'];
 
 export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -23,14 +32,19 @@ export const router = createRouter({
       name: 'component',
       component: () => import('./pages/ComponentPage.vue'),
       props: true,
-      beforeEnter: (to) => (entries.some((e) => e.slug === to.params.slug) ? true : { name: 'not-found' }),
+      beforeEnter: (to) => {
+        const entry = entries.find((e) => e.slug === to.params.slug);
+        const tab = to.params.tab as string | undefined;
+        if (!entry || (tab && (!tabs.includes(tab) || (tab === 'playground' && !entry.hasStory)))) return notFound(to);
+        return true;
+      },
     },
     {
       path: '/patterns/:slug',
       name: 'pattern',
       component: () => import('./pages/PatternPage.vue'),
       props: true,
-      beforeEnter: (to) => (patterns.some((p) => p.slug === to.params.slug) ? true : { name: 'not-found' }),
+      beforeEnter: (to) => (patterns.some((p) => p.slug === to.params.slug) ? true : notFound(to)),
     },
     {
       path: '/:rest(.*)*',

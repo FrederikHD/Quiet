@@ -7,11 +7,19 @@ const log = ref('');
 </script>
 
 <template>
-  <div><QRating :value="4.3" :count="31" @click="log = 'Opened the reviews tab'" /></div>
+  <div class="stack">
+    <QRating :value="4.3" :count="31" href="#reviews" />
+    <QRating :value="4.3" :count="31" @click="log = 'Opened the reviews tab'" />
+  </div>
   <p class="log" role="status">{{ log }}</p>
 </template>
 
 <style scoped>
+.stack {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-3);
+}
 .log {
   margin: 0;
   min-height: 18px;

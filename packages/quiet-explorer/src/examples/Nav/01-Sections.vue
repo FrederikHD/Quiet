@@ -37,7 +37,7 @@ function navigate(item: NavItem, e: MouseEvent) {
 
 <template>
   <div class="column">
-    <QNav :sections="sections" @navigate="navigate" />
+    <QNav :sections="sections" aria-label="Back office" @navigate="navigate" />
   </div>
 </template>
 

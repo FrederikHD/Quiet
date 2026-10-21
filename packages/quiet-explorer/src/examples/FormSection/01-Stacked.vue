@@ -13,7 +13,7 @@ const values = reactive({ title: 'Linen shirt, blue', vendor: 'Leinenweberei Rh√
       <QField label="Vendor" width="m"><QInput v-model="values.vendor" /></QField>
     </QFormSection>
     <QFormSection title="Pricing" description="Prices include VAT.">
-      <QField label="Price" width="s" required
+      <QField label="Price in EUR" width="s" required
         ><QInput v-model="values.price" suffix="‚Ç¨" numeric align="end" inputmode="decimal"
       /></QField>
     </QFormSection>

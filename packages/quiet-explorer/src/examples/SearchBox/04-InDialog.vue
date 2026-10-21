@@ -16,10 +16,11 @@ const suggestions = computed<SearchSuggestion[]>(() =>
 
 <template>
   <QButton icon-start="search" @click="open = true">Search</QButton>
-  <QDialog v-model:open="open" title="Search">
+  <QDialog v-model:open="open" title="Search" mobile="full">
     <QSearchBox
       v-model="q"
       inline
+      size="large"
       label="Search the shop"
       :suggestions="suggestions"
       @select="open = false"

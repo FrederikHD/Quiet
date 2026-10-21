@@ -16,7 +16,7 @@ const values = reactive({ currency: 'EUR', warehouse: 'Berlin', reason: '' });
       />
     </QField>
     <QField label="Currency" width="s" readonly hint="Set for the whole shop."
-      ><QSelect v-model="values.currency" :options="['EUR']"
+      ><QSelect v-model="values.currency" name="currency" :options="['EUR']"
     /></QField>
     <QField label="Warehouse" width="m" disabled hint="Only one warehouse is set up."
       ><QSelect v-model="values.warehouse" :options="['Berlin']"

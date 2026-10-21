@@ -1,18 +1,25 @@
 <script setup lang="ts">
 // Switches between the two published explorers: the released version at the site's root, and develop (what the next
 // release will contain) under next/. Both links open the same page in the other one. Shown only in those builds.
-import { version } from '@quiet/package.json';
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 
 const channel = import.meta.env.VITE_EXPLORER_CHANNEL;
+// The released version comes from the latest release tag at build time, not from this checkout's package.json: in the
+// develop build that is develop's own (unreleased) version. Without it, the option just says "Released".
+const released = import.meta.env.VITE_RELEASED_VERSION;
 const route = useRoute();
 const base = import.meta.env.BASE_URL;
 const root = channel === 'next' ? base.replace(/next\/$/, '') : base;
 const href = (to: 'release' | 'next') =>
   computed(() => `${root}${to === 'next' ? 'next/' : ''}${route.fullPath.slice(1)}`);
 const options = [
-  { channel: 'release', label: version, title: `Released version ${version}, as on npm`, href: href('release') },
+  {
+    channel: 'release',
+    label: released || 'Released',
+    title: released ? `Released version ${released}, as on npm` : 'The released version, as on npm',
+    href: href('release'),
+  },
   { channel: 'next', label: 'develop', title: 'Develop: what the next release will contain', href: href('next') },
 ] as const;
 </script>

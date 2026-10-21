@@ -98,8 +98,9 @@ function reset() {
 }
 // "Select all 128" acts on the query, not on the ticked keys.
 const count = () => (allMatching.value ? hits.value.length : selected.value.length);
+const orderCount = () => (count() === 1 ? '1 order' : `${count()} orders`);
 function fulfil() {
-  log.value = `Marked ${count()} orders as fulfilled.`;
+  log.value = `Marked ${orderCount()} as fulfilled.`;
   reset();
 }
 </script>
@@ -174,7 +175,7 @@ function fulfil() {
       >
       <template #bulk-actions>
         <QButton size="slim" @click="fulfil">Mark as fulfilled</QButton>
-        <QButton size="slim" icon-start="download" @click="log = `Exported ${count()} orders.`">Export</QButton>
+        <QButton size="slim" icon-start="download" @click="log = `Exported ${orderCount()}.`">Export</QButton>
       </template>
       <template #row-actions="{ row }">
         <QButton

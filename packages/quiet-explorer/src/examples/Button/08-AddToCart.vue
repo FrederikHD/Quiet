@@ -1,4 +1,4 @@
-<!-- On the product page, Add to cart is large and as wide as its column; a long label wraps instead of truncating. -->
+<!-- On the product page, Add to cart is large and as wide as its column, with Save to wishlist under it. -->
 <script setup lang="ts">
 import { QButton } from '@frederikhd/quiet';
 </script>
