@@ -1,5 +1,5 @@
 import type { App, Component, Plugin } from 'vue';
-import { configure, type ConfigureOptions } from './config';
+import { applyConfig, CONFIG_KEY, createAppConfig, type ConfigureOptions } from './config';
 import * as components from './components';
 
 export type QuietPluginOptions = ConfigureOptions & {
@@ -11,7 +11,10 @@ export type QuietPluginOptions = ConfigureOptions & {
 export const Quiet: Plugin<[QuietPluginOptions?]> = {
   install(app: App, options: QuietPluginOptions = {}) {
     const { components: register = true, ...config } = options;
-    configure(config);
+    // On a server each app (each request) gets its own settings; in the browser they are the shared ones.
+    const target = createAppConfig();
+    applyConfig(target, config);
+    app.provide(CONFIG_KEY, target);
     if (!register) return;
     for (const [name, component] of Object.entries(components)) {
       if (/^Q[A-Z]/.test(name)) app.component(name, component as Component);
