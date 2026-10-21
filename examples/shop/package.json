@@ -1,0 +1,23 @@
+{
+  "name": "quiet-example-shop",
+  "private": true,
+  "type": "module",
+  "description": "A small bilingual shop built with Nuxt and @frederikhd/quiet, as an app would use the published package.",
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "typecheck": "nuxt typecheck",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@frederikhd/quiet": "^0.6.0",
+    "nuxt": "^4.6.2",
+    "vue": "^3.5.44"
+  },
+  "devDependencies": {
+    "typescript": "~5.9.3",
+    "vue-tsc": "^3.3.13"
+  }
+}

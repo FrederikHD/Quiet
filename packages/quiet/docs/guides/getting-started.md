@@ -161,3 +161,4 @@ Every control goes in a `QField`, which gives it its label, hint and error. [For
 - [Accessibility](accessibility.md): what Quiet does for you, and what stays with your app.
 - [Upgrading](upgrading.md): the breaking changes between versions.
 - The patterns (Orders, Product edit, Checkout …) show whole screens built from the components.
+- The [example shop](https://frederikhd.github.io/Quiet/example/) is a whole Nuxt app in English and German, from a product list to the order. Its code is in [`examples/shop`](https://github.com/FrederikHD/Quiet/tree/develop/examples/shop).

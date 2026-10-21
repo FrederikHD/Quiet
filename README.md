@@ -64,6 +64,13 @@ Toasts need a `<QToaster />` (AppShell includes one). More in the [package READM
 [guides](packages/quiet/docs/guides): getting started (Vite and Nuxt), translations, theming, forms, accessibility and
 upgrading. The explorer shows them under Guides.
 
+## The example shop
+
+[`examples/shop`](examples/shop) is a small shop built the way an adopter would: Nuxt with server rendering, the
+library installed from npm, English and German. It runs at https://frederikhd.github.io/Quiet/example/ (built with
+the current develop). `npm run test:example` packs this checkout of the library, installs it into the shop, prerenders
+every page and checks them in Chromium; CI runs it on every push.
+
 ## How the code is organised
 
 ```

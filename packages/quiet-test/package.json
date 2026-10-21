@@ -15,7 +15,8 @@
     "typecheck": "vue-tsc -p tsconfig.json --noEmit",
     "test:package": "node package-check/run.mjs",
     "test:e2e:firefox": "playwright test --project=e2e-firefox",
-    "test:e2e:webkit": "playwright test --project=e2e-webkit"
+    "test:e2e:webkit": "playwright test --project=e2e-webkit",
+    "test:example": "node example-check/run.mjs"
   },
   "dependencies": {
     "@frederikhd/quiet": "0.6.0"

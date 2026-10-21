@@ -16,6 +16,8 @@ export default ts.config(
       '**/test-results/**',
       '**/playwright-report/**',
       '**/coverage/**',
+      '**/.nuxt/**',
+      '**/.output/**',
     ],
   },
   js.configs.recommended,
@@ -46,6 +48,11 @@ export default ts.config(
     // Tests mount small inline components next to the ones under test.
     files: ['packages/quiet-test/**'],
     rules: { 'vue/one-component-per-file': 'off' },
+  },
+  {
+    // Nuxt imports ref, computed, useHead and the app's own composables by itself; `nuxt typecheck` checks they exist.
+    files: ['examples/**'],
+    rules: { 'no-undef': 'off' },
   },
   prettier,
 );

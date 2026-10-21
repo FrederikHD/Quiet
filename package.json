@@ -1,7 +1,7 @@
 {
   "name": "quiet-monorepo",
   "private": true,
-  "description": "Quiet — a calm, neutral-first design system for commerce, in Vue.",
+  "description": "Quiet \u2014 a calm, neutral-first design system for commerce, in Vue.",
   "type": "module",
   "workspaces": [
     "packages/quiet",
@@ -21,7 +21,8 @@
     "format:check": "prettier --check .",
     "test:package": "npm run test:package -w quiet-test",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "test:example": "npm run test:example -w quiet-test"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
