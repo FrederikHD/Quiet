@@ -1,7 +1,7 @@
 import { fileURLToPath, URL } from 'node:url';
 import vue from '@vitejs/plugin-vue';
 import { defineConfig } from 'vite';
-import { quietMeta } from './plugins/quiet-meta';
+import { quietMeta } from './plugins/quiet-meta.ts';
 
 const libraryRoot = fileURLToPath(new URL('../quiet', import.meta.url));
 
