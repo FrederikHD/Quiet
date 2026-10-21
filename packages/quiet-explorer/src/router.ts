@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, type RouteLocationNormalized } from 'vue-router';
 import { entries, loadDetails } from './catalog';
+import { guides } from './guides';
 import { patterns } from './patterns';
 
 // An unknown component, tab or pattern shows the not-found page at the address that was asked for (the URL stays).
@@ -26,6 +27,13 @@ export const router = createRouter({
       name: 'icons',
       component: () => import('./pages/IconsPage.vue'),
       meta: { title: 'Icons' },
+    },
+    {
+      path: '/guides/:slug',
+      name: 'guide',
+      component: () => import('./pages/GuidePage.vue'),
+      props: true,
+      beforeEnter: (to) => (guides.some((g) => g.slug === to.params.slug) ? true : notFound(to)),
     },
     {
       path: '/components/:slug/:tab?',
@@ -77,5 +85,6 @@ router.beforeResolve(async (to) => {
 router.afterEach((to) => {
   const entry = entries.find((e) => e.slug === to.params.slug);
   const pattern = to.name === 'pattern' ? patterns.find((p) => p.slug === to.params.slug) : undefined;
-  document.title = `${pattern?.title ?? entry?.title ?? (to.meta.title as string | undefined) ?? 'Explorer'} · Quiet`;
+  const guide = to.name === 'guide' ? guides.find((g) => g.slug === to.params.slug) : undefined;
+  document.title = `${guide?.title ?? pattern?.title ?? entry?.title ?? (to.meta.title as string | undefined) ?? 'Explorer'} · Quiet`;
 });

@@ -3,6 +3,7 @@ import { QAppShell, QNav, QSelect, type NavItem, type NavSection } from '@freder
 import { computed, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { groups } from './catalog';
+import { guides } from './guides';
 import { patterns } from './patterns';
 import VersionSwitch from './VersionSwitch.vue';
 
@@ -29,6 +30,14 @@ const sections = computed<NavSection[]>(() => [
         current: route.name === 'icons',
       },
     ],
+  },
+  {
+    title: 'Guides',
+    items: guides.map<NavItem>((g) => ({
+      label: g.title,
+      href: router.resolve(`/guides/${g.slug}`).href,
+      current: route.name === 'guide' && route.params.slug === g.slug,
+    })),
   },
   {
     title: 'Patterns',

@@ -5,6 +5,12 @@ storefront and the merchant back office. Accessible (WCAG 2.2 AA), responsive, l
 
 **Documentation, examples and a live playground:** https://frederikhd.github.io/Quiet/
 
+**Guides:** [Getting started](https://frederikhd.github.io/Quiet/guides/getting-started) (Vite and Nuxt) ·
+[Translations](https://frederikhd.github.io/Quiet/guides/translations) (with every phrase in German) ·
+[Theming](https://frederikhd.github.io/Quiet/guides/theming) · [Forms](https://frederikhd.github.io/Quiet/guides/forms) ·
+[Accessibility](https://frederikhd.github.io/Quiet/guides/accessibility) ·
+[Upgrading](https://frederikhd.github.io/Quiet/guides/upgrading)
+
 ## Install
 
 ```sh
@@ -93,6 +99,9 @@ Every built-in word can be translated once for the whole app, or per component w
 ```ts
 app.use(Quiet, { locale: 'de-DE', strings: { form: { optional: 'freiwillig' }, dialog: { close: 'Schließen' } } });
 ```
+
+The [Translations guide](https://frederikhd.github.io/Quiet/guides/translations) has every phrase in German, ready to
+copy.
 
 ## Tokens
 

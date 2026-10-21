@@ -1,5 +1,5 @@
 // Phone and tablet widths: no page scrolls sideways, and the navigation becomes a drawer.
-import { components, patterns, slugOf } from './catalog';
+import { components, guides, patterns, slugOf } from './catalog';
 import { expect, test } from './fixtures';
 
 const pageWidth = (page: import('@playwright/test').Page) =>
@@ -12,10 +12,12 @@ for (const [device, width] of [
   test.describe(`${device} (${width}px)`, () => {
     test.use({ viewport: { width, height: 800 } });
 
-    for (const path of ['/', '/foundations/tokens', '/foundations/icons', ...patterns]) {
+    for (const path of ['/', '/foundations/tokens', '/foundations/icons', ...patterns, ...guides]) {
       test(`${path} fits the screen`, async ({ page }) => {
         await page.goto(path);
         await expect(page.getByRole('heading', { level: 1 }).first()).toBeVisible();
+        if (path.startsWith('/guides/'))
+          await expect(page.getByRole('main').getByRole('heading', { level: 2 }).first()).toBeVisible();
         const w = await pageWidth(page);
         expect(w.scroll).toBeLessThanOrEqual(w.client);
       });

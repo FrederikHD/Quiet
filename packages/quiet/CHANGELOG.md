@@ -6,6 +6,13 @@ breaking changes, a patch version (0.x.y) never does.
 
 ## [Unreleased]
 
+### Added
+
+- Guides on the documentation site, for adopting Quiet in an app: Getting started (Vite and Nuxt), Translations (with
+  every built-in phrase in German, checked against the types), Theming (dark mode, density, your own brand colour),
+  Forms (validation, the error summary, server errors), Accessibility (what Quiet does and what stays with the app) and
+  Upgrading (every breaking change since 0.1). The README links to them. No changes to the components.
+
 ## [0.6.0] - 2026-10-21
 
 ### Added

@@ -17,6 +17,32 @@ test('the foundations pages render', async ({ page }) => {
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
 });
 
+test('the guides are listed, link to each other in the app and show the complete German setup', async ({ page }) => {
+  await page.goto('/');
+  const nav = page.getByRole('navigation').first();
+  await nav.getByRole('link', { name: 'Getting started', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Getting started', level: 1 })).toBeVisible();
+  await expect(page).toHaveTitle('Getting started · Quiet');
+  await expect(nav.getByRole('link', { name: 'Getting started', exact: true })).toHaveAttribute('aria-current', 'page');
+
+  // A link between guides routes in the app: the page doesn't reload.
+  await page.evaluate(() => ((window as unknown as { stayed: boolean }).stayed = true));
+  await page.getByRole('main').getByRole('link', { name: 'Translations' }).first().click();
+  await expect(page).toHaveURL(/\/guides\/translations$/);
+  await expect(page.getByRole('heading', { name: 'Translations', level: 1 })).toBeVisible();
+  expect(await page.evaluate(() => (window as unknown as { stayed?: boolean }).stayed)).toBe(true);
+
+  // The German strings are shown in place of their marker, and the Markdown's own title isn't repeated.
+  const main = page.getByRole('main');
+  await expect(
+    main.locator('pre').filter({ hasText: "errorSummaryTitle: 'Bitte korrigieren Sie Folgendes'" }),
+  ).toBeVisible();
+  await expect(main.getByText('<!-- de.ts -->')).toHaveCount(0);
+  await expect(main.getByRole('heading', { level: 1 })).toHaveCount(1);
+  await page.goto('/guides/nothing');
+  await expect(page.getByRole('heading', { name: 'Not found', level: 1 })).toBeVisible();
+});
+
 test('an unknown address shows the not-found page', async ({ page }) => {
   await page.goto('/nowhere');
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();

@@ -60,7 +60,9 @@ createApp(App).use(Quiet, { locale: 'de-DE', currency: 'EUR' }).mount('#app');
 Pass `{ components: false }` to import them one by one instead: `import { QButton } from '@frederikhd/quiet'`.
 
 Load Inter from Google Fonts and set `data-theme="light|dark"` and `data-density="comfortable|compact"` on `<html>`.
-Toasts need a `<QToaster />` (AppShell includes one). More in the [package README](packages/quiet/README.md).
+Toasts need a `<QToaster />` (AppShell includes one). More in the [package README](packages/quiet/README.md) and the
+[guides](packages/quiet/docs/guides): getting started (Vite and Nuxt), translations, theming, forms, accessibility and
+upgrading. The explorer shows them under Guides.
 
 ## How the code is organised
 
