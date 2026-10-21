@@ -1,6 +1,6 @@
 # Upgrading
 
-Before 1.0, a minor version (0.x.0) may contain breaking changes; a patch version (0.x.y) never does. This page lists every breaking change with what to do about it, newest first. The changelog has everything else that changed.
+From 1.0.0, breaking changes come only in a major version (2.0.0); minor and patch versions are safe to install. Before 1.0, a minor version (0.x.0) could contain breaking changes. This page lists every breaking change with what to do about it, newest first. The changelog has everything else that changed.
 
 To upgrade, install the new version, then work through the sections between your version and it:
 
@@ -12,7 +12,7 @@ Type-checking your templates (see [Getting started](getting-started.md)) finds m
 
 ## 0.6 → 1.0
 
-No breaking changes. The release candidate is on npm under the `next` tag: `npm install @frederikhd/quiet@next`.
+No breaking changes: install 1.0.0 and you're done.
 
 ## 0.5 → 0.6
 

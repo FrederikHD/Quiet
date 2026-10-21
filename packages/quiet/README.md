@@ -114,6 +114,26 @@ Components render on the server (Nuxt, `vue/server-renderer`); browser-only work
 app keeps its own locale, currency and translations from `app.use(Quiet, …)`, so requests in different languages
 rendering at the same time never mix.
 
+## Stability
+
+Quiet follows [Semantic Versioning](https://semver.org/). From 1.0.0, a breaking change comes only in a major version
+(2.0.0), and the [changelog](https://github.com/FrederikHD/Quiet/blob/develop/packages/quiet/CHANGELOG.md) and the
+[Upgrading guide](https://frederikhd.github.io/Quiet/guides/upgrading) say what to change.
+
+**The public API**, which minor and patch versions keep working:
+
+- every export of `@frederikhd/quiet`: components, functions and types;
+- each component's props, events, `v-model`s, slots and the methods its ref exposes;
+- the translation namespaces and phrase keys in `strings`, and what each phrase function receives;
+- the design tokens (`--brand`, `--space-4` …), `tokens.json`, and the `data-theme` and `data-density` attributes;
+- keyboard behaviour and what screen readers hear: these only get better, never removed.
+
+**Not part of it**, and may change in any version: the components' markup and `q-` class names (style through tokens,
+props and slots instead), the exact look within the brand book (a refined spacing or colour is a minor change, listed
+in the changelog), and anything not exported. A new prop, event, slot, phrase or token comes in a minor version.
+
+Quiet needs Vue 3.5 or later, and is tested in current Chromium, Firefox and WebKit (Safari).
+
 ## Licence
 
 MIT
