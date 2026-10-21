@@ -113,8 +113,8 @@ deploys as that tag, so add a `v*` tag rule there if you release that way.
 
 Releases of `@frederikhd/quiet` are published to npm by `.github/workflows/release.yml`.
 
-1. In a PR into `develop`, set the new version in `packages/quiet/package.json` (semver; before 1.0, breaking changes
-   bump the minor version) and move the entries under `## [Unreleased]` in `packages/quiet/CHANGELOG.md` into a
+1. In a PR into `develop`, set the new version in `packages/quiet/package.json` (semver: breaking changes bump the
+   major version, see "Stability" in the package README) and move the entries under `## [Unreleased]` in `packages/quiet/CHANGELOG.md` into a
    `## [x.y.z] - YYYY-MM-DD` section.
 2. Merge it once CI is green.
 3. Start the release: Actions → **Release** → **Run workflow** on `develop` (it creates the `vx.y.z` tag), or tag the

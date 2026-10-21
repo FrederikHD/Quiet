@@ -1,10 +1,17 @@
 # Changelog
 
 All notable changes to `@frederikhd/quiet`. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
-and versions follow [Semantic Versioning](https://semver.org/): before 1.0, a minor version (0.x.0) may contain
-breaking changes, a patch version (0.x.y) never does.
+and versions follow [Semantic Versioning](https://semver.org/): from 1.0.0, breaking changes come only in a major version
+(2.0.0), new features in a minor version (1.1.0) and fixes in a patch (1.0.1). What counts as breaking is in the
+README, under "Stability". Before 1.0, a minor version (0.x.0) could contain breaking changes.
 
 ## [Unreleased]
+
+## [1.0.0] - 2026-10-21
+
+The first stable release: the same components as 1.0.0-rc.1, now on npm's `latest` tag. From here on, the API only
+changes in a backwards-compatible way until 2.0.0 (see "Stability" in the README). No breaking changes since 0.6.0;
+everything since then is listed under 1.0.0-rc.1.
 
 ## [1.0.0-rc.1] - 2026-10-21
 
@@ -216,7 +223,8 @@ First release.
 - WCAG 2.2 AA throughout: keyboard support, focus management, screen-reader announcements, both themes checked with
   axe; layouts that adapt to their own width; print styles; server rendering.
 
-[Unreleased]: https://github.com/FrederikHD/Quiet/compare/v1.0.0-rc.1...HEAD
+[Unreleased]: https://github.com/FrederikHD/Quiet/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/FrederikHD/Quiet/compare/v1.0.0-rc.1...v1.0.0
 [1.0.0-rc.1]: https://github.com/FrederikHD/Quiet/compare/v0.6.0...v1.0.0-rc.1
 [0.6.0]: https://github.com/FrederikHD/Quiet/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/FrederikHD/Quiet/compare/v0.4.0...v0.5.0
