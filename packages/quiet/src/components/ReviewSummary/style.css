@@ -65,9 +65,11 @@ button.q-rsum__row:disabled {
     background: var(--surface-sunken);
   }
 }
+/* Inside the row: the rows sit 2px apart, and the next one's background (the active level's tint) would cover a ring
+   drawn outside. */
 button.q-rsum__row:focus-visible {
   outline: 2px solid var(--brand);
-  outline-offset: 2px;
+  outline-offset: -2px;
 }
 .q-rsum__row.is-active {
   background: var(--brand-tint);

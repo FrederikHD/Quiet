@@ -107,7 +107,10 @@
   gap: var(--space-2);
   overflow-x: auto;
   scrollbar-width: thin;
-  padding: 2px;
+  /* The strip scrolls, so it clips what sticks out: 4px of room fits the focus ring (2px out, 2px wide); the negative
+     margin keeps the thumbnails where they were. */
+  padding: 4px;
+  margin: -2px;
 }
 .q-gallery__thumb {
   flex: none;
