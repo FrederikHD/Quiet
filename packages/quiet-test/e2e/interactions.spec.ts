@@ -280,6 +280,7 @@ test.describe('AppShell collapsible', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/components/button/examples');
     await page.evaluate(() => localStorage.removeItem('quiet-explorer-nav'));
+    await page.waitForLoadState('networkidle');
     await page.reload();
   });
 
@@ -298,7 +299,9 @@ test.describe('AppShell collapsible', () => {
     await expect(page.getByRole('link', { name: 'Brand book' })).toHaveCount(0);
     await page.keyboard.press('Tab');
     expect(await page.evaluate(() => !!document.activeElement?.closest('main'))).toBe(true);
-    // Remembered on the next visit, and the button brings it back.
+    // Remembered on the next visit, and the button brings it back. Settled first: a reload that cuts off a stylesheet
+    // still loading is reported as a console error.
+    await page.waitForLoadState('networkidle');
     await page.reload();
     await page.getByRole('button', { name: 'Show navigation' }).click();
     await expect(page.getByRole('link', { name: 'Brand book' })).toBeVisible();
