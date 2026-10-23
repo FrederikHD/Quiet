@@ -25,6 +25,11 @@ README, under "Stability". Before 1.0, a minor version (0.x.0) could contain bre
 - Focus rings hidden or cut off: Nav links and ReviewSummary's filter rows sit 2px apart, so the ring drawn outside an
   item went under the next item's background (the current link's tint); they now draw it inside, like Menu items. A
   Gallery thumbnail's ring was clipped by the scrolling strip, which now leaves room for it.
+- Rounded 2px rings had a light seam in their corners when zoomed in (most visible in Firefox): they were a 1px border
+  plus a 1px inset shadow, two shapes smoothed separately. The focus ring of Input, Select, Textarea and Combobox is now
+  one outline over the border; a chosen card, a chosen size tile, FileUpload's drop zone while dragging and an invalid
+  checkbox now have one 2px border, with the padding 1px smaller so nothing moves. The focus ring also shows in forced
+  colours mode now without a workaround.
 
 ## [1.0.0] - 2026-10-21
 
