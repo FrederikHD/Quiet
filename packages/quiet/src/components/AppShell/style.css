@@ -69,12 +69,18 @@
 .q-shell--collapsible {
   transition: grid-template-columns 200ms ease;
 }
-/* Closed, a 16px strip of the column stays, like the edge of a closed drawer: the button keeps its place on the border
-   and stays clear of the page's title. */
+/* Closed, the column is gone and the page takes the whole width. Only the button stays, floating in the page's left
+   margin at the same height. */
 .q-shell.is-collapsed {
-  --q-shell-side: var(--space-4);
+  --q-shell-side: 0px;
 }
-/* Once it has slid out, the content is hidden too, so nothing wide (a logo) shows a sliver in the strip. It comes back
+.q-shell.is-collapsed .q-shell__side {
+  border-right-width: 0;
+}
+.q-shell.is-collapsed .q-shell__collapse {
+  right: calc(-24px - var(--space-1));
+}
+/* Once it has slid out, the content is hidden too, from screen readers and from tests alike. It comes back
    at once when the column opens. */
 .q-shell.is-collapsed .q-shell__sidein {
   visibility: hidden;
@@ -97,6 +103,7 @@
   color: var(--ink-muted);
   cursor: pointer;
   transition:
+    right 200ms ease,
     color 120ms ease,
     border-color 120ms ease;
 }

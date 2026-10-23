@@ -27,7 +27,7 @@ The back-office frame: navigation on the left, the page beside it.
 `collapsible` adds a round button at the bottom of the column's edge, from 1024px: on the line above the nav footer when there is one, clear of its controls. It hides the navigation so a wide table or form gets the whole width, and brings it back. Bind `v-model:collapsed` to remember the choice, in local storage say.
 
 - **Open:** a 24px circle on the column's border with a left chevron, on `surface-raised` with a `line-strong` edge.
-- **Closed:** the column slides away in 200ms (none with reduced motion) to a 16px strip, like the edge of a closed drawer, and the circle stays on its border with a right chevron.
+- **Closed:** the column slides away completely in 200ms (none with reduced motion) and the page takes the whole width. Only the circle stays, with a right chevron, in the page's left margin at the same height.
 - The column's content keeps its width and slides out rather than squeezing, and the page widens with it.
 - Below 1024px nothing changes: the menu button and drawer work as before, whatever `collapsed` says.
 
