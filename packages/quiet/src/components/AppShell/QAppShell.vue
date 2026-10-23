@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref, useSlots } from 'vue';
+import { computed, onBeforeUnmount, onMounted, ref, useModel, useSlots } from 'vue';
 import { useStrings } from '../../config';
 import { useQuietId } from '../../composables/useQuietId';
 import { useStickyPad } from '../../composables/useStickyPad';
 import QButton from '../Button/QButton.vue';
 import QDialog from '../Dialog/QDialog.vue';
+import QIcon from '../Icon/QIcon.vue';
 import QToaster from '../Toast/QToaster.vue';
 
 export interface ShellStrings {
@@ -14,6 +15,10 @@ export interface ShellStrings {
   skip?: string;
   /** Name of the drawer's close button. Default "Close menu". */
   closeMenu?: string;
+  /** Name of the edge button while the column is open (`collapsible`). Default "Hide navigation". */
+  collapse?: string;
+  /** Name of the edge button while the column is closed (`collapsible`). Default "Show navigation". */
+  expand?: string;
 }
 export interface AppShellProps {
   /** The shop name in plain type (or use the `brand` slot). Also titles the drawer. */
@@ -27,6 +32,11 @@ export interface AppShellProps {
   /** Fill a box instead of the window: the shell scrolls inside its parent (give that a height) and the drawer opens
    *  over the shell, not the page. For previews and shells embedded in another page. */
   contained?: boolean;
+  /** From 1024px, a round button on the column's edge hides the navigation and shows it again, so the page gets the
+   *  full width. Bind `v-model:collapsed` to remember the choice. Below 1024px the menu button and drawer are unchanged. */
+  collapsible?: boolean;
+  /** Whether the column is hidden (`collapsible`). Default false. */
+  collapsed?: boolean;
 }
 
 const props = withDefaults(defineProps<AppShellProps>(), {
@@ -35,7 +45,10 @@ const props = withDefaults(defineProps<AppShellProps>(), {
   toaster: true,
   strings: undefined,
   contained: false,
+  collapsible: false,
+  collapsed: false,
 });
+defineEmits<{ 'update:collapsed': [value: boolean] }>();
 defineSlots<{
   /** The page — usually a Page. */
   default?(): unknown;
@@ -52,12 +65,22 @@ defineSlots<{
 const slots = useSlots();
 const strings = useStrings<Required<ShellStrings>>(
   'shell',
-  { menu: 'Menu', skip: 'Skip to content', closeMenu: 'Close menu' },
+  {
+    menu: 'Menu',
+    skip: 'Skip to content',
+    closeMenu: 'Close menu',
+    collapse: 'Hide navigation',
+    expand: 'Show navigation',
+  },
   () => props.strings,
 );
 const autoMainId = useQuietId('q-main-');
 const mainId = () => props.mainId ?? autoMainId;
 const open = ref(false);
+const collapsedModel = useModel(props, 'collapsed');
+// Only a collapsible shell hides its column: `collapsed` alone does nothing, so there is always a way back.
+const isCollapsed = computed(() => props.collapsible && collapsedModel.value);
+const sideId = useQuietId('q-side-');
 const topbar = ref<HTMLElement | null>(null);
 if (!props.contained) useStickyPad(topbar, 'top'); // 0 high on desktop, where the bar is hidden
 
@@ -86,7 +109,14 @@ function onDrawerClick(e: MouseEvent) {
 </script>
 
 <template>
-  <div :class="['q-shell', contained && 'q-shell--contained']">
+  <div
+    :class="[
+      'q-shell',
+      contained && 'q-shell--contained',
+      collapsible && 'q-shell--collapsible',
+      isCollapsed && 'is-collapsed',
+    ]"
+  >
     <a :href="`#${mainId()}`" class="q-shell__skip" @click="skip">{{ strings.skip }}</a>
     <header ref="topbar" class="q-shell__topbar">
       <QButton
@@ -103,11 +133,27 @@ function onDrawerClick(e: MouseEvent) {
       <div v-if="slots['top-bar-end']" class="q-shell__topend"><slot name="top-bar-end" /></div>
     </header>
     <div class="q-shell__side">
-      <div v-if="brand || slots.brand" class="q-shell__brand q-shell__brand--side">
-        <slot name="brand">{{ brand }}</slot>
+      <!-- Clips the column while it slides; inert while hidden, so its links leave the Tab order. -->
+      <div :id="sideId" class="q-shell__sideclip" :inert="isCollapsed || undefined">
+        <div class="q-shell__sidein">
+          <div v-if="brand || slots.brand" class="q-shell__brand q-shell__brand--side">
+            <slot name="brand">{{ brand }}</slot>
+          </div>
+          <div class="q-shell__nav"><slot name="nav" /></div>
+          <div v-if="slots['nav-footer']" class="q-shell__navfoot"><slot name="nav-footer" /></div>
+        </div>
       </div>
-      <div class="q-shell__nav"><slot name="nav" /></div>
-      <div v-if="slots['nav-footer']" class="q-shell__navfoot"><slot name="nav-footer" /></div>
+      <button
+        v-if="collapsible"
+        type="button"
+        class="q-shell__collapse"
+        :aria-label="isCollapsed ? strings.expand : strings.collapse"
+        :aria-expanded="!isCollapsed"
+        :aria-controls="sideId"
+        @click="collapsedModel = !isCollapsed"
+      >
+        <QIcon :name="isCollapsed ? 'chevron-right' : 'chevron-left'" size="sm" />
+      </button>
     </div>
     <main :id="mainId()" class="q-shell__main" tabindex="-1"><slot /></main>
     <QToaster v-if="toaster" />

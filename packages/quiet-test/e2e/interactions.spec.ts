@@ -274,3 +274,41 @@ test.describe('Focus rings', () => {
     expect(room.left).toBeGreaterThanOrEqual(room.ring);
   });
 });
+
+test.describe('AppShell collapsible', () => {
+  // The explorer's own shell is collapsible and remembers the choice.
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/foundations/tokens');
+    await page.evaluate(() => localStorage.removeItem('quiet-explorer-nav'));
+    await page.reload();
+  });
+
+  test('the edge button hides the column, keeps focus, and the page takes the width', async ({ page }) => {
+    const main = page.locator('main');
+    const hide = page.getByRole('button', { name: 'Hide navigation' });
+    await expect(hide).toHaveAttribute('aria-expanded', 'true');
+    const before = await main.evaluate((el) => el.getBoundingClientRect().left);
+    await hide.focus();
+    await page.keyboard.press('Enter');
+    const show = page.getByRole('button', { name: 'Show navigation' });
+    await expect(show).toBeFocused();
+    await expect(show).toHaveAttribute('aria-expanded', 'false');
+    await expect.poll(() => main.evaluate((el) => el.getBoundingClientRect().left)).toBeLessThan(before - 200);
+    // The hidden links are out of the Tab order: the next stop is in the page.
+    await expect(page.getByRole('link', { name: 'Brand book' })).toHaveCount(0);
+    await page.keyboard.press('Tab');
+    expect(await page.evaluate(() => !!document.activeElement?.closest('main'))).toBe(true);
+    // Remembered on the next visit, and the button brings it back.
+    await page.reload();
+    await page.getByRole('button', { name: 'Show navigation' }).click();
+    await expect(page.getByRole('link', { name: 'Brand book' })).toBeVisible();
+    await expect.poll(() => main.evaluate((el) => el.getBoundingClientRect().left)).toBe(before);
+  });
+
+  test('below 1024px there is no edge button: the menu opens the drawer as before', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 800 });
+    await expect(page.locator('.q-shell__collapse')).toBeHidden();
+    await page.getByRole('button', { name: 'Menu' }).click();
+    await expect(page.getByRole('dialog').getByRole('link', { name: 'Brand book' })).toBeVisible();
+  });
+});

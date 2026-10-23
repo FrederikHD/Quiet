@@ -138,4 +138,46 @@ describe('QAppShell', () => {
     const dialog = document.querySelector<HTMLElement>('[role="dialog"].q-shell__drawerpanel')!;
     expect(w.element.contains(dialog)).toBe(false);
   });
+
+  describe('collapsible', () => {
+    it('has no edge button unless collapsible, and ignores collapsed without it', () => {
+      const w = shell({ collapsed: true });
+      expect(w.find('.q-shell__collapse').exists()).toBe(false);
+      expect(w.classes()).not.toContain('is-collapsed');
+      expect(w.get('.q-shell__sideclip').attributes('inert')).toBeUndefined();
+    });
+
+    it('hides the column with the edge button and shows it again', async () => {
+      const w = shell({ collapsible: true });
+      const btn = w.get('button.q-shell__collapse');
+      const clip = w.get('.q-shell__sideclip');
+      expect(btn.attributes('aria-label')).toBe('Hide navigation');
+      expect(btn.attributes('aria-expanded')).toBe('true');
+      expect(btn.attributes('aria-controls')).toBe(clip.attributes('id'));
+      expect(btn.attributes('type')).toBe('button');
+
+      await btn.trigger('click');
+      expect(w.emitted('update:collapsed')).toEqual([[true]]);
+      expect(w.classes()).toContain('is-collapsed');
+      expect(btn.attributes('aria-label')).toBe('Show navigation');
+      expect(btn.attributes('aria-expanded')).toBe('false');
+      // Hidden content leaves the Tab order and the accessibility tree; the button itself stays outside it.
+      expect(clip.attributes('inert')).toBeDefined();
+      expect(clip.element.contains(btn.element)).toBe(false);
+
+      await btn.trigger('click');
+      expect(w.emitted('update:collapsed')).toEqual([[true], [false]]);
+      expect(w.classes()).not.toContain('is-collapsed');
+      expect(clip.attributes('inert')).toBeUndefined();
+    });
+
+    it('follows v-model:collapsed and translates the button', async () => {
+      const w = shell({ collapsible: true, collapsed: true, strings: { expand: 'Navigation einblenden' } });
+      expect(w.classes()).toContain('is-collapsed');
+      expect(w.get('.q-shell__collapse').attributes('aria-label')).toBe('Navigation einblenden');
+      await w.setProps({ collapsed: false });
+      expect(w.classes()).not.toContain('is-collapsed');
+      expect(w.get('.q-shell__collapse').attributes('aria-label')).toBe('Hide navigation');
+    });
+  });
 });

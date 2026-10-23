@@ -2,8 +2,9 @@
 /* Desktop (1024px and up): the nav is a fixed left column, the page scrolls beside it.
    Smaller: a top bar with a menu button opens the same nav as a drawer. */
 .q-shell {
+  --q-shell-side: 248px;
   display: grid;
-  grid-template-columns: 248px minmax(0, 1fr);
+  grid-template-columns: var(--q-shell-side) minmax(0, 1fr);
   min-height: 100vh;
   min-height: 100dvh;
   background: var(--surface);
@@ -37,13 +38,76 @@
   grid-column: 1;
   position: sticky;
   top: env(safe-area-inset-top, 0px);
+  z-index: 2;
   height: calc(100vh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
   height: calc(100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
   display: flex;
-  flex-direction: column;
+  min-width: 0;
   min-height: 0;
+  box-sizing: border-box;
   background: var(--surface-raised);
   border-right: 1px solid var(--line);
+}
+/* The column's content keeps its full width and is clipped while the column narrows, so it slides out instead of
+   squeezing. */
+.q-shell__sideclip {
+  flex: 1 1 auto;
+  display: flex;
+  min-width: 0;
+  overflow: hidden;
+}
+.q-shell__sidein {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  width: calc(248px - 1px);
+  min-height: 0;
+}
+
+/* collapsible: a round button on the column's edge, level with the brand, hides the column and brings it back. */
+.q-shell--collapsible {
+  transition: grid-template-columns 200ms ease;
+}
+/* Closed, a 16px strip of the column stays, like the edge of a closed drawer: the button keeps its place on the border
+   and stays clear of the page's title. */
+.q-shell.is-collapsed {
+  --q-shell-side: var(--space-4);
+}
+.q-shell__collapse {
+  position: absolute;
+  top: var(--space-4);
+  right: -12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-full);
+  background: var(--surface-raised);
+  color: var(--ink-muted);
+  cursor: pointer;
+  transition:
+    color 120ms ease,
+    border-color 120ms ease;
+}
+@media (hover: hover) {
+  .q-shell__collapse:hover {
+    border-color: var(--ink-muted);
+    color: var(--ink);
+  }
+}
+.q-shell__collapse:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .q-shell--collapsible,
+  .q-shell__collapse {
+    transition: none;
+  }
 }
 .q-shell__brand {
   min-width: 0;
@@ -135,7 +199,7 @@
   grid-template-rows: minmax(0, 1fr);
 }
 .q-shell--contained .q-shell__side {
-  position: static;
+  position: relative; /* not sticky: the shell scrolls inside its box. Relative still places the edge button. */
   height: auto;
 }
 .q-shell--contained .q-shell__main {
@@ -151,7 +215,8 @@
 }
 @media (forced-colors: active) {
   .q-shell__side,
-  .q-shell__topbar {
+  .q-shell__topbar,
+  .q-shell__collapse {
     border-color: CanvasText;
   }
 }

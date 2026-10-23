@@ -6,7 +6,7 @@ export default defineStory({
   component: QAppShell,
   name: 'QAppShell',
   // contained: the shell stays in the playground's stage, and its drawer covers only the shell.
-  props: { brand: 'Leinen & Co', toaster: false, contained: true },
+  props: { brand: 'Leinen & Co', toaster: false, contained: true, collapsible: true },
   slots: {
     nav: () =>
       h(QNav, {
