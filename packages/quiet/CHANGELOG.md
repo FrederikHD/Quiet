@@ -7,6 +7,10 @@ README, under "Stability". Before 1.0, a minor version (0.x.0) could contain bre
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-10-23
+
+No breaking changes: a new, opt-in AppShell feature and fixes found while using Quiet in a real app.
+
 ### Added
 
 - AppShell `collapsible` and `v-model:collapsed`: from 1024px, a round button at the bottom of the column's
@@ -247,7 +251,8 @@ First release.
 - WCAG 2.2 AA throughout: keyboard support, focus management, screen-reader announcements, both themes checked with
   axe; layouts that adapt to their own width; print styles; server rendering.
 
-[Unreleased]: https://github.com/FrederikHD/Quiet/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/FrederikHD/Quiet/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/FrederikHD/Quiet/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/FrederikHD/Quiet/compare/v1.0.0-rc.1...v1.0.0
 [1.0.0-rc.1]: https://github.com/FrederikHD/Quiet/compare/v0.6.0...v1.0.0-rc.1
 [0.6.0]: https://github.com/FrederikHD/Quiet/compare/v0.5.0...v0.6.0
