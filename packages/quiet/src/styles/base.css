@@ -14,6 +14,17 @@ body {
   color-scheme: dark;
 }
 
+/* Browser autofill: the field keeps its own look instead of the browser's blue or yellow. The browser's fill is
+   held back by a transition that never finishes, rather than painted over: a painted field covered the inner half of
+   the focus ring, and turned read-only and disabled fields white. */
+:is(.q-input__field, .q-textarea__field, .q-select__field):is(:-webkit-autofill, :autofill) {
+  -webkit-text-fill-color: currentColor;
+  caret-color: var(--ink);
+  transition:
+    background-color 600000s 0s,
+    color 600000s 0s;
+}
+
 /* Utility */
 .q-visually-hidden {
   position: absolute !important;

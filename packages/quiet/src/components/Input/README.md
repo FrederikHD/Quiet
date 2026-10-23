@@ -39,7 +39,7 @@ Pass `clearable` to show a × while the field has a value: search boxes, table f
 - **Invalid:** `invalid` turns the border `danger` and sets `aria-invalid`. Focused, it stays `danger` and thickens to 2px: focus is shown by thickness, the error by colour, so the error stays visible while it's being fixed. Never use it without the Field component's error message — a red border alone tells a colour-blind person nothing.
 - **Read-only:** `readonly` gives a `surface-sunken` fill and `line` border; the value stays selectable and copyable, and it takes the same 2px `brand` border when focused. Use it for order numbers, generated SKUs, API keys.
 - **Disabled:** `surface-sunken` fill, `line` border, `ink-muted` text — the same disabled look as every other control. Prefer read-only when people still need to read or copy the value.
-- **Autofill:** browser autofill keeps `surface-raised` and `ink` instead of the browser's yellow or blue.
+- **Autofill:** a field the browser filled in keeps its own background and text colour instead of the browser's yellow or blue, and its border and focus ring stay whole. The same holds for Textarea and Select.
 - **High contrast (Windows):** borders use system colours; invalid gets a 2px dashed border so it isn't colour-only.
 
 ## Placeholders
