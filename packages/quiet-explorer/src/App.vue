@@ -74,6 +74,15 @@ const read = (k: string, d: string) => {
   }
 };
 const theme = ref(read('quiet-explorer-theme', 'system'));
+// The navigation column, hidden with its edge button, stays hidden on the next visit.
+const navCollapsed = ref(read('quiet-explorer-nav', 'open') === 'collapsed');
+watch(navCollapsed, (c) => {
+  try {
+    localStorage.setItem('quiet-explorer-nav', c ? 'collapsed' : 'open');
+  } catch {
+    /* private mode */
+  }
+});
 const density = ref(read('quiet-explorer-density', 'comfortable'));
 const dark = window.matchMedia('(prefers-color-scheme: dark)');
 function applyTheme() {
@@ -108,7 +117,7 @@ watch(
 </script>
 
 <template>
-  <QAppShell brand="Quiet explorer" :toaster="!toasterPlayground">
+  <QAppShell v-model:collapsed="navCollapsed" brand="Quiet explorer" collapsible :toaster="!toasterPlayground">
     <template #brand>Quiet explorer <VersionSwitch /></template>
     <template #nav><QNav :sections="sections" @navigate="navigate" /></template>
     <template #nav-footer>

@@ -22,6 +22,19 @@ The back-office frame: navigation on the left, the page beside it.
 - Growing the window to 1024px or wider closes it. The navigation is then in its column.
 - It's a Dialog with `placement="start"`, so it behaves exactly like every other dialog.
 
+## Collapsible
+
+`collapsible` adds a round button at the bottom of the column's edge, from 1024px: on the line above the nav footer when there is one, clear of its controls. It hides the navigation so a wide table or form gets the whole width, and brings it back. Bind `v-model:collapsed` to remember the choice, in local storage say.
+
+- **Open:** a 24px circle on the column's border with a left chevron, on `surface-raised` with a `line-strong` edge.
+- **Closed:** the column slides away completely in 200ms (none with reduced motion) and the page takes the whole width. Only the circle stays, with a right chevron, in the page's left margin at the same height.
+- The column's content keeps its width and slides out rather than squeezing, and the page widens with it.
+- Below 1024px nothing changes: the menu button and drawer work as before, whatever `collapsed` says.
+
+```vue
+<QAppShell v-model:collapsed="collapsed" brand="Leinen & Co" collapsible>…</QAppShell>
+```
+
 ## Contained
 
 `contained` puts the shell in a box instead of the window: it fills its parent (give the parent a height), scrolls inside it, and the drawer opens over the shell only, not the whole page. Use it for previews and for a shell embedded in another page, like the examples here. A real back office leaves it off.
@@ -43,11 +56,13 @@ The back-office frame: navigation on the left, the page beside it.
 - **Skip link:** the first Tab stop, "Skip to content". It's hidden until focused; Enter moves focus to `main` (it has `tabindex="-1"`) and scrolls there.
 - **Landmarks:** the top bar is a `header`, the page is `main`, and the Nav is a `nav` named "Main" (see Nav).
 - **Menu button:** an icon button named "Menu" with `aria-expanded`. The drawer is a modal dialog (`aria-modal="true"`) titled by the brand, or "Menu" without one. Focus moves inside and Tab stays there; the rest of the page is inert. Its close button is named "Close menu".
+- **Edge button** (`collapsible`): named "Hide navigation" while the column is open and "Show navigation" while it's closed, with `aria-expanded` and `aria-controls` pointing at the column. Focus stays on it after a press. A hidden column is `inert`, so its links leave the Tab order and screen readers skip them.
 - **Toasts:** the built-in Toaster's live regions exist from the start, so the first toast is announced too.
 
 ## What you provide
 
 - **Required:** the `#nav` slot (a Nav), the page in the default slot.
-- **Optional:** `brand` (the shop name), `mainId` (the id of `main`; generated when missing), `contained` (fill a parent box instead of the window), `toaster` (default `true`; `:toaster="false"` leaves it out; translate the toasts with `configure({ strings: { toast } })`).
+- **Optional:** `brand` (the shop name), `mainId` (the id of `main`; generated when missing), `contained` (fill a parent box instead of the window), `collapsible` (an edge button that hides the column from 1024px), `toaster` (default `true`; `:toaster="false"` leaves it out; translate the toasts with `configure({ strings: { toast } })`).
 - **Slots:** `#nav`, the default slot (the page), `#brand` (instead of `brand`), `#nav-footer` (account, store switcher), `#top-bar-end` (icon buttons in the top bar below 1024px).
-- **Translations:** `strings` — `menu` ("Menu", also the drawer's title without a brand), `skip` ("Skip to content") and `closeMenu` ("Close menu"). Or set them once with `configure({ strings: { shell: { menu: 'Menü', skip: 'Zum Inhalt springen', closeMenu: 'Menü schließen' } } })`. The Nav inside names its own landmark: `configure({ strings: { nav: { label: 'Hauptmenü' } } })`.
+- **v-model:** `v-model:collapsed` (the column hidden, with `collapsible`; default false).
+- **Translations:** `strings` — `menu` ("Menu", also the drawer's title without a brand), `skip` ("Skip to content"), `closeMenu` ("Close menu"), `collapse` ("Hide navigation") and `expand` ("Show navigation"). Or set them once with `configure({ strings: { shell: { menu: 'Menü', skip: 'Zum Inhalt springen', closeMenu: 'Menü schließen' } } })`. The Nav inside names its own landmark: `configure({ strings: { nav: { label: 'Hauptmenü' } } })`.
