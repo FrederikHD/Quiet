@@ -1,4 +1,4 @@
-<!-- From 1024px, the round button on the column's edge hides the navigation, so a wide table or form gets the whole
+<!-- From 1024px, the round button at the bottom of the column's edge hides the navigation, so a wide table or form gets the whole
      width, and brings it back. v-model:collapsed lets the app remember the choice. -->
 <script setup lang="ts">
 import { QAppShell, QNav, QPage, QTable } from '@frederikhd/quiet';

@@ -2,6 +2,7 @@
 import { computed, onBeforeUnmount, onMounted, ref, useModel, useSlots } from 'vue';
 import { useStrings } from '../../config';
 import { useQuietId } from '../../composables/useQuietId';
+import { useResizeObserver } from '../../composables/useResizeObserver';
 import { useStickyPad } from '../../composables/useStickyPad';
 import QButton from '../Button/QButton.vue';
 import QDialog from '../Dialog/QDialog.vue';
@@ -32,7 +33,7 @@ export interface AppShellProps {
   /** Fill a box instead of the window: the shell scrolls inside its parent (give that a height) and the drawer opens
    *  over the shell, not the page. For previews and shells embedded in another page. */
   contained?: boolean;
-  /** From 1024px, a round button on the column's edge hides the navigation and shows it again, so the page gets the
+  /** From 1024px, a round button at the bottom of the column's edge hides the navigation and shows it again, so the page gets the
    *  full width. Bind `v-model:collapsed` to remember the choice. Below 1024px the menu button and drawer are unchanged. */
   collapsible?: boolean;
   /** Whether the column is hidden (`collapsible`). Default false. */
@@ -81,6 +82,10 @@ const collapsedModel = useModel(props, 'collapsed');
 // Only a collapsible shell hides its column: `collapsed` alone does nothing, so there is always a way back.
 const isCollapsed = computed(() => props.collapsible && collapsedModel.value);
 const sideId = useQuietId('q-side-');
+// With a nav footer, the edge button sits on the line above it, clear of the footer's controls: that line's height.
+const foot = ref<HTMLElement | null>(null);
+const footHeight = ref(0);
+useResizeObserver(foot, () => (footHeight.value = foot.value?.offsetHeight ?? 0));
 const topbar = ref<HTMLElement | null>(null);
 if (!props.contained) useStickyPad(topbar, 'top'); // 0 high on desktop, where the bar is hidden
 
@@ -140,13 +145,14 @@ function onDrawerClick(e: MouseEvent) {
             <slot name="brand">{{ brand }}</slot>
           </div>
           <div class="q-shell__nav"><slot name="nav" /></div>
-          <div v-if="slots['nav-footer']" class="q-shell__navfoot"><slot name="nav-footer" /></div>
+          <div v-if="slots['nav-footer']" ref="foot" class="q-shell__navfoot"><slot name="nav-footer" /></div>
         </div>
       </div>
       <button
         v-if="collapsible"
         type="button"
         class="q-shell__collapse"
+        :style="footHeight ? { bottom: `${footHeight - 12}px` } : undefined"
         :aria-label="isCollapsed ? strings.expand : strings.collapse"
         :aria-expanded="!isCollapsed"
         :aria-controls="sideId"

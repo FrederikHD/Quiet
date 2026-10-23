@@ -276,9 +276,9 @@ test.describe('Focus rings', () => {
 });
 
 test.describe('AppShell collapsible', () => {
-  // The explorer's own shell is collapsible and remembers the choice.
+  // The explorer's own shell is collapsible and remembers the choice. A page with controls, so Tab has somewhere to go.
   test.beforeEach(async ({ page }) => {
-    await page.goto('/foundations/tokens');
+    await page.goto('/components/button/examples');
     await page.evaluate(() => localStorage.removeItem('quiet-explorer-nav'));
     await page.reload();
   });

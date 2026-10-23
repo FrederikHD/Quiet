@@ -24,7 +24,7 @@ The back-office frame: navigation on the left, the page beside it.
 
 ## Collapsible
 
-`collapsible` adds a round button on the column's edge, level with the brand, from 1024px. It hides the navigation so a wide table or form gets the whole width, and brings it back. Bind `v-model:collapsed` to remember the choice, in local storage say.
+`collapsible` adds a round button at the bottom of the column's edge, from 1024px: on the line above the nav footer when there is one, clear of its controls. It hides the navigation so a wide table or form gets the whole width, and brings it back. Bind `v-model:collapsed` to remember the choice, in local storage say.
 
 - **Open:** a 24px circle on the column's border with a left chevron, on `surface-raised` with a `line-strong` edge.
 - **Closed:** the column slides away in 200ms (none with reduced motion) to a 16px strip, like the edge of a closed drawer, and the circle stays on its border with a right chevron.

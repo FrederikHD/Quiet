@@ -64,7 +64,8 @@
   min-height: 0;
 }
 
-/* collapsible: a round button on the column's edge, level with the brand, hides the column and brings it back. */
+/* collapsible: a round button on the column's edge, at the bottom, hides the column and brings it back. With a nav
+   footer it sits on the line above the footer (placed from the footer's height), clear of its controls. */
 .q-shell--collapsible {
   transition: grid-template-columns 200ms ease;
 }
@@ -73,9 +74,15 @@
 .q-shell.is-collapsed {
   --q-shell-side: var(--space-4);
 }
+/* Once it has slid out, the content is hidden too, so nothing wide (a logo) shows a sliver in the strip. It comes back
+   at once when the column opens. */
+.q-shell.is-collapsed .q-shell__sidein {
+  visibility: hidden;
+  transition: visibility 0s 200ms;
+}
 .q-shell__collapse {
   position: absolute;
-  top: var(--space-4);
+  bottom: var(--space-4);
   right: -12px;
   display: inline-flex;
   align-items: center;
@@ -105,7 +112,8 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .q-shell--collapsible,
-  .q-shell__collapse {
+  .q-shell__collapse,
+  .q-shell.is-collapsed .q-shell__sidein {
     transition: none;
   }
 }

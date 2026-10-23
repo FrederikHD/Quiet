@@ -9,6 +9,11 @@ README, under "Stability". Before 1.0, a minor version (0.x.0) could contain bre
 
 ### Added
 
+- AppShell `collapsible` and `v-model:collapsed`: from 1024px, a round button at the bottom of the column's
+  edge, slides the navigation away to a 16px strip and brings it back, so a wide table or form gets the whole width.
+  It's named "Hide navigation" / "Show navigation" (new `shell.collapse` and `shell.expand` strings) and keeps focus;
+  the hidden column is inert. Below 1024px the menu button and drawer are unchanged. Opt-in: existing shells look
+  the same.
 - A section in the Forms guide on what `type="email"` accepts (`anna@shop` is valid HTML) and how to require a dot in the
   domain.
 
