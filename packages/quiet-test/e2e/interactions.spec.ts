@@ -231,3 +231,46 @@ test.describe('Autofill', () => {
     await browser.close();
   });
 });
+
+test.describe('Focus rings', () => {
+  // A ring drawn outside an item hides under the next item's background when items sit closer than the ring is wide,
+  // and a scrolling container clips what sticks out. These items draw it inside, and the thumbnail strip leaves room.
+  test('stacked Nav links and review rows draw the ring inside', async ({ page }) => {
+    const ringFitsInside = (el: Element) => {
+      const s = getComputedStyle(el);
+      return parseFloat(s.outlineOffset) + parseFloat(s.outlineWidth) <= 0;
+    };
+    await page.goto('/foundations/tokens');
+    // Brand book sits right above the current item (Tokens), whose tinted background would cover a ring drawn outside.
+    const link = page.locator('.q-nav__link', { hasText: 'Brand book' });
+    await link.focus();
+    await page.keyboard.press('Shift+Tab');
+    await page.keyboard.press('Tab');
+    await expect(link).toBeFocused();
+    expect(await link.evaluate(ringFitsInside)).toBe(true);
+
+    await page.goto('/components/review-summary/examples');
+    const row = page.locator('button.q-rsum__row').first();
+    await row.focus();
+    await page.keyboard.press('Shift+Tab');
+    await page.keyboard.press('Tab');
+    await expect(row).toBeFocused();
+    expect(await row.evaluate(ringFitsInside)).toBe(true);
+  });
+
+  test('a Gallery thumbnail’s ring fits inside the scrolling strip', async ({ page }) => {
+    await page.goto('/components/gallery/examples');
+    const thumb = page.locator('.q-gallery__thumb').first();
+    await thumb.focus();
+    await page.keyboard.press('Tab');
+    await page.keyboard.press('Shift+Tab');
+    await expect(thumb).toBeFocused();
+    const room = await thumb.evaluate((el) => {
+      const ring = parseFloat(getComputedStyle(el).outlineOffset) + parseFloat(getComputedStyle(el).outlineWidth);
+      const strip = getComputedStyle(el.parentElement!);
+      return { ring, top: parseFloat(strip.paddingTop), left: parseFloat(strip.paddingLeft) };
+    });
+    expect(room.top).toBeGreaterThanOrEqual(room.ring);
+    expect(room.left).toBeGreaterThanOrEqual(room.ring);
+  });
+});

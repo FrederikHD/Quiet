@@ -17,6 +17,9 @@ README, under "Stability". Before 1.0, a minor version (0.x.0) could contain bre
 - A field the browser had filled in (autofill) lost the inner half of its focus ring: the field was painted white to hide
   the browser's blue, which covered it. The browser's colour is now held back instead of painted over, for Input,
   Textarea and Select, so the ring stays whole and read-only and disabled fields keep their grey.
+- Focus rings hidden or cut off: Nav links and ReviewSummary's filter rows sit 2px apart, so the ring drawn outside an
+  item went under the next item's background (the current link's tint); they now draw it inside, like Menu items. A
+  Gallery thumbnail's ring was clipped by the scrolling strip, which now leaves room for it.
 
 ## [1.0.0] - 2026-10-21
 
