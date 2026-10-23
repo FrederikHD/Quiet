@@ -189,3 +189,45 @@ test('Popover holding a field is wide enough for it and lines up with the end of
   expect(p.width).toBeGreaterThan(200);
   expect(Math.abs(p.x + p.width - (t.x + t.width))).toBeLessThan(1.5);
 });
+
+test.describe('Autofill', () => {
+  // Chromium's DevTools protocol fills a form the way the browser's autofill does; the other engines have no such hook.
+  test('keeps the field transparent, so the focus ring stays whole', async ({ playwright, browserName, baseURL }) => {
+    test.skip(browserName !== 'chromium', 'Autofill.trigger is Chromium-only');
+    // Full Chromium: the headless shell the other tests run in has no Autofill domain.
+    const browser = await playwright.chromium.launch({ channel: 'chromium' });
+    test.info().attach('browser', { body: browser.version() });
+    const page = await browser.newPage({ baseURL });
+    await page.goto('/components/input/examples');
+    // A card form in Quiet's own markup (the classes are what the stylesheet styles), so autofill recognises it.
+    await page.evaluate(() => {
+      const form = document.createElement('form');
+      form.innerHTML = ['cc-name', 'cc-number', 'cc-exp']
+        .map(
+          (a) =>
+            `<div class="q-input"><input class="q-input__field" id="af-${a}" name="${a}" autocomplete="${a}"></div>`,
+        )
+        .join('');
+      document.querySelector('main')!.prepend(form);
+    });
+    const cdp = await page.context().newCDPSession(page);
+    const { root } = await cdp.send('DOM.getDocument');
+    const { nodeId } = await cdp.send('DOM.querySelector', { nodeId: root.nodeId, selector: '#af-cc-number' });
+    const { node } = await cdp.send('DOM.describeNode', { nodeId });
+    await cdp.send('Autofill.trigger', {
+      fieldId: node.backendNodeId,
+      card: { number: '4444444444444444', name: 'Anna Schmidt', expiryMonth: '12', expiryYear: '2030', cvc: '123' },
+    });
+    const field = page.locator('#af-cc-number');
+    await expect(field).toHaveValue('4444444444444444');
+    expect(await field.evaluate((el) => el.matches(':autofill'))).toBe(true);
+    // Nothing painted over the box: no inset shadow, and the browser's fill held at transparent.
+    const { shadow, alpha } = await field.evaluate((el) => {
+      const s = getComputedStyle(el);
+      return { shadow: s.boxShadow, alpha: Number(s.backgroundColor.match(/[\d.]+(?=\))/)?.[0] ?? 1) };
+    });
+    expect(shadow).toBe('none');
+    expect(alpha).toBeLessThan(0.05);
+    await browser.close();
+  });
+});

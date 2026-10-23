@@ -7,6 +7,17 @@ README, under "Stability". Before 1.0, a minor version (0.x.0) could contain bre
 
 ## [Unreleased]
 
+### Added
+
+- A section in the Forms guide on what `type="email"` accepts (`anna@shop` is valid HTML) and how to require a dot in the
+  domain.
+
+### Fixed
+
+- A field the browser had filled in (autofill) lost the inner half of its focus ring: the field was painted white to hide
+  the browser's blue, which covered it. The browser's colour is now held back instead of painted over, for Input,
+  Textarea and Select, so the ring stays whole and read-only and disabled fields keep their grey.
+
 ## [1.0.0] - 2026-10-21
 
 The first stable release: the same components as 1.0.0-rc.1, now on npm's `latest` tag. From here on, the API only

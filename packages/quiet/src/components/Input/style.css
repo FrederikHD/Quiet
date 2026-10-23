@@ -161,16 +161,6 @@
   -webkit-appearance: none;
 }
 
-/* Browser autofill keeps the system's colours instead of yellow or blue */
-.q-input__field:-webkit-autofill,
-.q-input__field:-webkit-autofill:hover,
-.q-input__field:-webkit-autofill:focus {
-  -webkit-text-fill-color: var(--ink);
-  -webkit-box-shadow: 0 0 0 1000px var(--surface-raised) inset;
-  caret-color: var(--ink);
-  transition: background-color 9999s ease-out 0s;
-}
-
 /* Sizes */
 .q-input--slim {
   height: var(--control-slim);

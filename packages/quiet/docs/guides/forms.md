@@ -86,6 +86,16 @@ After a submit that leaves errors, the Form shows "Please fix the following" wit
 - Focus moves to the summary when errors first appear and after each submit, not while the list shrinks as people fix things.
 - A control in a closed tab opens its tab first, and the tab shows that it has errors.
 
+## Checking an email address
+
+`type="email"` and `validity.typeMismatch` follow the HTML rule, which only needs something on both sides of the `@`: `anna@localhost` is valid, so `anna@shop` passes too. For a shop, where every address has a domain with a dot, check for one yourself:
+
+```ts
+const looksLikeEmail = (v: string) => /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v.trim());
+```
+
+Keep it that loose: it catches typos, and only a confirmation email proves an address works.
+
 ## Writing messages
 
 Say what's wrong and how to fix it, in the words of the label: "Enter a price, like 49,90", not "Invalid input" or "Price is required". Keep the shop's format in the example (49,90 in Germany).
