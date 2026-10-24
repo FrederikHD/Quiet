@@ -89,6 +89,23 @@ describe('QRadioGroup', () => {
     expect(w.get('.q-choicegroup__chosen').text()).toBe('XL');
   });
 
+  it('joins connected button tiles, without repeating the chosen name beside the question', () => {
+    const w = mount(QRadioGroup, {
+      props: { label: 'Conditions to match', layout: 'buttons', connected: true, defaultValue: 'AND' },
+      slots: { default: () => [h(QRadio, { value: 'AND', label: 'All' }), h(QRadio, { value: 'OR', label: 'Any' })] },
+    });
+    expect(w.get('.q-choicegroup__options').classes()).toContain('q-choicegroup__options--connected');
+    expect(w.find('.q-choicegroup__chosen').exists()).toBe(false);
+    expect(w.get('[role="radiogroup"]').attributes('aria-labelledby')).toBeTruthy();
+  });
+
+  it('warns in development when connected is used without layout="buttons"', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const w = mount(QRadioGroup, { props: { label: 'Delivery', connected: true }, slots: { default: options } });
+    expect(w.get('.q-choicegroup__options').classes()).not.toContain('q-choicegroup__options--connected');
+    expect(warn.mock.calls.some(([m]) => String(m).includes('RadioGroup: connected'))).toBe(true);
+  });
+
   it('shows swatches with a title and the colour', () => {
     const w = mount(QRadioGroup, {
       props: { label: 'Colour', layout: 'swatches' },

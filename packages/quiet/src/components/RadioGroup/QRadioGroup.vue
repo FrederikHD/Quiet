@@ -13,6 +13,8 @@ export interface RadioGroupProps extends ChoiceGroupProps {
   ariaLabel?: string;
   /** The chosen radio's value; null for none yet. */
   modelValue?: string | null;
+  /** buttons only: the tiles join into one row with a shared border, like a segmented switch (All | Any). */
+  connected?: boolean;
 }
 
 const props = withDefaults(defineProps<RadioGroupProps>(), {
@@ -46,6 +48,12 @@ defineSlots<{
 if (props.label == null && !props.ariaLabel && !useAttrs()['aria-labelledby'])
   warnOnce('radiogroup-label', 'RadioGroup: pass a label — it is the question the radios answer.');
 
+if (props.connected && props.layout !== 'buttons')
+  warnOnce(
+    'radiogroup-connected',
+    'RadioGroup: connected joins the tiles of layout="buttons" and does nothing in other layouts.',
+  );
+
 if (model.value === undefined && props.defaultValue !== undefined) model.value = props.defaultValue;
 
 // A form reset puts the group back to its defaultValue.
@@ -77,6 +85,8 @@ const {
   chosen,
   slots,
 } = g;
+// Joined tiles name their option themselves; the chosen name beside the question would only repeat it.
+const joined = computed(() => props.connected && layout.value === 'buttons');
 </script>
 
 <template>
@@ -99,7 +109,8 @@ const {
     :strings="fstrings"
     :status="status"
     :summary-shown="summaryShown"
-    :chosen="chosen()"
+    :chosen="joined ? null : chosen()"
+    :connected="joined"
     :label-id="labelId"
     :hint-id="hintId"
     :msg-id="msgId"
