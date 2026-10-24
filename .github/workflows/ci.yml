@@ -36,6 +36,8 @@ jobs:
       - run: npx playwright install --with-deps chromium
         working-directory: packages/quiet-test
       - run: npm run test:e2e
+      # The design system's components render on a design canvas as they do in Vue (built above).
+      - run: npm run design-system:check -w quiet-test
       - uses: actions/upload-artifact@v7
         if: failure()
         with:

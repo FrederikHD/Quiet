@@ -126,7 +126,9 @@ const Bridge = defineComponent({
       const slots: Record<string, () => any> = {};
       for (const [k, v] of Object.entries(props.rprops)) {
         if (k === 'children') continue;
-        if (k === 'className') out.class = v;
+        // The canvas camel-cases every attribute (aria-label → ariaLabel); Quiet reads them as written.
+        if (/^(aria|data)[A-Z]/.test(k)) out[k.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`)] = v;
+        else if (k === 'className') out.class = v;
         else if (k === 'style') out.style = styleOf(v);
         else if (isNode(v)) slots[k] = () => toVue(v, props.host);
         else if (/^default[A-Z]/.test(k) && !(k in declared)) {
