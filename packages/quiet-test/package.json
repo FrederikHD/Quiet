@@ -1,7 +1,7 @@
 {
   "name": "quiet-test",
   "private": true,
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Tests for the Quiet design system: component tests (Vitest + Vue Test Utils) and end-to-end, accessibility and visual tests (Playwright) against quiet-explorer.",
   "type": "module",
   "scripts": {
@@ -21,7 +21,7 @@
     "design-system:check": "node design-system/check/check.mjs"
   },
   "dependencies": {
-    "@frederikhd/quiet": "1.1.0"
+    "@frederikhd/quiet": "1.2.0"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.14.0",
