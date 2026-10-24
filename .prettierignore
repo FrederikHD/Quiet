@@ -8,3 +8,4 @@ packages/quiet/src/styles/tokens.css
 /site
 .nuxt
 .output
+packages/quiet-test/design-system/out

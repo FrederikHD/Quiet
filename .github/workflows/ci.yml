@@ -31,6 +31,8 @@ jobs:
       - run: npm run typecheck
       - run: npm run test:unit
       - run: npm run test:package
+      # The design system for claude.ai still builds from this checkout (published by hand on each release).
+      - run: npm run design-system
       - run: npx playwright install --with-deps chromium
         working-directory: packages/quiet-test
       - run: npm run test:e2e
