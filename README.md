@@ -8,7 +8,7 @@ A calm, neutral-first design system for commerce — storefront and back office 
 
 | Package                                              | What it is                                                                                                                                                                                |
 | ---------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [`packages/quiet`](packages/quiet)                   | The library, published as `@frederikhd/quiet`: 50 components, design tokens, styles, the `Quiet` plugin and formatting helpers.                                                           |
+| [`packages/quiet`](packages/quiet)                   | The library, published as `@frederikhd/quiet`: 51 components, design tokens, styles, the `Quiet` plugin and formatting helpers.                                                           |
 | [`packages/quiet-explorer`](packages/quiet-explorer) | The documentation app: brand book, tokens, icons, patterns (whole screens built from the components), and for every component its guidelines, API tables, examples and a live playground. |
 | [`packages/quiet-test`](packages/quiet-test)         | Unit tests (Vitest + Vue Test Utils) and browser tests (Playwright): end-to-end, keyboard, accessibility (axe), responsive and visual.                                                    |
 

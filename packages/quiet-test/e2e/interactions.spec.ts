@@ -81,6 +81,31 @@ test('Combobox: typing filters, arrow keys and Enter pick', async ({ page }) => 
   await expect(trigger).toBeFocused();
 });
 
+test('DatePicker: typing, the calendar keyboard, Escape and choosing', async ({ page }) => {
+  await page.goto('/components/date-picker/examples');
+  const field = page.getByRole('textbox', { name: 'Publish on' });
+  await field.fill('3.1.2027');
+  await field.press('Tab');
+  await expect(field).toHaveValue('03.01.2027');
+  const button = page.getByRole('button', { name: 'Choose date' }).first();
+  await button.focus();
+  await page.keyboard.press('Enter');
+  const dialog = page.getByRole('dialog', { name: 'Choose date' });
+  await expect(dialog).toBeVisible();
+  await expect(dialog.getByRole('button', { name: 'Sonntag, 3. Januar 2027' })).toBeFocused();
+  await page.keyboard.press('Escape');
+  await expect(dialog).toBeHidden();
+  await expect(button).toBeFocused();
+  await page.keyboard.press('Enter');
+  await page.keyboard.press('ArrowRight');
+  await page.keyboard.press('PageDown');
+  await expect(dialog.getByRole('heading', { name: 'Februar 2027' })).toBeVisible();
+  await page.keyboard.press('Enter');
+  await expect(dialog).toBeHidden();
+  await expect(field).toHaveValue('04.02.2027');
+  await expect(button).toBeFocused();
+});
+
 test('Table: a sortable header sorts the rows', async ({ page }) => {
   await page.goto('/components/table/examples');
   const table = page.getByTestId('example').first().getByRole('table');

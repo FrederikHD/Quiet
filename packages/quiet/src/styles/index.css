@@ -18,6 +18,7 @@
 
 @import '../components/Dialog/style.css';
 @import '../components/Combobox/style.css';
+@import '../components/DatePicker/style.css';
 @import '../components/Badge/style.css';
 @import '../components/Pagination/style.css';
 @import '../components/Table/style.css';

@@ -3,6 +3,7 @@ import type {
   AddressStrings,
   BreadcrumbsStrings,
   ComboboxStrings,
+  DatePickerStrings,
   DialogStrings,
   DiscountCodeStrings,
   FileUploadStrings,
@@ -80,6 +81,7 @@ export function applyConfig(target: QuietConfig, options: ConfigureOptions): voi
 export interface QuietStrings {
   form?: FormStrings;
   combobox?: ComboboxStrings;
+  datePicker?: DatePickerStrings;
   table?: TableStrings;
   pagination?: PaginationStrings;
   input?: InputStrings;

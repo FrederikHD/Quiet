@@ -7,6 +7,15 @@ README, under "Stability". Before 1.0, a minor version (0.x.0) could contain bre
 
 ## [Unreleased]
 
+### Added
+
+- DatePicker: a date field to use instead of `<QInput type="date">`, whose popup differs in every browser and can't be
+  translated or styled. People type a date in the shop's format ("24.10.2026" in German, "10/24/2026" in the US) or
+  pick one from a calendar under the field. `v-model` is an ISO date (`"2026-10-24"`) or null; `min`, `max` and
+  `isDateDisabled` rule dates out, and `@invalid-text` says why typed text gave no date. The calendar follows the
+  locale's month and weekday names and first day of the week, and works with the keyboard (arrows, Home/End, Page
+  Up/Down for months, Shift for years). New `datePicker` strings.
+
 ## [1.1.0] - 2026-10-23
 
 No breaking changes: a new, opt-in AppShell feature and fixes found while using Quiet in a real app.

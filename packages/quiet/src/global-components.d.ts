@@ -13,6 +13,7 @@ declare module 'vue' {
     QCheckbox: typeof Q.QCheckbox;
     QCheckboxGroup: typeof Q.QCheckboxGroup;
     QCombobox: typeof Q.QCombobox;
+    QDatePicker: typeof Q.QDatePicker;
     QDescriptionList: typeof Q.QDescriptionList;
     QDialog: typeof Q.QDialog;
     QDisclosure: typeof Q.QDisclosure;
