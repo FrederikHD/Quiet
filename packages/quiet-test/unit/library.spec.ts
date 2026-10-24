@@ -53,6 +53,12 @@ describe('library', () => {
     }
   });
 
+  it('the READMEs state the number of components', () => {
+    const count = readdirSync(`${lib}src/components`, { withFileTypes: true }).filter((d) => d.isDirectory()).length;
+    expect(readFileSync(`${lib}README.md`, 'utf8')).toContain(`${count} components in eight groups`);
+    expect(readFileSync(`${lib}../../README.md`, 'utf8')).toContain(`: ${count} components,`);
+  });
+
   it('formats money and numbers for the configured locale', () => {
     quiet.configure({ locale: 'de-DE', currency: 'EUR' });
     expect(quiet.money(19.9).replace(/\s/g, ' ')).toBe('19,90 €');
