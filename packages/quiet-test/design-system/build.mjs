@@ -15,6 +15,9 @@ const lib = `${root}packages/quiet`;
 const examplesDir = `${root}packages/quiet-explorer/src/examples`;
 const out = `${here}out/project`;
 const read = (p) => readFileSync(p, 'utf8');
+// Scripts as plain ASCII (non-ASCII written as \u escapes): a page that loads them without declaring UTF-8 would
+// otherwise misread characters in strings and regular expressions.
+const ascii = (js) => js.replace(/[\u0080-\uffff]/g, (c) => `\\u${c.charCodeAt(0).toString(16).padStart(4, '0')}`);
 
 if (!existsSync(`${lib}/dist/quiet.js`)) throw new Error('Build the library first: npm run build -w @frederikhd/quiet');
 rmSync(`${here}out`, { recursive: true, force: true });
@@ -52,7 +55,7 @@ await build({
   },
 });
 const header = { format: 4, namespace: 'Quiet', components: exported.map((name) => ({ name })) };
-const bundle = `/* @ds-bundle: ${JSON.stringify(header)} */\n${read(`${out}/components/bundle.js`)}`;
+const bundle = `/* @ds-bundle: ${JSON.stringify(header)} */\n${ascii(read(`${out}/components/bundle.js`))}`;
 // The artifact may inline it in a <script>.
 if (/<\/script|<!--/i.test(bundle)) throw new Error('bundle.js contains </script or <!--');
 writeFileSync(`${out}/components/bundle.js`, bundle);
@@ -94,6 +97,8 @@ await build({
     },
   },
 });
+
+writeFileSync(`${out}/components/examples.js`, ascii(read(`${out}/components/examples.js`)));
 
 // 3. components/index.d.ts: each component's props, as the canvas takes them.
 writeFileSync(`${out}/components/index.d.ts`, indexDts(`${lib}/dist/types`));
