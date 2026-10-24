@@ -8,7 +8,7 @@ Most screens in a shop are forms: checkout, sign-up, editing a product. Quiet's 
 - **`QFormSection`**: a titled group of fields ("Shipping", "Pricing").
 - **`QField`**: one label, one control, and its hint, help and message. Every control goes in one.
 - **`QFieldGroup`**: fields that belong together on one row (price and compare-at price; postcode and city).
-- **Controls**: `QInput`, `QTextarea`, `QSelect`, `QCombobox`, `QQuantityStepper`, `QFileUpload`, `QPriceRange`, `QRatingInput`. `QCheckboxGroup` and `QRadioGroup` are fields themselves, with their own label and message.
+- **Controls**: `QInput`, `QTextarea`, `QSelect`, `QCombobox`, `QDatePicker`, `QQuantityStepper`, `QFileUpload`, `QPriceRange`, `QRatingInput`. `QCheckboxGroup` and `QRadioGroup` are fields themselves, with their own label and message.
 - **`QFormActions`**: the buttons at the end. `sticky` keeps Save in reach on long screens.
 
 ```vue

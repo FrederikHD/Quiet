@@ -30,6 +30,14 @@ export const de = {
     more: (count) => `+${count} weitere`,
     selected: (count) => `${count} ausgewählt`,
   },
+  datePicker: {
+    choose: 'Datum auswählen',
+    previousMonth: 'Vorheriger Monat',
+    nextMonth: 'Nächster Monat',
+    day: 'TT',
+    month: 'MM',
+    year: 'JJJJ',
+  },
   choice: { soldOut: 'ausverkauft' },
   stepper: { decrease: 'Menge verringern', increase: 'Menge erhöhen' },
   upload: {

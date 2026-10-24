@@ -27,6 +27,7 @@ export * from './components/Input';
 export * from './components/Textarea';
 export * from './components/Select';
 export * from './components/Combobox';
+export * from './components/DatePicker';
 export * from './components/QuantityStepper';
 export * from './components/Checkbox';
 export * from './components/CheckboxGroup';
