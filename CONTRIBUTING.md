@@ -77,3 +77,5 @@ Releases publish `@frederikhd/quiet` to npm through npm trusted publishing, so t
 2. Merge it once CI is green.
 3. Actions → **Release** → **Run workflow** on `develop`. It checks that the version and the changelog agree, runs the
    whole CI suite, publishes to npm with provenance, creates the GitHub Release and its tag, and deploys the docs site.
+4. Update the Quiet design system on claude.ai: `npm run design-system` builds it from the release commit, and Claude
+   publishes the result to the design-system artifact (see the README).

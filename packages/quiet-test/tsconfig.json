@@ -4,5 +4,5 @@
     "types": ["node", "vite/client"],
     "paths": { "@frederikhd/quiet": ["../quiet/src/index.ts"] }
   },
-  "include": ["unit/**/*.ts", "e2e/**/*.ts", "*.ts"]
+  "include": ["unit/**/*.ts", "e2e/**/*.ts", "design-system/src/**/*.ts", "*.ts"]
 }

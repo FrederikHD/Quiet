@@ -16,7 +16,8 @@
     "test:package": "node package-check/run.mjs",
     "test:e2e:firefox": "playwright test --project=e2e-firefox",
     "test:e2e:webkit": "playwright test --project=e2e-webkit",
-    "test:example": "node example-check/run.mjs"
+    "test:example": "node example-check/run.mjs",
+    "design-system": "node design-system/build.mjs"
   },
   "dependencies": {
     "@frederikhd/quiet": "1.1.0"

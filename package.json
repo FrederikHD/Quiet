@@ -22,7 +22,8 @@
     "test:package": "npm run test:package -w quiet-test",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "test:example": "npm run test:example -w quiet-test"
+    "test:example": "npm run test:example -w quiet-test",
+    "design-system": "npm run build -w @frederikhd/quiet && npm run design-system -w quiet-test"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

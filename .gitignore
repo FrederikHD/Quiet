@@ -11,3 +11,4 @@ blob-report/
 .nuxt/
 .output/
 /examples/shop/dist
+/packages/quiet-test/design-system/out/

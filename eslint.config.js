@@ -18,6 +18,7 @@ export default ts.config(
       '**/coverage/**',
       '**/.nuxt/**',
       '**/.output/**',
+      'packages/quiet-test/design-system/out/**',
     ],
   },
   js.configs.recommended,
