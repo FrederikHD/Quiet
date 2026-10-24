@@ -65,6 +65,26 @@ function toVue(node: ReactNode, host: IslandHost): any {
   const { type, props, key } = node as { type: any; props: Record<string, any>; key: string | null };
   if (type === R.Fragment) return toVue(props.children, host);
   if (type && type[VUE]) return h(Bridge, { key: key ?? undefined, comp: type[VUE], rprops: props, host });
+  // The canvas wraps an element it can select in <div class="sc-host-x" style="display: contents">. Around a Quiet
+  // component that wrapper would break the component's own CSS for its children (the first and last tile of a
+  // connected RadioGroup, the fields of a FieldGroup), so the component goes in directly and keeps the marker.
+  const only = Array.isArray(props.children) && props.children.length === 1 ? props.children[0] : props.children;
+  if (
+    type === 'div' &&
+    props.className === 'sc-host-x' &&
+    props.style?.display === 'contents' &&
+    Object.keys(props.style).length === 1 &&
+    R.isValidElement(only) &&
+    (only as { type: any }).type?.[VUE]
+  ) {
+    const child = only as { type: any; props: Record<string, any>; key: string | null };
+    return h(Bridge, {
+      key: key ?? child.key ?? undefined,
+      comp: child.type[VUE],
+      rprops: { ...child.props, 'data-dc-tpl': props['data-dc-tpl'] },
+      host,
+    });
+  }
   if (typeof type === 'string') {
     const p: Record<string, unknown> = {};
     for (const [k, v] of Object.entries(props)) {
