@@ -36,6 +36,7 @@ It is to Radio what Field is to Input. You put `<QRadio>`s inside, and the group
 - `cards`: bordered tiles with a description and a price. Use it for delivery and payment in checkout. A radio's `media` puts a small picture before the text — a payment method's icon or logo (it's decorative; the label carries the name). One per row by default; `columns` puts several per row, each at least 180px wide.
 - `swatches`: colour dots for a product's colours. Give each Radio a `swatch` colour (or an `image` of the fabric). The chosen colour's name shows next to the question ("Colour Navy"), and each dot shows its name on hover.
 - `buttons`: size tiles (XS · S · M · L), chosen = `brand` border on `brand-tint`. For short options: sizes, lengths, pack sizes.
+  - `connected` joins the tiles into one row with a shared border, like a segmented switch: for a short either–or in a form (All | Any, Net | Gross). Only the outer corners are rounded, and the chosen tile isn't named again beside the question.
 
 **Sold out** (`soldOut` on a Radio, in `swatches` and `buttons`): crossed out but still choosable, and read as "XL, sold out" — so people can pick it and be offered "Notify me" instead of Add to cart. Use `disabled` only for options that can't be chosen at all. Swatch and size tiles are 40px tap targets (32px compact, 48px on phones).
 
@@ -67,7 +68,7 @@ It is to Radio what Field is to Input. You put `<QRadio>`s inside, and the group
 ## What you provide
 
 - **Required:** `label` ("Delivery"), or `ariaLabel` when something else on the page already asks the question.
-- **Optional:** `layout` (`list` | `inline` | `cards` | `swatches` | `buttons`, default `list`), `columns` (cards only, default 1), `required`, `help`, `hint`, `error`, `warning`, `success`, `disabled`, `labelHidden`, `labelPlacement` (`auto` | `top` | `side`, default the Form's), `labelWidth` (default 200px), `markers` (`required` | `optional` | `none`, default the Form's), `id` (lands on the chosen option, or the first enabled one), `name` (generated when missing), `defaultValue` (starts the value without v-model; a form reset goes back to it).
+- **Optional:** `layout` (`list` | `inline` | `cards` | `swatches` | `buttons`, default `list`), `columns` (cards only, default 1), `connected` (buttons only), `required`, `help`, `hint`, `error`, `warning`, `success`, `disabled`, `labelHidden`, `labelPlacement` (`auto` | `top` | `side`, default the Form's), `labelWidth` (default 200px), `markers` (`required` | `optional` | `none`, default the Form's), `id` (lands on the chosen option, or the first enabled one), `name` (generated when missing), `defaultValue` (starts the value without v-model; a form reset goes back to it).
 - **v-model:** `v-model` (the chosen Radio's `value`, or `null` for none yet).
 - **Slots:** the default slot (the Radios, each with a `value` and a `label`, plus `swatch` or `image` and `soldOut` in the tile layouts), `#hint` (rich hint content instead of `hint`).
 - **Translations:** `strings` — `optional` ("optional"), `help` ("Help"), `errorPrefix` ("Error:"), `warningPrefix` ("Warning:"), `successPrefix` (""); it overrides the Form's, or set them once with `configure({ strings: { form: … } })`. The "sold out" word comes from `configure({ strings: { choice: { soldOut } } })`.

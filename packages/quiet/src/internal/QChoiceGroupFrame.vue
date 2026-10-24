@@ -27,6 +27,8 @@ const props = defineProps<{
   status: ['error' | 'warning' | 'success', string] | [null, null];
   summaryShown: boolean;
   chosen: string | null;
+  /** buttons layout: the tiles join into one row. */
+  connected?: boolean;
   labelId: string;
   hintId: string;
   msgId: string;
@@ -68,7 +70,11 @@ const named = () => props.label != null || !!props.ariaLabel || !!attrs['aria-la
       </div>
       <div class="q-field__controlcol">
         <div
-          :class="['q-choicegroup__options', `q-choicegroup__options--${layout}`]"
+          :class="[
+            'q-choicegroup__options',
+            `q-choicegroup__options--${layout}`,
+            connected && 'q-choicegroup__options--connected',
+          ]"
           :style="layout === 'cards' && columns && columns > 1 ? { '--q-cols': columns } : undefined"
         >
           <slot />

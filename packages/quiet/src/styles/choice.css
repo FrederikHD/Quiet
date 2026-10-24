@@ -446,6 +446,35 @@
   outline: 2px solid var(--brand);
   outline-offset: 2px;
 }
+/* Connected tiles (RadioGroup connected): one row with shared borders and only the outer corners rounded, like a
+   segmented switch. The tile that is hovered, chosen or focused sits on top, so its whole border shows. */
+.q-choicegroup__options--connected {
+  gap: 0;
+  flex-wrap: nowrap;
+}
+.q-choicegroup__options--connected > .q-tile--button + .q-tile--button {
+  margin-left: -1px;
+}
+.q-choicegroup__options--connected > .q-tile--button:not(:first-child) .q-tile__face {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.q-choicegroup__options--connected > .q-tile--button:not(:last-child) .q-tile__face {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.q-choicegroup__options--connected .q-tile__face {
+  position: relative;
+}
+.q-choicegroup__options--connected .q-tile:hover .q-tile__face {
+  z-index: 1;
+}
+.q-choicegroup__options--connected .q-tile__input:checked + .q-tile__face {
+  z-index: 2;
+}
+.q-choicegroup__options--connected .q-tile__input:focus-visible + .q-tile__face {
+  z-index: 3;
+}
 .q-tile--button.is-soldout .q-tile__face {
   color: var(--ink-muted);
   background-image: linear-gradient(

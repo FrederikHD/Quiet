@@ -15,6 +15,8 @@ README, under "Stability". Before 1.0, a minor version (0.x.0) could contain bre
   `isDateDisabled` rule dates out, and `@invalid-text` says why typed text gave no date. The calendar follows the
   locale's month and weekday names and first day of the week, and works with the keyboard (arrows, Home/End, Page
   Up/Down for months, Shift for years). New `datePicker` strings.
+- RadioGroup `connected`: with `layout="buttons"`, the tiles join into one row with a shared border, like a
+  segmented switch, for a short either–or in a form ("All | Any" conditions of a promotion).
 
 ## [1.1.0] - 2026-10-23
 
