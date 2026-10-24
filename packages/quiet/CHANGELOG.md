@@ -7,6 +7,10 @@ README, under "Stability". Before 1.0, a minor version (0.x.0) could contain bre
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-10-24
+
+No breaking changes: a DatePicker, and RadioGroup button tiles that join into one switch.
+
 ### Added
 
 - DatePicker: a date field to use instead of `<QInput type="date">`, whose popup differs in every browser and can't be
@@ -262,7 +266,8 @@ First release.
 - WCAG 2.2 AA throughout: keyboard support, focus management, screen-reader announcements, both themes checked with
   axe; layouts that adapt to their own width; print styles; server rendering.
 
-[Unreleased]: https://github.com/FrederikHD/Quiet/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/FrederikHD/Quiet/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/FrederikHD/Quiet/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/FrederikHD/Quiet/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/FrederikHD/Quiet/compare/v1.0.0-rc.1...v1.0.0
 [1.0.0-rc.1]: https://github.com/FrederikHD/Quiet/compare/v0.6.0...v1.0.0-rc.1
