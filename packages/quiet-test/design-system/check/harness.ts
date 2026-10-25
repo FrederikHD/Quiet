@@ -146,10 +146,74 @@ function mountReact(el: HTMLElement, story: Story, model?: unknown) {
   ReactDOM().createRoot(el).render(storyElement(story, model));
 }
 
+// Beyond the stories: scoped slots, which a canvas passes as render props, and slots with kebab-case names.
+const orders = [
+  { id: '#10500', customer: 'Anna Schmidt', status: 'Unfulfilled' },
+  { id: '#10499', customer: 'Noah Koch', status: 'Shipped' },
+];
+const tableProps = {
+  caption: 'Orders',
+  rowKey: 'id',
+  selectable: true,
+  defaultSelected: ['#10499'],
+  columns: [
+    { key: 'id', header: 'Order' },
+    { key: 'customer', header: 'Customer' },
+    { key: 'status', header: 'Status' },
+  ],
+  rows: orders,
+};
+const tone = (status: string) => (status === 'Shipped' ? 'info' : 'warning');
+const extras: Record<string, { vue: () => any; react: () => any }> = {
+  'Table (scoped slots)': {
+    vue: () =>
+      h(
+        Q.QPage,
+        { title: 'Orders' },
+        {
+          'title-meta': () => h(Q.QBadge, { tone: 'info' }, () => 'Live'),
+          default: () =>
+            h(Q.QTable, tableProps, {
+              'cell-status': ({ row }: any) => h(Q.QBadge, { tone: tone(row.status) }, () => row.status),
+              'row-actions': ({ row }: any) =>
+                h(Q.QButton, { size: 'slim', variant: 'ghost', 'aria-label': `Open ${row.id}` }, () => 'Open'),
+              'bulk-actions': ({ selected }: any) => h(Q.QButton, { size: 'slim' }, () => `Fulfil ${selected.length}`),
+            }),
+        },
+      ),
+    react: () => {
+      const el = R().createElement;
+      const Quiet = QuietReact();
+      return el(Quiet.Page, {
+        title: 'Orders',
+        titleMeta: host(el(Quiet.Badge, { tone: 'info', children: ['Live'] }), 'meta'),
+        children: [
+          host(
+            el(Quiet.Table, {
+              ...tableProps,
+              'cell-status': ({ row }: any) => el(Quiet.Badge, { tone: tone(row.status), children: [row.status] }),
+              rowActions: ({ row }: any) =>
+                el(Quiet.Button, { size: 'slim', variant: 'ghost', ariaLabel: `Open ${row.id}`, children: ['Open'] }),
+              bulkActions: ({ selected }: any) =>
+                el(Quiet.Button, { size: 'slim', children: [`Fulfil ${selected.length}`] }),
+            }),
+            'table',
+          ),
+        ],
+      });
+    },
+  },
+};
+
 (window as any).QuietCheck = {
-  names: () => Object.keys(stories).sort(),
+  names: () => [...Object.keys(stories).sort(), ...Object.keys(extras)],
   story: (name: string) => stories[name] as Story & { component: Component },
   mount(name: string) {
+    if (extras[name]) {
+      createApp({ render: extras[name].vue }).mount(document.getElementById('vue')!);
+      ReactDOM().createRoot(document.getElementById('react')!).render(extras[name].react());
+      return;
+    }
     const story = stories[name];
     mountVue(document.getElementById('vue')!, story);
     mountReact(document.getElementById('react')!, story);

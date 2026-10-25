@@ -182,6 +182,7 @@ These are the library's own Vue components (\`@frederikhd/quiet\` ${pkg.version}
 - **Its props as the library names them**, in camelCase: \`labelHidden\`, \`iconStart="plus"\`, \`fullWidth\`.
 - **Its value:** \`value\` + \`onChange\` (controlled; \`onChange\` gets the value), or \`defaultValue\` and let it keep its own (\`defaultChecked\` for a checkbox). Other models the same way: \`defaultOpen\` / \`onOpenChange\`, \`defaultPage\` / \`onPageChange\`.
 - **Slots as props holding content:** \`children\` is the default slot; a named slot is a prop of that name (Page \`actions\`, AppShell \`nav\`, Input \`suffix\`).
+- **Scoped slots as render props:** a function that gets the slot's props — Table \`'cell-status': ({ row }) => …\`, \`rowActions: ({ row }) => …\`, \`bulkActions: ({ selected }) => …\`.
 - **Events as \`on\` + their name:** \`onClear\`, \`onRemove\`, \`onSelect\`, \`onClick\`.
 - **Nesting:** Quiet components inside each other (Field › Input, RadioGroup › Radio, Form › Field) join one Vue tree, so labels, ids, errors and groups connect.
 - \`configure({ locale: 'de-DE', currency: 'EUR' })\` on \`window.Quiet\` sets the shop's language and currency.
