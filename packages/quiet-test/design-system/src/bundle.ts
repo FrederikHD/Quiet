@@ -103,6 +103,8 @@ function toVue(node: ReactNode, host: IslandHost): any {
 }
 
 const lcFirst = (s: string) => s.charAt(0).toLowerCase() + s.slice(1);
+/** A slot prop's name as the template writes it: navFooter → nav-footer, rowActions → row-actions. */
+const slotName = (k: string) => k.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`);
 
 /** One Quiet component inside the Vue tree, with React-style props mapped onto it. */
 const Bridge = defineComponent({
@@ -123,14 +125,18 @@ const Bridge = defineComponent({
       const out: Record<string, any> = {};
       const handlers: Record<string, any> = {};
       const controlled = new Set<string>();
-      const slots: Record<string, () => any> = {};
+      const slots: Record<string, (scope?: any) => any> = {};
       for (const [k, v] of Object.entries(props.rprops)) {
         if (k === 'children') continue;
         // The canvas camel-cases every attribute (aria-label → ariaLabel); Quiet reads them as written.
         if (/^(aria|data)[A-Z]/.test(k)) out[k.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`)] = v;
         else if (k === 'className') out.class = v;
         else if (k === 'style') out.style = styleOf(v);
-        else if (isNode(v)) slots[k] = () => toVue(v, props.host);
+        else if (isNode(v)) slots[slotName(k)] = () => toVue(v, props.host);
+        // A function for something that isn't a prop or an event is a scoped slot, as a render prop:
+        // 'cell-status': ({ row }) => <Badge …/>, rowActions: ({ row }) => <Menu …/>.
+        else if (typeof v === 'function' && !(k in declared) && !/^on[A-Z]/.test(k))
+          slots[slotName(k)] = (scope: Record<string, unknown>) => toVue(v(scope), props.host);
         else if (/^default[A-Z]/.test(k) && !(k in declared)) {
           const name = /^default(Value|Checked)$/.test(k) ? 'modelValue' : lcFirst(k.slice(7));
           if (!(name in local)) local[name] = v;

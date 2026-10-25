@@ -59,13 +59,28 @@ export function indexDts(types) {
       );
       const has = (member) => new RegExp(`\\n\\s+${member}\\??:`).test(body);
       const extra = [];
-      // Slots → props holding content.
-      const slots = src.match(/type __VLS_Slots = \{([\s\S]*?)\n\};/);
-      if (slots)
-        for (const [, doc = '', slot] of slots[1].matchAll(/(\/\*\*[\s\S]*?\*\/\s*)?('[\w-]+'|\w+)\?\(/g)) {
+      // Slots → props holding content; scoped slots → render props. (Generic components list them under `slots:`.)
+      const slots =
+        src.match(/type __VLS_Slots = \{([\s\S]*?)\n\};/) ?? src.match(/\n {4}slots: \{([\s\S]*?)\n {4}\};/);
+      const generic = body.match(new RegExp(`export interface ${name}Props<(\\w+)`))?.[1];
+      const scope = (args) => args.replace(/\s+/g, ' ').replace(/\bRow\b/g, generic ?? 'Record<string, unknown>');
+      if (slots) {
+        for (const [, doc = '', slot, args] of slots[1].matchAll(
+          /(\/\*\*[\s\S]*?\*\/\s*)?('[\w-]+'|\w+)\?\(([^()]*)\)/g,
+        )) {
           const prop = slot === 'default' ? 'children' : camel(slot.replace(/'/g, ''));
-          extra.push([prop, `${doc.trim() ? `${doc.trim()}\n    ` : ''}${prop}?: React.ReactNode;`]);
+          const type = args.trim() ? `(${scope(args)}) => React.ReactNode` : 'React.ReactNode';
+          extra.push([prop, `${doc.trim() ? `${doc.trim()}\n    ` : ''}${prop}?: ${type};`]);
         }
+        // Slots named by pattern: Table's 'cell-status', 'header-total'.
+        for (const [, pattern, args] of slots[1].matchAll(
+          /\[x: (`[\w-]+\$\{string\}`)\]: \(\(([^()]*)\) => unknown\)/g,
+        ))
+          extra.push([
+            pattern,
+            `[slot: ${pattern}]: ${args.trim() ? `((${scope(args)}) => React.ReactNode)` : 'React.ReactNode'} | undefined;`,
+          ]);
+      }
       // Events → on* callbacks; models → value / defaultX / onXChange.
       for (const [, event, args] of src.matchAll(/"?(on[A-Z][\w:]*)"?\?: \(\((.*?)\) => any\) \| undefined;/g)) {
         if (!event.startsWith('onUpdate:')) {
