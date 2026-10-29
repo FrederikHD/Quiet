@@ -13,6 +13,12 @@ updates:
         update-types: ['version-update:semver-major']
       - dependency-name: '@types/node'
         update-types: ['version-update:semver-major']
+      # React is only the design-system check's stand-in for a claude.ai canvas, which runs React 18 from its UMD
+      # builds; React 19 ships no UMD builds. Move both when the canvas does.
+      - dependency-name: react
+        update-types: ['version-update:semver-major']
+      - dependency-name: react-dom
+        update-types: ['version-update:semver-major']
     groups:
       playwright:
         patterns: ['@playwright/test', 'playwright', 'playwright-core']
